@@ -141,10 +141,10 @@ footer:active{  transform: translateX(-50%) scale(0.98); }
 
 .youMustAllowMicrophone{
   z-index: 1000; /*main is 999*/
-  position: fixed; min-width:300px; max-width:100vmin; height:80px; top:-100px; left:50vw; transform: translateX(-50%);
+  position: fixed; min-width:330px; max-width:100vmin; height:80px; top:-100px; left:50vw; transform: translateX(-50%);
   border-radius: 0px 0px 10px 10px;
   background-color: white; border: 2px solid #ebf2fa;
-  font-size: 20px; color: #b0cdd1; font-weight: bold;
+  font-size: 19px; color: #b0cdd1; font-weight: bold;
   display: flex; justify-content: center;  align-items: center; padding: 10px;
   animation-name: flashBlink; animation-duration: .6s; animation-iteration-count: infinite; animation-direction: alternate;
   transition: margin-top 1.5s; transition-timing-function: ease;
