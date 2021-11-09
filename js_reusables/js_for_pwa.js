@@ -134,6 +134,7 @@ function whetherTheAppIsRunningStandaloneF() {
 
 /* appinstalled FIRES ONLY ONCE DURING THE LIFETIME OF THE APP */ /* Side note: Clearing local storage from the browser will clear the app's data too */
 /* MDN says, appinstalled is deprecated and according to support table it fires only on Chrome and Edge */
-/*
-window.addEventListener("appinstalled",(evt)=>{   });
-*/
+/* Maybe we can use appinstalled to fix mobile chrome's [not switching to standalone app automatically when download completes] thing */
+if (deviceDetector.isMobile) {
+  window.addEventListener("appinstalled",(evt)=>{  window.location.reload();  }); // Force switch to standalone mode for Android
+}
