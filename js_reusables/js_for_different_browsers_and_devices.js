@@ -96,7 +96,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
   let continueAfterPauseMsgFromTxtFileInUILanguage = "Continue?"; // Get the actual text from txt file and use it instead of this default.
   const filePathForTheContinueLessonText = "user_interface/text/"+userInterfaceLanguage+"/0-continue_after_pause.txt";
-  fetch(filePathForTheContinueLessonText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ continueAfterPauseMsgFromTxtFileInUILanguage = contentOfTheTxtFile; });// See js_for_fetch_api_character_encoding.js for the headers thingy.
+  fetch(filePathForTheContinueLessonText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ continueAfterPauseMsgFromTxtFileInUILanguage = contentOfTheTxtFile; }); // See js_for_fetch_api_character_encoding.js for the headers thingy.
   // Note: The following enables annyang to restart after a PAUSE when user has been AWAY or has turned off his mobile device's screen. Desktops don't need any handling for that.
   // Note: Annyang's behaviour is similar to the "visibilitychange" event. That is different from window "blur/focus" event. See https://stackoverflow.com/questions/58148482/document-visibilitychange-versus-window-blur-focus-what-is-the-difference-when/58148483#58148483
   if (deviceDetector.isMobile) {
@@ -178,16 +178,58 @@ window.addEventListener('DOMContentLoaded', function(){
 
 }, { once: true });
 
+/**/
+/*________________window LOAD___________________*/
+let allowMicrophoneBlinker;
 window.addEventListener("load",function() {
 
-  /*___________________________________*/
   // Resolve the Firefox refresh button issue... After an F5 refresh the frame is supposed to be blank but Firefox shows the last loaded html. Yet if we hit ENTER on the address bar it clears as expected. To make F5/refresh clear the frame (just like when ENTER is hit) we have to "force" it.
   let whatTheFileNameInIframeSrcIs = ayFreym.src.substring(ayFreym.src.length - 10, ayFreym.src.length - 5); // Get the name of the html file from a string like "/user_interface/blank.html"
   if (whatTheFileNameInIframeSrcIs == "blank") { // This works. HOWEVER: Could also use let result = ayFreym.src.search("blank"); if(result>=0){}
-    setTimeout( function ()  {   ayFreym.src="user_interface/blank.html"  },100); // Force empty! At last! Blank as it is supposed to be.
+    setTimeout(function () {  ayFreym.src="user_interface/blank.html"  },100); // Force empty! At last! Blank as it is supposed to be.
   }
 
+  allowMicrophoneBlinker = document.getElementById('allowMicrophoneDivID');
+  const filePathForAllowMicrophoneText = "user_interface/text/"+userInterfaceLanguage+"/0-allow_microphone.txt";
+  fetch(filePathForAllowMicrophoneText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ allowMicrophoneBlinker.children[1].innerHTML =  contentOfTheTxtFile; });
+  checkMicPermission();
 }, { once: true });
+
+/*Microphone permission*/
+function checkMicPermission() {
+  if ("permissions" in navigator) { // Firefox supports geolocation and notification permissions ONLY. It doesn't support microphone permission as of 2021
+    const micPermissionPromise = navigator.permissions.query({name:'microphone'});
+    micPermissionPromise.then(function(result) {
+      if (result.state == 'granted') {
+        localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed = "yes"; // Restore localStorage record if browser cache was cleared after allowing mic
+        allowMicrophoneBlinker.parentNode.removeChild(allowMicrophoneBlinker);
+      }
+    }).catch(x => {
+      //console.log("cannot check microphone permission status"); // firefox users will never see the dialog
+    });
+  }
+}
+
+function handleMicPermission() {
+  if ("permissions" in navigator) {
+    function removePleaseAllowDialog() {
+      const micPermissionPromise = navigator.permissions.query({name:'microphone'});
+      micPermissionPromise.then(function(result) {
+        // Don't need: if (result.state == 'prompt')
+        // Don't need: if (result.state == 'denied')
+        result.onchange = function() {
+          allowMicrophoneBlinker.classList.add("letYouMustAllowMicrophoneDialogDisappear"); // No matter what the choice is
+          setTimeout(function () {     allowMicrophoneBlinker.parentNode.removeChild(allowMicrophoneBlinker);     },1501);
+        };
+      });
+    }
+    removePleaseAllowDialog();
+  } else {
+    //console.log("permissions not supported at all"); // safari
+    setTimeout(function () { allowMicrophoneBlinker.classList.add("letYouMustAllowMicrophoneDialogDisappear"); },4000);
+    setTimeout(function () {     allowMicrophoneBlinker.parentNode.removeChild(allowMicrophoneBlinker);        },5501);
+  }
+}
 
 /* __Test microphone and get allowed if need be__ */
 function testAnnyang() {
@@ -197,17 +239,21 @@ function testAnnyang() {
     if (localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed == "yes") { // There used to be a problem here like a double firing when index.html redirected to ja.html or tr.html shortly after landing because of UI language.
       // THE REASON WHY we don't want to repeat the microphone test every time the app starts running is because it DINGS on mobiles.
       // So start doing nothing with the 2nd visit and forever.
-    }
-    else {
+    } else {
       // Make the “allow microphone” box appear for users who have arrived for the first time by a quick TURN ON AND THEN OFF thing.
-      setTimeout(function () {  annyang.start(); localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed = "yes";  },1000); // Actually any string value makes it return true but the keyword “true” does not.
+      allowMicrophoneBlinker.classList.add("letYouMustAllowMicrophoneDialogAppear");
+      setTimeout(function () {
+        annyang.start();
+        localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed = "yes"; // Actually any string value makes it return true but the keyword “true” does not.
+        handleMicPermission();
+      },1501);
+
       // Thus the device shall not uselessly/purposelessly DING every time main menu is viewed.
       // While the user is viewing the dialog box and deciding whether or not to press OK
       let tryToAbortEveryThreeSeconds = setInterval(function () {
         if (annyang.isListening()) {
           annyang.abort();
           clearInterval(tryToAbortEveryThreeSeconds);
-          //setTimeout(function () {  navigator.vibrate(1);  },4000); // This is for browsers (like Firefox Mobile) which ask the user if he/she wants to allow vibration.
         }
       },3000);
     } // End of inner “else”
