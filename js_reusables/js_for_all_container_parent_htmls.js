@@ -227,9 +227,9 @@ function hideNotificationInstallationButton() {
   if (main.contains(footer)) {
     // console.log("Ok this happens"); // Tested and yes it fires
     if (deviceDetector.isMobile) {
-      footer.classList.add("???");
+      //footer.classList.add("???");
     } else {
-      footer.classList.add("???");
+      //footer.classList.add("???");
     }
   }
 }
