@@ -226,7 +226,11 @@ function hideNotificationInstallationButton() {
   const footer = document.getElementsByTagName('FOOTER')[0];
   if (main.contains(footer)) {
     // console.log("Ok this happens"); // Tested and yes it fires
-    footer.classList.add("footerSlideDown"); // Tested and yes it adds that class
+    if (deviceDetector.isMobile) {
+      footer.classList.add("???");
+    } else {
+      footer.classList.add("???");
+    }
   }
 }
 

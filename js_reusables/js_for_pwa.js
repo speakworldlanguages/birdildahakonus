@@ -29,6 +29,19 @@ function handleDesktopTabletPhoneETC() {
   /**/
 }
 
+
+function revealNotificationInstallationButton() {
+  const main = document.getElementsByTagName('MAIN')[0];
+  const footer = document.getElementsByTagName('FOOTER')[0];
+  if (main.contains(footer)) {
+    // console.log("Ok this happens"); // Tested and yes it fires
+    if (deviceDetector.isMobile) {
+      footer.classList.add("???");
+    } else {
+      footer.classList.add("footerSlideAppearDesktop");
+    }
+  }
+}
 // Convert from Notification to Installation IF CAN INSTALL
 // WATCH: display flex
 let doYouWantToInstallprompt;
@@ -39,6 +52,7 @@ function turnNotificationIntoInstallation(e) {
   doYouWantToInstallprompt = e;
   allowNotificationButton.style.display = "none"; // Probably OK even after removeChild
   installButton.style.display = "flex";
+  revealNotificationInstallationButton();
   installButton.addEventListener("click",showInstall_PWA_prompt,{once:true});
 }
 

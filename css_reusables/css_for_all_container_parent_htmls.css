@@ -104,22 +104,23 @@ footer{ /* Contains INSTALL THE APP - GET NOTIFICATIONS button */
   color: #b0cdd1; font-weight: 400;
   padding: 10px;
   border: 2px solid #ebf2fa;
-  transition: transform .3s, opacity .25s, margin-bottom .01s; /*use margin-top when using top, margin-bottom when using bottom*/
+  transition: transform .3s, opacity .25s, margin-top 1s; /*use margin-top when using top, margin-bottom when using bottom*/
   font-size: 19px;
 }
 footer:hover{   transform: translateX(-50%) scale(1.02); }
 footer:active{  transform: translateX(-50%) scale(0.98); }
-.footerGetLost{ transform: translateX(-50%) scale(0.0001); opacity: 0;}
-.footerSlideDown{margin-bottom:-60vmin;} /*ADJUST animation time, change it from .01s to a nice value when ready*/
-.footerSlideUpMobile{margin-bottom:58vh;} /*!!! Add to bottom:27vmin;*/
-.footerSlideUpDesktop{margin-bottom:0vmin;} /*!!! Add to bottom:3.3vmin;*/
+.footerGetLost{ transform: translateX(-50%) scale(0.0001); opacity: 0; }
+.footerSlideAppearDesktop{margin-top:-19.7vh;}
+.footerSlideAppearMobile{margin-top:21px;}
+/* .footerSlideUpMobile{margin-top:-100vmin;}  */ /*WE ARE WORKING!!!*/
+/* .footerSlideUpDesktop{margin-top:0vmin;} */
 
-.footerDesktop{ bottom:3.3vmin; }
+.footerDesktop{ top:100vh; }
 .footerDesktop div{display: flex; align-items: center; justify-content: center; min-width:240px; height: 100px;}
 .footerDesktop img{ height: 100px; }
 .footerDesktop p{ text-shadow: none; min-width: 150px; }
 
-.footerTabletAndPhone{ bottom:27vmin; }
+.footerTabletAndPhone{ top:-80px; }
 .footerTabletAndPhone div{ display: flex; align-items: center; justify-content: center; max-width:90vmin; height: 80px; }
 .footerTabletAndPhone img{ height: 80px; }
 .footerTabletAndPhone p{ text-shadow: none; min-width: 190px; line-height: 23px; }
