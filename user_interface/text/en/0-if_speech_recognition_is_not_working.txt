@@ -1,0 +1,2 @@
+﻿Speech recognition is not working.
+You may still use this web application but it is better if you try using Chrome on Windows or Android.

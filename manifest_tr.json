@@ -1,0 +1,15 @@
+{
+  "name": "Bir Dil Daha Öğren",
+  "short_name": "Bir Dil Daha Öğren",
+  "author": "Beykan Alper Bilgekılınç Topraksoy",
+  "description": "Dil Öğren Ki Yeryüzünün Yabancısı Değil Yerlisi Ol",
+  "icons": [{
+    "src": "icon_for_pwa_tr.png",
+    "sizes": "512x512",
+    "type": "image/png"
+    }],
+  "start_url": "index.html?installed",
+  "display": "fullscreen",
+  "background_color": "#adbbc4",
+  "theme_color": "#4d606f"
+}

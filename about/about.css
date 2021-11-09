@@ -1,0 +1,39 @@
+a:link, a:visited{color: white; text-decoration: none; text-shadow: 0px 0px 1px white;}
+a:hover{text-decoration: underline;}
+a:active{transform: scale(1.2);}
+
+a.openAboutPageAnchor:link, a.openAboutPageAnchor:visited{color: white; text-decoration: none;}
+a.openAboutPageAnchor:hover{text-decoration: none;}
+a.openAboutPageAnchor:active{}
+.letterSpacingAnimation{letter-spacing: 0.8px; transition: all 1.8s ease-out}
+.letterSpacingAnimation:hover{letter-spacing: 3px;}
+
+.alegreya{font-family: 'Alegreya Sans SC', 'Titillium Web Light', sans-serif; font-size: 2.25vh;}
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+  background: rgba(82,110,133,0.06);
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(82,110,133,0.3);
+  border-radius: 3px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  width: 8px;
+  /* background: rgba(229,245,255,0.95); */
+  background: rgba(82,110,133,0.4);
+  border-radius: 3px;
+  /* box-shadow: 0 0 2px rgba(217,238,252,0.9); */
+  box-shadow: inset 0 0 2px rgba(229,245,255,0.95);
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: white;
+}
+.niceFadeInFastForAboutScreen{animation-name: niceFadeInFast; animation-duration: 0.5s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;}
+@keyframes niceFadeInFast {
+  0%{opacity:0.05;}
+100%{opacity:1;}
+}

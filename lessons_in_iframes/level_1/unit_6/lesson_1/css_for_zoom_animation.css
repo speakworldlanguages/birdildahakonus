@@ -1,0 +1,10 @@
+.addThisClassToStartZoomingIn{
+  animation: getCloserAndCloser 18s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+@keyframes getCloserAndCloser {
+  0%{          transform: scale(1);       }
+  15%{          transform: scale(1.40);    }
+  100%{          transform: scale(1.80);   }
+}

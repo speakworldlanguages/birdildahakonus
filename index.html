@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head> <!-- Landing page for users whose browser language is "tr" -->
+
+    <script> var thisIsTheParentWhichContainsAllIFramedLessons = "yes"; </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"> <!-- For mobile device screens to display things properly -->
+    <title>BİR DİL DAHA ÖĞREN: Öğren Ki Yeryüzünün Yabancısı Değil Yerlisi Ol</title>
+    <meta name="description" content="Dinleyip öğrendiklerini hemen konuşarak kullanmaya başla!">
+    <meta name="author" content="Beykan Alper Bilgekılınç Topraksoy">
+
+    <!-- https://pedro.agency/digital-marketing/how-to-stop-google-ignoring-your-meta-descriptions/ --> <!-- https://ahrefs.com/blog/meta-robots/ -->
+
+    <link rel="alternate" hreflang="ja" href="https://hanaserutoiidesuy.one">
+    <!-- <link rel="alternate" hreflang="ko" href="https://???"> -->
+    <!-- <link rel="alternate" hreflang="zh" href="https://???"> -->
+    <!-- <link rel="alternate" hreflang="ms" href="https://???"> -->
+    <link rel="alternate" hreflang="tr" href="https://speakworldlanguages.app/tr.html"> <!-- birdildahaogreneyim -->
+    <!-- <link rel="alternate" hreflang="ar" href="https://???"> -->
+    <link rel="alternate" hreflang="en" href="https://speakworldlanguages.app">
+
+    <link rel="icon" type="image/png" href="user_interface/icon/animated_globe_icon_39.png" id="icon" sizes="32x32"> <!-- This appears next to the title in the browser's TABS and plays as an animation. See js_for_icon_animation.js -->
+    <link id="saveLoadTimeOnMobileID" rel="preload" href="css_reusables/css_for_permanent_custom_cursor.css" as="style" onload=" var useThis=this; useThis.onload=null; setTimeout(function(){ useThis.rel='stylesheet'; },3000); "> <!-- DESKTOPS only! -->
+    <!-- Above line is used because 40 little png files (for custom cursors) can take too many milliseconds to download and some frames can go missing as browser's rendering starts. Note: As of 2020 Firefox doesn't support rel="preload". -->
+    <link rel="stylesheet" href="css_reusables/css_for_every_single_html.css">
+    <link rel="stylesheet" href="css_reusables/css_for_all_container_parent_htmls.css">
+    <link rel="stylesheet" href="css_reusables/css_for_sliding_navigation_menu.css">
+    <link rel="stylesheet" href="css_reusables/css_for_latin_font_rules.css">
+
+    <script src="third_party_js/annyang.min.js">/*Speech Recognition library by Tal Ater - Github: TalAter*/</script>
+    <script src="third_party_js/ua-parser.min.js">/*JS library for getting the browser and OS names by Faisal Salman - Github: faisalman*/</script>
+    <!-- MOVED TO every_single_html.js <script src="third_party_js/devicedetector-min.js">/*A device detector by Maarten Belmans - Github: PoeHaH*/</script> --><!-- copy-paste devicedetector into js_for_every_single_html.js -->
+    <script src="third_party_js/howler.min.js">/*An audio handler - Github: goldfire*/</script>
+
+    <script src="js_reusables/js_for_preload_handling.js">/* INCLUSION PRIORITIZED: Measure time between "DOMContentLoaded" and "load" */</script>
+    <script defer src="js_reusables/js_for_every_single_html.js">/*Memory card, userInterfaceLanguage, fonts*/</script>
+    <!-- MOVED TO every_single_html.js <script defer src="js_reusables/js_for_fetch_api_character_encoding.js">/*Display extended latin characters (ÇĞİÖŞÜçğıöşü) correctly when using fetch to read txt files*/</script> -->
+    <script defer src="js_reusables/js_for_handling_fullscreen_mode.js">/*Handle right-clicks, double-clicks...*/</script>
+    <script defer src="js_reusables/js_for_all_container_parent_htmls.js">/*Fake antisleep video, be careful with iPhone fullscreen openfirstlesson, load last studied language codes...*/</script>
+    <script defer src="js_reusables/js_for_different_browsers_and_devices.js">/*Whitelist browsers, handling visibilitychange: what happens when user leaves the app*/</script>
+    <script defer src="js_reusables/js_for_icon_animation.js" id"removeIfStandaloneID">/*A rotating globe next to the title that appears in the browser-tab*/</script>
+    <script defer src="js_reusables/js_for_the_sliding_navigation_menu.js">/*NAVIGATION*/</script>
+    <script defer src="js_reusables/js_for_pwa.js">/*Progressive Web App - Handle installation*/</script>
+    <script defer src="js_reusables/js_for_odtu.js">/*---*/</script>
+
+    <!-- Uncomment the following to be able to use the browser console on mobile devices -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/1.5.8/eruda.min.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8FWCR3LS62"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8FWCR3LS62');
+    </script>
+
+    <!-- PWA -->
+    <!-- Idea: We could have manifest_iOS.json and manifest_default.json and set href when DOMContentLoaded happens -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Bir Dil Daha Öğren">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#4d606f">
+    <link rel="apple-touch-icon" href="icon_for_pwa_tr.png">
+    <link rel="manifest" href="manifest_tr.json">
+    <script>
+      if ("serviceWorker" in navigator) {  window.addEventListener("DOMContentLoaded",()=>{  navigator.serviceWorker.register("service-worker.js");  });  } // Takes too long compared to window load (almost a second)
+    </script>
+
+    <!--  -->
+  </head>
+  <body>
+    <div id="idOfThePreloadHandlingDiv" style="position: fixed; top:0; left:0; bottom:0; right:0; background-color: white; display: flex; justify-content: center; align-items: center; z-index: 9999;">
+      <!-- The content of this div is changed via script. See js_for_preload_handling.js -->
+      <!-- The style is left inline as a safe measure against slow network etc. See css_for_every_single_html.css-->
+      <img id="globeFrameZeroImgID" src="user_interface/images/rotating_globe_100x150_frame0.webp" alt="Geliyor...">
+    </div>
+
+    <!-- Parent HTMLs are not multilingual. The text below is translated and unique to this html just like the contents of the /user_interface/text/ folder -->
+    <div data-nosnippet id="idOfTheWelcomeMenuDiv" style="position: fixed; top:0; left:0; bottom:0; right:0; background-color: rgba(255, 255, 255, 0.5); display: flex; justify-content: center; align-items: center; z-index: 9998;">
+      <div class="promptBoxInParent">
+        <p class="getSmallOnPhones">Vakfımız bu uygulamanın gelişimi için çalışmaktadır.<br>“Çorbada benim de tuzum olsun” diyorsan <i>terãzili</i> düğmeyi kullan.</p>
+        <div style="width:10px;height:10px;">                  </div>
+        <!-- Empty little box to adjust the line height -->
+        <aside onclick="userHasClickedOrTouchedWelcomeAnswerA(); testAnnyang();">İşlerin nasıl yürüdüğünü anladım</aside>
+        <!-- See js_for_all_container_parent_htmls.js -->
+        <aside onclick="userHasClickedOrTouchedWelcomeAnswerB(); testAnnyang();">Ben artık hep tuz yolluyorum zaten</aside>
+        <!-- See js_for_all_container_parent_htmls.js -->
+      </div>
+    </div>
+
+    <!-- [Your progress has been loaded] box is in progress_chart -->
+
+    <!-- THE MAIN MENU -->
+    <main> <!-- See css_for_all_container_parent_htmls.css & js_for_all_container_parent_htmls.js -->
+      <header>
+        <p>Öğrenmek istediğin dili seç</p>
+      </header>
+      <div class="lowerHalfDiv">
+        <!-- When more languages are hopefully added, we better list them with the world map order like east to west, west to east,right to left, left to right with a swipeable navigation design -->
+        <!-- Initial location of that grid map can be users location via IP geolocation; we want to avoid asking permission for GPS location as that would be distracting or could be annoying -->
+        <!-- <button onclick="letTheIFrameTeachJapanese()">Hito Dili (Japonca)</button> -->
+        <!-- See js_for_all_container_parent_htmls.js -->
+        <!-- <button onclick="letTheIFrameTeachChinese()">Ren Dili (Çince)</button> -->
+        <button onclick="letTheIFrameTeachTurkish()">Kişi Dili (Türkçe)</button> <!-- See js_for_all_container_parent_htmls.js -->
+        <!-- <button onclick="letTheIFrameTeachArabic()">Ennaas Dili (Arapça)</button> -->
+        <!-- See js_for_all_container_parent_htmls.js -->
+        <!-- <button onclick="letTheIFrameTeachEnglish()">Piypıl Dili (İngilizce)</button> -->
+        <!-- See js_for_all_container_parent_htmls.js -->
+      </div>
+      <footer class="footerDesktop">
+        <div id="footerInstallID" style="display:none;">
+          <img src="user_interface/images/add_to_desktop.webp" alt="Uygulamayı indir">
+          <img src="user_interface/images/add_to_home_screen_tablet.webp" alt="Uygulamayı indir" style="display:none;">
+          <img src="user_interface/images/add_to_home_screen_phone.webp" alt="Uygulamayı indir" style="display:none;">
+          <p style="display:block;">Uygulamayı masaüstüne indir</p>
+          <p style="display:none;">Uygulamayı ana ekrana ekle</p>
+          <p style="display:none;">Artık tarayıcıyı kapatıp<br>uygulamayı ana ekrandan çalıştırabilirsin</p>
+        </div>
+        <div id="footerNotificationID" style="display:flex;">
+          <img src="user_interface/images/push_me_notification.webp" alt="Yeni bölümler hazır olunca haber ver">
+          <p style="display:block;">Yeni bölümler hazır olunca<br>haber almak için tıkla</p>
+          <p style="display:none;">Yeni bölümler hazır olunca haber almak için dokun</p>
+        </div>
+      </footer>
+    </main>
+
+    <!-- get rid of this after testing the new idOfTheLoadProgressDiv -->
+    <!-- <div id="fullViewportPositionFixedDivAsContainerOfLoadCheckpointPrompt"> -->
+      <!-- <div class="promptBoxInParent"> -->
+        <!-- <p>Kaldığın bölüme dön</p> -->
+        <!-- <div style="width:10px;height:10px;">          -->
+          <!-- Empty little box to adjust the line height -->
+        <!-- </div> -->
+        <!-- <button onclick="whenLoadLastLessonOkButtonIsClickedOrTapped()">Tamam</button> -->
+        <!-- See js_for_all_container_parent_htmls.js -->
+      <!-- </div> -->
+    <!-- </div> -->
+
+    <!-- LESSONS WILL BE DISPLAYED ONE BY ONE THROUGH THIS IFRAME -->
+    <!--  -->
+    <iframe src="user_interface/blank.html" id="theIdOfTheIframe" allowfullscreen></iframe>
+    <!--  -->
+
+    <!-- REDIRECT AND SET GUI LANGUAGE ACCORDING TO THE BROWSER LANGUAGE -->
+    <script>
+      // See js_for_every_single_html.js to find UI language settings.
+      // Wait for DOMContentLoaded to be able to use the “browserLanguage” variable from the js file.
+      window.addEventListener('DOMContentLoaded', function(){
+        // THIS IS NOT NECESSARY! - Yanlışlıkla Türkçe sayfa başlığına tıkladığı halde aslında başka sayfaya gitmesi gereken birileri olmadıkça
+        /*switch (browserLanguage) {
+          case "tr": break; // For TR stay here in the tr_clone of the app
+          //case "??": window.open("https://???", "_top"); break; // For ??
+          default: window.open("https://speakworldlanguages.app", "_top"); // Go to the main repository page (English GUI)
+        }*/
+      }, { once: true });
+      // We don't want to complicate the GUI by adding a button to change the language of the interface.
+    </script>
+    <!-- Firebase -->
+    <script type="module" src="notify_tr.js"></script>
+  </body>
+</html>

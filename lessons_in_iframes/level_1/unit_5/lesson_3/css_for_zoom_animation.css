@@ -1,0 +1,25 @@
+.addThisClassToStartZoomingInA{
+  animation: getCloserAndCloserA 24s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  transform-origin: bottom center;
+}
+@keyframes getCloserAndCloserA {
+  0%{             transform: scale(1);       }
+  5%{             transform: scale(1);       }
+  35%{            transform: scale(1.14);    }
+  90%{            transform: scale(1.14);    }
+  100%{           transform: scale(1.18);    }
+}
+
+.addThisClassToStartZoomingInB{
+  animation: getCloserAndCloserB 6s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  transform-origin: bottom center;
+}
+@keyframes getCloserAndCloserB {
+  0%{             transform: scale(1.18) translateX(0%);       }
+  25%{            transform: scale(1.18) translateX(0%);       }
+  100%{           transform: scale(1.50) translateX(2.5%);     }
+}

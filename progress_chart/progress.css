@@ -1,0 +1,66 @@
+main{
+  flex-direction: column;
+}
+/*Disable highlighting for everything, especially with a double-click on images, prevent ugly blue of OS fill */
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+/* .noselect:focus {outline:0;} */ /*Didn't solve the ugly blue upon touch*/
+/* .noselect:active {outline:0;} *//*Didn't solve the ugly blue upon touch*/
+
+.allUnitsInALevelContainer{ /*centered by main-flexbox*/
+  min-width:530px; min-height: 38.2vh; max-height: 50vh;
+  display: flex; flex-direction: column; align-items: center;
+  overflow-y: auto;
+  color: white; /* text color */
+  margin-bottom: 15vmin;
+  /* border: 1px dotted blue; */
+}
+@media (orientation:landscape) and (max-width:700px){
+  .allUnitsInALevelContainer{transform: translateY(-50px);}
+}
+.allLessonsInAUnitContainer{
+  min-width:200px; min-height: 100px;
+  background-color: #bcc9d3;
+  border-radius: 12px;
+  display: flex; justify-content: center; align-items: center;
+}
+
+.oneParticularLesson{
+  width:8vmin; height: 8vmin;
+  margin: 9px;
+  border-radius: 7px;
+  background-color: white;
+  display: flex; justify-content: center;  align-items: center;
+  transition: all 0.17s;
+  box-shadow: 0 1px 3px rgba(142,178,204,0.16), 0 1px 2px rgba(93,143,181,0.32);
+  border: 10px solid #f3f3f3; /*Close to WhiteSmoke*/
+}
+
+.oneParticularLesson:hover{
+  transform: scale(1.08);
+  box-shadow: 0 1px 5px rgba(220,239,248,0.16), 0 1px 4px rgba(93,143,181,0.32);
+}
+.oneParticularLesson:active{
+  transform: scale(0.8);
+}
+
+.thisLessonHasBeenViewedButNotCompleted{
+  border: 10px solid #ffffe4; /*Close to Ivory*/
+}
+
+.thisLessonHasBeenCompleted{
+  border: 10px solid #e4ffe4; /*Close to Honeydew*/
+}
+
+.eachWebp{
+  width:100%;
+  border-radius: 4px;
+  border: 6px solid white;
+  pointer-events: none;
+}

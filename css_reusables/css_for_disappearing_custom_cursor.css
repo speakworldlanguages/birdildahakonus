@@ -1,0 +1,44 @@
+/*AVOID: Filepaths must be relative without refering to the root '/' so that iframed domain masking can work. */
+/*File paths work when they are given with respect to this css file. Not to the html files.*/
+body{
+  cursor: url('../user_interface/images/cursor/default_cursor_00.png') 16 6,auto;
+  animation-name: defaultCursorDisappearWhenIdle; animation-duration: 2s;
+  animation-direction: normal; animation-delay: 1.5s; animation-fill-mode: forwards;
+  /*Listen for mousemove and restart animation*/ /* See js_for_disappearing_custom_cursor */
+}
+
+@keyframes noCursor {  0% {cursor: none;}  100% {cursor: none;}  }
+@keyframes reset {
+  0% {cursor: url('../user_interface/images/cursor/default_cursor_00.png') 16 6,auto;}
+  100% {cursor: url('../user_interface/images/cursor/default_cursor_00.png') 16 6,auto;}
+}
+@keyframes defaultCursorDisappearWhenIdle {
+  0% {cursor: url('../user_interface/images/cursor/default_cursor_00.png') 16 6,auto;}
+  4% {cursor: url('../user_interface/images/cursor/default_cursor_01.png') 16 6,auto;}
+  8% {cursor: url('../user_interface/images/cursor/default_cursor_02.png') 16 6,auto;}
+  12% {cursor: url('../user_interface/images/cursor/default_cursor_03.png') 16 6,auto;}
+  16% {cursor: url('../user_interface/images/cursor/default_cursor_04.png') 16 6,auto;}
+  20% {cursor: url('../user_interface/images/cursor/default_cursor_05.png') 16 6,auto;}
+  24% {cursor: url('../user_interface/images/cursor/default_cursor_06.png') 16 6,auto;}
+  28% {cursor: url('../user_interface/images/cursor/default_cursor_07.png') 16 6,auto;}
+  32% {cursor: url('../user_interface/images/cursor/default_cursor_08.png') 16 6,auto;}
+  36% {cursor: url('../user_interface/images/cursor/default_cursor_09.png') 16 6,auto;}
+  40% {cursor: url('../user_interface/images/cursor/default_cursor_10.png') 16 6,auto;}
+  44% {cursor: url('../user_interface/images/cursor/default_cursor_11.png') 16 6,auto;}
+  48% {cursor: url('../user_interface/images/cursor/default_cursor_12.png') 16 6,auto;}
+  52% {cursor: url('../user_interface/images/cursor/default_cursor_13.png') 16 6,auto;}
+  56% {cursor: url('../user_interface/images/cursor/default_cursor_14.png') 16 6,auto;}
+  60% {cursor: url('../user_interface/images/cursor/default_cursor_15.png') 16 6,auto;}
+  64% {cursor: url('../user_interface/images/cursor/default_cursor_16.png') 16 6,auto;}
+  68% {cursor: url('../user_interface/images/cursor/default_cursor_17.png') 16 6,auto;}
+  72% {cursor: url('../user_interface/images/cursor/default_cursor_18.png') 16 6,auto;}
+  76% {cursor: url('../user_interface/images/cursor/default_cursor_19.png') 16 6,auto;}
+  80% {cursor: url('../user_interface/images/cursor/default_cursor_19.png') 16 6,auto;}
+  83% {cursor: url('../user_interface/images/cursor/default_cursor_fade_01.png') 16 6,auto;}
+  86% {cursor: url('../user_interface/images/cursor/default_cursor_fade_02.png') 16 6,auto;}
+  89% {cursor: url('../user_interface/images/cursor/default_cursor_fade_03.png') 16 6,auto;}
+  92% {cursor: url('../user_interface/images/cursor/default_cursor_fade_04.png') 16 6,auto;}
+  95% {cursor: url('../user_interface/images/cursor/default_cursor_fade_05.png') 16 6,auto;}
+  98% {cursor: url('../user_interface/images/cursor/default_cursor_fade_06.png') 16 6,auto;}
+  100% {cursor: url('../user_interface/images/cursor/default_cursor_fade_07.png') 16 6,auto;}
+}
