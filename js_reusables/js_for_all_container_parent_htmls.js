@@ -65,7 +65,6 @@ window.addEventListener('load', function(){
       // Probably must do addEventListener load for iframe before hiding MAIN
       // NOTE: 8K is 7680x4320  »  8000px should be enough for any display
       document.getElementsByTagName('MAIN')[0].style.left = "8000px"; // Hide the "Choose the language you want to learn" screen
-      hideNotificationInstallationButton();
     }
 
     //
@@ -221,22 +220,10 @@ function letTheIFrameTeachEnglish(){ //See index.html to find the button that tr
   openFirstLesson();
 }
 
-function hideNotificationInstallationButton() {
-  const main = document.getElementsByTagName('MAIN')[0];
-  const footer = document.getElementsByTagName('FOOTER')[0];
-  if (main.contains(footer)) {
-    // console.log("Ok this happens"); // Tested and yes it fires
-    if (deviceDetector.isMobile) {
-      //footer.classList.add("???");
-    } else {
-      //footer.classList.add("???");
-    }
-  }
-}
 
 /*___________Navigate to first lesson_____________*/
 function openFirstLesson() {
-  hideNotificationInstallationButton();
+  hideNotificationInstallationButton(); // js_for_pwa
   // Save language choice
   localStorage.theLanguageUserWasLearningLastTimeToSetFilePaths = theLanguageUserIsLearningNowToSetFilePaths;
   localStorage.theLanguageUserWasLearningLastTimeToSetAnnyang = theLanguageUserIsLearningNowToSetAnnyang;
