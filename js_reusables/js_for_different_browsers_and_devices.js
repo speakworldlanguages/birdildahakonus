@@ -241,7 +241,8 @@ function testAnnyang() {
       // So start doing nothing with the 2nd visit and forever.
     } else {
       // Make the “allow microphone” box appear for users who have arrived for the first time by a quick TURN ON AND THEN OFF thing.
-      allowMicrophoneBlinker.classList.add("letYouMustAllowMicrophoneDialogAppear");
+      const httpORhttps = window.location.protocol;
+      if (httpORhttps == "https") {        allowMicrophoneBlinker.classList.add("letYouMustAllowMicrophoneDialogAppear");      } // prevent when testing on http://localhost
       setTimeout(function () {
         annyang.start();
         localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed = "yes"; // Actually any string value makes it return true but the keyword “true” does not.

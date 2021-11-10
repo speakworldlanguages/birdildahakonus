@@ -279,7 +279,7 @@ window.addEventListener("load",function () {
   hoverSound = new Howl({  src: ['user_interface/sounds/illuminant_button_hover.'+audioFileExtension]  }); // DESKTOP ONLY!
   clickSound = new Howl({  src: ['user_interface/sounds/illuminant_button_click.'+audioFileExtension]  });
 },{once:true})
-
+/* BUTTON - Kishi Language, Hito Lanuage, Ren Language */
 let allParentButtonElementsAreInThisArray = document.getElementsByTagName("BUTTON"); /*All of them in container parents,,, NOT THE IFRAMED LESSON BUTTONS*/
 let i;
 for (i = 0; i < allParentButtonElementsAreInThisArray.length; i++)
@@ -288,10 +288,10 @@ for (i = 0; i < allParentButtonElementsAreInThisArray.length; i++)
     allParentButtonElementsAreInThisArray[i].addEventListener("mouseenter", mouseEnterMenuButtonF);
     allParentButtonElementsAreInThisArray[i].addEventListener("mousedown", mouseDownMenuButtonF);
   } else {
-    allParentButtonElementsAreInThisArray[i].addEventListener("touchstart", mouseDownMenuButtonF);
+    allParentButtonElementsAreInThisArray[i].addEventListener("touchend", mouseDownMenuButtonF); // Not touchstart because it may have to be scrollable
   }
 }
-
+/* ASIDE - I will consider joining */
 let allParentAsideElementsAreInThisArray = document.getElementsByTagName("ASIDE"); /*All of them in container parents,,, NOT THE IFRAMED LESSON BUTTONS*/
 let j;
 for (j = 0; j < allParentAsideElementsAreInThisArray.length; j++)

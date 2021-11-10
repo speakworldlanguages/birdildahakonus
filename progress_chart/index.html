@@ -7,15 +7,14 @@
     <meta name="robots" content="noindex" />
 
     <link rel="stylesheet" href="../css_reusables/css_for_permanent_custom_cursor.css">
-    <!-- Let's try to avoid the border box rule and use default browser margin padding by not including css_for_every_single_html.css AND SEE WHAT HAPPENS-->
-    <!-- In this case we must copy things FROM css_for_all_container_parent_htmls TO progress.css -->
-    <!-- <link rel="stylesheet" href="../css_reusables/css_for_every_single_html.css"> -->
+    <link rel="stylesheet" href="../css_reusables/css_for_every_single_html.css">
     <link rel="stylesheet" href="../css_reusables/css_for_all_iframed_lesson_htmls.css">
     <link rel="stylesheet" href="../css_reusables/css_for_new_vocabulary_with_photos.css">
     <link rel="stylesheet" href="progress.css">
     <link rel="stylesheet" href="bilinguals.css">
 
     <script defer src="../js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, fonts, fetch headers, onePixelTransparentGif...*/</script>
+    
     <!-- Avoid including js_for_all_iframed_lesson_htmls -->
     <script defer src="progress.js">/*Handle things*/</script>
     <script defer src="get_ui_texts.js">/*Handle things*/</script>
@@ -26,9 +25,10 @@
     <main> <!-- See css_for_all_iframed_lesson_htmls.css -->
       <div class="allUnitsInALevelContainer">
         <div class="allLessonsInAUnitContainer">
-          <nav class="oneParticularLesson" id="1_1_1"><img src="bread.webp" class="eachWebp"></nav>
-          <nav class="oneParticularLesson" id="1_1_2"><img src="water.webp" class="eachWebp"></nav>
-          <nav class="oneParticularLesson" id="1_1_3"><img src="givemewater.webp" class="eachWebp"></nav>
+          <nav class="oneParticularLesson" id="1_1_1"><img alt="1-1-1" src="bread.webp" class="eachWebp"></nav>
+          <nav class="oneParticularLesson" id="1_1_2"><img alt="1-1-2" src="water.webp" class="eachWebp"></nav>
+          <nav class="oneParticularLesson" id="1_1_3"><img alt="1-1-3" src="givemewater.webp" class="eachWebp"></nav>
+          <nav class="oneParticularLesson" id="1_1_4"><img alt="1-1-4" src="" class="eachWebp"></nav>
         </div>
       </div>
     </main>
@@ -41,64 +41,17 @@
     <div class="bilinguals rightHalf" style=""> <!-- This will be filled by fetch -->
       <p id="rightText1pID">... <span style="white-space: nowrap;">...</span> <span style="white-space: nowrap;">...</span></p>
     </div>
-    <!-- <p>It is the language in which people as human beings are called Hito | 八島語の日本語の学習</p> -->
-    <!-- <p style="color:#496c81;">Learn another language | ほかの言語を学ぶ</p> -->
 
     <!-- FEATURE FOR THE FUTURE: Encode and download everything in localStorage -->
     <div class="" style=""> <!-- This will be hidden under main unless position:fixed; z-index:2; -->
       <!-- <button>Save my progress to file?</button> -->
+      <!-- memoryCard -->
+      <!-- theLanguageUserWasLearningLastTimeToSetFilePaths -->
+      <!-- theLanguageUserWasLearningLastTimeToSetAnnyang -->
+      <!-- genderOfUserSavedToLocalStorage -->
+      <!-- theUserSaidHeOrSheIsAMemberOfTheCrowd -->
+      <!-- check if there are any other such data ALSO SEE https://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser -->
     </div>
-    <!-- memoryCard -->
-    <!-- theLanguageUserWasLearningLastTimeToSetFilePaths -->
-    <!-- theLanguageUserWasLearningLastTimeToSetAnnyang -->
-    <!-- genderOfUserSavedToLocalStorage -->
-    <!-- theUserSaidHeOrSheIsAMemberOfTheCrowd -->
-    <!-- check if there are any other such data ALSO SEE https://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser -->
 
-    <!-- THESE ARE COPIED FROM PARENT LEVEL - NOT COMPATIBLE AS IT IS WITH iFRAME LEVEL -->
-    <!-- <div id="idOfTheWelcomeToProgressDiv" style="position: fixed; top:0; left:0; bottom:0; right:0; background-color: rgba(255, 255, 255, 0.5); display: flex; justify-content: center; align-items: center; z-index: 9997;"> -->
-      <!-- <div class="promptBoxInParent"> -->
-        <!-- <p class="getSmallOnPhones">You can track your progress here  Burada nereye geldiğini görebilirsin  SusumiÇizudesu</p> -->
-        <!-- <div style="width:10px;height:10px;">                  </div> -->
-        <!-- Empty little box to adjust the line height -->
-        <!-- <aside onclick="okButtonIsClickedOnProgressChartWelcome()">Got it  Anladım  Wakarimashita</aside> -->
-        <!-- See js_for_all_container_parent_htmls.js -->
-      <!-- </div> -->
-    <!-- </div> -->
-
-    <!-- <div id="idOfTheProgressIsLoadedDiv" style="position: fixed; top:0; left:0; bottom:0; right:0; background-color: rgba(255, 255, 255, 0.5); display: flex; justify-content: center; align-items: center; z-index: 9997;"> -->
-      <!-- <div class="promptBoxInParent"> -->
-        <!-- <p class="getSmallOnPhones">Autosaved progress has been loaded  Kaldığın yerden devam  前回の様子をロード</p> -->
-        <!-- <div style="width:10px;height:10px;">                  </div> -->
-        <!-- Empty little box to adjust the line height -->
-        <!-- <aside onclick="okButtonIsClickedOnProgressChartLoaded()">OK  Tamam  はい</aside> -->
-        <!-- See js_for_all_container_parent_htmls.js -->
-      <!-- </div> -->
-    <!-- </div> -->
-
-    <script>
-    /*
-    const firstTimeMsg = document.getElementById('idOfTheWelcomeToProgressDiv');
-    const progressIsLoadedMsg = document.getElementById('idOfTheProgressIsLoadedDiv');
-    if (localStorage.usersHasViewedTheProgressChartBefore) {
-      firstTimeMsg.parentNode.removeChild(firstTimeMsg); // Show [Progress Is Loaded Div]
-      //
-    } else {
-      progressIsLoadedMsg.parentNode.removeChild(progressIsLoadedMsg); // Show [Welcome To Progress Chart Div]
-      localStorage.usersHasViewedTheProgressChartBefore = "yes";
-      //
-    }
-
-    //sessionStorage iframehasbeenloaded
-    function okButtonIsClickedOnProgressChartWelcome() {
-      firstTimeMsg.parentNode.removeChild(firstTimeMsg); // Close the box
-      // classList.add("");
-    }
-    function okButtonIsClickedOnProgressChartLoaded() {
-      progressIsLoadedMsg.parentNode.removeChild(progressIsLoadedMsg); // Close the box
-      // classList.add("");
-    }
-    */
-    </script>
   </body>
 </html>

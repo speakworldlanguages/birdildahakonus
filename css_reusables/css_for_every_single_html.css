@@ -14,6 +14,7 @@ body{
   -moz-user-select: none;      /* Old versions of Firefox */
   -ms-user-select: none;       /* Internet Explorer/Edge */
   user-select: none;           /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  /**/
   text-align: center; /*Necessary! Flexboxes center the containers and not the text itself.*/ /*Divs seem to inherit this automatically. Must handle if some element doesn't inherit this rule automatically.*/
   /* Also see css_for_custom_cursor.css */
 }
