@@ -150,5 +150,11 @@ function whetherTheAppIsRunningStandaloneF() {
 /* MDN says, appinstalled is deprecated and according to support table it fires only on Chrome and Edge */
 /* Maybe we can use appinstalled to fix mobile chrome's [not switching to standalone app automatically when download completes] thing */
 if (deviceDetector.isMobile) {
-  window.addEventListener("appinstalled",(evt)=>{  window.location.reload();  }); // Force switch to standalone mode for Android
+  // appinstalled doesn't fire after download is completed. It fires immediately when user clicks [Install]
+  // there is no way to detect when exactly installation finishes
+  // the only option left is a guesstimation of how long it would take to download 400kb~500kb and add it to the home screen
+  window.addEventListener("appinstalled",(evt)=>{  whenAppinstalledFires();  }); // Force switch to standalone mode for Android
+  function whenAppinstalledFires() {
+    setTimeout(function () {  window.location.reload();  },15000); // Try to refresh about 15 seconds after [Install] is clicked.
+  }
 }
