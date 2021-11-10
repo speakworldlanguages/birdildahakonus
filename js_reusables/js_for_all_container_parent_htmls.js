@@ -223,7 +223,7 @@ function letTheIFrameTeachEnglish(){ //See index.html to find the button that tr
 
 /*___________Navigate to first lesson_____________*/
 function openFirstLesson() {
-  hideNotificationInstallationButton(); // js_for_pwa
+  hideNotificationInstallationButton(); // See js_for_pwa
   // Save language choice
   localStorage.theLanguageUserWasLearningLastTimeToSetFilePaths = theLanguageUserIsLearningNowToSetFilePaths;
   localStorage.theLanguageUserWasLearningLastTimeToSetAnnyang = theLanguageUserIsLearningNowToSetAnnyang;

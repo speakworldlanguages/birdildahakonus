@@ -22,10 +22,10 @@ function handleDesktopTabletPhoneETC() {
     containerFooter.parentNode.removeChild(containerFooter);
   }
 
-  if ('Notification' in window) { canShowNotification = true; } else {
-    allowNotificationButton.parentNode.removeChild(allowNotificationButton);
-    // As of 2021 all browsers that support beforeinstallprompt also support Notification
-  }
+  if ('Notification' in window) { canShowNotification = true; }
+  else {  allowNotificationButton.parentNode.removeChild(allowNotificationButton);  }
+  // As of 2021 all browsers that support beforeinstallprompt also support Notification
+
   /**/
 }
 

@@ -30,24 +30,24 @@
     100%{transform: scale(0.9); /*font-size:300%; letter-spacing: 1vmin;*/}
       }
       .latinTextFont{font-family:'Kanit';} /*REMOVE THIS IF User Interface is in non-Latin like Kanji etc*/
-      .nudgeDesktop{padding-bottom: 100px;}
-      .nudgeMobile{padding-top: 15vh;}
+      /* .nudgeDesktop{padding-bottom: 100px;} */
+      /* .nudgeMobile{padding-top: 15vh;} */
     </style>
     <script>
       window.addEventListener('DOMContentLoaded', function(){
-        const main = document.getElementById('thisContainsEverything');
+        /*const main = document.getElementById('thisContainsEverything');
         if (deviceDetector.isMobile) {
-          main.classList.add("nudgeMobile");
+          // main.classList.add("nudgeMobile");
         } else {
-          main.classList.add("nudgeDesktop");
+          // main.classList.add("nudgeDesktop");
         }
 
         const notificationButtonInParent = window.parent.document.getElementsByTagName('FOOTER')[0];
         if (deviceDetector.isMobile) {
-          //notificationButtonInParent.classList.add("???"); /*The style rules must exist in the parent; NOT IN iFRAME*/
+          // notificationButtonInParent.classList.add("???"); // The style rules must exist in the parent; NOT IN iFRAME
         } else {
-          //notificationButtonInParent.classList.add("???"); /*The style rules must exist in the parent; NOT IN iFRAME*/
-        }
+          // notificationButtonInParent.classList.add("???"); // The style rules must exist in the parent; NOT IN iFRAME
+        }*/
         /**/
         if (userInterfaceLanguage=="ja") {
           document.getElementById('messageAfterTheLastLessonP').classList.remove("latinTextFont");

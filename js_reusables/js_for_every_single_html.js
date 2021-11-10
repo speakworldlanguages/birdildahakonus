@@ -37,7 +37,7 @@ var needLatinFonts = false;
 var needHitoicJapaneseFonts = false;
 
 // BEST PRACTICE: Check if browser language and IP-geolocation match. Ask the user which language he/she wants for the GUI if the location and language is different.
-switch (browserLanguage) {
+switch (browserLanguage) { // Maybe window.location.hostname is better .. Do that after getting unique domain names for each clone .. use search() to make sure it works both with and without www
   case "ja":
     userInterfaceLanguage = "ja";
     userReadsLeftToRightOrRightToLeft = "ltr";
