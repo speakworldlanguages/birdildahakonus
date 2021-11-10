@@ -40,7 +40,7 @@ if (deviceDetector.isMobile) {
     rightText1.parentNode.addEventListener("touchstart",eitherTouch2F,{once:true});
   }
   function eitherTouch2F() {
-    goToLanguageSelection();
+    goBackToFirstScreenLanguageSelection();
   }
 } else {
   /*DESKTOPS*/
@@ -59,11 +59,11 @@ if (deviceDetector.isMobile) {
   leftText1.parentNode.addEventListener("mousedown",eitherClickF,{once:true});
   rightText1.parentNode.addEventListener("mousedown",eitherClickF,{once:true});
   function eitherClickF() {
-    goToLanguageSelection();
+    goBackToFirstScreenLanguageSelection();
   }
 }
 
-function goToLanguageSelection() {
+function goBackToFirstScreenLanguageSelection() {
   /* Remove PAUSE THE HOME ceramic nav button */
   if (parent.containerDivOfTheNavigationMenu.contains(parent.clickToGoToMainMenuDiv)) { // Don't break the app
     parent.containerDivOfTheNavigationMenu.removeChild(parent.clickToGoToMainMenuDiv); // TESTED: It works. ,,, also see we_are_working_for_new_levels
@@ -71,9 +71,9 @@ function goToLanguageSelection() {
   alert(sleepAdviceA+"\n\n"+sleepAdviceB);
   parent.ayFreym.classList.add("everyThingFadesToBlack"); // 700ms this css class must exist at parent level » NOT in this document's css
   setTimeout(function() {
-    parent.ayFreym.classList.remove("everyThingFadesToBlack");
+    parent.ayFreym.classList.remove("everyThingFadesToBlack"); // Just this once do it without a fade in; a jump in with remove() will be enough or is even better?
     //No effect??? parent.ayFreym.classList.add("everyThingComesFromBlack"); // How do we remove this?? Or do we need to??
     parent.ayFreym.src = '../user_interface/blank.html';
     parent.document.getElementsByTagName('MAIN')[0].style.left = "0px"; // Was hidden with 8000px
-  },701);
+  },1000); // 701 was enough???
 }

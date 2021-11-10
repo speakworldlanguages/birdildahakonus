@@ -172,9 +172,9 @@ footer:active{  transform: translateX(-50%) scale(0.98); }
 /* Home button loads the progress chart into the iFrame */
 /* REMEMBER: There must be duplicates of these in progress.css*/
 .everyThingFadesToBlack{animation-name: toBlack; animation-duration: 0.7s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;}
-@keyframes toBlack {    0%{ filter: brightness(1);} 100%{ filter: brightness(0);}  }
+@keyframes toBlack {    0%{ filter: brightness(1);} 100%{ filter: brightness(0.05);}  }
 .everyThingComesFromBlack{animation-name: fromBlack; animation-duration: 0.7s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;}
-@keyframes fromBlack {  0%{ filter: brightness(0);} 100%{ filter: brightness(1);}  }
+@keyframes fromBlack {  0%{ filter: brightness(0.05);} 100%{ filter: brightness(1);}  }
 /* When user clicks HOME button while already viewing progress chart */
 .flashBordersWithInsetWhiteBoxShadow{
   position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; pointer-events: none;

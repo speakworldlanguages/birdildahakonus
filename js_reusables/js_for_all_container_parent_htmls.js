@@ -1,6 +1,7 @@
 ﻿// This is deferred.
 // Redirection based on browser language is handled with inline script in index.html which should fire before anything here.
-var wasViewingProgressChart = false; // See js_for_all_iframed_lesson_htmls AND progress.js
+// var isOrWasViewingProgressChart = false; // DEPRECATED? See js_for_all_iframed_lesson_htmls AND progress.js
+
 /*Prevent screen turn off on mobiles*/
 const preventSleepModeOrScreenTurnOffWithFakeVideo = document.createElement("VIDEO");
 document.body.appendChild(preventSleepModeOrScreenTurnOffWithFakeVideo); // TESTED: It works

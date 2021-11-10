@@ -1,20 +1,22 @@
 // CAREFUL! DEFER or NOT DEFER
+// Is iFrameLoadHasHappenedThisManyTimes TOTALLY USELESS???
 if (sessionStorage.iFrameLoadHasHappenedThisManyTimes) {  sessionStorage.iFrameLoadHasHappenedThisManyTimes = Number(sessionStorage.iFrameLoadHasHappenedThisManyTimes) + 1;  }
 else {  sessionStorage.iFrameLoadHasHappenedThisManyTimes = 1;  } // CAN: Use modulus to repeat things every two or three times.
 var thisLessonHasBeenLoadedFresh = true; // Access this from js_for_the_sliding_navigation_menu to switch the function of the goBackOrRefreshButton
 
 /**/
 window.onload = function() { // DANGER: Do not use window.onload anywhere else. Use addEventListener "load" instead in order to avoid overwriting.
-  // console.log(parent.ayFreym.src); // November2021: Can't detect progress_chart because progress_chart/index.html doesn't load js_for_all_iframed_lesson_htmls -> CHANGE???
 
-  /* Handle Fade To&From Black Screen */
-  if (parent.wasViewingProgressChart) {
-    // fade from black
-    parent.ayFreym.classList.remove("everyThingFadesToBlack"); // Was added by progress.js » 700ms » this css class must exist at parent level » NOT in this document's css » See css_for_all_container_parent_htmls
-    parent.ayFreym.classList.add("everyThingComesFromBlack"); // See css_for_all_container_parent_htmls
-    setTimeout(function () { parent.ayFreym.classList.remove("everyThingComesFromBlack"); },701);
-    parent.wasViewingProgressChart = false; // See js_for_all_container_parent_htmls.js AND progress.js
-  } else {  } // Natural progress from one lesson to the next
+  // progress_chart
+  const whereAreWe = window.location.pathname;
+  if (whereAreWe.search("progress_chart") != -1) { // This means we have landed on the progress_chart
+    // Bring the installation&notification-subscription button (footer in parent)
+    parent.revealNotificationInstallationButton();
+  } else { // We have landed on a lesson or a special page
+    // Hide the installation&notification-subscription button (footer in parent)
+    parent.hideNotificationInstallationButton();
+  } // Progress from one lesson to the next with the rotating-globe-preloader of parent
+
   /* Handle NAV MENU - HOME OF PROGRESS ceramic button */
   if (!parent.containerDivOfTheNavigationMenu.contains(parent.clickToGoToMainMenuDiv)) { // If never existed in the beginning or could it be removed???
     parent.containerDivOfTheNavigationMenu.insertBefore(parent.clickToGoToMainMenuDiv,parent.clickToFinanceDiv); // TESTED: Looks like it’s working.
@@ -23,6 +25,7 @@ window.onload = function() { // DANGER: Do not use window.onload anywhere else. 
   if (!parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { // Could be removed by progress.js or never existed in the beginning
     parent.containerDivOfTheNavigationMenu.insertBefore(parent.clickToPauseTheAppDiv,parent.clickToFinanceDiv); // TESTED: Looks like it’s working.
   }
+
   // Hide the preloader whenever a new lesson is ready to be shown through the iFrame
   parent.preloadHandlingDiv.classList.remove("addThisClassToRevealThePreloader"); // See css_for_every_single_html
   parent.preloadHandlingDiv.classList.add("addThisClassToHideThePreloader"); // See css_for_every_single_html
@@ -55,17 +58,16 @@ if (parent.thisIsTheParentWhichContainsAllIFramedLessons == "yes") {
 } else {
   // Someone is trying to access this lesson with a direct link. Must put it inside its parent html.
   alert("Redirecting to main...")
-
-  // AVOID: Do not use reference to root with "/" as it could be uncertain what the root is in case of deep-iframing for domain masking.
+  // CONSIDER: Discontinue using reference to the root with "/" in case deep-iframing or domain masking causes a navigation problem.
   window.open("/","_top"); // Has been tested. It works.
-  // WELL: If one tries to open "https://myproject.github.io/forbidden/folder/index.html" this will force it to open "https://myproject.github.io/index.html"
+  // RESULT: If one tries to open "https://myproject.github.io/forbidden/folder/index.html" this will force it to open "https://myproject.github.io/index.html"
 }
 
 // HANDLE PAGE UNLOAD IF THE BROWSER'S “BACK” BUTTON IS USED
 // WARNING: onbeforeunload doesn't fire when src of the iframe changes nor does hashchange on mobile chrome
 window.onbeforeunload = function() {
   // PROBLEM: When user makes progress and then clicks the browser's REFRESH button and then clicks the browser's BACK button the last lesson starts playing hidden behind the main menu.
-  // console.log("iframe onbeforeunload has been fired -> js_for_all_iframed..."); // TESTED: It works on desktop Chrome // Why does this not show in eruda
+  // console.log("iframe onbeforeunload has been fired -> js_for_all_iframed..."); // TESTED: It works on desktop Chrome // Why does this not show in eruda // LATER: because eruda must be a frame-level-eruda not parent-level-eruda
   // Turn OFF annyang if it was ON
   if (parent.annyang) { // DO NOT OMIT! Firefox and other no-speech browsers need this "if (parent.annyang)" to let the app work without Web Speech API.
     if (parent.annyang.isListening()) {

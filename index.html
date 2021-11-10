@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="css_reusables/css_for_all_container_parent_htmls.css">
     <link rel="stylesheet" href="css_reusables/css_for_sliding_navigation_menu.css">
     <link rel="stylesheet" href="css_reusables/css_for_latin_font_rules.css">
+    <link rel="stylesheet" href="css_reusables/css_loading_animation_orbiting_circles.css">
 
     <script src="third_party_js/annyang.min.js">/*Speech Recognition library by Tal Ater - Github: TalAter*/</script>
     <script src="third_party_js/ua-parser.min.js">/*JS library for getting the browser and OS names by Faisal Salman - Github: faisalman*/</script>
@@ -74,6 +75,12 @@
       <!-- The content of this div is changed via script. See js_for_preload_handling.js -->
       <!-- The style is left inline as a safe measure against slow network etc. See css_for_every_single_html.css-->
       <img id="globeFrameZeroImgID" src="user_interface/images/rotating_globe_100x150_frame0.webp" alt="Geliyor...">
+    </div>
+
+    <div id="orbitingCirclesDivID" class="orbitingCirclesTopContainer" style="display:none;">
+      <div class="loadingio-spinner-interwind-f4cl6mjzf0h"><div class="ldio-d52i6xebzgm">
+      <div><div><div><div></div></div></div><div><div><div></div></div></div></div>
+      </div></div>
     </div>
 
     <div data-nosnippet id="allowMicrophoneDivID" class="youMustAllowMicrophone">
@@ -147,19 +154,9 @@
     <iframe src="user_interface/blank.html" id="theIdOfTheIframe" allowfullscreen></iframe>
     <!--  -->
 
-    <!-- REDIRECT AND SET GUI LANGUAGE ACCORDING TO THE BROWSER LANGUAGE -->
     <script>
       // See js_for_every_single_html.js to find UI language settings.
-      // Wait for DOMContentLoaded to be able to use the “browserLanguage” variable from the js file.
-      window.addEventListener('DOMContentLoaded', function(){
-        // THIS IS NOT NECESSARY! - Yanlışlıkla Türkçe sayfa başlığına tıkladığı halde aslında başka sayfaya gitmesi gereken birileri olmadıkça
-        /*switch (browserLanguage) {
-          case "tr": break; // For TR stay here in the tr_clone of the app
-          //case "??": window.open("https://???", "_top"); break; // For ??
-          default: window.open("https://speakworldlanguages.app", "_top"); // Go to the main repository page (English GUI)
-        }*/
-      }, { once: true });
-      // We don't want to complicate the GUI by adding a button to change the language of the interface.
+      //window.addEventListener('DOMContentLoaded', function(){      }, { once: true }); // In case it becomes necessary
     </script>
     <!-- Firebase -->
     <script type="module" src="notify_tr.js"></script>

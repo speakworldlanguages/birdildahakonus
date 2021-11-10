@@ -45,3 +45,18 @@ window.addEventListener("load",function() { // Parents ONLY! Will fire 1 time wh
 }, { once: true });
 
 // See js_for_all_iframed_lesson_htmls
+
+function handleFadingAndNavigation(srcPath) {
+  ayFreym.classList.add("everyThingFadesToBlack");
+  const orbitingCircles =  document.getElementById('orbitingCirclesDivID');
+  setTimeout(function () {   orbitingCircles.style.display = "flex";   },701);
+  setTimeout(function() {
+    ayFreym.addEventListener('load',frameIsLoadedByProgressChartNav,{ once: true });
+    setTimeout(function() {   ayFreym.src = srcPath;  },100);
+    function frameIsLoadedByProgressChartNav() {
+      orbitingCircles.style.display = "none";
+      ayFreym.classList.remove("everyThingFadesToBlack");  ayFreym.classList.add("everyThingComesFromBlack");
+      setTimeout(function() {   ayFreym.classList.remove("everyThingComesFromBlack");   },2701); // 701ms was not enough???
+    }
+  },750);
+}

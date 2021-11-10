@@ -592,21 +592,24 @@ window.addEventListener("load",function() {
   }
 
 
-  function goToMainMenuFunction() {
+  function goToMainMenuFunction() { // Actually to progress chart; not the starting screen // See progress.js and js_for_preload_handling.js for other fade-navigation handling
     navMenuClickSound.play();
     let searchAndDetectLocation = ayFreym.src;
     let result = searchAndDetectLocation.search("progress_chart");
-    if (result < 0) { // iFrame was not showing the progress_chart
+    if (result < 0) { // iFrame was showing a lesson or the goodbye screen; it was not showing the progress_chart
       // fade
       ayFreym.classList.add("everyThingFadesToBlack"); // Should take 700ms // Exists in css_for_all_container_parent_htmls
+      const orbitingCircles = document.getElementById('orbitingCirclesDivID');
+      setTimeout(function () {   orbitingCircles.style.display = "flex";   },701);
       setTimeout(function() {
-        ayFreym.src = "progress_chart";
         ayFreym.addEventListener('load',frameIsLoadedByHomeButton,{ once: true });
+        setTimeout(function() {  ayFreym.src = "progress_chart";  },100);
         function frameIsLoadedByHomeButton() {
+          orbitingCircles.style.display = "none";
           ayFreym.classList.remove("everyThingFadesToBlack"); ayFreym.classList.add("everyThingComesFromBlack");
-          setTimeout(function() {  ayFreym.classList.remove("everyThingComesFromBlack");  },701);
+          setTimeout(function() {  ayFreym.classList.remove("everyThingComesFromBlack");  },2701); // 701ms was not enough???
         }
-      },701);
+      },750); // 701ms was not enough???
     } else { // Already viewing the progress chart
       // 3 times quick flash white inset box shadow
       const flashingDiv = document.createElement("DIV"); flashingDiv.classList.add("flashBordersWithInsetWhiteBoxShadow");

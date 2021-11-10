@@ -42,9 +42,11 @@ function revealNotificationInstallationButton() {
 }
 
 function hideNotificationInstallationButton() {
+  //alert("work????");
   const main = document.getElementsByTagName('MAIN')[0];
   const footer = document.getElementsByTagName('FOOTER')[0];
   if (main.contains(footer)) {
+    //alert("work?");
     if (deviceDetector.isMobile) {
       footer.classList.remove("footerSlideAppearMobile");
     } else {
