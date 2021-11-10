@@ -69,32 +69,45 @@ aside:focus {outline:0;} /*BUTTON: I will consider joining the crowdfunding*/
 main{ /*This used to be #fullViewportPositionFixedDivAsContainerOfTheMenu */
   /*May create a new div inside this div with display:grid; to contain all the buttons. In fact, something like a fancy interactible world map would be cooler.*/
   position: fixed;
-  top:0;        left:0; /*The "left" value is to be changed via script to hide this div. See js_reusables/js_for_all_container_parent_htmls.js*/
-  bottom:0;        right:0; /*Change to 100vw 100vh if any problem occurs*/
-  /* width: 100%;
-  height: 100%; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  top:0; left:0; /*The "left" value is to be changed via script to hide this div. See js_reusables/js_for_all_container_parent_htmls.js*/
+  /*bottom:0; right:0;*/ /*Change to 100vw 100vh if any problem occurs*/
+  width:100vw; height: 100vh; /*Didn't observe a problem but this way feels safer*/
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
   z-index: 999; /* Preloader is 9999 */
   background-image: linear-gradient(#becbd5, #dbe2e8);
-  flex-direction: column;
   line-height: 2rem; /*Is set to zero by default. See css_for_every_single_html*/
   /* mix-blend-mode: normal; */
   overflow: hidden;
+  /* border: 2px dotted black; */
 }
 
 header{ /*Choose the language you want to learn*/
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-left: 15px;
-  padding-right: 15px;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding-left: 15px; padding-right: 15px;
+  /* border: 2px dotted red; */
+  font-size: 27px;
 }
 
-.lowerHalfDiv{
-  display: flex;
+.chooseLanguageButtonsContainer{
+  background-color: rgba(77, 96, 111, 0.1);
+  border-radius: 8px;
+  /* display: grid; */
+  width: 90vw;
+  /* border: 2px dotted green; */
+  overflow-x: hidden; overflow-y: auto;
+}
+@media screen and (orientation:portrait){
+header{margin-top:-10vmin;}
+button{min-width: 60vmin;}
+.chooseLanguageButtonsContainer{height: 70vmin;/*width: 100%; height: 80%; flex-direction: column; justify-content: flex-start;  align-items: center;*/ }
+  .theSmallNavigationMenuMOBILEStyling img{margin-left: 1vmin;  margin-right: 1vmin;}
+}
+
+@media screen and (orientation:landscape){
+header{margin-top:-5vmin;}
+button{min-width: 45vmin;}
+.chooseLanguageButtonsContainer{height: 50vmin;/*width: 100%; height: 60%; flex-direction: row-reverse;  justify-content: center;  align-items: flex-start; flex-wrap: wrap;*/}
+  .theSmallNavigationMenuMOBILEStyling img{margin-left: 5vmin;  margin-right: 5vmin;}
 }
 
 footer{ /* Contains INSTALL THE APP - GET NOTIFICATIONS button */
@@ -111,7 +124,7 @@ footer:hover{   transform: translateX(-50%) scale(1.02); }
 footer:active{  transform: translateX(-50%) scale(0.98); }
 .footerGetLost{ transform: translateX(-50%) scale(0.0001); opacity: 0; }
 .footerSlideAppearDesktop{margin-top:-19.7vh;}
-.footerSlideAppearMobile{margin-top:21px;}
+.footerSlideAppearMobile{margin-top:100px;}
 /* .footerSlideUpMobile{margin-top:-100vmin;}  */ /*WE ARE WORKING!!!*/
 /* .footerSlideUpDesktop{margin-top:0vmin;} */
 
@@ -120,26 +133,12 @@ footer:active{  transform: translateX(-50%) scale(0.98); }
 .footerDesktop img{ height: 100px; }
 .footerDesktop p{ text-shadow: none; min-width: 150px; }
 
-.footerTabletAndPhone{ top:-80px; }
-.footerTabletAndPhone div{ display: flex; align-items: center; justify-content: center; max-width:90vmin; height: 80px; }
-.footerTabletAndPhone img{ height: 80px; }
+.footerTabletAndPhone{ top:-110px; }
+.footerTabletAndPhone div{ display: flex; align-items: center; justify-content: center; max-width:90vmin; height: 90px; }
+.footerTabletAndPhone img{ height: 70px; }
 .footerTabletAndPhone p{ text-shadow: none; min-width: 190px; line-height: 23px; }
 
-
-@media screen and (orientation:portrait){
-  button{min-width: 62vmin;}
-  .upperHalfDiv{width: 100%; height: 20%;}
-  .lowerHalfDiv{width: 100%; height: 80%; flex-direction: column; justify-content: flex-start;  align-items: center; }
-  .theSmallNavigationMenuMOBILEStyling img{margin-left: 1vmin;  margin-right: 1vmin;}
-}
-
-@media screen and (orientation:landscape){
-  button{min-width: 38vmin;}
-  .upperHalfDiv{width: 100%; height: 40%;}
-  .lowerHalfDiv{width: 100%; height: 60%; flex-direction: row-reverse;  justify-content: center;  align-items: flex-start; flex-wrap: wrap;}
-  .theSmallNavigationMenuMOBILEStyling img{margin-left: 5vmin;  margin-right: 5vmin;}
-}
-
+/**/
 .youMustAllowMicrophone{
   z-index: 1000; /*main is 999*/
   position: fixed; min-width:330px; max-width:100vmin; height:80px; top:-100px; left:50vw; transform: translateX(-50%);
