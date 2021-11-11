@@ -1,16 +1,20 @@
 // Dynamic titles are cool!
 window.addEventListener("load",dynamicTitleF,{once:true});
+let stopItWhenStandalone;
+const theParentHtmlTitle = document.title;
 function dynamicTitleF() {
-  const theParentHtmlTitle = document.title;
-  setInterval( function ()
+  stopItWhenStandalone = setInterval( function ()
   {
     if (ayFreym.contentWindow.document.title) {
       document.title = ayFreym.contentWindow.document.title;
     }
-    setTimeout( function ()  {   document.title = theParentHtmlTitle   },3000);
+    setTimeout( function ()  {   document.title = theParentHtmlTitle;   },3000);
   } , 6000);
 }
-
+function fixedTitleWhenStandalone() { // js_for_pwa.js
+  clearInterval(stopItWhenStandalone);
+  document.title = theParentHtmlTitle;
+}
 //Animated favicon
 const iconElement = document.getElementById("icon");
 

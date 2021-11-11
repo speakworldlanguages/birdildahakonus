@@ -117,7 +117,7 @@ const searchResult = checkUrlToSeeLaunchingOrigin.search("installed"); // The se
 
 window.addEventListener("DOMContentLoaded",whetherTheAppIsRunningStandaloneF,{once:true});
 function whetherTheAppIsRunningStandaloneF() {
-  // Either standalone or inside browser tab; first check if notifications are allowed as soon as DOMContentLoaded
+  // Standalone or inside browser tab; either way, first check if notifications are allowed as soon as DOMContentLoaded
   if ("permissions" in navigator) {
     const notificationPermissionPromise = navigator.permissions.query({name:'notifications'});
     notificationPermissionPromise.then(function(result) {
@@ -131,6 +131,8 @@ function whetherTheAppIsRunningStandaloneF() {
   }
 
   if (searchResult != -1) { // The app is running standalone
+    alert("STANDALONE");
+    fixedTitleWhenStandalone(); // See js_for_icon_animation
     /*We don' want any install prompts anymore: Not certain whether this is really necessary but can't be too safe*/
     window.removeEventListener("beforeinstallprompt",turnNotificationIntoInstallation);
     /*We don't need the rotating-globe tab-icon animation*/
@@ -179,8 +181,13 @@ if (deviceDetector.isMobile) {
   // appinstalled doesn't fire after download is completed. It fires immediately when user clicks [Install]
   // there is no way to detect when exactly installation finishes
   // the only option left is a guesstimation of how long it would take to download 400kb~500kb and add it to the home screen
-  window.addEventListener("appinstalled",(evt)=>{  whenAppinstalledFires();  }); // Force switch to standalone mode for Android
-  function whenAppinstalledFires() {
+  window.addEventListener("appinstalled",(evt)=>{  whenAppinstalledFiresOnMobile();  }); // Force switch to standalone mode for Android
+  function whenAppinstalledFiresOnMobile() {
     setTimeout(function () {  window.location.reload();  },15000); // Try to refresh about 15 seconds after [Install] is clicked.
+  }
+} else {
+  window.addEventListener("appinstalled",(evt)=>{  whenAppinstalledFiresOnDesktop();  }); // Force switch to standalone mode for Android
+  function whenAppinstalledFiresOnDesktop() {
+    window.location.reload(); // Try to refresh immediately because DOMContentLoaded must fire to check if app is installed
   }
 }
