@@ -48,7 +48,7 @@ function subscribeUser() {
         insertData();
         // var notification = new Notification('Great', { body: "You will be notified when new lessons are online", icon: "icon_for_pwa_en.png" }); // THIS DOESN'T WORK!
         reg.showNotification('Yeni dersler hazır olunca',
-        { body: "işte bunun gibi bir bildirim alacaksın", badge: "badge_tr.png", icon: "icon_for_pwa_tr.png", image: "notification_image.jpg" });
+        { body: "işte bunun gibi bir bildirim alacaksın", badge: "notification/badge.png", icon: "icon_for_pwa_tr.png", image: "notification/notification_image.jpg" });
 
       }).catch((err) => {
         console.log('An error occurred while retrieving token. ', err);

@@ -1,10 +1,10 @@
 // Either defer or use DOMContentLoaded: DEFERRED
-// parent.isOrWasViewingProgressChart = true; // Deprecated? See js_for_all_container_parent_htmls and js_for_all_iframed_lesson_htmls
+// parent.isOrWasViewingProgressChart = true; // Deprecated - See js_for_all_container_parent_htmls and js_for_all_iframed_lesson_htmls
 
-/* Remove PAUSE THE APP ceramic nav button */
-if (parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { // Don't break the app
-  parent.containerDivOfTheNavigationMenu.removeChild(parent.clickToPauseTheAppDiv); // TESTED: It works. ,,, also see we_are_working_for_new_levels
-}
+/* Deprecated - MOVED THIS TASK TO js_for_all_iframed_lesson_htmls: Remove PAUSE THE APP ceramic nav button */
+// if (parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { // Don't break the app
+//   parent.containerDivOfTheNavigationMenu.removeChild(parent.clickToPauseTheAppDiv); // TESTED: It works. ,,, also see we_are_working_for_new_levels
+// }
 
 const allNavElements = document.getElementsByTagName('NAV');
 const hoverProgress = new parent.Howl({  src: ["user_interface/sounds/progress_chart_hover."+parent.audioFileExtension]  });
@@ -69,6 +69,7 @@ if (deviceDetector.isMobile) {
     window.parent.handleFadingAndNavigation('../lessons_in_iframes/level_1/unit_1/lesson_3/index.html');
   });
 }
+
 /* MOVED THIS TO js_for_preload_handling because load event doesn't fire as src change terminates the script execution
 function handleFadingAndNavigation(srcPath) {
   window.parent.ayFreym.classList.add("everyThingFadesToBlack");

@@ -12,19 +12,24 @@ window.onload = function() { // DANGER: Do not use window.onload anywhere else. 
   if (whereAreWe.search("progress_chart") != -1) { // This means we have landed on the progress_chart
     // Bring the installation&notification-subscription button (footer in parent)
     parent.revealNotificationInstallationButton();
+    /* Handle NAV MENU - Remove PAUSE THE APP ceramic button */
+    if (parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { // Used to be in progress.js
+      parent.containerDivOfTheNavigationMenu.removeChild(parent.clickToPauseTheAppDiv); //
+    }
   } else { // We have landed on a lesson or a special page
     // Hide the installation&notification-subscription button (footer in parent)
     parent.hideNotificationInstallationButton();
+    /* Handle NAV MENU - Add PAUSE THE APP ceramic button */
+    if (!parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { //
+      parent.containerDivOfTheNavigationMenu.insertBefore(parent.clickToPauseTheAppDiv,parent.clickToFinanceDiv); //
+    }
   } // Progress from one lesson to the next with the rotating-globe-preloader of parent
 
   /* Handle NAV MENU - HOME OF PROGRESS ceramic button */
   if (!parent.containerDivOfTheNavigationMenu.contains(parent.clickToGoToMainMenuDiv)) { // If never existed in the beginning or could it be removed???
     parent.containerDivOfTheNavigationMenu.insertBefore(parent.clickToGoToMainMenuDiv,parent.clickToFinanceDiv); // TESTED: Looks like it’s working.
   }
-  /* Handle NAV MENU - PAUSE THE APP ceramic button */
-  if (!parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { // Could be removed by progress.js or never existed in the beginning
-    parent.containerDivOfTheNavigationMenu.insertBefore(parent.clickToPauseTheAppDiv,parent.clickToFinanceDiv); // TESTED: Looks like it’s working.
-  }
+
 
   // Hide the preloader whenever a new lesson is ready to be shown through the iFrame
   parent.preloadHandlingDiv.classList.remove("addThisClassToRevealThePreloader"); // See css_for_every_single_html
