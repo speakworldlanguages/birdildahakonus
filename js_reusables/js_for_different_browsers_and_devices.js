@@ -210,7 +210,7 @@ function checkMicPermission() {
   }
 }
 
-function handleMicPermission() {
+function handleMicPermissionPrompt() {
   if ("permissions" in navigator) {
     function removePleaseAllowDialog() {
       const micPermissionPromise = navigator.permissions.query({name:'microphone'});
@@ -241,12 +241,12 @@ function testAnnyang() {
       // So start doing nothing with the 2nd visit and forever.
     } else {
       // Make the “allow microphone” box appear for users who have arrived for the first time by a quick TURN ON AND THEN OFF thing.
-      const httpORhttps = window.location.protocol;
-      if (httpORhttps == "https") {        allowMicrophoneBlinker.classList.add("letYouMustAllowMicrophoneDialogAppear");      } // prevent when testing on http://localhost
+      const httpORhttps = window.location.protocol.toLowerCase();
+      if (httpORhttps.search("https") >= 0) {        allowMicrophoneBlinker.classList.add("letYouMustAllowMicrophoneDialogAppear");      } // prevent when testing on http://localhost
       setTimeout(function () {
         annyang.start();
         localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed = "yes"; // Actually any string value makes it return true but the keyword “true” does not.
-        handleMicPermission();
+        handleMicPermissionPrompt();
       },1501);
 
       // Thus the device shall not uselessly/purposelessly DING every time main menu is viewed.
