@@ -20,8 +20,11 @@ window.onload = function() { // DANGER: Do not use window.onload anywhere else. 
     // Hide the installation&notification-subscription button (footer in parent)
     parent.hideNotificationInstallationButton();
     /* Handle NAV MENU - Add PAUSE THE APP ceramic button */
-    if (!parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { //
-      parent.containerDivOfTheNavigationMenu.insertBefore(parent.clickToPauseTheAppDiv,parent.clickToFinanceDiv); //
+    setTimeout(afterATinyDelay,100); // So that it won't come before HOME button
+    function afterATinyDelay() {
+      if (!parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { //
+        parent.containerDivOfTheNavigationMenu.insertBefore(parent.clickToPauseTheAppDiv,parent.clickToFinanceDiv); //
+      }
     }
   } // Progress from one lesson to the next with the rotating-globe-preloader of parent
 

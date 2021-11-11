@@ -2,7 +2,7 @@
 const installButton = document.getElementById('footerInstallID');
 const allowNotificationButton = document.getElementById('footerNotificationID'); // Same thing is named clickToSubscribe in notify_**.js
 const containerFooter = document.getElementsByTagName('FOOTER')[0]; // Same thing is named containerOfSubscribe in notify_**.js
-let canShowNotification=false;
+let canAskUserIfHeSheWantsToGetNotifiedAboutNewStuff=false;
 
 window.addEventListener("load",handleDesktopTabletPhoneETC,{once:true});
 function handleDesktopTabletPhoneETC() {
@@ -22,7 +22,7 @@ function handleDesktopTabletPhoneETC() {
     containerFooter.parentNode.removeChild(containerFooter);
   }
 
-  if ('Notification' in window) { canShowNotification = true; }
+  if ('Notification' in window) { canAskUserIfHeSheWantsToGetNotifiedAboutNewStuff = true; }
   else {  allowNotificationButton.parentNode.removeChild(allowNotificationButton);  }
   // As of 2021 all browsers that support beforeinstallprompt also support Notification
 
@@ -80,7 +80,7 @@ function showInstall_PWA_prompt() {
         installButton.children[0].style.display = "none"; installButton.children[1].style.display = "none"; installButton.children[2].style.display = "none"; // Hide whatever image
         installButton.children[3].style.display = "none"; installButton.children[4].style.display = "none"; // Hide whatever text
         if (deviceDetector.device == "desktop") { // Desktop Chrome automatically switches to standalone mode.
-          if (canShowNotification) { // Notification as 2nd step after installation
+          if (canAskUserIfHeSheWantsToGetNotifiedAboutNewStuff) { // Notification as 2nd step after installation
             allowNotificationButton.style.display = "flex"; // revert back to notification // notification click event is handled in notify_**.js
             installButton.style.display = "none";
           } else { // Unreal scenario: INSTALLATION WAS POSSIBLE BUT NOTIFICATION ISN'T // We don't know what will happen with Apple
@@ -98,7 +98,7 @@ function showInstall_PWA_prompt() {
         // BUT WAIT: App can also be installed without beforeinstallprompt
 
       } else { // Install-prompt was rejected or dismissed
-        if (canShowNotification) { // Become notification button once again
+        if (canAskUserIfHeSheWantsToGetNotifiedAboutNewStuff) { // Become notification button once again
           allowNotificationButton.style.display = "flex"; // notification click event is handled in notify_**.js
           installButton.style.display = "none";
         } else { // Unreal scenario: INSTALLATION WAS POSSIBLE BUT REJECTED - NOTIFICATION ISN'T POSSIBLE // Because we don't know what will happen with Apple
@@ -117,6 +117,19 @@ const searchResult = checkUrlToSeeLaunchingOrigin.search("installed"); // The se
 
 window.addEventListener("DOMContentLoaded",whetherTheAppIsRunningStandaloneF,{once:true});
 function whetherTheAppIsRunningStandaloneF() {
+  // Either standalone or inside browser tab; first check if notifications are allowed as soon as DOMContentLoaded
+  if ("permissions" in navigator) {
+    const notificationPermissionPromise = navigator.permissions.query({name:'notifications'});
+    notificationPermissionPromise.then(function(result) {
+      if (result.state == 'granted') {
+        localStorage.isSubscribedToNotifications = "yes"; // Actually set in notify_**.js
+        containerFooter.parentNode.removeChild(containerFooter); // Can't subscribe without installing the app
+      }
+    }).catch(x => {
+      console.log("cannot check notifications permission status"); // Impossible?
+    });
+  }
+
   if (searchResult != -1) { // The app is running standalone
     /*We don' want any install prompts anymore: Not certain whether this is really necessary but can't be too safe*/
     window.removeEventListener("beforeinstallprompt",turnNotificationIntoInstallation);
