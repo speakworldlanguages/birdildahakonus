@@ -117,55 +117,36 @@ const searchResult = checkUrlToSeeLaunchingOrigin.search("installed"); // The se
 
 window.addEventListener("DOMContentLoaded",whetherTheAppIsRunningStandaloneF,{once:true});
 function whetherTheAppIsRunningStandaloneF() {
+  // REGARDLESS OF HOW THE APP IS STARTED
   // Standalone or inside browser tab; either way, first check if notifications are allowed as soon as DOMContentLoaded
-  if ("permissions" in navigator) {
+  if (localStorage.isSubscribedToNotifications) { //
+    containerFooter.parentNode.removeChild(containerFooter);
+  } else if ("permissions" in navigator) {
     const notificationPermissionPromise = navigator.permissions.query({name:'notifications'});
     notificationPermissionPromise.then(function(result) {
       if (result.state == 'granted') {
-        localStorage.isSubscribedToNotifications = "yes"; // Actually set in notify_**.js
+        localStorage.isSubscribedToNotifications = "yes"; // This should have been set in notify_**.js already but just in case something broke
         containerFooter.parentNode.removeChild(containerFooter); // Can't subscribe without installing the app
       }
-    }).catch(x => {
-      console.log("cannot check notifications permission status"); // Impossible?
+    }).catch((err) => {
+      console.log(err);
     });
   }
-
+  // DEPENDING ON HOW THE APP IS STARTED
   if (searchResult != -1) { // The app is running standalone
-    alert("STANDALONE");
-    fixedTitleWhenStandalone(); // See js_for_icon_animation
+    // TRIED: getElementById('id') to get the script and remove it but that didn't work with DOMContentLoaded -> Maybe it would with "load" but that's too late to save download time
+    localStorage.appInstallationWasAccepted = "absolutely"; // This opens a door to cheating -> If a first time user typed "index.html?installed" into the browser's address bar, the app would falsely accept itself as installed. But we don't expect that to happen.
     /*We don' want any install prompts anymore: Not certain whether this is really necessary but can't be too safe*/
     window.removeEventListener("beforeinstallprompt",turnNotificationIntoInstallation);
     /*We don't need the rotating-globe tab-icon animation*/
-    const titleAnimationIsUnnecessaryForStandalone = document.getElementById('removeIfStandaloneID');
-    titleAnimationIsUnnecessaryForStandalone.parentNode.removeChild(titleAnimationIsUnnecessaryForStandalone);
+    fixedTitleWhenStandalone(); // See js_for_icon_animation
+    //titleAnimationIsUnnecessaryForStandalone.parentNode.removeChild(titleAnimationIsUnnecessaryForStandalone);
     // If this is the first time in standalone mode we should let user see the notifications button
-    // Otherwise remove the button completely
-    if (localStorage.isSubscribedToNotifications) {
-      containerFooter.parentNode.removeChild(containerFooter); // PROBLEM WILL HAPPEN if localStorage data gets lost: Notification button will appear despite being subscribed
-    } else {
-      // Let the user see notification subscription button
-      // Check if beforeinstallprompt ever fires here -> If it fires it will turn the notification button into installation button and we don't want that.
-      // Otherwise let the get notification button do its thing
-    }
   } else { // The app is in the browser; not in standalone mode
     // CASE 1: If it is a normal first visit then let the notification button be.
     // In this case browsers that fire beforeinstallprompt will turn [notification] into [installation] shortly after page load
     // Other browsers (like Safari on Mac OS) will show keep showing the notification button
-    // Unless,
-    let databaseSaysThisUserIsSubscribedToNotifications = false; // localStorage is faster than remote database
-    // Use async await with
-    /*
-    if (databaseSaysThisUserIsSubscribedToNotifications) {
-      localStorage.isSubscribedToNotifications = "yes"; // fix localStorage
-      containerFooter.parentNode.removeChild(containerFooter);
-    }
-    */
-    if (localStorage.isSubscribedToNotifications) { // Created and set to "yes" in notify_**.js
-      containerFooter.parentNode.removeChild(containerFooter); // PROBLEM WILL HAPPEN if localStorage data gets lost: Notification button will appear despite being subscribed
-      // The only guaranteed way of not showing [notification] after a subscription is by storing and checking it with a permanent database
-      // Do that in the FUTURE
-    }
-    // CASE 3: App is installed BUT for some reason user is still viewing the app on the browser even though he/she could have used the desktop or Homescreen version
+    // CASE 2: App is installed BUT for some reason user is still viewing the app on the browser even though he/she could have used the desktop or Homescreen version
     // In this case we can try and check if the app is already installed
     if (localStorage.appInstallationWasAccepted) {
      window.removeEventListener("beforeinstallprompt",turnNotificationIntoInstallation);
@@ -188,6 +169,6 @@ if (deviceDetector.isMobile) {
 } else {
   window.addEventListener("appinstalled",(evt)=>{  whenAppinstalledFiresOnDesktop();  }); // Force switch to standalone mode for Android
   function whenAppinstalledFiresOnDesktop() {
-    window.location.reload(); // Try to refresh immediately because DOMContentLoaded must fire to check if app is installed
+    setTimeout(function () {  window.location.reload();  },100); // Try to refresh immediately because DOMContentLoaded must fire to check if app is installed
   }
 }

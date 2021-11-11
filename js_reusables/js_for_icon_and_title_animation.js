@@ -12,8 +12,8 @@ function dynamicTitleF() {
   } , 6000);
 }
 function fixedTitleWhenStandalone() { // js_for_pwa.js
-  clearInterval(stopItWhenStandalone);
-  document.title = theParentHtmlTitle;
+  window.removeEventListener("load",dynamicTitleF);
+  window.removeEventListener("load",startAndLoopTheAnimationOfIcon);
 }
 //Animated favicon
 const iconElement = document.getElementById("icon");
@@ -62,7 +62,7 @@ setTimeout(function(){ iconElement.href = "user_interface/icon/animated_globe_ic
 
 }
 
-window.addEventListener("load",     startAndLoopTheAnimationOfIcon,      { once: true }); // once:true is like removeEventListener
+window.addEventListener("load",     startAndLoopTheAnimationOfIcon,      { once: true });
 function startAndLoopTheAnimationOfIcon() {
   iconChange();
   setInterval( function() {  iconChange();  }, 20000);
