@@ -137,7 +137,7 @@ footer:active{  transform: translateX(-50%) scale(0.98); }
 .footerTabletAndPhone div{ display: flex; align-items: center; justify-content: center; max-width:90vmin; height: 72px; }
 .footerTabletAndPhone img{ height: 70px; }
 .footerTabletAndPhone p{ text-shadow: none; min-width: 190px; line-height: 23px; }
-.footerSlideAppearMobile{margin-top:125px;}
+.footerSlideAppearMobile{margin-top:133px;}
 
 /**/
 .youMustAllowMicrophone{
