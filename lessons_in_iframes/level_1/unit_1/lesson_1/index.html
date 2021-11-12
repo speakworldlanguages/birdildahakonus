@@ -56,8 +56,8 @@
             const v2 = document.getElementById('video2'); v2.src = "v2_h264.mp4";
           }
         },{ once: true });
-        window.addEventListener("load",startDownloadingTheNextLesson,{once:true});
-        function startDownloadingTheNextLesson() {
+        window.addEventListener("load",startDownloadingLesson112,{once:true});
+        function startDownloadingLesson112() {
           if (!localStorage.thisIsNotTheFirstTime111) {
             parent.cacheAssetsOfLevel_112(); // See js_for_precaching_assets.js
             localStorage.thisIsNotTheFirstTime111 = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
