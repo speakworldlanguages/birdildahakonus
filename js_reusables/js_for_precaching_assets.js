@@ -279,11 +279,15 @@ async function cacheAssetsOfLevel_113() { // Call this as soon as window load ha
       "lessons_in_iframes/level_1/unit_1/lesson_1/what_bread_sounds_like_2.ogg");
   }*/
 }
+/**/
+async function cacheAssetsOfLevel_114(){
+
+}
 
 window.addEventListener("load",theVeryFirstCachingF,{once:true}); // Run only after DOMContentLoaded because -> js_for_different_browsers_and_devices.js
 function theVeryFirstCachingF() {
-  if (!localStorage.thisNotTheFirstTimeEver) {
+  if (!localStorage.thisIsNotTheFirstTimeEver) {
     cacheCoreAssetsOfTheApp(); cacheAssetsOfLevel_111(); cacheAssetsOfProgressChart();
-    localStorage.thisNotTheFirstTimeEver = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
+    localStorage.thisIsNotTheFirstTimeEver = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
   }
 }

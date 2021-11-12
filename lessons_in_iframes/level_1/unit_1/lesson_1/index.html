@@ -51,11 +51,18 @@
       <video src="v2_vp9.webm" id="video2" autoplay muted style="height: 62vh; display:none;"></video>
       <script>
         window.addEventListener("DOMContentLoaded",function(){
-          if (parent.detectedOS.name == "iOS" || parent.detectedBrowser.name == "Firefox") {
+          if (parent.isApple || parent.detectedBrowser.name == "Firefox") {
             const v1 = document.getElementById('video1'); v1.src = "v1_h264.mp4";
             const v2 = document.getElementById('video2'); v2.src = "v2_h264.mp4";
           }
         },{ once: true });
+        window.addEventListener("load",startDownloadingTheNextLesson,{once:true});
+        function startDownloadingTheNextLesson() {
+          if (!localStorage.thisIsNotTheFirstTime111) {
+            parent.cacheAssetsOfLevel_112(); // See js_for_precaching_assets.js
+            localStorage.thisIsNotTheFirstTime111 = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
+          }
+        }
       </script>
     </div>
 
