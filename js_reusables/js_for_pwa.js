@@ -139,7 +139,7 @@ function whetherTheAppIsRunningStandaloneF() {
     /*We don' want any install prompts anymore: Not certain whether this is really necessary but can't be too safe*/
     window.removeEventListener("beforeinstallprompt",turnNotificationIntoInstallation);
     /*We don't need the rotating-globe tab-icon animation*/
-    fixedTitleWhenStandalone(); // See js_for_icon_animation
+    fixedTitleWhenStandalone(); // See js_for_icon_and_title_animation
     //titleAnimationIsUnnecessaryForStandalone.parentNode.removeChild(titleAnimationIsUnnecessaryForStandalone);
     // If this is the first time in standalone mode we should let user see the notifications button
   } else { // The app is in the browser; not in standalone mode

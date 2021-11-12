@@ -1,4 +1,5 @@
 {
+  "lang": "tr",
   "name": "Bir Dil Daha Öğren",
   "short_name": "Bir Dil Daha Öğren",
   "author": "Beykan Alper Bilgekılınç Topraksoy",
@@ -11,5 +12,12 @@
   "start_url": "index.html?installed",
   "display": "fullscreen",
   "background_color": "#adbbc4",
-  "theme_color": "#4d606f"
+  "theme_color": "#4d606f",
+  "screenshots": [
+    {
+      "src": "notification/notification_image.jpg",
+      "type": "image/jpg",
+      "sizes": "800x400"
+    }
+  ]
 }

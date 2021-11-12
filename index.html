@@ -19,7 +19,7 @@
     <!-- <link rel="alternate" hreflang="ar" href="https://???"> -->
     <link rel="alternate" hreflang="en" href="https://speakworldlanguages.app">
 
-    <link rel="icon" type="image/png" href="user_interface/icon/animated_globe_icon_39.png" id="icon" sizes="32x32"> <!-- This appears next to the title in the browser's TABS and plays as an animation. See js_for_icon_animation.js -->
+    <link rel="icon" type="image/png" href="user_interface/icon/animated_globe_icon_39.png" id="icon" sizes="32x32"> <!-- This appears next to the title in the browser's TABS and plays as an animation. See js_for_icon_and_title_animation.js -->
     <link id="saveLoadTimeOnMobileID" rel="preload" href="css_reusables/css_for_permanent_custom_cursor.css" as="style" onload=" var useThis=this; useThis.onload=null; setTimeout(function(){ useThis.rel='stylesheet'; },3000); "> <!-- DESKTOPS only! -->
     <!-- Above line is used because 40 little png files (for custom cursors) can take too many milliseconds to download and some frames can go missing as browser's rendering starts. Note: As of 2020 Firefox doesn't support rel="preload". -->
     <link rel="stylesheet" href="css_reusables/css_for_every_single_html.css">
@@ -32,6 +32,7 @@
     <script src="third_party_js/ua-parser.min.js">/*JS library for getting the browser and OS names by Faisal Salman - Github: faisalman*/</script>
     <!-- MOVED TO every_single_html.js <script src="third_party_js/devicedetector-min.js">/*A device detector by Maarten Belmans - Github: PoeHaH*/</script> --><!-- copy-paste devicedetector into js_for_every_single_html.js -->
     <script src="third_party_js/howler.min.js">/*An audio handler - Github: goldfire*/</script>
+    <!-- <script src="third_party_js/localforage.min.js">/*Use indexedDB; store large blobs like recorded audio or pass data to the service worker*/</script> -->
 
     <script src="js_reusables/js_for_preload_handling.js">/* INCLUSION PRIORITIZED: Measure time between "DOMContentLoaded" and "load" */</script>
     <script defer src="js_reusables/js_for_every_single_html.js">/*Memory card, userInterfaceLanguage, fetch headers, fonts*/</script>
@@ -41,6 +42,7 @@
     <script defer src="js_reusables/js_for_icon_and_title_animation.js">/*A rotating globe next to the title that appears in the browser-tab*/</script>
     <script defer src="js_reusables/js_for_the_sliding_navigation_menu.js">/*NAVIGATION*/</script>
     <script defer src="js_reusables/js_for_pwa.js">/*Progressive Web App - Handle installation*/</script>
+    <script defer src="js_reusables/js_for_precaching_assets.js">/*Get the files in advance to minimize waiting time*/</script>
     <script defer src="js_reusables/js_for_odtu.js">/*---*/</script>
 
     <!-- Uncomment the following to be able to use the browser console on mobile devices -->

@@ -1,7 +1,8 @@
 var isTheUsersBrowserWhitelisted = false;
 var detectedBrowser;
 var detectedOS;
-var audioFileExtension = "mp3"; // Default to ogg except for Safari // Ogg is better than mp3 but Safari won't play it.
+var audioFileExtension = "ogg"; // Default to ogg except for Safari // Ogg is better than mp3 but Safari won't play it.
+var isApple = false;
 
 var deactivationSound2;
 var activationSound2;
@@ -16,6 +17,7 @@ window.addEventListener('DOMContentLoaded', function(){
   /* DESPITE: Being sick of writing special code for Apple */
   if (detectedOS.name == "iOS" || detectedOS.name == "Mac OS") {
     audioFileExtension = "mp3";
+    isApple=true;
   }
 
   deactivationSound2 = new Howl({  src: ['user_interface/sounds/thingy_two_deactivate.'+audioFileExtension]  }); // Mobiles: FULLSCREEN,,, Desktops: CHANGE BROWSER TAB
