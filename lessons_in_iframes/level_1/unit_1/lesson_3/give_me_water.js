@@ -404,6 +404,7 @@ function makeTheEyesLookAtTheGlass() {
 
 function whenWinHappens() {
   winSound.play();
+  if (canVibrate) {   navigator.vibrate([20,50,20,50,20]);    }
   //setTimeout(function () { say5.play(); injectTextIntoTheHelpBoxP.innerHTML = explanationB; },2000);
   setTimeout(function () {  parent.ayFreym.src = 'lessons_in_iframes/we_are_working_for_new_levels';  },5000);
 }

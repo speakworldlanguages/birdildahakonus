@@ -389,6 +389,7 @@ function gameLoopForPhoneOrTablet() {
 
     // No stereo on mobiles
     glassBreak.play();
+    if (canVibrate) {   navigator.vibrate([64,50,32,100,16,200,8,400,4,800,2]);    }
     //console.log("Şangırrr sesi");
 
     cartoonGravity = 0;
@@ -416,9 +417,6 @@ function gameLoopForPhoneOrTablet() {
     setTimeout(function () {    main.classList.add("blurAllAtTheEnd");    },6500); // Blur
     setTimeout(function () {    location.reload();    },7000);
   }
-
-
-
 
   requestAnimationFrame(gameLoopForPhoneOrTablet);
 }
