@@ -6,7 +6,22 @@ function theVeryFirstCachingF() {
     localStorage.thisIsNotTheFirstTimeEver = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
   }
 }
+
 // Call these when it is time to get the files ready
+/**/
+async function cacheAssetsOfInformationScreen() {
+  const cacheName = "information-screen-cache";
+  const resourcesToPrecache = [
+    "information/index.html",
+    "information/information.css",
+    "information/information.js",
+    "information/long_arrow.png",
+    "information/topraksoy_earthman_tsuchimoto.webp"
+  ];
+  const cache = await caches.open(cacheName);
+  await cache.addAll(resourcesToPrecache);
+}
+/**/
 async function cacheCoreAssetsOfTheApp() {
   const cacheName = "app-core-cache";
   // Outcommented files must be cached conditionally
@@ -22,8 +37,9 @@ async function cacheCoreAssetsOfTheApp() {
   // "user_interface/fonts/KosugiMaru-Regular.ttf",
   // "user_interface/fonts/Oxanium-SemiBold.ttf",
   // "user_interface/fonts/TitilliumWeb-Light.ttf",
-  // "user_interface/images/long_arrow.png",
+
   const resourcesToPrecache = [
+    "/",
     "index.html",
     "css_reusables/css_for_all_container_parent_htmls.css",
     "css_reusables/css_for_all_iframed_lesson_htmls.css",

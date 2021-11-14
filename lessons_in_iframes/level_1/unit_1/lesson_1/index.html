@@ -58,9 +58,11 @@
         },{ once: true });
         window.addEventListener("load",startDownloadingLesson112,{once:true});
         function startDownloadingLesson112() {
-          if (!localStorage.thisIsNotTheFirstTime111) {
-            parent.cacheAssetsOfLevel_112(); // See js_for_precaching_assets.js
-            localStorage.thisIsNotTheFirstTime111 = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
+          if (!localStorage.thisIsNotTheFirstTimeIn111) {
+            setTimeout(function () {
+              parent.cacheAssetsOfLevel_112(); // See js_for_precaching_assets.js
+              localStorage.thisIsNotTheFirstTimeIn111 = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
+            },5000); // Allow fetch to get all the uncached files for this lesson first if there is any
           }
         }
       </script>

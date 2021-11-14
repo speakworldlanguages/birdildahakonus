@@ -174,11 +174,13 @@
           notNecessaryExceptOnIOS.parentNode.removeChild(notNecessaryExceptOnIOS);
         }
       }
-      window.addEventListener("load",startDownloadingTheNextLesson,{once:true});
-      function startDownloadingTheNextLesson() {
-        if (!localStorage.thisIsNotTheFirstTime113) {
-          parent.cacheAssetsOfLevel_114(); // See js_for_precaching_assets.js
-          localStorage.thisIsNotTheFirstTime113 = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
+      window.addEventListener("load",startDownloadingLesson114,{once:true});
+      function startDownloadingLesson114() {
+        if (!localStorage.thisIsNotTheFirstTimeIn113) {
+          setTimeout(function () {
+            parent.cacheAssetsOfLevel_114(); // See js_for_precaching_assets.js
+            localStorage.thisIsNotTheFirstTimeIn113 = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
+          },5000); // Allow fetch to get all the uncached files for this lesson first if there is any
         }
       }
     </script>

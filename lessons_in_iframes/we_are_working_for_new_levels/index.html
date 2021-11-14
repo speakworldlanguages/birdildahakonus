@@ -93,6 +93,12 @@
             parent.containerDivOfTheNavigationMenu.removeChild(parent.clickToPauseTheAppDiv);  // also see progress.js
           }
         },30);
+        if (!localStorage.thisIsNotTheFirstTimeInWeAreWorking) {
+          setTimeout(function () {
+            parent.cacheAssetsOfInformationScreen(); // See js_for_precaching_assets.js
+            localStorage.thisIsNotTheFirstTimeInWeAreWorking = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
+          },5000); // Allow fetch to get all the uncached files for this lesson first if there is any
+        }
       }, { once: true })
     </script>
 
