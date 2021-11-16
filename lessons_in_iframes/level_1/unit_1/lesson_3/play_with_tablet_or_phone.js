@@ -414,8 +414,8 @@ function gameLoopForPhoneOrTablet() {
       glassThatCanRotateDiv.appendChild(imgGlassBreakCenter);
     }
 
-    setTimeout(function () {    main.classList.add("blurAllAtTheEnd");    },6500); // Blur
-    setTimeout(function () {    location.reload();    },7000);
+    setTimeout(function () {    main.classList.add("blurAllAtTheEnd");    },4500); // Blur
+    setTimeout(function () {    location.reload();    },5000);
   }
 
   requestAnimationFrame(gameLoopForPhoneOrTablet);

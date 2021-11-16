@@ -435,7 +435,7 @@ function gameLoopStage2ForMouse() {
       glassThatCanFallDiv.parentNode.removeChild(glassThatCanFallDiv);      // remove glass
       winOrLoseHappened = true;
       canNowPlayAnExclamation = false; // No more [Be careful!, Easy!, Hey stop!] sounds even if tray moves.
-      
+
 
       /* Save progress */
       savedProgress[studiedLang].lesson_GIVEMEWATER_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
@@ -492,8 +492,8 @@ function gameLoopStage2ForMouse() {
       glassThatCanRotateDiv.appendChild(imgGlassBreakCenter);
     }
 
-    setTimeout(function () {    main.classList.add("blurAllAtTheEnd");    },6500); // Blur
-    setTimeout(function () {    location.reload();    },7000);
+    setTimeout(function () {    main.classList.add("blurAllAtTheEnd");    },4500); // Blur
+    setTimeout(function () {    location.reload();    },5000);
   }
 
 

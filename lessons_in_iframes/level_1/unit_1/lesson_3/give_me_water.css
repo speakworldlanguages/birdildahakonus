@@ -59,7 +59,7 @@
 
 .containerOfEyes{position: absolute; left: 0; top: 0; width:100%; height: 100%;}
 .delayedEyeMovement{transition: all 0.3s; transition-timing-function: ease;}
-.verySlowEyeMovement{transition: all 1.3s; transition-timing-function: ease; transition-delay: 2.2s}
+.verySlowEyeMovement{transition: all 1.3s; transition-timing-function: ease; transition-delay: 1.7s}
 .img540x1080{ position: absolute; left: 0; top: 0; }
 .transformOriginBottomLeft{
   transform-origin: 44% 25%;
