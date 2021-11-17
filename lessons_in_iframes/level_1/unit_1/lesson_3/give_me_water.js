@@ -326,6 +326,7 @@ function getReadyToPlayTheGameOnMobileF() {
   function detectIfBothThumbsAreTouching1() {    //e.preventDefault(); // Necessary???
     if (leftIsTouching&&rightIsTouching) {
         parent.swipeMenuIsDisabled = true; // CAREFUL: Don't forget to enable it at the end of the game once the conflict is over !!! !!! !!!
+        // REMEMBER: Must re-enable swipe menu when either "lose" or "win" happens (not only one but both cases)
         notificationSoundCloseControlDevice.play();
         showTouchControlsDiv.children[0].style.display = "none";
         showTouchControlsDiv.children[1].style.display = "block";
@@ -339,7 +340,7 @@ function getReadyToPlayTheGameOnMobileF() {
         leftHalf.removeEventListener("touchstart", detectIfBothThumbsAreTouching1);
         rightHalf.removeEventListener("touchstart", detectIfBothThumbsAreTouching1);
         // Give user some time to figure out tilt controls
-        setTimeout(startTheGameWithTabletOrPhone,3000);
+        setTimeout(startTheGameWithTabletOrPhone,3500);
     }
   }
 }

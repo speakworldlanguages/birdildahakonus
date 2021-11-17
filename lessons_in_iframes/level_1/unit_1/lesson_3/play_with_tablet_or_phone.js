@@ -41,7 +41,7 @@ function startTheGameWithTabletOrPhone() {
 
     theMovingTrayOnHandDiv.removeChild(theMovingTrayOnHandDiv.firstElementChild); // CAUTION: firstChild lastChild counts html comments as children. Use firstElementChild instead
     theMovingTrayOnHandDiv.firstElementChild.style.display = "block"; // REMEMBER: What used to be the [1st] is now the [0th]
-  },1500);
+  },2500);
 
   // Let SCRIPT take control of position from vmin value in CSS
   if (viewportWidth>viewportHeight) {
@@ -357,7 +357,7 @@ function gameLoopForPhoneOrTablet() {
       glassThatCanFallDiv.parentNode.removeChild(glassThatCanFallDiv);      // remove glass
       winOrLoseHappened = true;
       canNowPlayAnExclamation = false; // No more [Be careful!, Easy!, Hey stop!] sounds even if tray moves.
-      parent.swipeMenuIsDisabled = false; // CAREFUL: the conflict is over !!! !!! !!!
+      parent.swipeMenuIsDisabled = false; // NOTE THAT: the touch conflict is now over !!! !!! !!!
 
       /* Save progress */
       savedProgress[studiedLang].lesson_GIVEMEWATER_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
@@ -381,6 +381,7 @@ function gameLoopForPhoneOrTablet() {
   /*LOSE AND RETRY*/
   if (fallingGlassVerticalPosition>49 && !winOrLoseHappened) { // in vmins
     winOrLoseHappened = true;
+    parent.swipeMenuIsDisabled = false; // NOTE THAT: the touch conflict is now over !!! !!! !!!
     movingEyesDiv2.children[1].style.visibility = "hidden"; movingEyesDiv2.children[0].style.visibility = "hidden"; // From shocked eyes
     movingEyesDiv2.children[2].style.visibility = "visible"; // to squinting eyes
     movingEyesDiv2.classList.add("verySlowEyeMovement");
