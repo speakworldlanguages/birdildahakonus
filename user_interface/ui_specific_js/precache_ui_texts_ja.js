@@ -75,7 +75,6 @@ async function cacheUI_texts() {
     "user_interface/text/ja/info_about_resources.txt",
     "user_interface/text/ja/info_go_back_button.txt",
     "user_interface/text/ja/info_index_html_title.txt",
-    "user_interface/text/ja/info_monthly_option_base_eur.txt",
     "user_interface/text/ja/info_monthly_option_base_usd.txt",
     "user_interface/text/ja/info_name_of_author.txt",
     "user_interface/text/ja/info_name_of_license.txt",
