@@ -48,12 +48,12 @@ const say5 = new parent.Howl({  src: [say5Path]  });
 const winSound = new parent.Howl({  src: ['lessons_in_iframes/level_1/unit_1/lesson_3/he_gets_the_water.'+parent.audioFileExtension]  });
 const glassBreak = new parent.Howl({  src: ['lessons_in_iframes/level_1/unit_1/lesson_3/glass_breaks_into_pieces.'+parent.audioFileExtension]  });
 
-const notificationControlDevice = new parent.Howl({  src: ['user_interface/sounds/notification2_appear.'+parent.audioFileExtension]  });
-const notificationCloseControlDevice = new parent.Howl({  src: ['user_interface/sounds/notification2_close.'+parent.audioFileExtension]  });
+const notificationSoundAboutControllerDevice = new parent.Howl({  src: ['user_interface/sounds/notification2_appear.'+parent.audioFileExtension]  });
+const notificationSoundCloseControlDevice = new parent.Howl({  src: ['user_interface/sounds/notification2_close.'+parent.audioFileExtension]  });
 /* Sounds exist on the parent. So they will NOT UNLOAD when iframe src is changed. We must manually unload them before exiting. */
 function unloadTheSoundsOfThisLesson() { // Either call this as the last thing before leaving or let it be called by window.onbeforeunload in js_for_all_iframed_lesson_htmls
-  notificationCloseControlDevice.unload();
-  notificationControlDevice.unload();
+  notificationSoundCloseControlDevice.unload();
+  notificationSoundAboutControllerDevice.unload();
   glassBreak.unload();
   winSound.unload();
   say5.unload();  say4.unload();  say3.unload();  say2.unload();  say1.unload();
@@ -263,7 +263,7 @@ function proceedDependingOnTheDevice() {
       withOrWithoutPermission();
     }
     function withOrWithoutPermission() {
-      notificationControlDevice.play();
+      notificationSoundAboutControllerDevice.play();
       showTouchControlsDiv.classList.add("toNormalOpacityAndScale");
       /**/
       const url = "../../../../js_reusables/tilt-to-steer.js";
@@ -276,7 +276,7 @@ function proceedDependingOnTheDevice() {
     }
   } else { // Desktops
     hideCursorPermanently(); // See js_for_disappearing_custom_cursor.js
-    notificationControlDevice.play();
+    notificationSoundAboutControllerDevice.play();
     chooseInputDiv.classList.add("toNormalOpacityAndScale");
     getReadyToPlayTheGameOnDesktopF();
   }
@@ -326,7 +326,7 @@ function getReadyToPlayTheGameOnMobileF() {
   function detectIfBothThumbsAreTouching1() {    //e.preventDefault(); // Necessary???
     if (leftIsTouching&&rightIsTouching) {
         parent.swipeMenuIsDisabled = true; // CAREFUL: Don't forget to enable it at the end of the game once the conflict is over !!! !!! !!!
-        notificationCloseControlDevice.play();
+        notificationSoundCloseControlDevice.play();
         showTouchControlsDiv.children[0].style.display = "none";
         showTouchControlsDiv.children[1].style.display = "block";
         if (sessionStorage.selectedInputDevice == "touchscreen") {
@@ -336,9 +336,10 @@ function getReadyToPlayTheGameOnMobileF() {
           sessionStorage.selectedInputDevice = "touchscreen";
         }
         switchFromTalkingManToWatchingMan();
-        startTheGameWithTabletOrPhone();
         leftHalf.removeEventListener("touchstart", detectIfBothThumbsAreTouching1);
         rightHalf.removeEventListener("touchstart", detectIfBothThumbsAreTouching1);
+        // Give user some time to figure out tilt controls
+        setTimeout(startTheGameWithTabletOrPhone,3000);
     }
   }
 }
@@ -347,7 +348,7 @@ function getReadyToPlayTheGameOnDesktopF() {
   // Choose gamepad or mouse to play the game.
   window.addEventListener("mouseup", userHasChosenMouse, { once: true });
   function userHasChosenMouse() {
-    imgChooseInput.style.display = "none"; imgMouse.style.display = "block"; notificationCloseControlDevice.play();
+    imgChooseInput.style.display = "none"; imgMouse.style.display = "block"; notificationSoundCloseControlDevice.play();
     switchFromTalkingManToWatchingMan();
     if (sessionStorage.selectedInputDevice == "mouse") { // User has already tried and failed with mouse
       imgMouse.classList.add("addThisToHideTheSelectedDeviceQuick");
@@ -364,7 +365,7 @@ function getReadyToPlayTheGameOnDesktopF() {
   }
   window.addEventListener("gamepadconnected", userHasChosenGamepad, { once: true });
   function userHasChosenGamepad() {
-    imgChooseInput.style.display = "none"; imgGamepad.style.display = "block"; notificationCloseControlDevice.play();
+    imgChooseInput.style.display = "none"; imgGamepad.style.display = "block"; notificationSoundCloseControlDevice.play();
     switchFromTalkingManToWatchingMan();
     if (sessionStorage.selectedInputDevice == "gamepad") { // User has already tried and failed with gamepad
       imgGamepad.classList.add("addThisToHideTheSelectedDeviceQuick");
