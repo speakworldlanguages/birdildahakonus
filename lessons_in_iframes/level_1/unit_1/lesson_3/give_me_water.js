@@ -369,13 +369,13 @@ function getReadyToPlayTheGameOnDesktopF() {
     imgChooseInput.style.display = "none"; imgGamepad.style.display = "block"; notificationSoundCloseControlDevice.play();
     switchFromTalkingManToWatchingMan();
     if (sessionStorage.selectedInputDevice == "gamepad") { // User has already tried and failed with gamepad
-      imgGamepad.classList.add("addThisToHideTheSelectedDeviceQuick");
-      setTimeout(function () {  chooseInputDiv.parentNode.removeChild(chooseInputDiv);  },1001);
-      setTimeout(function () {  startTheGameWithTheGamepad();  },1111);
+      imgGamepad.classList.add("addThisToHideTheSelectedDeviceQuick"); // webp animation duration 4819 ms
+      setTimeout(function () {  chooseInputDiv.parentNode.removeChild(chooseInputDiv);  },5005); // css animation takes 5s
+      setTimeout(function () {  startTheGameWithTheGamepad();  },3000);
     } else {                                               // User is going to play for the first time with gamepad
-      setTimeout(function () {  imgGamepad.classList.add("addThisToHideTheSelectedDeviceSlow");  },1000);
-      setTimeout(function () {  chooseInputDiv.parentNode.removeChild(chooseInputDiv);  },3501);
-      setTimeout(function () {  startTheGameWithTheGamepad();  },3333);
+      imgGamepad.classList.add("addThisToHideTheSelectedDeviceSlow");
+      setTimeout(function () {  chooseInputDiv.parentNode.removeChild(chooseInputDiv);  },7007); // css animation takes 7s
+      setTimeout(function () {  startTheGameWithTheGamepad();  },5000);
     }
     window.removeEventListener("mouseup", userHasChosenMouse); // Remove unnecessary listeners
     sessionStorage.selectedInputDevice = "gamepad";

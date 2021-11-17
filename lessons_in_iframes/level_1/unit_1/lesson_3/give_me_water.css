@@ -21,8 +21,8 @@
 }
 
 /*---*/
-.addThisToHideTheSelectedDeviceSlow{   animation: devicesDisappear 2.5s;  animation-fill-mode: forwards;  }
-.addThisToHideTheSelectedDeviceQuick{  animation: devicesDisappear 1s;    animation-fill-mode: forwards;  }
+.addThisToHideTheSelectedDeviceSlow{   animation: devicesDisappear 2s; animation-delay: 5s; animation-fill-mode: forwards;  }
+.addThisToHideTheSelectedDeviceQuick{  animation: devicesDisappear 3s; animation-delay: 2s; animation-fill-mode: forwards;  }
 .hideTiltInstructionSlow{   animation: devicesDisappear 4s; animation-delay: 8s; animation-fill-mode: forwards;  } /*67x60=4020ms*/
 .hideTiltInstructionQuick{  animation: devicesDisappear 2s; animation-delay: 4s; animation-fill-mode: forwards;  }
 @keyframes devicesDisappear {  0%{  opacity: 1;  }  100%{  opacity: 0;  } /*remove the elements via script when animation ends*/ }
