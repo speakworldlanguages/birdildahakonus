@@ -28,7 +28,9 @@ if (localStorage.memoryCard) {  // https://www.w3schools.com/jsref/tryit.asp?fil
 // Must give the user the option to change the user interface language and allow him/her to choose any available language other than the browser's language if necessary.
 // Until that time, UI language will automatically take the browser's language.
 
+// POSSIBLE GOOD PRACTICE: Check if browser language and IP-geolocation match. Ask the user which language he/she wants for the GUI if the location and language is different.
 var browserLanguage = navigator.language.substring(0,2).toLowerCase(); // Is used for 1- Setting UI language 2- Set currency(Euro) according to user's (estimated) country.
+
 
 // These variables will exist both in parent html and in frame html separately at the same time.
 var userInterfaceLanguage;
@@ -36,7 +38,7 @@ var userReadsLeftToRightOrRightToLeft; /*Use this to flip the arrow signs etc wi
 var needLatinFonts = false;
 var needHitoicJapaneseFonts = false;
 
-// BEST PRACTICE: Check if browser language and IP-geolocation match. Ask the user which language he/she wants for the GUI if the location and language is different.
+
 switch (browserLanguage) { // Maybe window.location.hostname is better .. Do that after getting unique domain names for each clone .. use search() to make sure it works both with and without www
   case "ja":
     userInterfaceLanguage = "ja";
