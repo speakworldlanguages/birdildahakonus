@@ -1,14 +1,15 @@
 window.addEventListener("load",getUserInterfaceTextsReadyF,{once:true}); // Run only after DOMContentLoaded because -> js_for_different_browsers_and_devices.js
 function getUserInterfaceTextsReadyF() {
   if (!localStorage.thisIsNotTheFirstTimeEverGettingUITexts) {
-    cacheUI_texts();
+    cacheUI_textsAndFonts();
     localStorage.thisIsNotTheFirstTimeEverGettingUITexts = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
   }
 }
 
-async function cacheUI_texts() {
+async function cacheUI_textsAndFonts() {
   const cacheName = "user-interface-txt-cache";
   const resourcesToPrecache = [
+    "user_interface/fonts/KosugiMaru-Regular.ttf",
     "user_interface/text/ja/0-allow_microphone.txt",
     "user_interface/text/ja/0-author_gives_sleep_advice.txt",
     "user_interface/text/ja/0-continue_after_pause.txt",

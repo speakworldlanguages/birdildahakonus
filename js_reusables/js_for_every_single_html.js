@@ -30,24 +30,42 @@ if (localStorage.memoryCard) {  // https://www.w3schools.com/jsref/tryit.asp?fil
 
 // POSSIBLE GOOD PRACTICE: Check if browser language and IP-geolocation match. Ask the user which language he/she wants for the GUI if the location and language is different.
 var browserLanguage = navigator.language.substring(0,2).toLowerCase(); // Is used for 1- Setting UI language 2- Set currency(Euro) according to user's (estimated) country.
-
+var domainNameOfTheClone = window.location.hostname.toLowerCase();
 
 // These variables will exist both in parent html and in frame html separately at the same time.
 var userInterfaceLanguage;
 var userReadsLeftToRightOrRightToLeft; /*Use this to flip the arrow signs etc with transform rotate 180deg or scaleX -1 if UI is in Arabic or another rtl language*/
 var needLatinFonts = false;
-var needHitoicJapaneseFonts = false;
+var needHitoicJapaneseFonts = false; // Kosugi Motoya font is for Hitoic only - It doesn't have simplified chinese or hangul characters
 
+// Set user interface and fonts
+if (domainNameOfTheClone.search("hanaserutoiidesuy") >= 0) {
+  // JA
+  userInterfaceLanguage = "ja";
+  userReadsLeftToRightOrRightToLeft = "ltr";
+  needHitoicJapaneseFonts = true;
+} else if (domainNameOfTheClone.search("herkesdilogren") >= 0) {
+  // TR
+  userInterfaceLanguage = "tr";
+  userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullan
+  needLatinFonts = true;
+} else {
+  // EN
+  userInterfaceLanguage = "en";
+  userReadsLeftToRightOrRightToLeft = "ltr";
+  needLatinFonts = true;
+}
 
-switch (browserLanguage) { // Maybe window.location.hostname is better .. Do that after getting unique domain names for each clone .. use search() to make sure it works both with and without www
+/* // DEPRECATED
+switch (browserLanguage) {
   case "ja":
     userInterfaceLanguage = "ja";
     userReadsLeftToRightOrRightToLeft = "ltr";
     needHitoicJapaneseFonts = true;
     break;
-  case "tr": /*case "uz": case "ug": case "tk": case "ky": case "kk": case "az":*/
+  case "tr": // Ayrıca,,, case "uz": case "ug": case "tk": case "ky": case "kk": case "az":
     userInterfaceLanguage = "tr";
-    userReadsLeftToRightOrRightToLeft = "ltr";
+    userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullan
     needLatinFonts = true;
     break;
   default:
@@ -55,16 +73,17 @@ switch (browserLanguage) { // Maybe window.location.hostname is better .. Do tha
     userReadsLeftToRightOrRightToLeft = "ltr";
     needLatinFonts = true;
 }
+*/
 
 /*_____HEADERS to make fetch work with txt files with non-english characters properly________*/
 var myHeaders = new Headers(); // Apache server default ayarları yüzünden böyle buna gerek var.
+if (userInterfaceLanguage=="tr") {
+  // Çağrılan txt dosyasındaki ÇĞİÖŞÜçğıöşü'nın ��������� yerine doğru görünmesi için charset=iso-8859-9 gerek; charset=utf-8 ile olmuyor.
+  // Dikkat! Bunun doğru çalışması için çağrılan txt dosyasının UTF-8 ile kaydedilmiş olması gerek.
+  myHeaders.append('Content-Type','text/plain; charset=iso-8859-9');
+}
 //window.addEventListener('DOMContentLoaded', function(){
 //theLanguageUserIsLearningNowToSetFilePaths=="tr" || parent.theLanguageUserIsLearningNowToSetFilePaths=="tr" ??? How to add???
-  if (userInterfaceLanguage=="tr") {
-    // Çağrılan txt dosyasındaki ÇĞİÖŞÜçğıöşü'nın ��������� yerine doğru görünmesi için charset=iso-8859-9 gerek; charset=utf-8 ile olmuyor.
-    // Dikkat! Bunun doğru çalışması için çağrılan txt dosyasının UTF-8 ile kaydedilmiş olması gerek.
-    myHeaders.append('Content-Type','text/plain; charset=iso-8859-9');
-  }
 //}, { once: true });
 
 /*___________________________________*/
