@@ -1,4 +1,4 @@
 ﻿Touch here
 to play the game
 with tilt controls
-(Choose <strong>allow</strong>)
+(Choose <strong>[Allow]</strong>)

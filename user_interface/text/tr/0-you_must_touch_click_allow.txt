@@ -1,5 +1,5 @@
-﻿Oyunu
-oynayabilmek
+﻿Oyuna
+başlamak
 için
 buraya
 dokunduktan

@@ -15,9 +15,9 @@
   "theme_color": "#4d606f",
   "screenshots": [
     {
-      "src": "notification/notification_image.jpg",
+      "src": "user_interface/images/screenshot.jpg",
       "type": "image/jpg",
-      "sizes": "800x400"
+      "sizes": "320x160"
     }
   ]
 }
