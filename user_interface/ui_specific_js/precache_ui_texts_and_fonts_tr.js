@@ -9,6 +9,7 @@ function getUserInterfaceTextsReadyF() {
 async function cacheUI_textsAndFonts() {
   const cacheName = "user-interface-txt-cache";
   const resourcesToPrecache = [
+    "css_reusables/css_for_latin_font_rules.css",
     "user_interface/fonts/TitilliumWeb-Light.ttf",
     "user_interface/fonts/Oxanium-SemiBold.ttf",
     "user_interface/text/tr/0-allow_microphone.txt",

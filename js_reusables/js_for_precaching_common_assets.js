@@ -27,17 +27,13 @@ async function cacheCoreAssetsOfTheApp() {
   const cacheName = "app-core-cache";
   // Outcommented files must be cached conditionally
 
-  // "css_reusables/css_for_hitoic_kanji_font_rules.css",
-  // "css_reusables/css_for_latin_font_rules.css",
+  // "js_reusables/js_for_microphone_input_visualization.js",
   // "css_reusables/css_for_wavesurfer_microphone_divs.css",
   // "js_reusables/js_for_icon_and_title_animation.js",
   // "js_reusables/js_for_odtu.js",
   // "js_reusables/js_for_pwa.js",
   // "third_party_js/wavesurfer.microphone.min.js",
   // "third_party_js/wavesurfer.microphone.min.js.map",
-  // "user_interface/fonts/KosugiMaru-Regular.ttf",
-  // "user_interface/fonts/Oxanium-SemiBold.ttf",
-  // "user_interface/fonts/TitilliumWeb-Light.ttf",
 
   const resourcesToPrecache = [
     "/",
@@ -55,8 +51,8 @@ async function cacheCoreAssetsOfTheApp() {
     "js_reusables/js_for_handling_fullscreen_mode.js",
     "js_reusables/js_for_handling_reveal_help_button.js",
     "js_reusables/js_for_handling_speech_give_up.js",
-    "js_reusables/js_for_microphone_input_visualization.js",
     "js_reusables/js_for_notification_or_such_boxes.js",
+    "js_reusables/js_for_online_and_offline_modes.js",
     "js_reusables/js_for_preload_handling.js",
     "js_reusables/js_for_the_sliding_navigation_menu.js",
     "third_party_js/annyang.min.js",

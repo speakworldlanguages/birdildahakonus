@@ -9,6 +9,7 @@ function getUserInterfaceTextsReadyF() {
 async function cacheUI_textsAndFonts() {
   const cacheName = "user-interface-txt-cache";
   const resourcesToPrecache = [
+    "css_reusables/css_for_hitoic_kanji_font_rules.css",
     "user_interface/fonts/KosugiMaru-Regular.ttf",
     "user_interface/text/ja/0-allow_microphone.txt",
     "user_interface/text/ja/0-author_gives_sleep_advice.txt",
