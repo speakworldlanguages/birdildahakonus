@@ -73,7 +73,7 @@ function goBackToFirstScreenLanguageSelection() {
   setTimeout(function() {
     parent.ayFreym.classList.remove("everyThingFadesToBlack"); // Just this once do it without a fade in; a jump in with remove() will be enough or is even better?
     //No effect??? parent.ayFreym.classList.add("everyThingComesFromBlack"); // How do we remove this?? Or do we need to??
-    parent.ayFreym.src = '../user_interface/blank.html';
+    parent.ayFreym.src = '/user_interface/blank.html';
     parent.document.getElementsByTagName('MAIN')[0].style.left = "0px"; // Was hidden with 8000px
   },1000); // 701 was enough???
 }

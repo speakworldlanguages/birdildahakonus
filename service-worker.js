@@ -11,6 +11,7 @@
 /* install and activate fire only on the first visit*/
 
 self.addEventListener("activate", event => {
+  /*
   event.waitUntil(
     caches.keys().then(keys =>{
       return Promise.all(
@@ -27,18 +28,19 @@ self.addEventListener("activate", event => {
       )
     })
   )
+  */
 });
 
-const dynamicCacheName = "app-dynamic-cache-Nov19th2021"; // CAN: Change the name to force-recache
+//const dynamicCacheName = "app-dynamic-cache-Nov19th2021"; // CAN: Change the name to force-recache
 self.addEventListener("fetch", event => {
   event.respondWith( caches.match(event.request)
     .then( cachedResponse => {
-      return cachedResponse || fetch(event.request).then(fetchResponse => {
+      return cachedResponse || fetch(event.request)/*.then(fetchResponse => {
         return caches.open(dynamicCacheName).then(cache => {
           cache.put(event.request.url, fetchResponse.clone());
           return fetchResponse;
         })
-      });
+      })*/;
     } )
   );
 });

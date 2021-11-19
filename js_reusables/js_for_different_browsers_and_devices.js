@@ -186,12 +186,13 @@ window.addEventListener('DOMContentLoaded', function(){
 /*________________window LOAD___________________*/
 let allowMicrophoneBlinker;
 window.addEventListener("load",function() {
-
+  /*
   // Resolve the Firefox refresh button issue... After an F5 refresh the frame is supposed to be blank but Firefox shows the last loaded html. Yet if we hit ENTER on the address bar it clears as expected. To make F5/refresh clear the frame (just like when ENTER is hit) we have to "force" it.
   let whatTheFileNameInIframeSrcIs = ayFreym.src.substring(ayFreym.src.length - 10, ayFreym.src.length - 5); // Get the name of the html file from a string like "/user_interface/blank.html"
   if (whatTheFileNameInIframeSrcIs == "blank") { // This works. HOWEVER: Could also use let result = ayFreym.src.search("blank"); if(result>=0){}
     setTimeout(function () {  ayFreym.src="user_interface/blank.html"  },100); // Force empty! At last! Blank as it is supposed to be.
   }
+  */
 
   allowMicrophoneBlinker = document.getElementById('allowMicrophoneDivID');
   const filePathForAllowMicrophoneText = "user_interface/text/"+userInterfaceLanguage+"/0-allow_microphone.txt";

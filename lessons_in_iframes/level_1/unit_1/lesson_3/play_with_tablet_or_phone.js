@@ -58,7 +58,7 @@ function startTheGameWithTabletOrPhone() {
         parent.swipeMenuIsDisabled = false;
         const internationalErrorMsg = "↺ ❌\n↻ ❌\n:-(\n❌😞📱\n(-_-)\n" + parent.detectedBrand;
         alert(internationalErrorMsg);
-        setTimeout(function () {  parent.ayFreym.src = 'progress_chart';  },1000);
+        setTimeout(function () {  parent.ayFreym.src = '/progress_chart/index.html';  },1000);
       } else {
         gameLoopForPhoneOrTablet();
         leftHalf.addEventListener("touchstart", detectIfBothThumbsAreTouching2);

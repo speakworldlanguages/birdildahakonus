@@ -606,7 +606,7 @@ window.addEventListener("load",function() {
       setTimeout(function () {   orbitingCircles.style.display = "flex";   },701);
       setTimeout(function() {
         ayFreym.addEventListener('load',frameIsLoadedByHomeButton,{ once: true });
-        setTimeout(function() {  ayFreym.src = "progress_chart";  },100);
+        setTimeout(function() {  ayFreym.src = "/progress_chart/index.html";  },100);
         function frameIsLoadedByHomeButton() {
           orbitingCircles.style.display = "none";
           ayFreym.classList.remove("everyThingFadesToBlack"); ayFreym.classList.add("everyThingComesFromBlack");

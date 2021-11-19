@@ -62,7 +62,7 @@ window.addEventListener('load', function(){
 
     ayFreym.addEventListener('load',blankFrameIsLoaded,{ once: true }); // The right-click (context menu) won't function properly if ayFreym.src is changed too early
     function blankFrameIsLoaded() {
-      ayFreym.src = "progress_chart"; // QUESTION: Immediately or as soon as OK is touchclicked in "Auto-saved progress has been loaded"
+      ayFreym.src = "/progress_chart/index.html"; // QUESTION: Immediately or as soon as OK is touchclicked in "Auto-saved progress has been loaded"
       // Probably must do addEventListener load for iframe before hiding MAIN
       // NOTE: 8K is 7680x4320  »  8000px should be enough for any display
       document.getElementsByTagName('MAIN')[0].style.left = "8000px"; // Hide the "Choose the language you want to learn" screen
@@ -244,7 +244,7 @@ function openFirstLesson() {
     // Hide the welcome screen ( <<choose the language you want to learn>> screen's menu-div)
     document.getElementsByTagName('MAIN')[0].style.left = "8000px";   // Used to be    document.getElementById('fullViewportPositionFixedDivAsContainerOfTheMenu').style.left = "8000px";
     // Display the first lesson
-    ayFreym.src = "lessons_in_iframes/level_1/unit_1/lesson_1/index.html";
+    ayFreym.src = "/lessons_in_iframes/level_1/unit_1/lesson_1/index.html";
   },50); // Unnoticable tiny delay
 
   // Make the loading animation appear (i.e. bring the preloader)
