@@ -2,7 +2,7 @@
 // Don't forget to update service-worker.js after adding/removing/changing something here
 /**/
 window.addEventListener("load",theVeryFirstCachingF,{once:true}); // Run only after DOMContentLoaded because -> js_for_different_browsers_and_devices.js
-function theVeryFirstCachingF() {
+async function theVeryFirstCachingF() {
   if (!localStorage.thisIsNotTheFirstTimeEver) {
     // How do we chain these???
     await cacheCoreAssetsOfTheApp();
