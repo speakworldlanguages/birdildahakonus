@@ -51,10 +51,20 @@ function startTheGameWithTabletOrPhone() {
   }
 
   setTimeout(function () {
-    startReadingTilt();
-    gameLoopForPhoneOrTablet();
-    leftHalf.addEventListener("touchstart", detectIfBothThumbsAreTouching2);
-    rightHalf.addEventListener("touchstart", detectIfBothThumbsAreTouching2);
+    startReadingTilt(); // As of 2021 there may still be devices that won't read deviceorientation such as a Samsung phone »»» gamma and beta return null
+    setTimeout(checkAvailabilityOfTilt,100);
+    function checkAvailabilityOfTilt() {
+      if (b == null && g == null) { // b & g are declared in tilt-to-steer.js
+        parent.swipeMenuIsDisabled = false;
+        const internationalErrorMsg = "↺ ❌\n↻ ❌\n:-(\n❌😞📱\n(-_-)\n" + parent.detectedBrand;
+        alert(internationalErrorMsg);
+        setTimeout(function () {  parent.ayFreym.src = 'progress_chart';  },1000);
+      } else {
+        gameLoopForPhoneOrTablet();
+        leftHalf.addEventListener("touchstart", detectIfBothThumbsAreTouching2);
+        rightHalf.addEventListener("touchstart", detectIfBothThumbsAreTouching2);
+      }
+    }
   },5000);
 }
 

@@ -1,6 +1,7 @@
 var isTheUsersBrowserWhitelisted = false;
 var detectedBrowser;
 var detectedOS;
+var detectedBrand;
 var audioFileExtension = "ogg"; // Default to ogg except for Safari // Ogg is better than mp3 but Safari won't play it.
 var isApple = false;
 
@@ -14,6 +15,7 @@ window.addEventListener('DOMContentLoaded', function(){
   // Check for browser name on every device
   detectedBrowser = parser.getBrowser();
   detectedOS = parser.getOS();
+  detectedBrand = parser.getDevice(); detectedBrand = detectedBrand.vendor;
   /* DESPITE: Being sick of writing special code for Apple */
   if (detectedOS.name == "iOS" || detectedOS.name == "Mac OS") {
     audioFileExtension = "mp3";

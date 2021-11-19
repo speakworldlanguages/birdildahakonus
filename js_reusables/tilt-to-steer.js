@@ -32,12 +32,13 @@ function handlePortraitOrLandscape() {
 handlePortraitOrLandscape(); // Set for the first time
 window.addEventListener("resize",handlePortraitOrLandscape); // Update when change happens
 
-let b; // Adjust and use beta for steering when in landscape mode
-let g; // Adjust and use gamma for steering when in portrait mode after dealing with the gimbal lock problem using beta
+// Use var instead of let for things that could be accessed from elsewhere
+var b; // Adjust and use beta for steering when in landscape mode
+var g; // Adjust and use gamma for steering when in portrait mode after dealing with the gimbal lock problem using beta
 let betaCalculation1, betaCalculation2, betaCalculation3;
 let gammaCalculation1, gammaCalculation2, gammaCalculation3;
 let suppressionFromBeta=0, suppressionFromGamma=0;
-var steerDeg=0, smoothSteerDeg=0; // var instead of let because in case it needs to be accessed from elsewhere
+var steerDeg=0, smoothSteerDeg=0;
 let steerDegDelayed20ms = 0, steerDegDelayed40ms = 0;
 
 function fixGimbalLock() { // NOTE THAT THIS IS NOT A PERFECT SOLUTION!
