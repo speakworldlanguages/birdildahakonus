@@ -17,7 +17,6 @@
     <script defer src="../../../../js_reusables/js_for_disappearing_custom_cursor.js">/**/</script>
     <script defer src="../../../../js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, deviceDetector, fonts, fetch headers, onePixelTransparentGif...*/</script>
     <script defer src="../../../../js_reusables/js_for_all_iframed_lesson_htmls.js">/*createNotificationBox, createVocabBox, button sounds, iframeLoadCounter...*/</script>
-    <!-- MOVED TO every_single_html.js <script defer src="../../../../js_reusables/js_for_fetch_api_character_encoding.js">/*Display extended latin characters (ÇĞİÖŞÜçğıöşü) correctly when using fetch to read txt files*/</script> -->
     <script defer src="../../../../js_reusables/js_for_handling_reveal_help_button.js">/*Desktops: Like movie subtitles, Mobiles: Drag the figure down*/</script>
     <script defer src="../../../../js_reusables/js_for_notification_or_such_boxes.js">/*Includes fetch so it must come after character encoding*/</script>
     <!-- Add tilt-to-steer.js dynamically if the device is mobile -->
@@ -178,9 +177,9 @@
       function startDownloadingLesson114() {
         if (!localStorage.thisIsNotTheFirstTimeIn113) {
           setTimeout(function () {
-            parent.cacheAssetsOfLevel_114(); // See js_for_precaching_assets.js
+            parent.cacheAssetsOfLevel_114(); // See js_for_precaching_common_assets.js
             localStorage.thisIsNotTheFirstTimeIn113 = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
-          },5000); // Allow fetch to get all the uncached files for this lesson first if there is any
+          },5000); // Allow fetch to get all the uncached files for this lesson first if there are any
         }
       }
     </script>

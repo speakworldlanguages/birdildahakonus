@@ -1,4 +1,4 @@
-__ SOURCES OF PHOTOS WITHOUT VISUAL MASTERING __
+__ SOURCES OF RAW PHOTOS WITHOUT VISUAL MASTERING __
 https://www.publicdomainpictures.net/
 https://unsplash.com/
 https://pixabay.com/
@@ -12,3 +12,6 @@ https://pixnio.com/
 https://pxhere.com/
 https://pikist.com/
 https://pikwizard.com
+
+__ SOURCES OF RAW VIDEOS WITHOUT VISUAL MASTERING __
+https://www.videezy.com

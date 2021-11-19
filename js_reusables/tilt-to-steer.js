@@ -42,11 +42,13 @@ var steerDeg=0, smoothSteerDeg=0;
 let steerDegDelayed20ms = 0, steerDegDelayed40ms = 0;
 
 function fixGimbalLock() { // NOTE THAT THIS IS NOT A PERFECT SOLUTION!
-  // According to tests gimbal lock floor is about beta:45 degrees but the ceiling is not always beta:90
+  // According to tests, gimbal lock floor is about beta:45 degrees but the ceiling is not always beta:90
+  // As gamma approaches 0 deg, beta ceiling approaches 90 deg
+  // As gamma approaches plus or minus 90 deg, beta ceiling changes and beta JUMP starts happening. For example it jumps from 85 to 95 or from 80 to 100 etc.
   // Beta-ceiling (where max-gimbal-lock happens) varies between beta:45~135 degrees depending on gamma.
-  // As abs(gamma) approaches 90, beta-ceiling drops from 90 to 45-135 with a weird curve like y=ax^{20}+bx ___ a=0.0000000000000000002 b=0.4
+  // The change in beta-ceiling has a weird curve like y=ax^{20}+bx ___ a=0.0000000000000000002 b=0.4
   // In this case we will use a manual approximation to real angles through trial&error
-  // If you can tweak this and get better results please fork it and send a pull request
+  // If you think can tweak this please fork it and work on it. If you do get better results then send a pull request.
   if (Math.abs(g)>45) {
     gammaCalculation1 = 90-Math.abs(g); // 45 to 0 and to 45 again
     gammaCalculation2 = Math.abs(gammaCalculation1-45)/45; // 0 to 1 and to 0 again
@@ -67,7 +69,7 @@ function fixGimbalLock() { // NOTE THAT THIS IS NOT A PERFECT SOLUTION!
 function handleTilt(event) {
 
   b = event.beta;  // Cannot use raw data from deviceorientation becuse it jumps like +180/-180 at certain points
-  g = event.gamma; // Cannot use raw data from deviceorientation becuse it jumps from plus to minus at certain points and there is the gimbal-lock issue
+  g = event.gamma; // Cannot use raw data from deviceorientation becuse it jumps from plus to minus at certain points and also there is the gimbal-lock issue
 
   /* TURN RAW DATA INTO USEFUL DATA */
   if (theDeviceIsRotated == "no") {

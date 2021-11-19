@@ -288,7 +288,7 @@ var finalLeftY=0; var finalRightY=0;
 let dLeft=0; let dRight=0;
 const leftHalf = document.createElement("DIV");
 const rightHalf = document.createElement("DIV");
-function tiltToSteerJsCouldNotBeLoaded() {  alert("Connection problem!");  } // Improve later if can
+function tiltToSteerJsCouldNotBeLoaded() {  alert("Error reading js file!");  } // Improve later if can
 function getReadyToPlayTheGameOnMobileF() {
 
   leftHalf.classList.add("leftThumbTouchArea"); document.body.appendChild(leftHalf);

@@ -50,11 +50,11 @@ function startTheGameWithTabletOrPhone() {
     xPositionOfTray = 50; /* Fixed because now 100vw = 100vmin */
   }
 
+  startReadingTilt(); // As of 2021 there may still be devices that won't read deviceorientation such as a Samsung phone »»» gamma and beta return null
+  // According to tests: It could take a moment for beta and gamma to NOT RETURN null. Not sure how many milliseconds actually.
   setTimeout(function () {
-    startReadingTilt(); // As of 2021 there may still be devices that won't read deviceorientation such as a Samsung phone »»» gamma and beta return null
-    setTimeout(checkAvailabilityOfTilt,100);
-    function checkAvailabilityOfTilt() {
-      if (b == null && g == null) { // b & g are declared in tilt-to-steer.js
+    // Check Availability Of Tilt
+      if (b == null && g == null) { // b & g are declared in tilt-to-steer.js // Note that (0 == null) returns false // (undefined == null) returns true
         parent.swipeMenuIsDisabled = false;
         const internationalErrorMsg = "↺ ❌\n↻ ❌\n:-(\n❌😞📱\n(-_-)\n" + parent.detectedBrand;
         alert(internationalErrorMsg);
@@ -64,7 +64,6 @@ function startTheGameWithTabletOrPhone() {
         leftHalf.addEventListener("touchstart", detectIfBothThumbsAreTouching2);
         rightHalf.addEventListener("touchstart", detectIfBothThumbsAreTouching2);
       }
-    }
   },5000);
 }
 

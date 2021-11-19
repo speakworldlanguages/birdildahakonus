@@ -19,7 +19,6 @@
     <script defer src="../../../../js_reusables/js_for_microphone_input_visualization.js">/*Start, Stop wavesurfer microphone*/</script>
     <script src="../../../../third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
     <script src="../../../../third_party_js/wavesurfer.microphone.min.js">/*Audio visualization. Github: katspaugh*/</script>
-    <!-- MOVED TO every_single_html.js <script defer src="../../../../js_reusables/js_for_fetch_api_character_encoding.js">/*Display extended latin characters (ÇĞİÖŞÜçğıöşü) correctly when using fetch to read txt files*/</script> -->
     <script defer src="../../../../js_reusables/js_for_notification_or_such_boxes.js">/*Includes fetch so it must come after character encoding*/</script>
     <script defer src="water.js">/*Progress handling for this lesson*/</script>
 
@@ -60,9 +59,9 @@
         function startDownloadingLesson113() {
           if (!localStorage.thisIsNotTheFirstTimeIn112) {
             setTimeout(function () {
-              parent.cacheAssetsOfLevel_113(); // See js_for_precaching_assets.js
+              parent.cacheAssetsOfLevel_113(); // See js_for_precaching_common_assets.js
               localStorage.thisIsNotTheFirstTimeIn112 = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
-            },5000); // Allow fetch to get all the uncached files for this lesson first if there is any
+            },5000); // Allow fetch to get all the uncached files for this lesson first if there are any
           }
         }
       </script>
