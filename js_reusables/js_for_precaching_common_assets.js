@@ -9,9 +9,10 @@ function theVeryFirstCachingF() {
 
 // Call these when it is time to get the files ready
 /**/
-async function cacheAssetsOfInformationScreen() {
+async function cacheAssetsOfInformationScreen() { // There is also the [about page] but will leave it to dynamic service worker caching for now
   const cacheName = "information-screen-cache";
   const resourcesToPrecache = [
+    "information",
     "information/index.html",
     "information/information.css",
     "information/information.js",
@@ -63,14 +64,6 @@ async function cacheCoreAssetsOfTheApp() {
     "third_party_js/ua-parser.min.js",
     "third_party_js/wavesurfer.min.js",
     "third_party_js/wavesurfer.min.js.map",
-    "progress_chart/bilinguals.css",
-    "progress_chart/bread.webp",
-    "progress_chart/get_ui_texts.js",
-    "progress_chart/givemewater.webp",
-    "progress_chart/index.html",
-    "progress_chart/progress.css",
-    "progress_chart/progress.js",
-    "progress_chart/water.webp",
     "user_interface/images/sliding_navigation_menu/go_to_main_menu_house_a.webp",
     "user_interface/images/sliding_navigation_menu/go_to_main_menu_house_d.webp",
     "user_interface/images/sliding_navigation_menu/pause_lesson_a.webp",
@@ -176,6 +169,7 @@ async function cacheCoreAssetsOfTheApp() {
 async function cacheAssetsOfProgressChart() {
   const cacheName = "app-progress-chart-cache";
   const resourcesToPrecache = [
+    "progress_chart",
     "progress_chart/bilinguals.css",
     "progress_chart/bread.webp",
     "progress_chart/get_ui_texts.js",
@@ -192,6 +186,7 @@ async function cacheAssetsOfProgressChart() {
 async function cacheAssetsOfLevel_111() {
   const cacheName = "app-lesson-1-1-1-cache";
   const resourcesToPrecache = [
+    "lessons_in_iframes/level_1/unit_1/lesson_1",
     "lessons_in_iframes/level_1/unit_1/lesson_1/1_c1.webp",
     "lessons_in_iframes/level_1/unit_1/lesson_1/2.webp",
     "lessons_in_iframes/level_1/unit_1/lesson_1/3.webp",
@@ -229,6 +224,7 @@ async function cacheAssetsOfLevel_111() {
 async function cacheAssetsOfLevel_112() { // Call this as soon as window load happens in lessons_in_iframes/level_1/unit_1/lesson_1/index.html
   const cacheName = "app-lesson-1-1-2-cache";
   const resourcesToPrecache = [
+    "lessons_in_iframes/level_1/unit_1/lesson_2",
     "lessons_in_iframes/level_1/unit_1/lesson_2/1.webp",
     "lessons_in_iframes/level_1/unit_1/lesson_2/2.webp",
     "lessons_in_iframes/level_1/unit_1/lesson_2/3.webp",
@@ -277,6 +273,7 @@ async function cacheAssetsOfLevel_112() { // Call this as soon as window load ha
 async function cacheAssetsOfLevel_113() { // Call this as soon as window load happens in lessons_in_iframes/level_1/unit_1/lesson_2/index.html
   const cacheName = "app-lesson-1-1-3-cache";
   const resourcesToPrecache = [
+    "lessons_in_iframes/level_1/unit_1/lesson_3",
     "lessons_in_iframes/level_1/unit_1/lesson_3/-0p5_glass.webp",
     "lessons_in_iframes/level_1/unit_1/lesson_3/-1_glass.webp",
     "lessons_in_iframes/level_1/unit_1/lesson_3/-1p5_glass.webp",
