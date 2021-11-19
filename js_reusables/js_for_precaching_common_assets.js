@@ -1,3 +1,5 @@
+// VEEERY IMPORTANT !!!!!!!!!
+// Don't forget to update service-worker.js after adding/removing/changing something here
 /**/
 window.addEventListener("load",theVeryFirstCachingF,{once:true}); // Run only after DOMContentLoaded because -> js_for_different_browsers_and_devices.js
 function theVeryFirstCachingF() {
@@ -10,21 +12,23 @@ function theVeryFirstCachingF() {
 // Call these when it is time to get the files ready
 /**/
 async function cacheAssetsOfInformationScreen() { // There is also the [about page] but will leave it to dynamic service worker caching for now
-  const cacheName = "information-screen-cache";
+  const cacheName = "information-screen-cache-Nov19th2021";
   const resourcesToPrecache = [
     "information",
-    "information/index.html",
-    "information/information.css",
-    "information/information.js",
-    "information/long_arrow.png",
-    "information/topraksoy_earthman_tsuchimoto.webp"
+    "/information",
+    "/information/",
+    "/information/index.html",
+    "/information/information.css",
+    "/information/information.js",
+    "/information/long_arrow.png",
+    "/information/topraksoy_earthman_tsuchimoto.webp"
   ];
   const cache = await caches.open(cacheName);
   await cache.addAll(resourcesToPrecache);
 }
 /**/
 async function cacheCoreAssetsOfTheApp() {
-  const cacheName = "app-core-cache";
+  const cacheName = "app-core-cache-Nov19th2021";
   // Outcommented files must be cached conditionally
 
   // "js_reusables/js_for_microphone_input_visualization.js",
@@ -37,6 +41,7 @@ async function cacheCoreAssetsOfTheApp() {
 
   const resourcesToPrecache = [
     "/",
+    "/index.html",
     "index.html",
     "css_reusables/css_for_all_container_parent_htmls.css",
     "css_reusables/css_for_all_iframed_lesson_htmls.css",
@@ -163,7 +168,7 @@ async function cacheCoreAssetsOfTheApp() {
 }
 /**/
 async function cacheAssetsOfProgressChart() {
-  const cacheName = "app-progress-chart-cache";
+  const cacheName = "progress-chart-cache-Nov19th2021";
   const resourcesToPrecache = [
     "progress_chart",
     "progress_chart/bilinguals.css",
@@ -180,7 +185,7 @@ async function cacheAssetsOfProgressChart() {
 }
 /**/
 async function cacheAssetsOfLevel_111() {
-  const cacheName = "app-lesson-1-1-1-cache";
+  const cacheName = "lesson-1-1-1-cache-Nov19th2021";
   const resourcesToPrecache = [
     "lessons_in_iframes/level_1/unit_1/lesson_1",
     "lessons_in_iframes/level_1/unit_1/lesson_1/1_c1.webp",
@@ -218,7 +223,7 @@ async function cacheAssetsOfLevel_111() {
 }
 /**/
 async function cacheAssetsOfLevel_112() { // Call this as soon as window load happens in lessons_in_iframes/level_1/unit_1/lesson_1/index.html
-  const cacheName = "app-lesson-1-1-2-cache";
+  const cacheName = "lesson-1-1-2-cache-Nov19th2021";
   const resourcesToPrecache = [
     "lessons_in_iframes/level_1/unit_1/lesson_2",
     "lessons_in_iframes/level_1/unit_1/lesson_2/1.webp",
@@ -267,7 +272,7 @@ async function cacheAssetsOfLevel_112() { // Call this as soon as window load ha
 }
 /**/
 async function cacheAssetsOfLevel_113() { // Call this as soon as window load happens in lessons_in_iframes/level_1/unit_1/lesson_2/index.html
-  const cacheName = "app-lesson-1-1-3-cache";
+  const cacheName = "lesson-1-1-3-cache-Nov19th2021";
   const resourcesToPrecache = [
     "lessons_in_iframes/level_1/unit_1/lesson_3",
     "lessons_in_iframes/level_1/unit_1/lesson_3/-0p5_glass.webp",

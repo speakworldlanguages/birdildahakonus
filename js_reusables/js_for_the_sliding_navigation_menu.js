@@ -163,7 +163,7 @@ function makeTheNavMenuGoDownOnMobiles() {
       deactivationSound1.play(); //
       navMenuIsUpAndVisible = false;
       navMenuIsMoving = true;
-      setTimeout(function () {   navMenuIsMoving = false;   },1234);
+      setTimeout(function () {   navMenuIsMoving = false;   },750);
     }
   // ---
 }
@@ -176,7 +176,7 @@ function makeTheNavMenuComeUpOnMobiles() {
       activationSound1.play(); // Handle audio: All SWIPE-UPs will continue firing this function but this sound must be heard only once.
       navMenuIsUpAndVisible = true;
       navMenuIsMoving = true;
-      setTimeout(function () {   navMenuIsMoving = false;   },1234);
+      setTimeout(function () {   navMenuIsMoving = false;   },750);
     }
   }
 }

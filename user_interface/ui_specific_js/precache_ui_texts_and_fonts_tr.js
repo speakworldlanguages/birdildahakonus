@@ -1,3 +1,6 @@
+// VEEERY IMPORTANT !!!!!!!!!
+// Don't forget to update service-worker.js after adding/removing/changing something here
+
 window.addEventListener("load",getUserInterfaceTextsReadyF,{once:true}); // Run only after DOMContentLoaded because -> js_for_different_browsers_and_devices.js
 function getUserInterfaceTextsReadyF() {
   if (!localStorage.thisIsNotTheFirstTimeEverGettingUITexts) {
@@ -7,7 +10,7 @@ function getUserInterfaceTextsReadyF() {
 }
 
 async function cacheUI_textsAndFonts() {
-  const cacheName = "user-interface-txt-cache";
+  const cacheName = "user-interface-cache-Nov19th2021";
   const resourcesToPrecache = [
     "css_reusables/css_for_latin_font_rules.css",
     "user_interface/fonts/TitilliumWeb-Light.ttf",
