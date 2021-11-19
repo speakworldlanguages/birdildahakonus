@@ -108,8 +108,11 @@ femalesIcon.src = "user_interface/images/gender_ladies.webp"; // Only 1,5KB
 /*What language will be taught via the iframe*/
 /* JA - Hito */
 function letTheIFrameTeachJapanese(){ //See index.html to find the button that triggers this via onclick.
-  theLanguageUserIsLearningNowToSetFilePaths = "ja"; //"ja" is OK with both iOS and Android
+  theLanguageUserIsLearningNowToSetFilePaths = "ja"; //"ja" seemed to be OK with both iOS and Android in summer 2021
   theLanguageUserIsLearningNowToSetAnnyang = "ja";
+  if (isApple) { // See js_for_different_browsers_and_devices
+    theLanguageUserIsLearningNowToSetAnnyang = "ja-JP"; // Overwrite
+  }
   if (!savedProgress.ja) { // if it doesn't exist
     savedProgress.ja = {}; // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
   } // else » don't touch the data, leave it alone, do not overwrite-erase if something already exists,, perhaps user studies more than 1 language
@@ -121,8 +124,8 @@ function letTheIFrameTeachJapanese(){ //See index.html to find the button that t
 function letTheIFrameTeachChinese(){ //See index.html to find the button that triggers this via onclick.
   theLanguageUserIsLearningNowToSetFilePaths = "zh"; // Android is OK with "zh" but iOS needs "zh-TW"
   theLanguageUserIsLearningNowToSetAnnyang = "zh"; // We may still want to pass "zh" instead of "zh-TW" on Android and Windows. Because Android turns the mic on and off too quickly in some less supported languages.
-  if (detectedOS.name == "iOS") {
-    theLanguageUserIsLearningNowToSetAnnyang = "zh-TW"; // Overwrite because Siri won't accept zh // WARNING: Must break the string and get "zh" only to match the path with actual folder names!
+  if (isApple) {
+    theLanguageUserIsLearningNowToSetAnnyang = "zh-TW"; // Overwrite
   }
   if (!savedProgress.zh) { // if it doesn't exist
     savedProgress.zh = {}; // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
@@ -134,7 +137,10 @@ function letTheIFrameTeachChinese(){ //See index.html to find the button that tr
 /* TR - Kişi */
 function letTheIFrameTeachTurkish(){ //See index.html to find the button that triggers this via onclick.
   theLanguageUserIsLearningNowToSetFilePaths = "tr"; //"tr" is OK with both iOS and Android
-  theLanguageUserIsLearningNowToSetAnnyang = "tr"; // UNCLEAR: SHOULD THIS BE tr-TR on iOS?
+  theLanguageUserIsLearningNowToSetAnnyang = "tr"; // UNCLEAR: SHOULD THIS BE tr-TR on iOS? // tr-TR
+  if (isApple) {
+    theLanguageUserIsLearningNowToSetAnnyang = "tr-TR"; // Overwrite
+  }
   if (!savedProgress.tr) { // if it doesn't exist
     savedProgress.tr = {}; // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
   } // else » don't touch the data, leave it alone, do not overwrite-erase if something already exists,, perhaps user studies more than 1 language
@@ -146,7 +152,7 @@ function letTheIFrameTeachTurkish(){ //See index.html to find the button that tr
 function letTheIFrameTeachArabic(){ //See index.html to find the button that triggers this via onclick.
   theLanguageUserIsLearningNowToSetFilePaths = "ar"; // Android is OK with "ar" but iOS needs "ar-SA" or "ar-QA" etc
   theLanguageUserIsLearningNowToSetAnnyang = "ar"; // We still want "ar" instead of "ar-SA" on Android for better performance (frequency of the mic turn on&off thing).
-  if (detectedOS.name == "iOS") {
+  if (isApple) {
     theLanguageUserIsLearningNowToSetAnnyang = "ar-SA"; // Overwrite... Don't know which is better: ar-SA ar-JO ar-KW ar-QA
   }
   if (!savedProgress.ar) { // if it doesn't exist
@@ -154,7 +160,6 @@ function letTheIFrameTeachArabic(){ //See index.html to find the button that tri
   } // else » don't touch the data, leave it alone, do not overwrite-erase if something already exists,, perhaps user studies more than 1 language
   saveJSON = JSON.stringify(savedProgress);
   localStorage.setItem("memoryCard", saveJSON); // Now it exists on the memory card, accessible by both parent and iframe
-  // WARNING: Must break the string and get "zh" only to match the path with actual folder names!
   // Get user's gender
   const darkenWholeViewportDiv = document.createElement("DIV");
   darkenWholeViewportDiv.classList.add("darkenTheWholeViewportClass");
@@ -224,7 +229,7 @@ function letTheIFrameTeachEnglish(){ //See index.html to find the button that tr
 
 /*___________Navigate to first lesson_____________*/
 function openFirstLesson() {
-  hideNotificationInstallationButton(); // See js_for_pwa
+  hideNotificationAndInstallation_2in1_button(); // See js_for_pwa
   // Save language choice
   localStorage.theLanguageUserWasLearningLastTimeToSetFilePaths = theLanguageUserIsLearningNowToSetFilePaths;
   localStorage.theLanguageUserWasLearningLastTimeToSetAnnyang = theLanguageUserIsLearningNowToSetAnnyang;
@@ -232,8 +237,6 @@ function openFirstLesson() {
   if (annyang) {
     annyang.setLanguage(theLanguageUserIsLearningNowToSetAnnyang); // Firefox v60's and v70's won't let buttons function unless this is wrapped in an if (annyang){} like this.
   }
-
-  handleTheFirstGoingFullscreenOnMobiles();
 
   if (canVibrate) { navigator.vibrate(10); } // Note that this may make mobile Firefox ask for permission to allow vibration
 
@@ -249,28 +252,29 @@ function openFirstLesson() {
   setPreloadCoverIsShowingNowToTrue(); // See js_for_preload_handling
 }
 
-function handleTheFirstGoingFullscreenOnMobiles() { // This fires if 1- User selects a language to learn 2- User returns to the last saved point
-  // Try to go fullscreen on mobile devices. Note the exception of iPhones!
-  if (deviceDetector.isMobile) {
-    // Going fullscreen on mobiles will make the nav menu sink down and disappear because
-    // as you can find in js_for_the_sliding_navigation_menu.js -> the resize event triggers hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen()
-    openFullscreen(); // See js_for_handling_fullscreen_mode.js
-    // WARNING: iPhone's Safari won't allow fullscreen! caniuse.com says it is allowed on iPads but wasn't able to test it as of July 2021.
-    // So since resize doesn't happen on iPhones we must manually do the first sinking of the nav menu like this.
-    if (deviceDetector.device == "phone" && detectedOS.name == "iOS") {
-      // Just hide the nav menu since we are unable to go fullscreen on an iPhone
-      // INSTEAD OF THIS: setTimeout(function () {      makeTheNavMenuGoDownOnMobiles();      },3500); // See js_for_the_sliding_navigation_menu
-      // WE MUST: wait until preloadCoverIsShowingNow is set to false. That change happens in js_for_all_container_parent_htmls
-      let checkEvery350msOrSo = setInterval(isThePreloaderDoneYet, 350);
-      function isThePreloaderDoneYet() {
-        if (preloadCoverIsShowingNow == false) { // Yes, it is now done.
-          clearInterval(checkEvery350msOrSo); // Stop the timer.
-          makeTheNavMenuGoDownOnMobiles(); // Safely hide the nav menu as soon as possible now. // See js_for_the_sliding_navigation_menu
-        }
-      }
-    }
-  } // END OF Try to go fullscreen on mobile ...
-}
+// DEPRECATED: function handleTheFirstGoingFullscreenOnMobiles() { // This fires if 1- User selects a language to learn 2- User returns to the last saved point
+//   // Try to go fullscreen on mobile devices. Note the exception of iPhones!
+//   if (deviceDetector.isMobile) {
+//     // Going fullscreen on mobiles will make the nav menu sink down and disappear because
+//     // as you can find in js_for_the_sliding_navigation_menu.js -> the resize event triggers DEPRECATED: hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen()
+//     openFullscreen(); // See js_for_handling_fullscreen_mode.js
+//     // WARNING: iPhone's Safari won't allow fullscreen! caniuse.com says it is allowed on iPads but wasn't able to test it as of July 2021.
+//     // So since resize doesn't happen on iPhones we must manually do the first sinking of the nav menu like this.
+//     // BETTER SOLUTION: Move the makeTheNavMenuGoDownOnMobiles() function call to iframe.onload and check if landing is a lesson html (not progress_chart)
+//     /*if (deviceDetector.device == "phone" && detectedOS.name == "iOS") {
+//       // Just hide the nav menu since we are unable to go fullscreen on an iPhone
+//       // INSTEAD OF THIS: setTimeout(function () {      makeTheNavMenuGoDownOnMobiles();      },3500); // See js_for_the_sliding_navigation_menu
+//       // WE MUST: wait until preloadCoverIsShowingNow is set to false. That change happens in js_for_all_container_parent_htmls
+//       let checkEvery350msOrSo = setInterval(isThePreloaderDoneYet, 350);
+//       function isThePreloaderDoneYet() {
+//         if (preloadCoverIsShowingNow == false) { // Yes, it is now done.
+//           clearInterval(checkEvery350msOrSo); // Stop the timer.
+//           makeTheNavMenuGoDownOnMobiles(); // Safely hide the nav menu as soon as possible now. // See js_for_the_sliding_navigation_menu
+//         }
+//       }
+//     }*/
+//   } // END OF Try to go fullscreen on mobile ...
+// }
 
 
 // UI sounds ... also see js_for_different_browsers_and_devices.js

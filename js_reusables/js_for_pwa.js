@@ -29,7 +29,7 @@ function handleDesktopTabletPhoneETC() {
   /**/
 }
 
-function revealNotificationInstallationButton() {
+function revealNotificationAndInstallation_2in1_button() {
   const main = document.getElementsByTagName('MAIN')[0];
   const footer = document.getElementsByTagName('FOOTER')[0];
   if (main.contains(footer)) {
@@ -41,7 +41,7 @@ function revealNotificationInstallationButton() {
   }
 }
 
-function hideNotificationInstallationButton() {
+function hideNotificationAndInstallation_2in1_button() {
   //alert("work????");
   const main = document.getElementsByTagName('MAIN')[0];
   const footer = document.getElementsByTagName('FOOTER')[0];
@@ -65,7 +65,7 @@ function turnNotificationIntoInstallation(e) {
   doYouWantToInstallprompt = e;
   allowNotificationButton.style.display = "none"; // Probably OK even after removeChild
   installButton.style.display = "flex";
-  revealNotificationInstallationButton();
+  revealNotificationAndInstallation_2in1_button();
   installButton.addEventListener("click",showInstall_PWA_prompt,{once:true});
 }
 

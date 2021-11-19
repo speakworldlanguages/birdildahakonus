@@ -22,7 +22,7 @@ window.addEventListener("load",function() {
     iDoc.document.addEventListener("touchstart", handleTouchForFullscreen); // Tried to removeEventListener with 'unload' but neither 'unload' nor 'hashchange' fires on the iframe.
   }
   // See js_for_all_container_parent_htmls to find how openFullscreen() is called.
-  // openFullscreen() is called via handleTheFirstGoingFullscreenOnMobiles() when either of these two things happen,
+  // DEPRECATED: openFullscreen() is called via handleTheFirstGoingFullscreenOnMobiles() when either of these two things happen,
   // 1- when user taps on a button in the main menu (language selection menu) 2- when user taps the "return to the last saved point" button
   // But ALSO must RETURN TO FULLSCREEN WITH THE FIRST TOUCH if user navigates away from the app and comes back and THE REASON is
   // BECAUSE most browsers won't allow going fullscreen without a user gesture... That means calling openFullscreen() with Onblur Onfocus or document.visibilitychange won't work.

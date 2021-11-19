@@ -150,28 +150,33 @@ var swipeMenuIsDisabled = false; // Must disable it during any touch controlled 
 let touchStartY;
 let touchEndY;
 let navMenuIsUpAndVisible = true; // Nav menu is visible at first when the app starts.
-let navMenuOnMobileHasBeenHiddenForTheFirstTime = false; // So that the very first swipe-up can be ignored.
+let navMenuIsMoving = false;
+// DEPRECATED: let navMenuOnMobileHasBeenHiddenForTheFirstTime = false; // So that the very first swipe-up can be ignored.
 var invisibleContainerOfContainerDivOfTheNavigationMenu = document.createElement("DIV");
 
 function makeTheNavMenuGoDownOnMobiles() {
   // Watch what's happening with swipeMenuIsDisabled
-    invisibleContainerOfContainerDivOfTheNavigationMenu.classList.add("addThisForAnimationSinkAndDisappear"); // See css_for_sliding_navigation_menu.css
-    invisibleContainerOfContainerDivOfTheNavigationMenu.classList.remove("addThisForAnimationAppearFromBottom");
-    navMenuOnMobileHasBeenHiddenForTheFirstTime = true;
-    if (navMenuIsUpAndVisible) { // It really was up and is now moving down
-      deactivationSound1.play(); // Handle audio: All SWIPE-DOWNs will continue firing this function but this sound must be heard only once.
+    // DEPRECATED: navMenuOnMobileHasBeenHiddenForTheFirstTime = true;
+    if (navMenuIsUpAndVisible && !navMenuIsMoving) { // It really was up
+      invisibleContainerOfContainerDivOfTheNavigationMenu.classList.remove("addThisForAnimationAppearFromBottom");
+      invisibleContainerOfContainerDivOfTheNavigationMenu.classList.add("addThisForAnimationSinkAndDisappear"); // See css_for_sliding_navigation_menu.css
+      deactivationSound1.play(); //
       navMenuIsUpAndVisible = false;
+      navMenuIsMoving = true;
+      setTimeout(function () {   navMenuIsMoving = false;   },1234);
     }
   // ---
 }
 
 function makeTheNavMenuComeUpOnMobiles() {
   if (!swipeMenuIsDisabled) {
-    invisibleContainerOfContainerDivOfTheNavigationMenu.classList.add("addThisForAnimationAppearFromBottom"); // See css_for_sliding_navigation_menu.css
-    invisibleContainerOfContainerDivOfTheNavigationMenu.classList.remove("addThisForAnimationSinkAndDisappear");
-    if (!navMenuIsUpAndVisible) { // It really was down and is now moving up
+    if (!navMenuIsUpAndVisible && !navMenuIsMoving) { // It really was down
+      invisibleContainerOfContainerDivOfTheNavigationMenu.classList.remove("addThisForAnimationSinkAndDisappear");
+      invisibleContainerOfContainerDivOfTheNavigationMenu.classList.add("addThisForAnimationAppearFromBottom"); // See css_for_sliding_navigation_menu.css
       activationSound1.play(); // Handle audio: All SWIPE-UPs will continue firing this function but this sound must be heard only once.
       navMenuIsUpAndVisible = true;
+      navMenuIsMoving = true;
+      setTimeout(function () {   navMenuIsMoving = false;   },1234);
     }
   }
 }
@@ -197,7 +202,7 @@ window.addEventListener("load",function() {
     invisibleContainerOfContainerDivOfTheNavigationMenu.appendChild(containerDivOfTheNavigationMenu);
     // SOLVED: Samsung Browser and Chrome were firing fullscreenchange and resize differently. 100ms delay before the boolean operations did the trick.
     // The Navigation Menu must appear only when user exits fullscreen. It MUST NOT APPEAR when device orientation is changed.
-    window.addEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);
+    // DEPRECATED: window.addEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);
     // SWIPE FROM BELOW TO BRING THE NAV MENU
     function getY1(event) {      touchStartY = event.changedTouches[0].screenY;    }
     function getY2(event) {      touchEndY = event.changedTouches[0].screenY;      handleSwipeGesture();    }
@@ -459,54 +464,52 @@ window.addEventListener("load",function() {
   }
 
   // ---------- Declaration of mobile functions ----------
-  // GO FULLSCREEN TO HIDE THE NAV MENU - EXIT TO REVEAL
-  function hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen() {
-    // Safari on iPhone doesn't allow fullscreen! (iOS 14.7 July 2021)
-    // Therefore no resize means no hiding of the nav menu through here on iPhones.
-    // So these will work only where changing to fullscreen triggers the 'resize' event.
-    // REMEMBER: "resize" fires not only when going fullscreen but also when user rotates the device i.e. when orientation is changed.
-    window.removeEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);
-    // Use hasGoneFullscreen variable from js_for_handling_fullscreen_mode.js
-    // WARNING! “hasGoneFullscreen” has a boolean value that alternates every time “fullscreenchange” event fires.
-    // CAUTION! This may happen before or after “resize” event fires depending on the browser!
-    // REMEMBER: Since resize doesn't happen on iPhones, the very first sinking of the nav menu is handled in js_for_all_container_parent_htmls -> handleTheFirstGoingFullscreenOnMobiles()
-    setTimeout(function () { /*!!!*/ // Try and see if 100ms delay will solve the opposite firing conflict between Chrome and Samsung Browser? Result: YES!
-      if (!hasGoneFullscreen) { // Since iPhones don't allow fullscreen orientation change fires differently on Android and iOS.
-        deactivationSound2.play();
-        setTimeout(function () {    makeTheNavMenuComeUpOnMobiles();    },500);
-        setTimeout(function () {    window.addEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);    },200); // animation duration is .4s inside css
-      } // End of if
-      else {
-        activationSound2.play();
-        // Hide the nav menu if open-fullscreen happened normally during a lesson without any preloading screen.
-        // Preloading is triggered by any of the [choose language] buttons OR [continue from last position] button etc
-        // In such cases makeTheNavMenuGoDownOnMobiles() must fire only after the preloading is done (iframe.load fires).
-        if (!preloadCoverIsShowingNow) { // This is created in js_for_preload_handling and is changed in
-          // No need to wait for smth to happen
-          setTimeout(function () {    makeTheNavMenuGoDownOnMobiles();    },2500);
-        } else {
-          // Must wait until preloadCoverIsShowingNow is set to false. That change happens in js_for_all_container_parent_htmls
-          let checkEvery250msOrSo = setInterval(isItDoneYet, 250);
-          function isItDoneYet() {
-            if (preloadCoverIsShowingNow == false) { // Yes, it is now done.
-              clearInterval(checkEvery250msOrSo); // Stop the timer.
-              makeTheNavMenuGoDownOnMobiles(); // Safely hide the nav menu as soon as possible now.
-            }
-          }
-        }
-        setTimeout(function () {    window.addEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);    },200); // animation duration is .4s inside css
-      } // End of else
-    },100); /*!!!*/ // End of setTimeout. Set to 100ms assuming that nobody would enter and then exit full screen within 100 milliseconds.
-
-  } // End of function hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen()
+  // DEPRECATED: GO FULLSCREEN TO HIDE THE NAV MENU - EXIT TO REVEAL
+  // function hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen() {
+  //   // Safari on iPhone doesn't allow fullscreen! (iOS 14.7 July 2021)
+  //   // Therefore no resize means no hiding of the nav menu through here on iPhones.
+  //   // So these will work only where changing to fullscreen triggers the 'resize' event.
+  //   // REMEMBER: "resize" fires not only when going fullscreen but also when user rotates the device i.e. when orientation is changed.
+  //   window.removeEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);
+  //   // Use hasGoneFullscreen variable from js_for_handling_fullscreen_mode.js
+  //   // WARNING! “hasGoneFullscreen” has a boolean value that alternates every time “fullscreenchange” event fires.
+  //   // CAUTION! This may happen before or after “resize” event fires depending on the browser!
+  //   // DEPRECATED: Since resize doesn't happen on iPhones, the very first sinking of the nav menu is handled in js_for_all_container_parent_htmls -> handleTheFirstGoingFullscreenOnMobiles()
+  //   setTimeout(function () { /*!!!*/ // Try and see if 100ms delay will solve the opposite firing conflict between Chrome and Samsung Browser? Result: YES!
+  //     if (!hasGoneFullscreen) { // Since iPhones don't allow fullscreen orientation change fires differently on Android and iOS.
+  //       deactivationSound2.play();
+  //       setTimeout(function () {    makeTheNavMenuComeUpOnMobiles();    },500);
+  //       setTimeout(function () {    window.addEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);    },200); // animation duration is .4s inside css
+  //     } // End of if
+  //     else {
+  //       activationSound2.play();
+  //       // Hide the nav menu if open-fullscreen happened normally during a lesson without any preloading screen.
+  //       // Preloading is triggered by any of the [choose language] buttons OR [continue from last position] button etc
+  //       // In such cases makeTheNavMenuGoDownOnMobiles() must fire only after the preloading is done (iframe.load fires).
+  //       if (!preloadCoverIsShowingNow) { // This is created in js_for_preload_handling and is changed in
+  //         // No need to wait for smth to happen
+  //         setTimeout(function () {    makeTheNavMenuGoDownOnMobiles();    },2500);
+  //       } else {
+  //         // Must wait until preloadCoverIsShowingNow is set to false. That change happens in js_for_all_container_parent_htmls
+  //         let checkEvery250msOrSo = setInterval(isItDoneYet, 250);
+  //         function isItDoneYet() {
+  //           if (preloadCoverIsShowingNow == false) { // Yes, it is now done.
+  //             clearInterval(checkEvery250msOrSo); // Stop the timer.
+  //             makeTheNavMenuGoDownOnMobiles(); // Safely hide the nav menu as soon as possible now.
+  //           }
+  //         }
+  //       }
+  //       setTimeout(function () {    window.addEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);    },200); // animation duration is .4s inside css
+  //     } // End of else
+  //   },100); /*!!!*/ // End of setTimeout. Set to 100ms assuming that nobody would enter and then exit full screen within 100 milliseconds.
+  //
+  // } // End of function hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen()
 
   // SWIPE UP-DOWN TO SEE-HIDE THE NAV MENU
   function handleSwipeGesture() {
     if ((touchStartY-touchEndY)>55) {
       // console.log("a swipe up happened");
-      if (navMenuOnMobileHasBeenHiddenForTheFirstTime) {
-        makeTheNavMenuComeUpOnMobiles();
-      }
+      makeTheNavMenuComeUpOnMobiles();
     }
     else if ((touchStartY-touchEndY)<-40) {
       // console.log("a swipe down happened");

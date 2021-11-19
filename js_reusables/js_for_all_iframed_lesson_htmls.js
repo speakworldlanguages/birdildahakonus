@@ -11,14 +11,17 @@ window.onload = function() { // DANGER: Do not use window.onload anywhere else. 
   const whereAreWe = window.location.pathname;
   if (whereAreWe.search("progress_chart") != -1) { // This means we have landed on the progress_chart
     // Bring the installation&notification-subscription button (footer in parent)
-    parent.revealNotificationInstallationButton();
+    parent.revealNotificationAndInstallation_2in1_button();
     /* Handle NAV MENU - Remove PAUSE THE APP ceramic button */
     if (parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { // Used to be in progress.js
       parent.containerDivOfTheNavigationMenu.removeChild(parent.clickToPauseTheAppDiv); //
     }
   } else { // We have landed on a lesson or a special page
+    if (deviceDetector.isMobile) {
+      setTimeout(function () {   parent.makeTheNavMenuGoDownOnMobiles();   },1500); // See js_for_the_sliding_navigation_menu // The function checks if the menu was up
+    }
     // Hide the installation&notification-subscription button (footer in parent)
-    parent.hideNotificationInstallationButton();
+    parent.hideNotificationAndInstallation_2in1_button();
     /* Handle NAV MENU - Add PAUSE THE APP ceramic button */
     setTimeout(afterATinyDelay,100); // So that it won't come before HOME button
     function afterATinyDelay() {
