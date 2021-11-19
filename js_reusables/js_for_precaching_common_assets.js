@@ -4,7 +4,11 @@
 window.addEventListener("load",theVeryFirstCachingF,{once:true}); // Run only after DOMContentLoaded because -> js_for_different_browsers_and_devices.js
 function theVeryFirstCachingF() {
   if (!localStorage.thisIsNotTheFirstTimeEver) {
-    cacheCoreAssetsOfTheApp(); cacheAssetsOfLevel_111(); cacheAssetsOfProgressChart();
+    // How do we chain these???
+    await cacheCoreAssetsOfTheApp();
+    await cacheAssetsOfLevel_111();
+    await cacheAssetsOfProgressChart();
+    await cacheAssetsOfInformationScreen();
     localStorage.thisIsNotTheFirstTimeEver = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
   }
 }
@@ -15,8 +19,6 @@ async function cacheAssetsOfInformationScreen() { // There is also the [about pa
   const cacheName = "information-screen-cache-Nov19th2021";
   const resourcesToPrecache = [
     "information",
-    "/information",
-    "/information/",
     "/information/index.html",
     "/information/information.css",
     "/information/information.js",
