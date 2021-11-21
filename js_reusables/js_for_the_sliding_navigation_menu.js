@@ -31,22 +31,22 @@ const clickToFinanceImgD = document.createElement("IMG");
 
 const onePixelTransparentGifUsedLocallyHereInNavMenu = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==";
 
-clickToGoToPreviousImgA.src = "user_interface/images/sliding_navigation_menu/go_to_previous_for_ltr_ui_a.webp";
-clickToGoToPreviousImgB.src = "user_interface/images/sliding_navigation_menu/go_to_previous_for_ltr_ui_b.webp";
-clickToGoToPreviousImgC.src = "user_interface/images/sliding_navigation_menu/go_to_previous_for_ltr_ui_c.webp";
-clickToGoToPreviousImgD.src = "user_interface/images/sliding_navigation_menu/go_to_previous_for_ltr_ui_d.webp";
-clickToGoToMainMenuImgA.src = "user_interface/images/sliding_navigation_menu/go_to_main_menu_house_a.webp";
-clickToGoToMainMenuImgB.src = "user_interface/images/sliding_navigation_menu/go_to_main_menu_house_b.webp";
-clickToGoToMainMenuImgC.src = "user_interface/images/sliding_navigation_menu/go_to_main_menu_house_c.webp";
-clickToGoToMainMenuImgD.src = "user_interface/images/sliding_navigation_menu/go_to_main_menu_house_d.webp";
-clickToPauseTheAppImgA.src = "user_interface/images/sliding_navigation_menu/pause_lesson_a.webp";
-clickToPauseTheAppImgB.src = "user_interface/images/sliding_navigation_menu/pause_lesson_b.webp";
-clickToPauseTheAppImgC.src = "user_interface/images/sliding_navigation_menu/pause_lesson_c.webp";
-clickToPauseTheAppImgD.src = "user_interface/images/sliding_navigation_menu/pause_lesson_d.webp";
-clickToFinanceImgA.src = "user_interface/images/sliding_navigation_menu/scale_a.webp";
-clickToFinanceImgB.src = "user_interface/images/sliding_navigation_menu/scale_b.webp";
-clickToFinanceImgC.src = "user_interface/images/sliding_navigation_menu/scale_c.webp";
-clickToFinanceImgD.src = "user_interface/images/sliding_navigation_menu/scale_d.webp";
+clickToGoToPreviousImgA.src = "/user_interface/images/sliding_navigation_menu/go_to_previous_for_ltr_ui_a.webp";
+clickToGoToPreviousImgB.src = "/user_interface/images/sliding_navigation_menu/go_to_previous_for_ltr_ui_b.webp";
+clickToGoToPreviousImgC.src = "/user_interface/images/sliding_navigation_menu/go_to_previous_for_ltr_ui_c.webp";
+clickToGoToPreviousImgD.src = "/user_interface/images/sliding_navigation_menu/go_to_previous_for_ltr_ui_d.webp";
+clickToGoToMainMenuImgA.src = "/user_interface/images/sliding_navigation_menu/go_to_main_menu_house_a.webp";
+clickToGoToMainMenuImgB.src = "/user_interface/images/sliding_navigation_menu/go_to_main_menu_house_b.webp";
+clickToGoToMainMenuImgC.src = "/user_interface/images/sliding_navigation_menu/go_to_main_menu_house_c.webp";
+clickToGoToMainMenuImgD.src = "/user_interface/images/sliding_navigation_menu/go_to_main_menu_house_d.webp";
+clickToPauseTheAppImgA.src = "/user_interface/images/sliding_navigation_menu/pause_lesson_a.webp";
+clickToPauseTheAppImgB.src = "/user_interface/images/sliding_navigation_menu/pause_lesson_b.webp";
+clickToPauseTheAppImgC.src = "/user_interface/images/sliding_navigation_menu/pause_lesson_c.webp";
+clickToPauseTheAppImgD.src = "/user_interface/images/sliding_navigation_menu/pause_lesson_d.webp";
+clickToFinanceImgA.src = "/user_interface/images/sliding_navigation_menu/scale_a.webp";
+clickToFinanceImgB.src = "/user_interface/images/sliding_navigation_menu/scale_b.webp";
+clickToFinanceImgC.src = "/user_interface/images/sliding_navigation_menu/scale_c.webp";
+clickToFinanceImgD.src = "/user_interface/images/sliding_navigation_menu/scale_d.webp";
 
 clickToGoToPreviousImgB.style.display = "none";
 clickToGoToPreviousImgC.style.display = "none";
@@ -118,8 +118,8 @@ function removeGoBackToPreviousButtonFromTheNavigationMenu() {
 }
 */
 // Sliding navigation menu button UI sounds
-const navMenuHoverSound = new Howl({  src: ['user_interface/sounds/ceramic_button_hover.'+audioFileExtension]  }); // DESKTOP ONLY. Put it here to make it global.
-const navMenuClickSound = new Howl({  src: ['user_interface/sounds/ceramic_button_click.'+audioFileExtension]  });
+const navMenuHoverSound = new Howl({  src: ['/user_interface/sounds/ceramic_button_hover.'+audioFileExtension]  }); // DESKTOP ONLY. Put it here to make it global.
+const navMenuClickSound = new Howl({  src: ['/user_interface/sounds/ceramic_button_click.'+audioFileExtension]  });
 
 var speedAdjustmentDiv = document.createElement("DIV"); // ONLY FOR DESKTOPS
 speedAdjustmentDiv.classList.add("sliderContainerDivsWillLook");
@@ -184,7 +184,7 @@ function makeTheNavMenuComeUpOnMobiles() {
 let mouseIsOnMenuTriggerArea = false;
 /*---*/
 let continueAfterPauseByNavMenuPauseButton = "Paused?"; // Get the actual text from txt file and use it instead of this default.
-const filePathForResumeAfterPausedByButton = "user_interface/text/"+userInterfaceLanguage+"/0-lesson_is_paused_by_button.txt";
+const filePathForResumeAfterPausedByButton = "/user_interface/text/"+userInterfaceLanguage+"/0-lesson_is_paused_by_button.txt";
 // See js_for_fetch_api_character_encoding.js for the headers thingy.
 fetch(filePathForResumeAfterPausedByButton,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ continueAfterPauseByNavMenuPauseButton = contentOfTheTxtFile; });
 /* NOTE: Looks like the function declarations could have been tidier */
@@ -635,7 +635,7 @@ window.addEventListener("load",function() {
         annyang.abort(); // without this annyang.start() won't function. // No problem if abort() fires when annyang wasn't listening.
       }
       /**/
-      // Setting the volume to 0 and then back to 1 causes a weird muting-unmuting behavior in iOS
+      // Setting the volume to 0 and then back to 1 causes a weird muting-unmuting behavior on iOS
       let howlerVolumeWas = Howler.volume();
       if (detectedOS.name != "iOS") {      Howler.volume(0);      } // Let it work except on iOS
       /**/
@@ -660,9 +660,9 @@ window.addEventListener("load",function() {
     // SAFARI IGNORES: window.open() with _blank due to pop-up blocking policy
     // EVEN THOUGH: Firefox allows _blank in window.open() we won't use it because it creates a conflict with "Continue lesson" alert as it force-focuses its tab and makes the entire Firefox flyover menu unnavigateable
     if (detectedOS.name == "iOS" || detectedOS.name == "Mac OS" || detectedBrowser.name == "Firefox") {
-      window.open("information","_self");
+      window.open("/information/index.html","_self");
     } else {
-      window.open("information","_blank");
+      window.open("/information/index.html","_blank");
     }
   }
   /*____________END OF touch and mouse events_____________*/

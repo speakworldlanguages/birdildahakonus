@@ -7,8 +7,8 @@
 // }
 
 const allNavElements = document.getElementsByTagName('NAV');
-const hoverProgress = new parent.Howl({  src: ["user_interface/sounds/progress_chart_hover."+parent.audioFileExtension]  });
-const clickProgress = new parent.Howl({  src: ["user_interface/sounds/progress_chart_click."+parent.audioFileExtension]  });
+const hoverProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_hover."+parent.audioFileExtension]  });
+const clickProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_click."+parent.audioFileExtension]  });
 let local_i;
 for (local_i = 0; local_i < allNavElements.length; local_i++)
 {
@@ -50,23 +50,23 @@ if (savedProgress[studiedLangCode].lesson_GIVEMEWATER_IsCompleted) {  lesson113.
 // See js_for_preload_handling to find handleFadingAndNavigation
 if (deviceDetector.isMobile) {
   lesson111.addEventListener("touchstart",function () {
-    window.parent.handleFadingAndNavigation('../lessons_in_iframes/level_1/unit_1/lesson_1/index.html');
+    window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_1/index.html");
   });
   lesson112.addEventListener("touchstart",function () {
-    window.parent.handleFadingAndNavigation('../lessons_in_iframes/level_1/unit_1/lesson_2/index.html');
+    window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html");
   });
   lesson113.addEventListener("touchstart",function () {
-    window.parent.handleFadingAndNavigation('../lessons_in_iframes/level_1/unit_1/lesson_3/index.html');
+    window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_3/index.html");
   });
 } else {
   lesson111.addEventListener("mouseup",function () {
-    window.parent.handleFadingAndNavigation('../lessons_in_iframes/level_1/unit_1/lesson_1/index.html');
+    window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_1/index.html");
   });
   lesson112.addEventListener("mouseup",function () {
-    window.parent.handleFadingAndNavigation('../lessons_in_iframes/level_1/unit_1/lesson_2/index.html');
+    window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html");
   });
   lesson113.addEventListener("mouseup",function () {
-    window.parent.handleFadingAndNavigation('../lessons_in_iframes/level_1/unit_1/lesson_3/index.html');
+    window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_3/index.html");
   });
 }
 

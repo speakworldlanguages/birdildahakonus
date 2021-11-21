@@ -294,7 +294,7 @@ var stopListeningAndProceedToNext = function () {
     parent.preloadHandlingDiv.classList.add("addThisClassToRevealThePreloader");
   },2100); // 3600-1500 = 2100 See css_for_every_single_html
   // REMEMBER: iframe.src change makes window.onbeforeunload fire in js_for_all_iframed_lesson_htmls.js which has unloadTheSoundsOfThisLesson();
-  setTimeout(function() { parent.ayFreym.src = '/lessons_in_iframes/level_1/unit_1/lesson_3'; },3600); // Replace this when lesson 3 is ready
+  setTimeout(function() { parent.ayFreym.src = "/lessons_in_iframes/level_1/unit_1/lesson_3/index.html"; },3600); //
   /* Save progress */
   savedProgress[studiedLang].lesson_WATER_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
   saveJSON = JSON.stringify(savedProgress); // Convert

@@ -34,12 +34,12 @@ window.addEventListener("DOMContentLoaded",function() { // Parents ONLY! Will fi
   preloadHandlingDiv = document.getElementById('idOfThePreloadHandlingDiv'); /* LET THE CREATION OF THIS DIV BE DONE IMMEDIATELY INSIDE HTML FILES and not here */
   preloadGlobeImg = document.getElementById('globeFrameZeroImgID');
   // fetch slowConnectionTryAgainOrWaitText
-  const filePathForResetTheAppText = "user_interface/text/"+userInterfaceLanguage+"/0-do_you_want_to_reset.txt";
+  const filePathForResetTheAppText = "/user_interface/text/"+userInterfaceLanguage+"/0-do_you_want_to_reset.txt";
   fetch(filePathForResetTheAppText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ slowConnectionTryAgainOrWaitText = contentOfTheTxtFile; });
 }, { once: true });
 
 window.addEventListener("load",function() { // Parents ONLY! Will fire 1 time when the app loads for the first time and never again
-  preloadGlobeImg.src = "user_interface/images/rotating_globe_100x150.webp"; // Change the 16KB single frame webp with the animated one 449KB one. Which will probably be ready until user chooses a language to learn.
+  preloadGlobeImg.src = "/user_interface/images/rotating_globe_100x150.webp"; // Change the 16KB single frame webp with the animated one 449KB one. Which will probably be ready until user chooses a language to learn.
   preloadHandlingDiv.classList.add("addThisClassToHideThePreloader"); // See css_for_every_single_html
   setTimeout(function () {   setPreloadCoverIsShowingNowToFalse();   },505); // What happens if blank.html can not be loaded
 }, { once: true });

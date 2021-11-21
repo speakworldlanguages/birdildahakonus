@@ -11,6 +11,7 @@
 /* install and activate fire only on the first visit*/
 
 self.addEventListener("activate", event => {
+  // Didn't work as expected,,, some files (like blank.html) get written in the dynamic cache despite being listed in the static cache
   /*
   event.waitUntil(
     caches.keys().then(keys =>{
@@ -32,19 +33,21 @@ self.addEventListener("activate", event => {
 });
 
 //const dynamicCacheName = "app-dynamic-cache-Nov19th2021"; // CAN: Change the name to force-recache
+// Didn't work as expected,,, some files (like blank.html) get written in the dynamic cache despite being listed in the static cache
 self.addEventListener("fetch", event => {
   event.respondWith( caches.match(event.request)
     .then( cachedResponse => {
-      return cachedResponse || fetch(event.request)/*.then(fetchResponse => {
+      return cachedResponse || fetch(event.request);
+      /*.then(fetchResponse => {
         return caches.open(dynamicCacheName).then(cache => {
           cache.put(event.request.url, fetchResponse.clone());
           return fetchResponse;
         })
-      })*/;
+      })*///;
     } )
   );
 });
-// See The Net Ninja PWA tutorials on Youtube #19 offline fallback
+// See The Net Ninja PWA tutorials on Youtube #19 #20 for offline fallback
 /*
 .catch(() => {
   if (event.request.url.indexOf(".html") >= 0) {

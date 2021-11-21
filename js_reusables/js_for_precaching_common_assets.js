@@ -3,34 +3,38 @@
 /**/
 window.addEventListener("load",theVeryFirstCachingF,{once:true}); // Run only after DOMContentLoaded because -> js_for_different_browsers_and_devices.js
 async function theVeryFirstCachingF() {
-  if (!localStorage.thisIsNotTheFirstTimeEver) {
-    // How do we chain these???
-    await cacheCoreAssetsOfTheApp();
-    await cacheAssetsOfLevel_111();
-    await cacheAssetsOfProgressChart();
-    await cacheAssetsOfInformationScreen();
-    localStorage.thisIsNotTheFirstTimeEver = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
+  setTimeout(afterSomeMilliseconds,2000);
+  function afterSomeMilliseconds() {
+    if (!localStorage.thisIsNotTheFirstTimeEver) {
+      // How do we chain these???
+      await cacheCoreAssetsOfTheApp();
+      await cacheAssetsOfLevel_111();
+      await cacheAssetsOfProgressChart();
+      await cacheAssetsOfInformationScreen();
+      localStorage.thisIsNotTheFirstTimeEver = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
+    }
   }
 }
 
 // Call these when it is time to get the files ready
 /**/
 async function cacheAssetsOfInformationScreen() { // There is also the [about page] but will leave it to dynamic service worker caching for now
-  const cacheName = "information-screen-cache-Nov19th2021";
+  const cacheName = "information-screen-cache-Nov21st2021";
   const resourcesToPrecache = [
-    "/information",
     "/information/index.html",
     "/information/information.css",
     "/information/information.js",
     "/information/long_arrow.png",
     "/information/topraksoy_earthman_tsuchimoto.webp"
   ];
+  // if desktop push "/about/index.html"
   const cache = await caches.open(cacheName);
   await cache.addAll(resourcesToPrecache);
 }
+
 /**/
 async function cacheCoreAssetsOfTheApp() {
-  const cacheName = "app-core-cache-Nov19th2021";
+  const cacheName = "app-core-cache-Nov21st2021";
   // Outcommented files must be cached conditionally
 
   // "js_reusables/js_for_microphone_input_visualization.js",
@@ -167,16 +171,16 @@ async function cacheCoreAssetsOfTheApp() {
   const cache = await caches.open(cacheName);
   await cache.addAll(resourcesToPrecache);
 }
+
 /**/
 async function cacheAssetsOfProgressChart() {
-  const cacheName = "progress-chart-cache-Nov19th2021";
+  const cacheName = "progress-chart-cache-Nov21st2021";
   const resourcesToPrecache = [
-    "/progress_chart",
+    "/progress_chart/index.html",
     "/progress_chart/bilinguals.css",
     "/progress_chart/bread.webp",
     "/progress_chart/get_ui_texts.js",
     "/progress_chart/givemewater.webp",
-    "/progress_chart/index.html",
     "/progress_chart/progress.css",
     "/progress_chart/progress.js",
     "/progress_chart/water.webp"
@@ -184,11 +188,13 @@ async function cacheAssetsOfProgressChart() {
   const cache = await caches.open(cacheName);
   await cache.addAll(resourcesToPrecache);
 }
+
 /**/
 async function cacheAssetsOfLevel_111() {
-  const cacheName = "lesson-1-1-1-cache-Nov19th2021";
+  const cacheName = "lesson-1-1-1-cache-Nov21st2021";
   const resourcesToPrecache = [
-    "/lessons_in_iframes/level_1/unit_1/lesson_1",
+    "/lessons_in_iframes/level_1/unit_1/lesson_1/",
+    "/lessons_in_iframes/level_1/unit_1/lesson_1/index.html",
     "/lessons_in_iframes/level_1/unit_1/lesson_1/1_c1.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_1/2.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_1/3.webp",
@@ -202,8 +208,7 @@ async function cacheAssetsOfLevel_111() {
     "/lessons_in_iframes/level_1/unit_1/lesson_1/c5.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_1/c6.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_1/c7.webp",
-    "/lessons_in_iframes/level_1/unit_1/lesson_1/c8.webp",
-    "/lessons_in_iframes/level_1/unit_1/lesson_1/index.html"
+    "/lessons_in_iframes/level_1/unit_1/lesson_1/c8.webp"
   ];
   // if iOS or Mac OS mp4 else webm // if iOS or Mac OS mp3 else ogg
   if (isApple) {
@@ -222,11 +227,13 @@ async function cacheAssetsOfLevel_111() {
   const cache = await caches.open(cacheName);
   await cache.addAll(resourcesToPrecache);
 }
+
 /**/
 async function cacheAssetsOfLevel_112() { // Call this as soon as window load happens in lessons_in_iframes/level_1/unit_1/lesson_1/index.html
-  const cacheName = "lesson-1-1-2-cache-Nov19th2021";
+  const cacheName = "lesson-1-1-2-cache-Nov21st2021";
   const resourcesToPrecache = [
-    "/lessons_in_iframes/level_1/unit_1/lesson_2",
+    "/lessons_in_iframes/level_1/unit_1/lesson_2/",
+    "/lessons_in_iframes/level_1/unit_1/lesson_2/index.html",
     "/lessons_in_iframes/level_1/unit_1/lesson_2/1.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_2/2.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_2/3.webp",
@@ -243,7 +250,6 @@ async function cacheAssetsOfLevel_112() { // Call this as soon as window load ha
     "/lessons_in_iframes/level_1/unit_1/lesson_2/c8.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_2/c9.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_2/c10.webp",
-    "/lessons_in_iframes/level_1/unit_1/lesson_2/index.html",
     "/lessons_in_iframes/level_1/unit_1/lesson_2/water.js"
   ];
   // if iOS or Mac OS mp4 else webm // if iOS or Mac OS mp3 else ogg
@@ -271,11 +277,13 @@ async function cacheAssetsOfLevel_112() { // Call this as soon as window load ha
   const cache = await caches.open(cacheName);
   await cache.addAll(resourcesToPrecache);
 }
+
 /**/
 async function cacheAssetsOfLevel_113() { // Call this as soon as window load happens in lessons_in_iframes/level_1/unit_1/lesson_2/index.html
-  const cacheName = "lesson-1-1-3-cache-Nov19th2021";
+  const cacheName = "lesson-1-1-3-cache-Nov21st2021";
   const resourcesToPrecache = [
-    "/lessons_in_iframes/level_1/unit_1/lesson_3",
+    "/lessons_in_iframes/level_1/unit_1/lesson_3/",
+    "/lessons_in_iframes/level_1/unit_1/lesson_3/index.html",
     "/lessons_in_iframes/level_1/unit_1/lesson_3/-0p5_glass.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_3/-1_glass.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_3/-1p5_glass.webp",
@@ -318,7 +326,6 @@ async function cacheAssetsOfLevel_113() { // Call this as soon as window load ha
     "/lessons_in_iframes/level_1/unit_1/lesson_3/give_me_water_state_d.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_3/give_me_water.css",
     "/lessons_in_iframes/level_1/unit_1/lesson_3/give_me_water.js",
-    "/lessons_in_iframes/level_1/unit_1/lesson_3/index.html",
     "/lessons_in_iframes/level_1/unit_1/lesson_3/play_with_gamepad.js",
     "/lessons_in_iframes/level_1/unit_1/lesson_3/play_with_mouse.js",
     "/lessons_in_iframes/level_1/unit_1/lesson_3/play_with_tablet_or_phone.js",

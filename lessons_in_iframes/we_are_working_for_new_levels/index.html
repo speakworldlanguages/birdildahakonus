@@ -3,16 +3,15 @@
   <head>
     <!-- This will be parented by a container HTML -->
     <title>🏁</title> <!-- Symbol &#127937;-->
-    <script>    localStorage.theLastCheckpointSavedInLocalStorage = self.location.href; /*Save checkpoint*/    </script>
     <meta charset="utf-8">
     <meta name="robots" content="noindex" />
 
-    <link rel="stylesheet" href="../../css_reusables/css_for_permanent_custom_cursor.css">
-    <link rel="stylesheet" href="../../css_reusables/css_for_every_single_html.css">
-    <link rel="stylesheet" href="../../css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Necessary for background gradient. -->
+    <link rel="stylesheet" href="/css_reusables/css_for_permanent_custom_cursor.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Necessary for background gradient. -->
 
-    <script defer src="../../js_reusables/js_for_every_single_html.js">/*Get fonts*/</script>
-    <script defer src="../../js_reusables/js_for_all_iframed_lesson_htmls.js">/*Make button sounds work*/</script>
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*Get fonts*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Make button sounds work*/</script>
     <!--ADDED THIS INTO js_for_every_single_html.js <script defer src="../../js_reusables/js_for_fetch_api_character_encoding.js">/*Display non-english characters correctly*/</script> -->
 
     <link rel="preconnect" href="https://fonts.gstatic.com"> <!-- Use google font library -->
@@ -54,8 +53,8 @@
         }
         // REMEMBER: Wait for “userInterfaceLanguage” variable to be ready. See js_for_every_single_html.js
         // ------- Fill the divs with text depending on the user interface language --------
-        const filePathForMessageText = "../../user_interface/text/"+userInterfaceLanguage+"/after_last_lesson_message.txt";
-        const filePathForButtonText = "../../user_interface/text/"+userInterfaceLanguage+"/after_last_lesson_button.txt";
+        const filePathForMessageText = "/user_interface/text/"+userInterfaceLanguage+"/after_last_lesson_message.txt";
+        const filePathForButtonText = "/user_interface/text/"+userInterfaceLanguage+"/after_last_lesson_button.txt";
         fetch(filePathForMessageText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.getElementById('messageAfterTheLastLessonP').innerHTML = contentOfTheTxtFile; });
         fetch(filePathForButtonText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.getElementById('goToInfoPageButton').innerHTML = contentOfTheTxtFile; });
 
@@ -100,7 +99,7 @@
         <div id="particularZoomOnPhonesA">
           <p id="messageAfterTheLastLessonP" class="latinTextFont" style="color:#2b3e4e ;font-size:170%; letter-spacing: -0.1vmin; white-space: pre;">...</p>
         </div>
-        <img id="particularZoomOnPhonesB" src="../../user_interface/images/we_are_working.webp" alt="" style="height:38vh;">
+        <img id="particularZoomOnPhonesB" src="/user_interface/images/we_are_working.webp" alt="" style="height:38vh;">
         <button id="goToInfoPageButton" style="mix-blend-mode: overlay; font-size:25px; white-space: pre;" onclick="handleClickTouch();">...</button>
         <!-- mix-blend could depend on device -->
     </main>

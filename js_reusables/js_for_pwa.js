@@ -154,7 +154,6 @@ function whetherTheAppIsRunningStandaloneF() {
   }
 }
 
-
 /* appinstalled FIRES ONLY ONCE DURING THE LIFETIME OF THE APP */ /* Side note: Clearing local storage from the browser will clear the app's data too */
 /* MDN says, appinstalled is deprecated and according to support table it fires only on Chrome and Edge */
 /* Maybe we can use appinstalled to fix mobile chrome's [not switching to standalone app automatically when download completes] thing */
@@ -164,6 +163,7 @@ if (deviceDetector.isMobile) {
   // the only option left is a guesstimation of how long it would take to download 400kb~500kb and add it to the home screen
   window.addEventListener("appinstalled",(evt)=>{  whenAppinstalledFiresOnMobile();  }); // Force switch to standalone mode for Android
   function whenAppinstalledFiresOnMobile() {
+    // BETTER: Display a sticking full-viewport note and tell the user to close the browser tab leaving him/her optionless ???
     setTimeout(function () {  window.location.reload();  },15000); // Try to refresh about 15 seconds after [Install] is clicked.
   }
 } else {

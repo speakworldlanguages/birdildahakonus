@@ -78,7 +78,7 @@ let rotationSpeedFromTouches = 0;
 let rotationDegFromTouches = 0;
 let newRotation = 0;
 
-let xForceThrustAdjustmentForTilt = (40 + 30*howManyTries);
+let xForceThrustAdjustmentForTilt = (45 + 55*howManyTries);
 let releaseTheHandsEffect = 1;
 
 function gameLoopForPhoneOrTablet() {
