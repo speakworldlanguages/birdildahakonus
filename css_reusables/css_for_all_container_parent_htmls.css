@@ -83,7 +83,7 @@ main{ /*This used to be #fullViewportPositionFixedDivAsContainerOfTheMenu */
 
 header{ /*Choose the language you want to learn*/
   display: flex; flex-direction: column; justify-content: center; align-items: center;
-  padding-top: 5px;
+  padding-top: 14px; /* On phones the 2in1 button is too close so try to move the "Choose the language" title further down */
   padding-left: 15px; padding-right: 15px;
   /* border: 2px dotted red; */
   font-size: 27px;
