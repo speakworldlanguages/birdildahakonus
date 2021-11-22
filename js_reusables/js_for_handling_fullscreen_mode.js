@@ -33,7 +33,7 @@ window.addEventListener("load",function() {
       iDocWindow.document.addEventListener("touchstart", handleTouchSoundBeforeFullscreen);
     }
     function handleTouchForFullscreen() {
-      if (!hasGoneFullscreen){  openFullscreen();  } // This works but it gives an error for the first touch. Was able to turn the error into something useful by adding preActivationSound_TWO.play();
+      if (!hasGoneFullscreen){  openFullscreen();  }
     }
     function handleTouchSoundBeforeFullscreen() {
       if (detectedOS.name != "iOS" && !hasGoneFullscreen) { preActivationSound_TWO.play(); }
@@ -42,7 +42,7 @@ window.addEventListener("load",function() {
     // THE RIGHT CLICK METHOD ON DESKTOPS
     var currentSrcParsed;
     // Every time the iframe is loaded, add the custom context menu to either the parent document or the framed document.
-    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnDesktopBrowser,{once:true});
+    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnDesktopBrowser); // Looks like we MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
     function iframeHasBeenLoadedOnDesktopBrowser() {
       // DEPRECATED: currentSrcParsed = iFrameLocalConst.src.substring(iFrameLocalConst.src.length - 10, iFrameLocalConst.src.length-5); // Get the name of the html file from a string like "/user_interface/blank.html"
       const currentSrc = iFrameLocalConst.src;
