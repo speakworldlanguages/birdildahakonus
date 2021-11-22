@@ -191,7 +191,7 @@ fetch(filePathForResumeAfterPausedByButton,myHeaders).then(function(response){re
 window.addEventListener("load",function() {
 
   // What to do on MOBILE DEVICES
-  //var iframe = document.getElementById('theIdOfTheIframe'); // DEPRECATED: Use ayFreym from js_for_all_container_parent_htmls
+  // Use ayFreym from js_for_all_container_parent_htmls
   // What to do on MOBILES
   if (deviceDetector.isMobile){
     // If something blocks the clickablity of any other element use pointerEvents = "none";

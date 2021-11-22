@@ -143,8 +143,8 @@
     </main>
     <!-- MAKE THE APP LOAD slightly FASTER BY ASSIGNING src OF THE IMAGE FILES AFTER window load -->
     <script>
-      window.addEventListener("load",handleSrcOfWebps,{once:true});
-      function handleSrcOfWebps() {
+      window.addEventListener("load",handleSrcOfLateLoaders,{once:true});
+      function handleSrcOfLateLoaders() {
         const desktopImg = document.getElementById('desktopImgID');
         const tabletImg = document.getElementById('tabletImgID');
         const phoneImg = document.getElementById('phoneImgID');
@@ -153,6 +153,8 @@
         if (deviceDetector.device == "desktop") { desktopImg.src = "/user_interface/images/add_to_desktop.webp"; }
         else if (deviceDetector.device == "tablet") { tabletImg.src = "/user_interface/images/add_to_home_screen_tablet.webp"; }
         else { phoneImg.src = "/user_interface/images/add_to_home_screen_phone.webp"; }
+        const frame = document.getElementsByTagName('IFRAME')[0];
+        frame.src = "/user_interface/blank.html";
       }
     </script>
 
@@ -170,7 +172,7 @@
 
     <!-- LESSONS WILL BE DISPLAYED ONE BY ONE THROUGH THIS IFRAME -->
     <!--  -->
-    <iframe src="/user_interface/blank.html" id="theIdOfTheIframe" allowfullscreen></iframe>
+    <iframe src="" allowfullscreen></iframe>
     <!--  -->
 
     <script>

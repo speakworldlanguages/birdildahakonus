@@ -11,41 +11,43 @@ window.addEventListener("load",function() {
   activationSound1 = new Howl({  src: ["/user_interface/sounds/thingy_one_activate."+audioFileExtension]  }); // Desktops: FULLSCREEN,,, Mobiles: NAVIGATION MENU
   errorSound = new Howl({  src: ["/user_interface/sounds/thingy_two_error."+audioFileExtension]  }); // Mobiles only: Touch once - Touch twice distinction
 
-  const iFrameLocalConst = document.getElementById('theIdOfTheIframe'); // Check js_for_all_container_parent_htmls.js prevent conflicts
+  const iFrameLocalConst = document.getElementsByTagName('IFRAME')[0]; // Used to be .getElementById('theIdOfTheIframe'); // Check js_for_all_container_parent_htmls.js prevent conflicts
   const iDoc = iFrameLocalConst.contentWindow || iFrameLocalConst.contentDocument;
 
   // HOW TO GO AND STAY IN FULLSCREEN ON MOBILES
-  function handleTouchForFullscreen() {
-    if (!hasGoneFullscreen){  openFullscreen();  } // This works but it gives an error for the first touch. Was able to turn the error into something useful by adding errorSound.play();
-  }
-  function iframeHasBeenLoaded() {
-    iDoc.document.addEventListener("touchstart", handleTouchForFullscreen); // Tried to removeEventListener with 'unload' but neither 'unload' nor 'hashchange' fires on the iframe.
-  }
+  /**/
   // See js_for_all_container_parent_htmls to find how openFullscreen() is called.
   // DEPRECATED: openFullscreen() is called via handleTheFirstGoingFullscreenOnMobiles() when either of these two things happen,
   // 1- when user taps on a button in the main menu (language selection menu) 2- when user taps the "return to the last saved point" button
   // But ALSO must RETURN TO FULLSCREEN WITH THE FIRST TOUCH if user navigates away from the app and comes back and THE REASON is
   // BECAUSE most browsers won't allow going fullscreen without a user gesture... That means calling openFullscreen() with Onblur Onfocus or document.visibilitychange won't work.
   // So here is how we do it...
+
   if (deviceDetector.isMobile) {
-    iFrameLocalConst.addEventListener("load",iframeHasBeenLoaded); // We cannot directly add an event listener for touchstart/mousedown on the iframe without this.
-  }
-  // THE RIGHT CLICK METHOD ON DESKTOPS
-  else {
+    // We cannot directly add an event listener for touchstart/mousedown on the iframe. So instead add it to the documentSmthSmth in the iFrame.
+    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnMobileBrowser,{once:true});
+    function iframeHasBeenLoadedOnMobileBrowser() {
+      iDoc.document.addEventListener("touchstart", handleTouchForFullscreen); // Tried to removeEventListener with 'unload' but neither 'unload' nor 'hashchange' fires on the iframe.
+    }
+    function handleTouchForFullscreen() {
+      if (!hasGoneFullscreen){  openFullscreen();  } // This works but it gives an error for the first touch. Was able to turn the error into something useful by adding errorSound.play();
+    }
+  } else {
+    // THE RIGHT CLICK METHOD ON DESKTOPS
     var currentSrcParsed;
     // Every time the iframe is loaded, add the custom context menu to either the parent document or the framed document.
-    iFrameLocalConst.onload = function() {
-      currentSrcParsed = iFrameLocalConst.src.substring(iFrameLocalConst.src.length - 10, iFrameLocalConst.src.length-5); // Get the name of the html file from a string like "/user_interface/blank.html"
+    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnDesktopBrowser,{once:true});
+    function iframeHasBeenLoadedOnDesktopBrowser() {
+      // DEPRECATED: currentSrcParsed = iFrameLocalConst.src.substring(iFrameLocalConst.src.length - 10, iFrameLocalConst.src.length-5); // Get the name of the html file from a string like "/user_interface/blank.html"
+      const currentSrc = iFrameLocalConst.src;
       // When user is viewing the main menu
-      if (currentSrcParsed == "blank") {
+      if (currentSrc.search("blank.html") >= 0) {
         document.addEventListener('contextmenu', rightClickHandlerFunction);
         document.addEventListener('mousedown', coordinatesF);
         window.onkeyup = function(e) {  if ( e.keyCode === 27 ) {    toggleRightClickMenuOff();   }  }; // When the “Esc”ape key is hit
         document.addEventListener('mousedown', toggleRightClickMenuOff);
         document.addEventListener('dblclick', toggleFullScreen);
-      }
-      // When user is viewing a lesson
-      else {
+      } else { // When user is viewing a lesson
         iFrameLocalConst.contentWindow.document.addEventListener('contextmenu', rightClickHandlerFunction);
         iFrameLocalConst.contentWindow.document.addEventListener('mousedown', coordinatesF);
         iFrameLocalConst.contentWindow.onkeyup = function(e) {  if ( e.keyCode === 27 ) {    toggleRightClickMenuOff();   }  }; // When the “Esc”ape key is hit
@@ -53,7 +55,7 @@ window.addEventListener("load",function() {
         iFrameLocalConst.contentWindow.addEventListener('dblclick', toggleFullScreen); // NOTE: dblclick means either left double-click or right double-click
       }
 
-    }; // This line is the end of iFrameLocalConst.onload = function(){}; for DESKTOPS
+    } // This line is the end of iframeHasBeenLoadedOnDesktopBrowser()
   } // End of “else”
 
 },{ once: true });

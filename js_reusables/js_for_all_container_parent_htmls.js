@@ -30,7 +30,7 @@ function userHasClickedOrTouchedWelcomeAnswerB() { // The user has claimed that 
 var genderOfTheUser;
 var theLanguageUserIsLearningNowToSetFilePaths;
 var theLanguageUserIsLearningNowToSetAnnyang;
-var ayFreym = document.getElementById('theIdOfTheIframe'); // Access to ayFreym from » progress.js, js_for_different_browsers_and_devices, js_for_the_sliding_navigation_menu
+var ayFreym = document.getElementsByTagName('IFRAME')[0]; //used to be getElementById('theIdOfTheIframe'); // Access to ayFreym from » progress.js, js_for_different_browsers_and_devices, js_for_the_sliding_navigation_menu
 
 window.addEventListener('DOMContentLoaded', function(){
   // Skip the crowdfunding (welcome screen) message if user says he she is a member.

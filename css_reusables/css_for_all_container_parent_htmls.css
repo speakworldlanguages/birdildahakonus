@@ -83,6 +83,7 @@ main{ /*This used to be #fullViewportPositionFixedDivAsContainerOfTheMenu */
 
 header{ /*Choose the language you want to learn*/
   display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding-top: 5px;
   padding-left: 15px; padding-right: 15px;
   /* border: 2px dotted red; */
   font-size: 27px;
@@ -133,10 +134,13 @@ footer:active{  transform: translateX(-50%) scale(0.98); }
 .footerDesktop p{ text-shadow: none; min-width: 150px; }
 .footerSlideAppearDesktop{margin-top:-19.7vh;}
 
+/*See js_for_pwa.js*/
 .footerTabletAndPhone{ top:-120px; }
 .footerTabletAndPhone div{ display: flex; align-items: center; justify-content: center; max-width:90vmin; height: 72px; }
 .footerTabletAndPhone img{ height: 70px; }
 .footerTabletAndPhone p{ text-shadow: none; min-width: 190px; line-height: 23px; }
+@media (orientation: landscape) {  .footerTabletAndPhone {    display: none;   }   }
+@media (orientation: portrait)  {  .footerTabletAndPhone {    display: block;  }   }
 .footerSlideAppearMobile{margin-top:133px;}
 
 /**/
