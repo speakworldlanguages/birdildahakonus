@@ -2,15 +2,15 @@
 // Even though this is deferred, looks like we still need to wait for the load event before we call a function from another js file.
 
 // See js_for_different_browsers_and_devices ... Also see js_for_the_sliding_navigation_menu
-var deactivationSound1, activationSound1, errorSound;
+var deactivationSound1, activationSound1, preActivationSound_TWO;
 
 var hasGoneFullscreen = false;
 // Go fullscreen by touching anywhere on the screen.
 window.addEventListener("load",function() {
   deactivationSound1 = new Howl({  src: ["/user_interface/sounds/thingy_one_deactivate."+audioFileExtension]  }); // Desktops: FULLSCREEN,,, Mobiles: NAVIGATION MENU
   activationSound1 = new Howl({  src: ["/user_interface/sounds/thingy_one_activate."+audioFileExtension]  }); // Desktops: FULLSCREEN,,, Mobiles: NAVIGATION MENU
-  errorSound = new Howl({  src: ["/user_interface/sounds/thingy_two_error."+audioFileExtension]  }); // Mobiles only: Touch once - Touch twice distinction
-
+  preActivationSound_TWO = new Howl({  src: ["/user_interface/sounds/thingy_two_preactivation."+audioFileExtension]  }); // Mobiles only: Touch once - Touch twice distinction
+  // See js_for_different_browsers_and_devices.js for activationSound2 and deactivationSound2
   const iFrameLocalConst = document.getElementsByTagName('IFRAME')[0]; // Used to be .getElementById('theIdOfTheIframe'); // Check js_for_all_container_parent_htmls.js prevent conflicts
   const iDocWindow = iFrameLocalConst.contentWindow || iFrameLocalConst.contentDocument;
 
@@ -25,13 +25,18 @@ window.addEventListener("load",function() {
 
   if (deviceDetector.isMobile) {
     // We cannot directly add an event listener for touchstart/mousedown on the iframe. So instead add it to the documentSmthSmth in the iFrame.
-    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnMobileBrowser); // Try not using once:true
+    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnMobileBrowser); // Looks like we MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
     function iframeHasBeenLoadedOnMobileBrowser() {
       // Try touchend instead of touchstart to see if it will fix the console error » "fullscreen error"
-      iDocWindow.document.addEventListener("touchend", handleTouchForFullscreen); // Tried to removeEventListener with 'unload' but neither 'unload' nor 'hashchange' fires on the iframe.
+      // ANSWER: Yes, it looks like trying to go fullscreen with touchstart was the cause of that error which made fullscreen work only with a double tap
+      iDocWindow.document.addEventListener("touchend", handleTouchForFullscreen);
+      iDocWindow.document.addEventListener("touchstart", handleTouchSoundBeforeFullscreen);
     }
     function handleTouchForFullscreen() {
-      if (!hasGoneFullscreen){  openFullscreen();  } // This works but it gives an error for the first touch. Was able to turn the error into something useful by adding errorSound.play();
+      if (!hasGoneFullscreen){  openFullscreen();  } // This works but it gives an error for the first touch. Was able to turn the error into something useful by adding preActivationSound_TWO.play();
+    }
+    function handleTouchSoundBeforeFullscreen() {
+      if (detectedOS.name != "iOS" && !hasGoneFullscreen) { preActivationSound_TWO.play(); }
     }
   } else {
     // THE RIGHT CLICK METHOD ON DESKTOPS
@@ -112,7 +117,7 @@ function toggleRightClickMenuOff() {
 var theWholeDocument = document.documentElement;
 /* Function to open fullscreen mode */
 function openFullscreen() {
-  /* There is a weird thing on Android as fullscreen permission is not granted before the second touch event. It still works though. */
+  /* On Android fullscreen permission throws an error with touchstart. Use touchend instead */
   if (theWholeDocument.requestFullscreen) {
     theWholeDocument.requestFullscreen();
   } else if (theWholeDocument.mozRequestFullScreen) { /* Firefox */
@@ -124,14 +129,6 @@ function openFullscreen() {
     theWholeDocument.msRequestFullscreen();
   }
   /* DEPRECATED: Used to handle audio on mobile with RESIZE*/ // See js_for_the_sliding_navigation_menu.js //
-  if (deviceDetector.device=="desktop") {
-    activationSound1.play();
-  } else {
-
-    // activationSound2.play(); // See js_for_different_browsers_and_devices.js
-    // Handle audio according to the "weird two touches problem" without creating conflict with iOS
-    if (detectedOS.name != "iOS") { errorSound.play(); } // No need for DOMContentLoaded etc???
-  }
 }
 
 /* Function to close fullscreen mode */
@@ -145,45 +142,55 @@ function closeFullscreen() {
   } else if (document.msExitFullscreen) {
     window.top.document.msExitFullscreen();
   }
-  /*Handle audio on mobile with RESIZE*/ // See js_for_the_sliding_navigation_menu.js
-  if (deviceDetector.device=="desktop") {
-    deactivationSound1.play(); // Let it be heard only on desktops,,, Actually: This wouldn't play on mobiles even if wasn't inside an "if-desktop" since on mobiles exiting fullscreen happens without closeFullscreen().
-  } else { // What happens when fullscreen is closed on tablets and phones
-    // deactivationSound2.play(); // See js_for_different_browsers_and_devices.js
-    if (typeof swipeMenuIsDisabled == "boolean") { // Check if it exists even if they are both at parent level
-      swipeMenuIsDisabled = false; // Enable it (it could have been disabled because of a game-input-conflict) See js_for_the_sliding_navigation_menu.js
-    }
-  }
 }
 
+function handleEnterSound() {
+  if (deviceDetector.isMobile) {   activationSound2.play();  } // See js_for_different_browsers_and_devices.js
+  else {    activationSound1.play();   }
+}
+function handleExitSound() {
+  if (deviceDetector.isMobile) {   deactivationSound2.play();  }
+  else {    deactivationSound1.play(); }
+  if (typeof swipeMenuIsDisabled == "boolean") { // Check if it exists even if they are both at parent level
+    swipeMenuIsDisabled = false; // Enable it (it could have been disabled because of a game-input-conflict) See js_for_the_sliding_navigation_menu.js
+  }
+}
 /* Change boolean hasGoneFullscreen every time fullscreen is opened or closed*/
 document.addEventListener("fullscreenchange", function() {
   if (!hasGoneFullscreen) {
     hasGoneFullscreen = true;
+    handleEnterSound();
     // console.log("fullscreenchange event fired! and now it is fullscreen");
   } else {
     hasGoneFullscreen = false;
+    handleExitSound();
     // console.log("fullscreenchange event fired! and now it is back to default view");
   }
 });
 document.addEventListener("mozfullscreenchange", function() {
   if (!hasGoneFullscreen) {
     hasGoneFullscreen = true;
+    handleEnterSound();
   } else {
     hasGoneFullscreen = false;
+    handleExitSound();
   }
 });
 document.addEventListener("webkitfullscreenchange", function() {
   if (!hasGoneFullscreen) {
     hasGoneFullscreen = true;
+    handleEnterSound();
   } else {
     hasGoneFullscreen = false;
+    handleExitSound();
   }
 });
 document.addEventListener("msfullscreenchange", function() {
   if (!hasGoneFullscreen) {
     hasGoneFullscreen = true;
+    handleEnterSound();
   } else {
     hasGoneFullscreen = false;
+    handleExitSound();
   }
 });
