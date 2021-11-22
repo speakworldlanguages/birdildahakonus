@@ -10,26 +10,26 @@ saveJSON = JSON.stringify(savedProgress); // Convert
 localStorage.setItem("memoryCard", saveJSON); // Save
 
 /* __ TEXT TO BE INJECTED INTO EXPLANATION BOX __ */
-const explanationPathA = "../../../../user_interface/text/"+userInterfaceLanguage+"/1-1-3a.txt"; // The translation of what is being said, to be put into the helpbox/subtitles.
-const explanationPathB = "../../../../user_interface/text/"+userInterfaceLanguage+"/1-1-3b.txt"; // The translation of what is being said, to be put into the helpbox/subtitles.
-let explanationA = "No internet connection?"; // Warning: Returns UNDEFINED before fetch() actually gets the file.
-let explanationB = "No internet connection?"; // Warning: Returns UNDEFINED before fetch() actually gets the file.
+const explanationPathA = "/user_interface/text/"+userInterfaceLanguage+"/1-1-3a.txt"; // The translation of what is being said, to be put into the helpbox/subtitles.
+const explanationPathB = "/user_interface/text/"+userInterfaceLanguage+"/1-1-3b.txt"; // The translation of what is being said, to be put into the helpbox/subtitles.
+let explanationA = "No internet connection?"; // Warning: Without an initial value it returns UNDEFINED before fetch() actually gets the file.
+let explanationB = "No internet connection?"; // Warning: Without an initial value it returns UNDEFINED before fetch() actually gets the file.
 fetch(explanationPathA,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ explanationA = contentOfTheTxtFile; });
 fetch(explanationPathB,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ explanationB = contentOfTheTxtFile; });
 /* __ TEXT TO BE INJECTED INTO iOS ALLOW deviceorientation BUTTON __ */
-const getPermissionPath = "../../../../user_interface/text/"+userInterfaceLanguage+"/0-you_must_touch_click_allow.txt";
-const ifNoPermissionPath = "../../../../user_interface/text/"+userInterfaceLanguage+"/0-you_didnt_touch_click_allow.txt";
+const getPermissionPath = "/user_interface/text/"+userInterfaceLanguage+"/0-you_must_touch_click_allow.txt";
+const ifNoPermissionPath = "/user_interface/text/"+userInterfaceLanguage+"/0-you_didnt_touch_click_allow.txt";
 let getPermission = "No internet connection?";
 let ifNoPermission = "No internet connection?";
 fetch(getPermissionPath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ getPermission = contentOfTheTxtFile; });
 fetch(ifNoPermissionPath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ ifNoPermission = contentOfTheTxtFile; });
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
-const say1Path = "audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/give_me_water_1."+parent.audioFileExtension;
-const say2Path = "audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/give_me_water_2."+parent.audioFileExtension;
-const say3Path = "audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/give_me_water_3."+parent.audioFileExtension;
-const say4Path = "audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/give_me_water_4."+parent.audioFileExtension;
-const say5Path = "audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/thank_you."+parent.audioFileExtension;
+const say1Path = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/give_me_water_1."+parent.audioFileExtension;
+const say2Path = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/give_me_water_2."+parent.audioFileExtension;
+const say3Path = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/give_me_water_3."+parent.audioFileExtension;
+const say4Path = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/give_me_water_4."+parent.audioFileExtension;
+const say5Path = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/thank_you."+parent.audioFileExtension;
 
 if (parent.theLanguageUserIsLearningNowToSetFilePaths=="ar" && parent.genderOfTheUser=="female") {
   say1Path = say1Path.split(".")[0] + "_female."+parent.audioFileExtension;
@@ -45,11 +45,11 @@ const say3 = new parent.Howl({  src: [say3Path]  });
 const say4 = new parent.Howl({  src: [say4Path]  });
 const say5 = new parent.Howl({  src: [say5Path]  });
 
-const winSound = new parent.Howl({  src: ['lessons_in_iframes/level_1/unit_1/lesson_3/he_gets_the_water.'+parent.audioFileExtension]  });
-const glassBreak = new parent.Howl({  src: ['lessons_in_iframes/level_1/unit_1/lesson_3/glass_breaks_into_pieces.'+parent.audioFileExtension]  });
+const winSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_3/he_gets_the_water."+parent.audioFileExtension]  });
+const glassBreak = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_3/glass_breaks_into_pieces."+parent.audioFileExtension]  });
 
-const notificationSoundAboutControllerDevice = new parent.Howl({  src: ['user_interface/sounds/notification2_appear.'+parent.audioFileExtension]  });
-const notificationSoundCloseControlDevice = new parent.Howl({  src: ['user_interface/sounds/notification2_close.'+parent.audioFileExtension]  });
+const notificationSoundAboutControllerDevice = new parent.Howl({  src: ["/user_interface/sounds/notification2_appear."+parent.audioFileExtension]  });
+const notificationSoundCloseControlDevice = new parent.Howl({  src: ["/user_interface/sounds/notification2_close."+parent.audioFileExtension]  });
 /* Sounds exist on the parent. So they will NOT UNLOAD when iframe src is changed. We must manually unload them before exiting. */
 function unloadTheSoundsOfThisLesson() { // Either call this as the last thing before leaving or let it be called by window.onbeforeunload in js_for_all_iframed_lesson_htmls
   notificationSoundCloseControlDevice.unload();
@@ -134,7 +134,7 @@ function domContentLoadedFunction() {
 window.addEventListener('load', loadingIsCompleteFunction, { once: true });
 function loadingIsCompleteFunction() {
   if (parent.theLanguageUserIsLearningNowToSetFilePaths == "ar") { // Display an info box about gender difference in Arabic.
-    const pathOfNotificationAboutMaleFemaleCommand = "../../../../user_interface/text/"+userInterfaceLanguage+"/1-1-3_arabic_male_female.txt";
+    const pathOfNotificationAboutMaleFemaleCommand = "/user_interface/text/"+userInterfaceLanguage+"/1-1-3_arabic_male_female.txt";
     fetch(pathOfNotificationAboutMaleFemaleCommand,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
       setTimeout(function(){ createAndHandleNotificationBox(); putNotificationTxtIntoThisP.innerHTML = contentOfTheTxtFile; },501); // See js_for_notification_or_such_boxes.js
       // createAndHandleNotificationBox will fire startTheLesson 1.5 seconds after its OK button is clicked/touched
@@ -147,8 +147,8 @@ function loadingIsCompleteFunction() {
 
 function startTheLesson() {
   // User must listen to wavesurfer vocabulary box no matter what language he/she is studying
-  const filePathOfTheAudioFile = "../../../../audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/give."+parent.audioFileExtension;
-  const wavesurferP1P2Path = "../../../../user_interface/text/"+userInterfaceLanguage+"/1-1-3_vocabulary_p1_p2.txt";
+  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_3/give."+parent.audioFileExtension;
+  const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-1-3_vocabulary_p1_p2.txt";
   fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
   // See js_for_notification_or_such_boxes » iframe-lesson level
   setTimeout(function(){    createAndHandleVocabularyBox(filePathOfTheAudioFile);    },501); // Wait for preloader to disappear or give a brief break after notification
@@ -266,7 +266,7 @@ function proceedDependingOnTheDevice() {
       notificationSoundAboutControllerDevice.play();
       showTouchControlsDiv.classList.add("toNormalOpacityAndScale");
       /**/
-      const url = "../../../../js_reusables/tilt-to-steer.js";
+      const url = "/js_reusables/tilt-to-steer.js";
       const script = document.createElement('script');
       script.async = true;
       script.onload = () => getReadyToPlayTheGameOnMobileF();

@@ -4,7 +4,7 @@
 
     <script> var thisIsTheParentWhichContainsAllIFramedLessons = "yes"; </script>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"> <!-- For mobile device screens to display things properly -->
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable = no"> <!-- For mobile device screens to display things properly -->
     <title>BİR DİL DAHA ÖĞREN: Öğren Ki Yeryüzünün Yabancısı Değil Yerlisi Ol</title>
     <meta name="description" content="Dinleyip öğrendiklerini hemen konuşarak kullanmaya başla!">
     <meta name="author" content="Beykan Alper Bilgekılınç Topraksoy">
@@ -19,33 +19,33 @@
     <!-- <link rel="alternate" hreflang="ar" href="https://???"> -->
     <link rel="alternate" hreflang="en" href="https://speakworldlanguages.app">
 
-    <link rel="icon" type="image/png" href="user_interface/icon/animated_globe_icon_39.png" id="icon" sizes="32x32"> <!-- This appears next to the title in the browser's TABS and plays as an animation. See js_for_icon_and_title_animation.js -->
-    <link id="saveLoadTimeOnMobileID" rel="preload" href="css_reusables/css_for_permanent_custom_cursor.css" as="style" onload=" var useThis=this; useThis.onload=null; setTimeout(function(){ useThis.rel='stylesheet'; },3000); "> <!-- DESKTOPS only! -->
+    <link rel="icon" type="image/png" href="/user_interface/icon/animated_globe_icon_39.png" id="icon" sizes="32x32"> <!-- This appears next to the title in the browser's TABS and plays as an animation. See js_for_icon_and_title_animation.js -->
+    <link id="saveLoadTimeOnMobileID" rel="preload" href="/css_reusables/css_for_permanent_custom_cursor.css" as="style" onload=" var useThis=this; useThis.onload=null; setTimeout(function(){ useThis.rel='stylesheet'; },3000); "> <!-- DESKTOPS only! -->
     <!-- Above line is used because 40 little png files (for custom cursors) can take too many milliseconds to download and some frames can go missing as browser's rendering starts. Note: As of 2020 Firefox doesn't support rel="preload". -->
-    <link rel="stylesheet" href="css_reusables/css_for_every_single_html.css">
-    <link rel="stylesheet" href="css_reusables/css_for_all_container_parent_htmls.css">
-    <link rel="stylesheet" href="css_reusables/css_for_sliding_navigation_menu.css">
-    <link rel="stylesheet" href="css_reusables/css_for_latin_font_rules.css">
-    <link rel="stylesheet" href="css_reusables/css_loading_animation_orbiting_circles.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_all_container_parent_htmls.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_sliding_navigation_menu.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_latin_font_rules.css">
+    <link rel="stylesheet" href="/css_reusables/css_loading_animation_orbiting_circles.css">
 
-    <script src="third_party_js/annyang.min.js">/*Speech Recognition library by Tal Ater - Github: TalAter*/</script>
-    <script src="third_party_js/ua-parser.min.js">/*JS library for getting the browser and OS names by Faisal Salman - Github: faisalman*/</script>
-    <!-- MOVED TO every_single_html.js <script src="third_party_js/devicedetector-min.js">/*A device detector by Maarten Belmans - Github: PoeHaH*/</script> --><!-- copy-paste devicedetector into js_for_every_single_html.js -->
-    <script src="third_party_js/howler.min.js">/*An audio handler - Github: goldfire*/</script>
-    <!-- <script src="third_party_js/localforage.min.js">/*Use indexedDB; store large blobs like recorded audio or pass data to the service worker*/</script> -->
+    <script src="/third_party_js/annyang.min.js">/*Speech Recognition library by Tal Ater - Github: TalAter*/</script>
+    <script src="/third_party_js/ua-parser.min.js">/*JS library for getting the browser and OS names by Faisal Salman - Github: faisalman*/</script>
+    <!-- MOVED TO every_single_html.js <script src="/third_party_js/devicedetector-min.js">/*A device detector by Maarten Belmans - Github: PoeHaH*/</script> --><!-- copy-paste devicedetector into js_for_every_single_html.js -->
+    <script src="/third_party_js/howler.min.js">/*An audio handler - Github: goldfire*/</script>
+    <!-- <script src="/third_party_js/localforage.min.js">/*Use indexedDB; store large blobs like recorded audio or pass data to the service worker*/</script> -->
 
-    <script src="js_reusables/js_for_preload_handling.js">/* INCLUSION PRIORITIZED: Measure time between "DOMContentLoaded" and "load" */</script>
-    <script src="js_reusables/js_for_online_and_offline_modes.js">/* Detect and handle online offline mode */</script>
-    <script defer src="js_reusables/js_for_every_single_html.js">/*Memory card, userInterfaceLanguage, fetch headers, fonts*/</script>
-    <script defer src="js_reusables/js_for_handling_fullscreen_mode.js">/*Handle right-clicks, double-clicks...*/</script>
-    <script defer src="js_reusables/js_for_all_container_parent_htmls.js">/*Fake antisleep video, be careful with iPhone fullscreen openfirstlesson, load last studied language codes...*/</script>
-    <script defer src="js_reusables/js_for_different_browsers_and_devices.js">/*Whitelist browsers, handling visibilitychange: what happens when user leaves the app*/</script>
-    <script defer src="js_reusables/js_for_icon_and_title_animation.js">/*A rotating globe next to the title that appears in the browser-tab*/</script>
-    <script defer src="js_reusables/js_for_the_sliding_navigation_menu.js">/*NAVIGATION*/</script>
-    <script defer src="js_reusables/js_for_pwa.js">/*Progressive Web App - Handle installation*/</script>
-    <script defer src="js_reusables/js_for_precaching_common_assets.js">/*Get the files in advance to minimize waiting time*/</script>
-    <script defer src="user_interface/ui_specific_js/precache_ui_texts_and_fonts_tr.js">/*Get the files in advance to minimize waiting time*/</script>
-    <script defer src="js_reusables/js_for_odtu.js">/*---*/</script>
+    <script src="/js_reusables/js_for_preload_handling.js">/* INCLUSION PRIORITIZED: Measure time between "DOMContentLoaded" and "load" */</script>
+    <script src="/js_reusables/js_for_online_and_offline_modes.js">/* Detect and handle online offline mode */</script>
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*Memory card, userInterfaceLanguage, fetch headers, fonts*/</script>
+    <script defer src="/js_reusables/js_for_handling_fullscreen_mode.js">/*Handle right-clicks, double-clicks...*/</script>
+    <script defer src="/js_reusables/js_for_all_container_parent_htmls.js">/*Fake antisleep video, be careful with iPhone fullscreen openfirstlesson, load last studied language codes...*/</script>
+    <script defer src="/js_reusables/js_for_different_browsers_and_devices.js">/*Whitelist browsers, handling visibilitychange: what happens when user leaves the app*/</script>
+    <script defer src="/js_reusables/js_for_icon_and_title_animation.js">/*A rotating globe next to the title that appears in the browser-tab*/</script>
+    <script defer src="/js_reusables/js_for_the_sliding_navigation_menu.js">/*NAVIGATION*/</script>
+    <script defer src="/js_reusables/js_for_pwa.js">/*Progressive Web App - Handle installation*/</script>
+    <script defer src="/js_reusables/js_for_precaching_common_assets.js">/*Get the files in advance to minimize waiting time*/</script>
+    <script defer src="/user_interface/ui_specific_js/precache_ui_texts_and_fonts_tr.js">/*Get the files in advance to minimize waiting time*/</script>
+    <script defer src="/js_reusables/js_for_odtu.js">/*---*/</script>
 
     <!-- Uncomment the following to be able to use the browser console on mobile devices -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/1.5.8/eruda.min.js"></script> -->
@@ -66,8 +66,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Bir Dil Daha Öğren">
     <meta name="apple-mobile-web-app-status-bar-style" content="#4d606f">
-    <link rel="apple-touch-icon" href="icon_for_pwa_tr.png">
-    <link rel="manifest" href="manifest_tr.json">
+    <link rel="apple-touch-icon" href="/icon_for_pwa_tr.png">
+    <link rel="manifest" href="/manifest_tr.json">
     <script>
       if ("serviceWorker" in navigator) {  window.addEventListener("DOMContentLoaded",()=>{  navigator.serviceWorker.register("service-worker.js");  });  } // Takes too long compared to window load (almost a second)
     </script>
@@ -78,7 +78,7 @@
     <div id="idOfThePreloadHandlingDiv" style="position: fixed; top:0; left:0; bottom:0; right:0; background-color: white; display: flex; justify-content: center; align-items: center; z-index: 9999;">
       <!-- The content of this div is changed via script. See js_for_preload_handling.js -->
       <!-- The style is left inline as a safe measure against slow network etc. See css_for_every_single_html.css-->
-      <img id="globeFrameZeroImgID" src="user_interface/images/rotating_globe_100x150_frame0.webp" alt="Geliyor...">
+      <img id="globeFrameZeroImgID" src="/user_interface/images/rotating_globe_100x150_frame0.webp" alt="Geliyor...">
     </div>
 
     <div id="orbitingCirclesDivID" class="orbitingCirclesTopContainer" style="display:none;">
@@ -88,7 +88,7 @@
     </div>
 
     <div data-nosnippet id="allowMicrophoneDivID" class="youMustAllowMicrophone">
-      <img src="user_interface/images/microphone.webp" style="width:50px;" alt="İzin ver">
+      <img src="/user_interface/images/microphone.webp" style="width:50px;" alt="İzin ver">
       <p style="text-shadow:none;">?</p>
     </div>
 
@@ -110,7 +110,7 @@
     <!-- THE MAIN MENU -->
     <main> <!-- See css_for_all_container_parent_htmls.css & js_for_all_container_parent_htmls.js -->
       <header>
-        <p>Öğrenmek istediğin dili seç</p>
+        <p>Öğrenmek istediğin <span style="white-space:nowrap;">dili seç</span></p>
       </header>
       <div class="chooseLanguageButtonsContainer">
         <!-- When more languages are hopefully added, we better list them with the world map order like east to west, west to east,right to left, left to right with a swipeable navigation design -->
@@ -124,22 +124,37 @@
         <!-- <button onclick="letTheIFrameTeachEnglish()">Piypıl Dili (İngilizce)</button> -->
         <!-- See js_for_all_container_parent_htmls.js -->
       </div>
+      <!-- See js_for_pwa.js -->
       <footer class="footerDesktop">
         <div id="footerInstallID" style="display:none;">
-          <img src="user_interface/images/add_to_desktop.webp" alt="Uygulamayı indir">
-          <img src="user_interface/images/add_to_home_screen_tablet.webp" alt="Uygulamayı indir" style="display:none;">
-          <img src="user_interface/images/add_to_home_screen_phone.webp" alt="Uygulamayı indir" style="display:none;">
+          <img id="desktopImgID" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Uygulamayı indir">
+          <img id="tabletImgID" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Uygulamayı indir" style="display:none;">
+          <img id="phoneImgID" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Uygulamayı indir" style="display:none;">
           <p style="display:block;">Uygulamayı masaüstüne indir</p>
           <p style="display:none;">Uygulamayı ana ekrana ekle</p>
           <p style="display:none;">Artık tarayıcıyı kapatıp<br>uygulamayı ana ekrandan çalıştırabilirsin</p>
         </div>
         <div id="footerNotificationID" style="display:flex;">
-          <img src="user_interface/images/push_me_notification.webp" alt="Yeni bölümler hazır olunca haber ver">
+          <img id="pushNotificationImgID" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Yeni bölümler hazır olunca haber ver">
           <p style="display:block;">Yeni bölümler hazır olunca<br>haber almak için tıkla</p>
           <p style="display:none;">Yeni bölümler hazır olunca haber almak için dokun</p>
         </div>
       </footer>
     </main>
+    <!-- MAKE THE APP LOAD slightly FASTER BY ASSIGNING src OF THE IMAGE FILES AFTER window load -->
+    <script>
+      window.addEventListener("load",handleSrcOfWebps,{once:true});
+      function handleSrcOfWebps() {
+        const desktopImg = document.getElementById('desktopImgID');
+        const tabletImg = document.getElementById('tabletImgID');
+        const phoneImg = document.getElementById('phoneImgID');
+        const pushNotificationImg = document.getElementById('pushNotificationImgID');
+        pushNotificationImg.src = "/user_interface/images/push_me_notification.webp";
+        if (deviceDetector.device == "desktop") { desktopImg.src = "/user_interface/images/add_to_desktop.webp"; }
+        else if (deviceDetector.device == "tablet") { tabletImg.src = "/user_interface/images/add_to_home_screen_tablet.webp"; }
+        else { phoneImg.src = "/user_interface/images/add_to_home_screen_phone.webp"; }
+      }
+    </script>
 
     <!-- get rid of this after testing the new idOfTheLoadProgressDiv -->
     <!-- <div id="fullViewportPositionFixedDivAsContainerOfLoadCheckpointPrompt"> -->
@@ -155,7 +170,7 @@
 
     <!-- LESSONS WILL BE DISPLAYED ONE BY ONE THROUGH THIS IFRAME -->
     <!--  -->
-    <iframe src="user_interface/blank.html" id="theIdOfTheIframe" allowfullscreen></iframe>
+    <iframe src="/user_interface/blank.html" id="theIdOfTheIframe" allowfullscreen></iframe>
     <!--  -->
 
     <script>

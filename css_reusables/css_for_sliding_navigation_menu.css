@@ -93,21 +93,21 @@
 .sliderContainerDivsWillLook{
   width: 140px;
   height: 140px;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_background.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_background.webp") no-repeat; /* Use an absolute or relative path */
   background-size: 140px 140px;
   position: absolute;
   /*left: 0%;*//*right: 0%;*/ /*Set via script -> see js_for_sliding_navigation_menu.js*/
   transform: rotate(-90deg);
 }
 .sliderContainerDivsWillLook:hover{
-  background: url("../user_interface/images/sliding_navigation_menu/slider_background_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_background_hover.webp") no-repeat; /* Use an absolute or relative path */
 }
 
 .bothSlidersAppearance{
   margin: 0;
   position: relative;
   top: 50%;
-  -ms-transform: translateY(-50%); /*Not sure if the -ms- prefix is necessary... Will leave it anyways*/
+  -ms-transform: translateY(-50%); /*Not sure if the -ms- prefix is necessary. Will leave it anyways*/
   transform: translateY(-50%);
   -webkit-appearance: none;
   appearance: none;
@@ -137,19 +137,19 @@
   appearance: none;
   width: 52px;
   height: 46px;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
   cursor: grab;
 
 }
 .speedSliderAppearance1::-webkit-slider-thumb:hover {
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 
 }
 .speedSliderAppearance1::-webkit-slider-thumb:active {
   cursor: grabbing;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 
@@ -158,17 +158,17 @@
   appearance: none;
   width: 52px;
   height: 46px;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
   cursor: grab;
 }
 .speedSliderAppearance1::-moz-range-thumb:hover {
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 .speedSliderAppearance1::-moz-range-thumb:active {
   cursor: grabbing;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_1_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 /*____2 means NORMAL SPEED____*/
@@ -178,17 +178,17 @@
   appearance: none;
   width: 52px;
   height: 46px;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
   cursor: grab;
 }
 .speedSliderAppearance2::-webkit-slider-thumb:hover {
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 .speedSliderAppearance2::-webkit-slider-thumb:active {
   cursor: grabbing;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 .speedSliderAppearance2::-moz-range-thumb {
@@ -196,17 +196,17 @@
   appearance: none;
   width: 52px;
   height: 46px;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
   cursor: grab;
 }
 .speedSliderAppearance2::-moz-range-thumb:hover {
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 .speedSliderAppearance2::-moz-range-thumb:active {
   cursor: grabbing;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_2_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 /*____3 means FAST____*/
@@ -216,17 +216,17 @@
   appearance: none;
   width: 52px;
   height: 46px;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
   cursor: grab;
 }
 .speedSliderAppearance3::-webkit-slider-thumb:hover {
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 .speedSliderAppearance3::-webkit-slider-thumb:active {
   cursor: grabbing;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 .speedSliderAppearance3::-moz-range-thumb {
@@ -234,17 +234,17 @@
   appearance: none;
   width: 52px;
   height: 46px;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
   cursor: grab;
 }
 .speedSliderAppearance3::-moz-range-thumb:hover {
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 .speedSliderAppearance3::-moz-range-thumb:active {
   cursor: grabbing;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_hare_and_turtle_3_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 
@@ -257,17 +257,17 @@
   appearance: none;
   width: 52px;
   height: 46px;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_volume.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_volume.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
   cursor: grab;
 }
 .volumeSliderAppearance::-webkit-slider-thumb:hover {
-  background: url("../user_interface/images/sliding_navigation_menu/slider_volume_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_volume_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 .volumeSliderAppearance::-webkit-slider-thumb:active {
   cursor: grabbing;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_volume_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_volume_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 .volumeSliderAppearance::-moz-range-thumb {
@@ -275,16 +275,16 @@
   appearance: none;
   width: 52px;
   height: 46px;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_volume.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_volume.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
   cursor: grab;
 }
 .volumeSliderAppearance::-moz-range-thumb:hover {
-  background: url("../user_interface/images/sliding_navigation_menu/slider_volume_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_volume_hover.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }
 .volumeSliderAppearance::-moz-range-thumb:active {
   cursor: grabbing;
-  background: url("../user_interface/images/sliding_navigation_menu/slider_volume_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
+  background: url("/user_interface/images/sliding_navigation_menu/slider_volume_active.webp") no-repeat; /*Relative to the css file. Not relative to the html.*/
   background-size: 52px 46px;
 }

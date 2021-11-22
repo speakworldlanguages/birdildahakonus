@@ -1,30 +1,30 @@
 const leftText1 = document.getElementById('leftText1pID'); const rightText1 = document.getElementById('rightText1pID');
 
 let leftTextWithoutInteraction;
-const filePathForLeftTextWithoutInteraction = "../user_interface/text/"+userInterfaceLanguage+"/0-you_are_learning_"+parent.theLanguageUserIsLearningNowToSetFilePaths+".txt";
+const filePathForLeftTextWithoutInteraction = "/user_interface/text/"+userInterfaceLanguage+"/0-you_are_learning_"+parent.theLanguageUserIsLearningNowToSetFilePaths+".txt";
 fetch(filePathForLeftTextWithoutInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
   leftTextWithoutInteraction = contentOfTheTxtFile;
   leftText1.innerHTML = leftTextWithoutInteraction;
 });// See js_for_fetch_api_character_encoding.js for the headers thingy.
 
 let rightTextWithoutInteraction;
-const filePathForRightTextWithoutInteraction = "../user_interface/text/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/0-you_are_learning_"+parent.theLanguageUserIsLearningNowToSetFilePaths+".txt";
+const filePathForRightTextWithoutInteraction = "/user_interface/text/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/0-you_are_learning_"+parent.theLanguageUserIsLearningNowToSetFilePaths+".txt";
 fetch(filePathForRightTextWithoutInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
   rightTextWithoutInteraction = contentOfTheTxtFile;
   rightText1.innerHTML = rightTextWithoutInteraction;
 });
 
 let leftTextUponInteraction;
-const filePathForLeftTextUponInteraction = "../user_interface/text/"+userInterfaceLanguage+"/0-learn_another_language.txt";
+const filePathForLeftTextUponInteraction = "/user_interface/text/"+userInterfaceLanguage+"/0-learn_another_language.txt";
 fetch(filePathForLeftTextUponInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ leftTextUponInteraction = contentOfTheTxtFile; });
 
 let rightTextUponInteraction;
-const filePathForRightTextUponInteraction = "../user_interface/text/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/0-learn_another_language.txt";
+const filePathForRightTextUponInteraction = "/user_interface/text/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/0-learn_another_language.txt";
 fetch(filePathForRightTextUponInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ rightTextUponInteraction = contentOfTheTxtFile; });
 
 let sleepAdviceA, sleepAdviceB;
-const filePathForsleepAdviceA = "../user_interface/text/"+userInterfaceLanguage+"/0-author_gives_sleep_advice.txt";
-const filePathForsleepAdviceB = "../user_interface/text/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/0-author_gives_sleep_advice.txt";
+const filePathForsleepAdviceA = "/user_interface/text/"+userInterfaceLanguage+"/0-author_gives_sleep_advice.txt";
+const filePathForsleepAdviceB = "/user_interface/text/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/0-author_gives_sleep_advice.txt";
 fetch(filePathForsleepAdviceA,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ sleepAdviceA = contentOfTheTxtFile; });
 fetch(filePathForsleepAdviceB,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ sleepAdviceB = contentOfTheTxtFile; });
 

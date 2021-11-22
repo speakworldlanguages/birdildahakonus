@@ -6,19 +6,19 @@
     <meta charset="utf-8">
     <meta name="robots" content="noindex" />
     <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
-    <link rel="stylesheet" href="../../../../css_reusables/css_for_permanent_custom_cursor.css">
-    <link rel="stylesheet" href="../../../../css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
-    <link rel="stylesheet" href="../../../../css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- MAIN is a full viewport DIV with flex center X center Y -->
-    <link rel="stylesheet" href="../../../../css_reusables/css_for_new_vocabulary_with_photos.css">
-    <link rel="stylesheet" href="../../../../css_reusables/css_for_wavesurfer_microphone_divs.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_permanent_custom_cursor.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- MAIN is a full viewport DIV with flex center X center Y -->
+    <link rel="stylesheet" href="/css_reusables/css_for_new_vocabulary_with_photos.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_wavesurfer_microphone_divs.css">
 
-    <script defer src="../../../../js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, deviceDetector, fonts, fetch headers, onePixelTransparentGif...*/</script>
-    <script defer src="../../../../js_reusables/js_for_all_iframed_lesson_htmls.js">/*createNotificationBox, createVocabBox, button sounds, iframeLoadCounter...*/</script>
-    <script defer src="../../../../js_reusables/js_for_handling_speech_give_up.js">/*White listed browsers: wait for speech ,,, others: don't wait*/</script>
-    <script defer src="../../../../js_reusables/js_for_microphone_input_visualization.js">/*Start, Stop wavesurfer microphone*/</script>
-    <script src="../../../../third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
-    <script src="../../../../third_party_js/wavesurfer.microphone.min.js">/*Audio visualization. Github: katspaugh*/</script>
-    <script defer src="../../../../js_reusables/js_for_notification_or_such_boxes.js">/*Includes fetch so it must come after character encoding*/</script>
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, deviceDetector, fonts, fetch headers, onePixelTransparentGif...*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*createNotificationBox, createVocabBox, button sounds, iframeLoadCounter...*/</script>
+    <script defer src="/js_reusables/js_for_handling_speech_give_up.js">/*White listed browsers: wait for speech ,,, others: don't wait*/</script>
+    <script defer src="/js_reusables/js_for_microphone_input_visualization.js">/*Start, Stop wavesurfer microphone*/</script>
+    <script src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <script src="/third_party_js/wavesurfer.microphone.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <script defer src="/js_reusables/js_for_notification_or_such_boxes.js">/*Includes fetch so it must come after character encoding*/</script>
     <script defer src="water.js">/*Progress handling for this lesson*/</script>
 
   </head>
@@ -104,7 +104,7 @@
     </script>
 
     <!-- “Now it’s your turn” animation 5100ms -->
-    <img id="nowYouSayItIMG" src="../../../../user_interface/images/now_you_say_it_to_speech_recognition.webp" style="display:none;">
+    <img id="nowYouSayItIMG" src="/user_interface/images/now_you_say_it_to_speech_recognition.webp" style="display:none;">
 
     <!-- GIVE UP\PROCEED TO NEXT -->
     <div id="giveUpSkipNextContinueButtonDivID" class="glassButtonStartHidden" style="position: fixed; top:50%; left:50%; transform: translate(-50%,-50%); z-index: 1000;" onmouseup="giveUpButtonIsClickedFunction();"> <!-- See js_for_handling_speech_give_up.js --> <!-- See css_for_all_iframed_lesson_htmls.css -->

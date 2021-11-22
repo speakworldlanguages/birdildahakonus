@@ -34,6 +34,7 @@ self.addEventListener("activate", event => {
 
 //const dynamicCacheName = "app-dynamic-cache-Nov19th2021"; // CAN: Change the name to force-recache
 // Didn't work as expected,,, some files (like blank.html) get written in the dynamic cache despite being listed in the static cache
+// Maybe we should introduce a delay or a condition so that dynamic caching will start only after static caching is done and ready
 self.addEventListener("fetch", event => {
   event.respondWith( caches.match(event.request)
     .then( cachedResponse => {
@@ -51,7 +52,7 @@ self.addEventListener("fetch", event => {
 /*
 .catch(() => {
   if (event.request.url.indexOf(".html") >= 0) {
-    return caches.match("user_interface/youmustgetonline.html");
+    return caches.match("/user_interface/youmustgetonline.html");
   }
 })
 */

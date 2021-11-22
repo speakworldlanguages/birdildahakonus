@@ -15,3 +15,4 @@ function updateOnlineStatus() {
 window.addEventListener('online',  updateOnlineStatus );
 window.addEventListener('offline', updateOnlineStatus );
 window.addEventListener("DOMContentLoaded",updateOnlineStatus,{once:true});
+// See js_for_handling_speech_give_up

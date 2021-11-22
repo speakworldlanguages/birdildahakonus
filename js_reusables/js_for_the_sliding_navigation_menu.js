@@ -118,8 +118,8 @@ function removeGoBackToPreviousButtonFromTheNavigationMenu() {
 }
 */
 // Sliding navigation menu button UI sounds
-const navMenuHoverSound = new Howl({  src: ['/user_interface/sounds/ceramic_button_hover.'+audioFileExtension]  }); // DESKTOP ONLY. Put it here to make it global.
-const navMenuClickSound = new Howl({  src: ['/user_interface/sounds/ceramic_button_click.'+audioFileExtension]  });
+const navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover."+audioFileExtension]  }); // DESKTOP ONLY. Put it here to make it global.
+const navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click."+audioFileExtension]  });
 
 var speedAdjustmentDiv = document.createElement("DIV"); // ONLY FOR DESKTOPS
 speedAdjustmentDiv.classList.add("sliderContainerDivsWillLook");
@@ -649,7 +649,7 @@ window.addEventListener("load",function() {
         if (wasListeningWhenUserPaused) {
           setTimeout(function() {          if (annyang){ annyang.start(); }           },1001);
         }
-      },30); // 30ms is not a superstition, it's guesstimated safety measure.
+      },30); // 30ms is not a superstition, it's a guesstimated safety measure.
     },250);
   }
 

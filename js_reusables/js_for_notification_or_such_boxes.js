@@ -5,15 +5,15 @@ const okButtonToCloseTheNotification = document.createElement("DIV");
 okButtonToCloseTheNotification.innerHTML = "&#10004;"; // Default content of the OK box is a "tick ✔" mark
 
 // Put something like [OK], [Got it], [I see], [Oh really?], [Wow], [That's interesting] etc into the button.
-const pathOfOkCloseTheBox = "../../../../user_interface/text/"+userInterfaceLanguage+"/0-ok_i_understand.txt";
+const pathOfOkCloseTheBox = "/user_interface/text/"+userInterfaceLanguage+"/0-ok_i_understand.txt";
 fetch(pathOfOkCloseTheBox,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleOKButtonText(contentOfTheTxtFile);  });
 function handleOKButtonText(receivedTxt) {
   if(Math.random()<0.5) { okButtonToCloseTheNotification.innerHTML = receivedTxt.split("|")[0]; } // Heads or tails
   else { okButtonToCloseTheNotification.innerHTML = receivedTxt.split("|")[1]; } // Heads or tails
 }
 
-const popUpNotificationSound = new parent.Howl({  src: ['user_interface/sounds/notification1_appear.'+parent.audioFileExtension]  });
-const dismissNotificationSound = new parent.Howl({  src: ['user_interface/sounds/notification1_close.'+parent.audioFileExtension]  });
+const popUpNotificationSound = new parent.Howl({  src: ["/user_interface/sounds/notification1_appear."+parent.audioFileExtension]  });
+const dismissNotificationSound = new parent.Howl({  src: ["/user_interface/sounds/notification1_close."+parent.audioFileExtension]  });
 
 function createAndHandleNotificationBox() {
   popUpNotificationSound.play();
@@ -56,14 +56,14 @@ function handleP1P2ActualText(receivedTxt) {
 const listenButtonOfTheVocabulary = document.createElement("DIV");;
 const startButtonToCloseTheVocabulary = document.createElement("DIV");;
 let listenButtonTxt, listenAgainButtonTxt, startButtonTxt;
-const wavesurferButton1Button2Path = "../../../../user_interface/text/"+userInterfaceLanguage+"/0-vocabulary_button1_button2.txt";
+const wavesurferButton1Button2Path = "/user_interface/text/"+userInterfaceLanguage+"/0-vocabulary_button1_button2.txt";
 fetch(wavesurferButton1Button2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
   listenButtonTxt = contentOfTheTxtFile.split("|")[0];
   listenAgainButtonTxt = contentOfTheTxtFile.split("|")[1];
   startButtonTxt = contentOfTheTxtFile.split("|")[2];
 });
-const popUpVocabularySound = new parent.Howl({  src: ['user_interface/sounds/notification3_appear.'+parent.audioFileExtension]  });
-const dismissVocabularySound = new parent.Howl({  src: ['user_interface/sounds/notification3_close.'+parent.audioFileExtension]  });
+const popUpVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_appear."+parent.audioFileExtension]  });
+const dismissVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_close."+parent.audioFileExtension]  });
 
 function createAndHandleVocabularyBox(filePathOfTheAudio) {
   popUpVocabularySound.play();

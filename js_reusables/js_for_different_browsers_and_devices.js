@@ -22,8 +22,8 @@ window.addEventListener('DOMContentLoaded', function(){
     isApple=true;
   }
 
-  deactivationSound2 = new Howl({  src: ['user_interface/sounds/thingy_two_deactivate.'+audioFileExtension]  }); // Mobiles: FULLSCREEN,,, Desktops: CHANGE BROWSER TAB
-  activationSound2 = new Howl({  src: ['user_interface/sounds/thingy_two_activate.'+audioFileExtension]  }); // Mobiles: FULLSCREEN,,, Desktops: CHANGE BROWSER TAB
+  deactivationSound2 = new Howl({  src: ["/user_interface/sounds/thingy_two_deactivate."+audioFileExtension]  }); // Mobiles: FULLSCREEN,,, Desktops: CHANGE BROWSER TAB
+  activationSound2 = new Howl({  src: ["/user_interface/sounds/thingy_two_activate."+audioFileExtension]  }); // Mobiles: FULLSCREEN,,, Desktops: CHANGE BROWSER TAB
   // See caniuse.com
   // Samsung Browser PROBLEM SOLVED: See js_for_the_sliding_navigation_menu.js to find the function hideOrUnhideTheNavigationMenuOnMOBILES()
   // Sliding navigation menu used to be triggered oppositely because resize and fullscreenchange events fired at different times in Chrome and in Samsung Browser.
@@ -74,7 +74,7 @@ window.addEventListener('DOMContentLoaded', function(){
         localStorage.browserIsNotWhitelistedNotificationHasAlreadyBeenDisplayed = "yes"; // Display the notifications only once by using this.
         setTimeout(function () {
           // A crude alert box is shown if the user's browser is not Chrome or another Web Speech API compatible one.
-          const filePath = "user_interface/text/"+userInterfaceLanguage+"/0-if_the_browser_does_not_support.txt";
+          const filePath = "/user_interface/text/"+userInterfaceLanguage+"/0-if_the_browser_does_not_support.txt";
           fetch(filePath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
             // Display in UI language: “X browser did not support speech features last time we checked. Try using Chrome if it still doesn't.”
             alert(detectedBrowser.name+contentOfTheTxtFile);
@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', function(){
             if (!annyang) {
               // A crude alert box is shown if there is a problem with the speech recognition.
               setTimeout(function () {
-                const filePath = "user_interface/text/"+userInterfaceLanguage+"/0-if_speech_recognition_is_not_working.txt";
+                const filePath = "/user_interface/text/"+userInterfaceLanguage+"/0-if_speech_recognition_is_not_working.txt";
                 fetch(filePath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  alert(contentOfTheTxtFile);  });
               },3100);
             }
@@ -99,7 +99,7 @@ window.addEventListener('DOMContentLoaded', function(){
   // Use “var” (not “const”) for things that need to be accessible from elsewhere.
 
   let continueAfterPauseMsgFromTxtFileInUILanguage = "Continue?"; // Get the actual text from txt file and use it instead of this default.
-  const filePathForTheContinueLessonText = "user_interface/text/"+userInterfaceLanguage+"/0-continue_after_pause.txt";
+  const filePathForTheContinueLessonText = "/user_interface/text/"+userInterfaceLanguage+"/0-continue_after_pause.txt";
   fetch(filePathForTheContinueLessonText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ continueAfterPauseMsgFromTxtFileInUILanguage = contentOfTheTxtFile; }); // See js_for_fetch_api_character_encoding.js for the headers thingy.
   // Note: The following enables annyang to restart after a PAUSE when user has been AWAY or has turned off his mobile device's screen. Desktops don't need any handling for that.
   // Note: Annyang's behaviour is similar to the "visibilitychange" event. That is different from window "blur/focus" event. See https://stackoverflow.com/questions/58148482/document-visibilitychange-versus-window-blur-focus-what-is-the-difference-when/58148483#58148483
@@ -191,12 +191,12 @@ window.addEventListener("load",function() {
   // Resolve the Firefox refresh button issue... After an F5 refresh the frame is supposed to be blank but Firefox shows the last loaded html. Yet if we hit ENTER on the address bar it clears as expected. To make F5/refresh clear the frame (just like when ENTER is hit) we have to "force" it.
   let whatTheFileNameInIframeSrcIs = ayFreym.src.substring(ayFreym.src.length - 10, ayFreym.src.length - 5); // Get the name of the html file from a string like "/user_interface/blank.html"
   if (whatTheFileNameInIframeSrcIs == "blank") { // This works. HOWEVER: Could also use let result = ayFreym.src.search("blank"); if(result>=0){}
-    setTimeout(function () {  ayFreym.src="user_interface/blank.html"  },100); // Force empty! At last! Blank as it is supposed to be.
+    setTimeout(function () {  ayFreym.src="/user_interface/blank.html"  },100); // Force empty! At last! Blank as it is supposed to be.
   }
   */
 
   allowMicrophoneBlinker = document.getElementById('allowMicrophoneDivID');
-  const filePathForAllowMicrophoneText = "user_interface/text/"+userInterfaceLanguage+"/0-allow_microphone.txt";
+  const filePathForAllowMicrophoneText = "/user_interface/text/"+userInterfaceLanguage+"/0-allow_microphone.txt";
   fetch(filePathForAllowMicrophoneText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ allowMicrophoneBlinker.children[1].innerHTML =  contentOfTheTxtFile; });
   checkMicPermission();
 }, { once: true });

@@ -1,7 +1,6 @@
 let winZoneRightLimit;
 let winZoneLeftLimit;
 
-
 let portraitLandscapeForceAdjuster = 1;
 /*_____________*/
 function startTheGameWithTabletOrPhone() {
@@ -58,7 +57,7 @@ function startTheGameWithTabletOrPhone() {
         parent.swipeMenuIsDisabled = false;
         const internationalErrorMsg = "↺ ❌\n↻ ❌\n:-(\n❌😞📱\n(-_-)\n" + parent.detectedBrand;
         alert(internationalErrorMsg);
-        setTimeout(function () {  parent.ayFreym.src = '/progress_chart/index.html';  },1000);
+        setTimeout(function () {  parent.ayFreym.src = "/progress_chart/index.html";  },1000);
       } else {
         gameLoopForPhoneOrTablet();
         leftHalf.addEventListener("touchstart", detectIfBothThumbsAreTouching2);
@@ -96,7 +95,9 @@ function gameLoopForPhoneOrTablet() {
     rotationDegFromTouches = Number((rotationDegFromTouches + rotationSpeedFromTouches).toFixed(2));
     if (rotationDegFromTouches<-33) {  rotationDegFromTouches = -33;  }
     if (rotationDegFromTouches>33)  {  rotationDegFromTouches = 33;  }
-    releaseTheHandsEffect = 1.25;
+    if (howManyTries == 1) { releaseTheHandsEffect = 1.25; }
+    else if (howManyTries == 2) { releaseTheHandsEffect = 1.125; }
+    else { releaseTheHandsEffect = 1.05; }
   }
 
   let transformForTrayAndGlassDeg = "rotate("+rotationDegFromTouches.toFixed(1)+"deg)"; /*No need to use « toString() » because toFixed() converts it already.*/

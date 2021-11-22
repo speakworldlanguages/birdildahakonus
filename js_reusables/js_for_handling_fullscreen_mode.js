@@ -7,9 +7,9 @@ var deactivationSound1, activationSound1, errorSound;
 var hasGoneFullscreen = false;
 // Go fullscreen by touching anywhere on the screen.
 window.addEventListener("load",function() {
-  deactivationSound1 = new Howl({  src: ['user_interface/sounds/thingy_one_deactivate.'+audioFileExtension]  }); // Desktops: FULLSCREEN,,, Mobiles: NAVIGATION MENU
-  activationSound1 = new Howl({  src: ['user_interface/sounds/thingy_one_activate.'+audioFileExtension]  }); // Desktops: FULLSCREEN,,, Mobiles: NAVIGATION MENU
-  errorSound = new Howl({  src: ['user_interface/sounds/thingy_two_error.'+audioFileExtension]  }); // Mobiles only: Touch once - Touch twice distinction
+  deactivationSound1 = new Howl({  src: ["/user_interface/sounds/thingy_one_deactivate."+audioFileExtension]  }); // Desktops: FULLSCREEN,,, Mobiles: NAVIGATION MENU
+  activationSound1 = new Howl({  src: ["/user_interface/sounds/thingy_one_activate."+audioFileExtension]  }); // Desktops: FULLSCREEN,,, Mobiles: NAVIGATION MENU
+  errorSound = new Howl({  src: ["/user_interface/sounds/thingy_two_error."+audioFileExtension]  }); // Mobiles only: Touch once - Touch twice distinction
 
   const iFrameLocalConst = document.getElementById('theIdOfTheIframe'); // Check js_for_all_container_parent_htmls.js prevent conflicts
   const iDoc = iFrameLocalConst.contentWindow || iFrameLocalConst.contentDocument;
@@ -63,8 +63,8 @@ var rightClickMenu = document.createElement("DIV");
 var goFullscreenWebp = document.createElement("IMG");
 var exitFullscreenWebp = document.createElement("IMG");
 // AVOID: Do not use reference to root with "/" as it could be uncertain what the root is in case of deep-iframing for domain masking.
-goFullscreenWebp.src = "user_interface/images/right_click_go_for_fullscreen.webp";
-exitFullscreenWebp.src = "user_interface/images/right_click_no_more_fullscreen.webp";
+goFullscreenWebp.src = "/user_interface/images/right_click_go_for_fullscreen.webp";
+exitFullscreenWebp.src = "/user_interface/images/right_click_no_more_fullscreen.webp";
 rightClickMenu.appendChild(goFullscreenWebp);
 rightClickMenu.appendChild(exitFullscreenWebp);
 rightClickMenu.classList.add("rightClickMenuWithWebpsInside"); // See css_for_every_single_html.css

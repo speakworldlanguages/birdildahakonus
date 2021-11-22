@@ -13,16 +13,16 @@ localStorage.setItem("memoryCard", saveJSON); // Save
 // All settings here will depend on the content of the lesson
 let theNewWordUserIsLearningNowAndPossibleMishaps; // Get this from txt file
 // CAUTION: parent.theLanguageUserIsLearningNowToSetFilePaths variable depends on localStorage data being available. See js_for_all_container_parent_htmls.js
-const filePathForTheWordOrPhrase = "../../../../speech_recognition_dictionary/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/1-1-1-bread.txt";
+const filePathForTheWordOrPhrase = "/speech_recognition_dictionary/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/1-1-1-bread.txt";
 // See js_for_fetch_api_character_encoding.js for the headers setting.
 fetch(filePathForTheWordOrPhrase,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ theNewWordUserIsLearningNowAndPossibleMishaps = contentOfTheTxtFile; });
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
-const say1say2Path = "audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_1/bread_1-2."+parent.audioFileExtension;
-const say3Path     = "audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_1/bread_3."+parent.audioFileExtension;
-const say4say5Path = "audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_1/bread_4-5."+parent.audioFileExtension;
-const say6Path     = "audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_1/bread_6."+parent.audioFileExtension;
-const say7say8Path = "audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_1/bread_7-8."+parent.audioFileExtension;
+const say1say2Path = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_1/bread_1-2."+parent.audioFileExtension;
+const say3Path     = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_1/bread_3."+parent.audioFileExtension;
+const say4say5Path = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_1/bread_4-5."+parent.audioFileExtension;
+const say6Path     = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_1/bread_6."+parent.audioFileExtension;
+const say7say8Path = "/audio_files_for_listening/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/level_1/unit_1/lesson_1/bread_7-8."+parent.audioFileExtension;
 
 const sayAB = new parent.Howl({  src: [say1say2Path]  });
 const sayC  = new parent.Howl({  src: [say3Path]      });
@@ -30,13 +30,13 @@ const sayDE = new parent.Howl({  src: [say4say5Path]  });
 const sayF  = new parent.Howl({  src: [say6Path]      });
 const sayGH = new parent.Howl({  src: [say7say8Path]  });
 
-//const whatBreadSoundsLike1 = new parent.Howl({  src: ['lessons_in_iframes/level_1/unit_1/lesson_1/what_bread_sounds_like_1.'+parent.audioFileExtension]  });
-//const whatBreadSoundsLike2 = new parent.Howl({  src: ['lessons_in_iframes/level_1/unit_1/lesson_1/what_bread_sounds_like_2.'+parent.audioFileExtension]  });
+//const whatBreadSoundsLike1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_1/what_bread_sounds_like_1."+parent.audioFileExtension]  });
+//const whatBreadSoundsLike2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_1/what_bread_sounds_like_2."+parent.audioFileExtension]  });
 //3
 //4
 //5
-const successTone = new parent.Howl({  src: ['user_interface/sounds/success1.'+parent.audioFileExtension]  });
-const notificationDingTone = new parent.Howl({  src: ['user_interface/sounds/ding.'+parent.audioFileExtension]  });
+const successTone = new parent.Howl({  src: ["/user_interface/sounds/success1."+parent.audioFileExtension]  });
+const notificationDingTone = new parent.Howl({  src: ["/user_interface/sounds/ding."+parent.audioFileExtension]  });
 /* Sounds exist on the parent. So they will NOT UNLOAD when iframe src is changed. We must manually unload them before exiting. */
 function unloadTheSoundsOfThisLesson() { // Either call this as the last thing before leaving or let it be called by window.onbeforeunload in js_for_all_iframed_lesson_htmls
   notificationDingTone.unload();
@@ -76,21 +76,21 @@ function loadingIsCompleteFunction()
 {
   // Stop and notify the user if necessary; otherwise just continue.
   if (parent.theLanguageUserIsLearningNowToSetFilePaths == "en") { // Display the explanation about accents for users who want to learn English.
-    const pathOfNotificationAboutBritishVsAmerican = "../../../../user_interface/text/"+userInterfaceLanguage+"/1-1-1_british_vs_american.txt";
+    const pathOfNotificationAboutBritishVsAmerican = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_british_vs_american.txt";
     fetch(pathOfNotificationAboutBritishVsAmerican,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
       setTimeout(function(){ createAndHandleNotificationBox(); putNotificationTxtIntoThisP.innerHTML = contentOfTheTxtFile; },501); // See js_for_notification_or_such_boxes.js
       // createAndHandleNotificationBox() will fire startTheLesson() 1.5 seconds after its OK button is clicked/touched
     });
   }
   else if (parent.theLanguageUserIsLearningNowToSetFilePaths == "zh") { // Display the warning about intonations to users who want to learn the Ren language.
-    const pathOfNotificationAboutRenIntonation = "../../../../user_interface/text/"+userInterfaceLanguage+"/1-1-1_ren_intonation.txt";
+    const pathOfNotificationAboutRenIntonation = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_ren_intonation.txt";
     fetch(pathOfNotificationAboutRenIntonation,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
       setTimeout(function(){ createAndHandleNotificationBox(); putNotificationTxtIntoThisP.innerHTML = contentOfTheTxtFile; },501); // See js_for_notification_or_such_boxes.js
       // createAndHandleNotificationBox() will fire startTheLesson() 1.5 seconds after its OK button is clicked/touched
     });
   }
   else if (parent.theLanguageUserIsLearningNowToSetFilePaths == "ar") { // Display the warning about TANWEEN to users who want to learn the Standard Arabic.
-    const pathOfNotificationAboutTanween = "../../../../user_interface/text/"+userInterfaceLanguage+"/1-1-1_arabic_tanween.txt";
+    const pathOfNotificationAboutTanween = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_arabic_tanween.txt";
     fetch(pathOfNotificationAboutTanween,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
       setTimeout(function(){ createAndHandleNotificationBox(); putNotificationTxtIntoThisP.innerHTML = contentOfTheTxtFile; },501); // See js_for_notification_or_such_boxes.js
       // createAndHandleNotificationBox() will fire startTheLesson() 1.5 seconds after its OK button is clicked/touched
@@ -279,7 +279,7 @@ function speakToTheMic() {
     }
     // Start listening.
     setTimeout(function() {  parent.annyang.start();  },200);
-    setTimeout(function() {  startAudioInputVisualization();  },300); // Will work only on desktops. See js_for_microphone_input_visualization.js
+    setTimeout(function() {  startAudioInputVisualization();  },300); // Will work only on desktops. See js_for_microphone_input_visualization.js // Must test and see if it works on iOS.
   }
 
 } /* END OF speakToTheMic */

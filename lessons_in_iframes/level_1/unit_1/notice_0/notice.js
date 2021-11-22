@@ -1,6 +1,6 @@
 // TEXT TO BE INJECTED “SLOWLY” INTO P ELEMENTS
 let whatTheAuthorHasToSay115 = " "; // CAUTION & WARNING: If fetch() is delayed because of slow network this would be UNDEFINED for a while unless set to empty space!
-// NOTE: “myHeaders” variable exists in "../../../../js_reusables/js_for_fetch_api_character_encoding.js"
+// NOTE: DEPRECATED! » “myHeaders” variable exists in "../../../../js_reusables/js_for_fetch_api_character_encoding.js"
 // NOTE: “userInterfaceLanguage” variable exists in "../../../../js_reusables/js_for_every_single_html.js"
 let filePathForAuthorsMessage;
 let filePathForWhatToPutIntoTheButton;
@@ -18,7 +18,7 @@ window.addEventListener('load', function(){
       desktopDisplay.classList.add("fadeIn");
   }
   /*_________END OF UI HANDLING__________*/
-  filePathForAuthorsMessage  = "../../../../user_interface/text/"+userInterfaceLanguage+"/1-1-5_author_says.txt";
+  filePathForAuthorsMessage  = "/user_interface/text/"+userInterfaceLanguage+"/1-1-5_author_says.txt";
   fetch(filePathForAuthorsMessage,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
     whatTheAuthorHasToSay115 = contentOfTheTxtFile;
     // ANIMATE TEXT
@@ -36,7 +36,7 @@ window.addEventListener('load', function(){
     }, 60);
   });
   // TRICK: Although the same ID is used three times, the removal of two of them will already have taken place by the time fetch() gets the file.
-  filePathForWhatToPutIntoTheButton  = "../../../../user_interface/text/"+userInterfaceLanguage+"/0-continue_to_next.txt";
+  filePathForWhatToPutIntoTheButton  = "/user_interface/text/"+userInterfaceLanguage+"/0-continue_to_next.txt";
   fetch(filePathForWhatToPutIntoTheButton,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  document.getElementById('putTextIntoThisGoToNextButton').innerHTML = contentOfTheTxtFile; });
 
 }, { once: true });
@@ -46,8 +46,8 @@ window.addEventListener('load', function(){
 //JA: "先に見えたそのパンは私が家で作りました。";
 
 
-function unloadTheSoundsOfThisLesson() {  /*Nothing to do*/  } // This has to exist here.
-function unloadTheImagesOfThisLesson() {  /*Could try to unload the bread webp and tsuchimoto webp if necessary*/  } // This has to exist here.
+//function unloadTheSoundsOfThisLesson() {  /*Nothing to do*/  } // This has to exist here.
+//function unloadTheImagesOfThisLesson() {  /*Could try to unload the bread webp and tsuchimoto webp if necessary*/  } // This has to exist here.
 
 function proceedToNextLesson115() { /*This is called with an inline onclick inside the button element. See notice_0/index.html */
   document.querySelector('.nearZeroOpacity').classList.add("fadeOut"); // 2 second fadeout
@@ -57,9 +57,9 @@ function proceedToNextLesson115() { /*This is called with an inline onclick insi
     parent.preloadHandlingDiv.classList.remove("addThisClassToHideThePreloader");
     parent.preloadHandlingDiv.classList.add("addThisClassToRevealThePreloader");
   },1500); // 3000-1500 = 1500 See css_for_every_single_html
-  setTimeout(function() {
+  /*setTimeout(function() {
     unloadTheSoundsOfThisLesson();
     unloadTheImagesOfThisLesson();
-  },2900); // Also see js_for_all_iframed_lesson_htmls about unloadTheSoundsOfThisLesson() unloadTheImagesOfThisLesson()
-  setTimeout(function () { self.location.href = "../../unit_2/lesson_1/index.html";  },3000);
+  },2900); // Also see js_for_all_iframed_lesson_htmls about unloadTheSoundsOfThisLesson() unloadTheImagesOfThisLesson()*/
+  setTimeout(function () { parent.ayFreym.src = "/lessons_in_iframes/level_1/unit_2/lesson_1/index.html"; },3000);
 }

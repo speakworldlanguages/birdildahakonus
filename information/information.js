@@ -28,19 +28,19 @@ window.addEventListener('DOMContentLoaded', function(){
     }
   }
 
-  clickSound = new Howl({  src: ['../user_interface/sounds/financial_thirdparty_click.mp3']  });
+  clickSound = new Howl({  src: ['/user_interface/sounds/financial_thirdparty_click.mp3']  });
   // ------- Fill the divs with text depending on the user interface language --------
-  const filePathForLicense = "../LICENSE";
+  const filePathForLicense = "/LICENSE";
   fetch(filePathForLicense,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ const keepTheNiceLineBreaks = contentOfTheTxtFile.replace(/\n\s*/g, "<br>"); document.getElementById('putTheLicenseIntoThisP').innerHTML = keepTheNiceLineBreaks; });
 
-  const filePathForTitle = "../user_interface/text/"+userInterfaceLanguage+"/info_index_html_title.txt";
-  const filePathForNameOfAuthor = "../user_interface/text/"+userInterfaceLanguage+"/info_name_of_author.txt";
-  const filePathForNameOfLicense = "../user_interface/text/"+userInterfaceLanguage+"/info_name_of_license.txt";
-  const filePathForViewLicenseButton = "../user_interface/text/"+userInterfaceLanguage+"/info_view_license_button.txt";
-  const filePathForGoBackButton = "../user_interface/text/"+userInterfaceLanguage+"/info_go_back_button.txt";
-  filePathForMonthlyFinanceBaseUsd = "../user_interface/text/"+userInterfaceLanguage+"/info_monthly_option_base_usd.txt";
-  filePathForMonthlyFinanceBaseEur = "../user_interface/text/"+userInterfaceLanguage+"/info_monthly_option_base_eur.txt";
-  const filePathForViewSourceCode = "../user_interface/text/"+userInterfaceLanguage+"/info_about_resources.txt";
+  const filePathForTitle = "/user_interface/text/"+userInterfaceLanguage+"/info_index_html_title.txt";
+  const filePathForNameOfAuthor = "/user_interface/text/"+userInterfaceLanguage+"/info_name_of_author.txt";
+  const filePathForNameOfLicense = "/user_interface/text/"+userInterfaceLanguage+"/info_name_of_license.txt";
+  const filePathForViewLicenseButton = "/user_interface/text/"+userInterfaceLanguage+"/info_view_license_button.txt";
+  const filePathForGoBackButton = "/user_interface/text/"+userInterfaceLanguage+"/info_go_back_button.txt";
+  filePathForMonthlyFinanceBaseUsd = "/user_interface/text/"+userInterfaceLanguage+"/info_monthly_option_base_usd.txt";
+  filePathForMonthlyFinanceBaseEur = "/user_interface/text/"+userInterfaceLanguage+"/info_monthly_option_base_eur.txt";
+  const filePathForViewSourceCode = "/user_interface/text/"+userInterfaceLanguage+"/info_about_resources.txt";
   /* TRICK: Although it is wrong to use the same ID for 3 elements (desktop,tablet,phone) this works because two of them are removed with removeChild() before this runs*/
   fetch(filePathForTitle,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.title = document.title +" "+ contentOfTheTxtFile; }); // Keep the default and add the text next to it.
   fetch(filePathForNameOfAuthor,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.getElementById('authorsNameP').innerHTML = contentOfTheTxtFile; });

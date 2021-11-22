@@ -94,13 +94,13 @@ if (userInterfaceLanguage=="tr") {
 if (needLatinFonts) {
   /*GET FONTS*/
   let titilliumFont;
-  titilliumFont = new FontFace('Titillium Web Light', 'url(/user_interface/fonts/TitilliumWeb-Light.ttf)');
+  titilliumFont = new FontFace('Titillium Web Light', "url(/user_interface/fonts/TitilliumWeb-Light.ttf)");
   titilliumFont.load().then(function(loaded_face) {
       document.fonts.add(loaded_face);
   }).catch(function(error) {    console.log("Unable to get the font!");  });
 
   let oxaniumFont;
-  oxaniumFont = new FontFace('Oxanium SemiBold', 'url(/user_interface/fonts/Oxanium-SemiBold.ttf)');
+  oxaniumFont = new FontFace('Oxanium SemiBold', "url(/user_interface/fonts/Oxanium-SemiBold.ttf)");
   oxaniumFont.load().then(function(loaded_face) {
       document.fonts.add(loaded_face);
   }).catch(function(error) {    console.log("Unable to get the font!");  });
@@ -119,7 +119,7 @@ if (needLatinFonts) {
 if (needHitoicJapaneseFonts) {
     /*GET FONTS*/
     let kosugiFont;
-    kosugiFont = new FontFace('Kosugi Maru', 'url(/user_interface/fonts/KosugiMaru-Regular.ttf)'); // NOTE: File size is about 2.5 MB
+    kosugiFont = new FontFace('Kosugi Maru', "url(/user_interface/fonts/KosugiMaru-Regular.ttf)"); // NOTE: File size is about 2.5 MB
     kosugiFont.load().then(function(loaded_face) {
         document.fonts.add(loaded_face);
     }).catch(function(error) {      console.log("Unable to get the font!");    });

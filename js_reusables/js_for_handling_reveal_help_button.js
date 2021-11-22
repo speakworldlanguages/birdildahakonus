@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', function(){
     }
     /**/
     imgInsideTouchableArea = document.createElement("IMG");
-    imgInsideTouchableArea.src = "../../../../user_interface/images/touch_and_drag_man_2x_scale.webp";
+    imgInsideTouchableArea.src = "/user_interface/images/touch_and_drag_man_2x_scale.webp";
     imgInsideTouchableArea.classList.add("touchableDraggableImgSizePosition"); // See css_for_lessons_with_interactables.css
     imgInsideTouchableArea.classList.add("touchableDraggableInitial");
     document.body.appendChild(imgInsideTouchableArea);
@@ -68,11 +68,11 @@ window.addEventListener('DOMContentLoaded', function(){
     document.body.appendChild(clickToRevealSubtitlesDiv);
     /**/
     imgInsideClickableAreaOFF = document.createElement("IMG");
-    imgInsideClickableAreaOFF.src = "../../../../user_interface/images/reveal_help_desktop_teacher_off.webp";
+    imgInsideClickableAreaOFF.src = "/user_interface/images/reveal_help_desktop_teacher_off.webp";
     imgInsideClickableAreaOFF.classList.add("mouseClickableImgSizePosition"); // See css_for_lessons_with_interactables.css
     clickToRevealSubtitlesDiv.appendChild(imgInsideClickableAreaOFF);
     imgInsideClickableAreaON = document.createElement("IMG");
-    imgInsideClickableAreaON.src = "../../../../user_interface/images/reveal_help_desktop_teacher_on.webp";
+    imgInsideClickableAreaON.src = "/user_interface/images/reveal_help_desktop_teacher_on.webp";
     imgInsideClickableAreaON.classList.add("mouseClickableImgSizePosition"); // See css_for_lessons_with_interactables.css
     /**/
     clickToRevealSubtitlesDiv.addEventListener("mousedown",toggleImgONOFF);

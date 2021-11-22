@@ -1,6 +1,6 @@
 const theButtonForSkippingSpeechInputVocabularyTest = document.getElementById('theTextInsideSkipNextButtonID');
-const filePathForGiveUpButtonInnerHTML = "../../../../user_interface/text/"+userInterfaceLanguage+"/0-give_up_and_skip.txt";
-const filePathForNextButtonInnerHTML = "../../../../user_interface/text/"+userInterfaceLanguage+"/0-continue_to_next.txt";
+const filePathForGiveUpButtonInnerHTML = "/user_interface/text/"+userInterfaceLanguage+"/0-give_up_and_skip.txt";
+const filePathForNextButtonInnerHTML = "/user_interface/text/"+userInterfaceLanguage+"/0-continue_to_next.txt";
 
 // Let “no web-speech browser” users quickly skip to the speech recognition cancellation
 //var howLongBeforeGiveUpButtonAppears; // This is called from bread.js, water.js etc // DEPRECATION: Move this to each lesson’s own js

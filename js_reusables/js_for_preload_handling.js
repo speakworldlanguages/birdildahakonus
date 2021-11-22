@@ -10,7 +10,7 @@ let slowConnectionTryAgainOrWaitText = "Try reloading the app?"; // Default msg,
 function setPreloadCoverIsShowingNowToTrue() { // See js_for_all_container_parent_htmls (wherever ayFreym.src is changed)
   preloadCoverIsShowingNow = true; // See js_for_the_sliding_navigation_menu for its usage
   /*Check and handle slow-connection or app-is-frozen problem*/
-  // Ask if the user wants to try a refresh every 14 seconds.
+  // Ask if the user wants to try a refresh every ?? seconds.
   /* NEED something better than this
   isItTakingTooLongToLoad = setInterval(function(){
     if (confirm(slowConnectionTryAgainOrWaitText)) {

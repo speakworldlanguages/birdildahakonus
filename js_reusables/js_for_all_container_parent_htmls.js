@@ -7,8 +7,8 @@ const preventSleepModeOrScreenTurnOffWithFakeVideo = document.createElement("VID
 document.body.appendChild(preventSleepModeOrScreenTurnOffWithFakeVideo); // TESTED: It works
 preventSleepModeOrScreenTurnOffWithFakeVideo.autoplay=true;
 preventSleepModeOrScreenTurnOffWithFakeVideo.muted=true;
-preventSleepModeOrScreenTurnOffWithFakeVideo.loop=true; // Don't forget this otherwise the screen will still turn off after 1 single play.
-preventSleepModeOrScreenTurnOffWithFakeVideo.src="user_interface/16x16_anti_sleep_mode.mp4";
+preventSleepModeOrScreenTurnOffWithFakeVideo.loop=true; // Otherwise the screen will still turn off after 1 single play.
+preventSleepModeOrScreenTurnOffWithFakeVideo.src="/user_interface/16x16_anti_sleep_mode.mp4";
 preventSleepModeOrScreenTurnOffWithFakeVideo.style.opacity="0"; // Can't be too safe
 
 // NOTE: Chrome does not count an alert box click as a user gesture. The first click or touch will unlock sound. Must be silent until then.
@@ -102,8 +102,8 @@ window.addEventListener('load', function(){
 // Let the webp img files be downloaded and ready before the button to reveal them is clicked/touched.
 const malesIcon = document.createElement("IMG");
 const femalesIcon = document.createElement("IMG");
-malesIcon.src = "user_interface/images/gender_gentlemen.webp"; // Less than 1KB
-femalesIcon.src = "user_interface/images/gender_ladies.webp"; // Only 1,5KB
+malesIcon.src = "/user_interface/images/gender_gentlemen.webp"; // Less than 1KB
+femalesIcon.src = "/user_interface/images/gender_ladies.webp"; // Only 1,5KB
 
 /*What language will be taught via the iframe*/
 /* JA - Hito */
@@ -280,9 +280,9 @@ function openFirstLesson() {
 // UI sounds ... also see js_for_different_browsers_and_devices.js
 let dismissNotificationSound1, hoverSound, clickSound;
 window.addEventListener("load",function () {
-  dismissNotificationSound1 = new Howl({  src: ['user_interface/sounds/notification1_close.'+audioFileExtension]  });
-  hoverSound = new Howl({  src: ['user_interface/sounds/illuminant_button_hover.'+audioFileExtension]  }); // DESKTOP ONLY!
-  clickSound = new Howl({  src: ['user_interface/sounds/illuminant_button_click.'+audioFileExtension]  });
+  dismissNotificationSound1 = new Howl({  src: ["/user_interface/sounds/notification1_close."+audioFileExtension]  });
+  hoverSound = new Howl({  src: ["/user_interface/sounds/illuminant_button_hover."+audioFileExtension]  }); // DESKTOP ONLY!
+  clickSound = new Howl({  src: ["/user_interface/sounds/illuminant_button_click."+audioFileExtension]  });
 },{once:true})
 /* BUTTON - Kishi Language, Hito Lanuage, Ren Language */
 let allParentButtonElementsAreInThisArray = document.getElementsByTagName("BUTTON"); /*All of them in container parents,,, NOT THE IFRAMED LESSON BUTTONS*/

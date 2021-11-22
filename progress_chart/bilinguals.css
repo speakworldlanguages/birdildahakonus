@@ -5,7 +5,7 @@
   padding-top: 0.6vmin; padding-bottom: 0.6vmin;
   border: 1px solid #9daebd;
   /* cursor: pointer; */
-  cursor: url('../user_interface/images/cursor/button_cursor_00.png') 16 6,auto;
+  cursor: url('/user_interface/images/cursor/button_cursor_00.png') 16 6,auto;
   animation: hoverCursor 1.85s infinite;
   animation-direction: alternate;
 }

@@ -17,7 +17,7 @@ if (deviceDetector.device=="desktop") {
 /* ______ Functions to start-stop ______ */
 // These will be called from the particular js files of the particular lessons.
 function startAudioInputVisualization() {
-  if (deviceDetector.device=="desktop") {
+  if (deviceDetector.device=="desktop") { // Test if this works on iOS,,, if it does then add || detectedOS.name == "iOS"
     // Get information about CPU. Make things look better on faster machines.
     if (window.navigator.hardwareConcurrency>3) {
       wavesurfer.microphone.bufferSize = 2048; // This makes it look smoother. Default is 4096.

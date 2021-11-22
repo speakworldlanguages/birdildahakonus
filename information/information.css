@@ -74,7 +74,7 @@ a.openAboutPageAnchor:active{}
 
 @font-face {
   font-family: earthmanFont;
-  src: url(../user_interface/fonts/Earthman.ttf);
+  src: url(/user_interface/fonts/Earthman.ttf);
 }
 
 ::-webkit-scrollbar { /* width */
