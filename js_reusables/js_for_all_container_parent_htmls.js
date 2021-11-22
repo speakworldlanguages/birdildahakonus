@@ -2,7 +2,7 @@
 // Redirection based on browser language is handled with inline script in index.html which should fire before anything here.
 // var isOrWasViewingProgressChart = false; // DEPRECATED? See js_for_all_iframed_lesson_htmls AND progress.js
 
-/*Prevent screen turn off on mobiles*/
+/* Prevent screen turn off on mobiles (anti-sleep-mode) */
 const preventSleepModeOrScreenTurnOffWithFakeVideo = document.createElement("VIDEO");
 document.body.appendChild(preventSleepModeOrScreenTurnOffWithFakeVideo); // TESTED: It works
 preventSleepModeOrScreenTurnOffWithFakeVideo.autoplay=true;
@@ -30,7 +30,7 @@ function userHasClickedOrTouchedWelcomeAnswerB() { // The user has claimed that 
 var genderOfTheUser;
 var theLanguageUserIsLearningNowToSetFilePaths;
 var theLanguageUserIsLearningNowToSetAnnyang;
-var ayFreym = document.getElementsByTagName('IFRAME')[0]; //used to be getElementById('theIdOfTheIframe'); // Access to ayFreym from » progress.js, js_for_different_browsers_and_devices, js_for_the_sliding_navigation_menu
+var ayFreym = document.getElementsByTagName('IFRAME')[0]; // Used to be getElementById('theIdOfTheIframe'); // Access to ayFreym from » progress.js, js_for_different_browsers_and_devices, js_for_the_sliding_navigation_menu
 
 window.addEventListener('DOMContentLoaded', function(){
   // Skip the crowdfunding (welcome screen) message if user says he she is a member.
@@ -257,7 +257,7 @@ function openFirstLesson() {
 //   if (deviceDetector.isMobile) {
 //     // Going fullscreen on mobiles will make the nav menu sink down and disappear because
 //     // as you can find in js_for_the_sliding_navigation_menu.js -> the resize event triggers DEPRECATED: hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen()
-//     openFullscreen(); // See js_for_handling_fullscreen_mode.js
+//     o-p-e-n-F-u-l-l-s-c-r-e-e-n(); // See js_for_handling_fullscreen_mode.js
 //     // WARNING: iPhone's Safari won't allow fullscreen! caniuse.com says it is allowed on iPads but wasn't able to test it as of July 2021.
 //     // So since resize doesn't happen on iPhones we must manually do the first sinking of the nav menu like this.
 //     // BETTER SOLUTION: Move the makeTheNavMenuGoDownOnMobiles() function call to iframe.onload and check if landing is a lesson html (not progress_chart)

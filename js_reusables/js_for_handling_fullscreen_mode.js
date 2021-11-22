@@ -12,22 +12,23 @@ window.addEventListener("load",function() {
   errorSound = new Howl({  src: ["/user_interface/sounds/thingy_two_error."+audioFileExtension]  }); // Mobiles only: Touch once - Touch twice distinction
 
   const iFrameLocalConst = document.getElementsByTagName('IFRAME')[0]; // Used to be .getElementById('theIdOfTheIframe'); // Check js_for_all_container_parent_htmls.js prevent conflicts
-  const iDoc = iFrameLocalConst.contentWindow || iFrameLocalConst.contentDocument;
+  const iDocWindow = iFrameLocalConst.contentWindow || iFrameLocalConst.contentDocument;
 
   // HOW TO GO AND STAY IN FULLSCREEN ON MOBILES
   /**/
-  // See js_for_all_container_parent_htmls to find how openFullscreen() is called.
-  // DEPRECATED: openFullscreen() is called via handleTheFirstGoingFullscreenOnMobiles() when either of these two things happen,
+  // See js_for_all_container_parent_htmls to find how o-p-e-n-F-u-l-l-s-c-r-e-e-n() is called.
+  // DEPRECATED: o-p-e-n-F-u-l-l-s-c-r-e-e-n() is called via handleTheFirstGoingFullscreenOnMobiles() when either of these two things happen,
   // 1- when user taps on a button in the main menu (language selection menu) 2- when user taps the "return to the last saved point" button
   // But ALSO must RETURN TO FULLSCREEN WITH THE FIRST TOUCH if user navigates away from the app and comes back and THE REASON is
-  // BECAUSE most browsers won't allow going fullscreen without a user gesture... That means calling openFullscreen() with Onblur Onfocus or document.visibilitychange won't work.
+  // BECAUSE most browsers won't allow going fullscreen without a user gesture... That means calling o-p-e-n-F-u-l-l-s-c-r-e-e-n() with Onblur Onfocus or document.visibilitychange won't work.
   // So here is how we do it...
 
   if (deviceDetector.isMobile) {
     // We cannot directly add an event listener for touchstart/mousedown on the iframe. So instead add it to the documentSmthSmth in the iFrame.
-    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnMobileBrowser,{once:true});
+    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnMobileBrowser); // Try not using once:true
     function iframeHasBeenLoadedOnMobileBrowser() {
-      iDoc.document.addEventListener("touchstart", handleTouchForFullscreen); // Tried to removeEventListener with 'unload' but neither 'unload' nor 'hashchange' fires on the iframe.
+      // Try touchend instead of touchstart to see if it will fix the console error » "fullscreen error"
+      iDocWindow.document.addEventListener("touchend", handleTouchForFullscreen); // Tried to removeEventListener with 'unload' but neither 'unload' nor 'hashchange' fires on the iframe.
     }
     function handleTouchForFullscreen() {
       if (!hasGoneFullscreen){  openFullscreen();  } // This works but it gives an error for the first touch. Was able to turn the error into something useful by adding errorSound.play();
@@ -122,10 +123,12 @@ function openFullscreen() {
     theWholeDocument = window.top.document.body; //To break out of frame in IE
     theWholeDocument.msRequestFullscreen();
   }
-  /*Handle audio on mobile with RESIZE*/ // See js_for_the_sliding_navigation_menu.js
+  /* DEPRECATED: Used to handle audio on mobile with RESIZE*/ // See js_for_the_sliding_navigation_menu.js //
   if (deviceDetector.device=="desktop") {
     activationSound1.play();
   } else {
+
+    // activationSound2.play(); // See js_for_different_browsers_and_devices.js
     // Handle audio according to the "weird two touches problem" without creating conflict with iOS
     if (detectedOS.name != "iOS") { errorSound.play(); } // No need for DOMContentLoaded etc???
   }
@@ -146,6 +149,7 @@ function closeFullscreen() {
   if (deviceDetector.device=="desktop") {
     deactivationSound1.play(); // Let it be heard only on desktops,,, Actually: This wouldn't play on mobiles even if wasn't inside an "if-desktop" since on mobiles exiting fullscreen happens without closeFullscreen().
   } else { // What happens when fullscreen is closed on tablets and phones
+    // deactivationSound2.play(); // See js_for_different_browsers_and_devices.js
     if (typeof swipeMenuIsDisabled == "boolean") { // Check if it exists even if they are both at parent level
       swipeMenuIsDisabled = false; // Enable it (it could have been disabled because of a game-input-conflict) See js_for_the_sliding_navigation_menu.js
     }

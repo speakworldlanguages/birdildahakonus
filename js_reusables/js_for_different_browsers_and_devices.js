@@ -159,7 +159,7 @@ window.addEventListener('DOMContentLoaded', function(){
           // Unfortunately requestFullscreen gets blocked because Chrome does not count an alert box click as a valid user gesture
           // See https://stackoverflow.com/questions/66242084/chrome-does-not-count-closing-an-alert-box-as-a-valid-user-gesture-therefore-unl
           // if (deviceDetector.isMobile){ // CANNOT USE
-          //   setTimeout(function () {  openFullscreen();  },100); // CANNOT USE
+          //   setTimeout(function () {  o-p-e-n-F-u-l-l-s-c-r-e-e-n();  },100); // CANNOT USE
           // } // CANNOT USE
       }
     }
