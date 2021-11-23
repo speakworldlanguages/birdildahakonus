@@ -2,15 +2,14 @@
 // Even though this is deferred, looks like we still need to wait for the load event before we call a function from another js file.
 
 // See js_for_different_browsers_and_devices ... Also see js_for_the_sliding_navigation_menu
-var deactivationSound1, activationSound1, preActivationSound_TWO;
+let enterSound, exitSound, rightClickSound, touchstartSound;
 
 var hasGoneFullscreen = false;
 // Go fullscreen by touching anywhere on the screen.
 window.addEventListener("load",function() {
-  deactivationSound1 = new Howl({  src: ["/user_interface/sounds/thingy_one_deactivate."+audioFileExtension]  }); // Desktops: FULLSCREEN,,, Mobiles: NAVIGATION MENU
-  activationSound1 = new Howl({  src: ["/user_interface/sounds/thingy_one_activate."+audioFileExtension]  }); // Desktops: FULLSCREEN,,, Mobiles: NAVIGATION MENU
-  preActivationSound_TWO = new Howl({  src: ["/user_interface/sounds/thingy_two_preactivation."+audioFileExtension]  }); // Mobiles only: Touch once - Touch twice distinction
-  // See js_for_different_browsers_and_devices.js for activationSound2 and deactivationSound2
+  enterSound = new Howl({  src: ["/user_interface/sounds/touchend_and_open_fullscreen."+audioFileExtension]  });
+  exitSound = new Howl({  src: ["/user_interface/sounds/exit_fullscreen."+audioFileExtension]  });
+
   const iFrameLocalConst = document.getElementsByTagName('IFRAME')[0]; // Used to be .getElementById('theIdOfTheIframe'); // Check js_for_all_container_parent_htmls.js prevent conflicts
   const iDocWindow = iFrameLocalConst.contentWindow || iFrameLocalConst.contentDocument;
 
@@ -24,6 +23,7 @@ window.addEventListener("load",function() {
   // So here is how we do it...
 
   if (deviceDetector.isMobile) {
+    touchstartSound = new Howl({  src: ["/user_interface/sounds/touchstart_for_fullscreen."+audioFileExtension]  });
     // We cannot directly add an event listener for touchstart/mousedown on the iframe. So instead add it to the documentSmthSmth in the iFrame.
     iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnMobileBrowser); // Looks like we MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
     function iframeHasBeenLoadedOnMobileBrowser() {
@@ -36,9 +36,10 @@ window.addEventListener("load",function() {
       if (!hasGoneFullscreen){  openFullscreen();  }
     }
     function handleTouchSoundBeforeFullscreen() {
-      if (detectedOS.name != "iOS" && !hasGoneFullscreen) { preActivationSound_TWO.play(); }
+      if (detectedOS.name != "iOS" && !hasGoneFullscreen) { touchstartSound.play(); }
     }
   } else {
+    rightClickSound = new Howl({  src: ["/user_interface/sounds/right_click_for_fullscreen."+audioFileExtension]  });
     // THE RIGHT CLICK METHOD ON DESKTOPS
     var currentSrcParsed;
     // Every time the iframe is loaded, add the custom context menu to either the parent document or the framed document.
@@ -83,7 +84,7 @@ var x,y;
 function coordinatesF(event) {   x=event.clientX;  y=event.clientY;     }
 
 function rightClickHandlerFunction(event) {
-
+  rightClickSound.play();
   event.preventDefault();
   if (!hasGoneFullscreen) {
     goFullscreenWebp.style.display = "block";
@@ -144,14 +145,16 @@ function closeFullscreen() {
   }
 }
 
-function handleEnterSound() {
-  if (deviceDetector.isMobile) {   activationSound2.play();  } // See js_for_different_browsers_and_devices.js
-  else {    activationSound1.play();   }
+function handleEnterSoundEtc() {
+  /*if (deviceDetector.isMobile) {   ???.play();  } // See js_for_different_browsers_and_devices.js
+  else {    ???.play();   }*/
+  enterSound.play();
 }
-function handleExitSound() {
-  if (deviceDetector.isMobile) {   deactivationSound2.play();  }
-  else {    deactivationSound1.play(); }
-  if (typeof swipeMenuIsDisabled == "boolean") { // Check if it exists even if they are both at parent level
+function handleExitSoundEtc() {
+  /*if (deviceDetector.isMobile) {   ???.play();  }
+  else {    ???.play(); }*/
+  exitSound.play();
+  if (typeof swipeMenuIsDisabled == "boolean") { // Check if it exists even though they are both at parent level
     swipeMenuIsDisabled = false; // Enable it (it could have been disabled because of a game-input-conflict) See js_for_the_sliding_navigation_menu.js
   }
 }
@@ -159,38 +162,38 @@ function handleExitSound() {
 document.addEventListener("fullscreenchange", function() {
   if (!hasGoneFullscreen) {
     hasGoneFullscreen = true;
-    handleEnterSound();
+    handleEnterSoundEtc();
     // console.log("fullscreenchange event fired! and now it is fullscreen");
   } else {
     hasGoneFullscreen = false;
-    handleExitSound();
+    handleExitSoundEtc();
     // console.log("fullscreenchange event fired! and now it is back to default view");
   }
 });
 document.addEventListener("mozfullscreenchange", function() {
   if (!hasGoneFullscreen) {
     hasGoneFullscreen = true;
-    handleEnterSound();
+    handleEnterSoundEtc();
   } else {
     hasGoneFullscreen = false;
-    handleExitSound();
+    handleExitSoundEtc();
   }
 });
 document.addEventListener("webkitfullscreenchange", function() {
   if (!hasGoneFullscreen) {
     hasGoneFullscreen = true;
-    handleEnterSound();
+    handleEnterSoundEtc();
   } else {
     hasGoneFullscreen = false;
-    handleExitSound();
+    handleExitSoundEtc();
   }
 });
 document.addEventListener("msfullscreenchange", function() {
   if (!hasGoneFullscreen) {
     hasGoneFullscreen = true;
-    handleEnterSound();
+    handleEnterSoundEtc();
   } else {
     hasGoneFullscreen = false;
-    handleExitSound();
+    handleExitSoundEtc();
   }
 });

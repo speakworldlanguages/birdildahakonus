@@ -133,11 +133,12 @@ async function cacheCoreAssetsOfTheApp() {
       "/user_interface/sounds/progress_chart_hover.mp3",
       "/user_interface/sounds/success1.mp3",
       "/user_interface/sounds/success2.mp3",
-      "/user_interface/sounds/thingy_one_activate.mp3",
-      "/user_interface/sounds/thingy_one_deactivate.mp3",
-      "/user_interface/sounds/thingy_two_activate.mp3",
-      "/user_interface/sounds/thingy_two_deactivate.mp3",
-      "/user_interface/sounds/thingy_two_error.mp3"
+      "/user_interface/sounds/exit_fullscreen.mp3",
+      "/user_interface/sounds/right_click_for_fullscreen.mp3",
+      "/user_interface/sounds/swipe_down.mp3",
+      "/user_interface/sounds/swipe_up.mp3",
+      "/user_interface/sounds/touchend_and_open_fullscreen.mp3",
+      "/user_interface/sounds/touchstart_for_fullscreen.mp3"
       );
   } else {
     resourcesToPrecache.push(
@@ -161,11 +162,12 @@ async function cacheCoreAssetsOfTheApp() {
       "/user_interface/sounds/progress_chart_hover.ogg",
       "/user_interface/sounds/success1.ogg",
       "/user_interface/sounds/success2.ogg",
-      "/user_interface/sounds/thingy_one_activate.ogg",
-      "/user_interface/sounds/thingy_one_deactivate.ogg",
-      "/user_interface/sounds/thingy_two_activate.ogg",
-      "/user_interface/sounds/thingy_two_deactivate.ogg",
-      "/user_interface/sounds/thingy_two_error.ogg"
+      "/user_interface/sounds/exit_fullscreen.ogg",
+      "/user_interface/sounds/right_click_for_fullscreen.ogg",
+      "/user_interface/sounds/swipe_down.ogg",
+      "/user_interface/sounds/swipe_up.ogg",
+      "/user_interface/sounds/touchend_and_open_fullscreen.ogg",
+      "/user_interface/sounds/touchstart_for_fullscreen.ogg"
       );
   }
   const cache = await caches.open(cacheName);

@@ -5,8 +5,8 @@ var detectedBrand;
 var audioFileExtension = "ogg"; // Default to ogg except for Safari // Ogg is better than mp3 but Safari won't play it.
 var isApple = false;
 
-var deactivationSound2;
-var activationSound2;
+//var deactivationSound2;
+//var activationSound2;
 var customCursorThatWeDontNeedOnTouchscreens;
 
 window.addEventListener('DOMContentLoaded', function(){
@@ -22,8 +22,8 @@ window.addEventListener('DOMContentLoaded', function(){
     isApple=true;
   }
 
-  deactivationSound2 = new Howl({  src: ["/user_interface/sounds/thingy_two_deactivate."+audioFileExtension]  }); // Mobiles: FULLSCREEN,,, Desktops: CHANGE BROWSER TAB
-  activationSound2 = new Howl({  src: ["/user_interface/sounds/thingy_two_activate."+audioFileExtension]  }); // Mobiles: FULLSCREEN,,, Desktops: CHANGE BROWSER TAB
+  //deactivationSound2 = new Howl({  src: ["/user_interface/sounds/thingy_two_deactivate."+audioFileExtension]  }); // Mobiles: FULLSCREEN,,, Desktops: CHANGE BROWSER TAB
+  //activationSound2 = new Howl({  src: ["/user_interface/sounds/thingy_two_activate."+audioFileExtension]  }); // Mobiles: FULLSCREEN,,, Desktops: CHANGE BROWSER TAB
   // See caniuse.com
   // Samsung Browser PROBLEM SOLVED: See js_for_the_sliding_navigation_menu.js to find the function hideOrUnhideTheNavigationMenuOnMOBILES()
   // Sliding navigation menu used to be triggered oppositely because resize and fullscreenchange events fired at different times in Chrome and in Samsung Browser.
@@ -172,10 +172,10 @@ window.addEventListener('DOMContentLoaded', function(){
           {
             if (document.hidden) {
                 // console.log("hidden means user is gone");
-                deactivationSound2.play();
+                //deactivationSound2.play();
             } else {
                 // console.log("visible means user is back");
-                activationSound2.play();
+                //activationSound2.play();
             }
           }
   }

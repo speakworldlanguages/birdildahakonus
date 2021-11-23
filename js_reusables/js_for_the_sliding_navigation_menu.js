@@ -117,9 +117,6 @@ function removeGoBackToPreviousButtonFromTheNavigationMenu() {
   //console.log("GO BACK button is removed from the menu");
 }
 */
-// Sliding navigation menu button UI sounds
-const navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover."+audioFileExtension]  }); // DESKTOP ONLY. Put it here to make it global.
-const navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click."+audioFileExtension]  });
 
 var speedAdjustmentDiv = document.createElement("DIV"); // ONLY FOR DESKTOPS
 speedAdjustmentDiv.classList.add("sliderContainerDivsWillLook");
@@ -160,7 +157,7 @@ function makeTheNavMenuGoDownOnMobiles() {
     if (navMenuIsUpAndVisible && !navMenuIsMoving) { // It really was up
       invisibleContainerOfContainerDivOfTheNavigationMenu.classList.remove("addThisForAnimationAppearFromBottom");
       invisibleContainerOfContainerDivOfTheNavigationMenu.classList.add("addThisForAnimationSinkAndDisappear"); // See css_for_sliding_navigation_menu.css
-      deactivationSound1.play(); //
+      swipeDownSound.play();
       navMenuIsUpAndVisible = false;
       navMenuIsMoving = true;
       setTimeout(function () {   navMenuIsMoving = false;   },750);
@@ -173,7 +170,7 @@ function makeTheNavMenuComeUpOnMobiles() {
     if (!navMenuIsUpAndVisible && !navMenuIsMoving) { // It really was down
       invisibleContainerOfContainerDivOfTheNavigationMenu.classList.remove("addThisForAnimationSinkAndDisappear");
       invisibleContainerOfContainerDivOfTheNavigationMenu.classList.add("addThisForAnimationAppearFromBottom"); // See css_for_sliding_navigation_menu.css
-      activationSound1.play(); // Handle audio: All SWIPE-UPs will continue firing this function but this sound must be heard only once.
+      swipeUpSound.play();
       navMenuIsUpAndVisible = true;
       navMenuIsMoving = true;
       setTimeout(function () {   navMenuIsMoving = false;   },750);
@@ -188,12 +185,21 @@ const filePathForResumeAfterPausedByButton = "/user_interface/text/"+userInterfa
 // See js_for_fetch_api_character_encoding.js for the headers thingy.
 fetch(filePathForResumeAfterPausedByButton,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ continueAfterPauseByNavMenuPauseButton = contentOfTheTxtFile; });
 /* NOTE: Looks like the function declarations could have been tidier */
+
+// Sliding navigation menu button UI sounds
+const navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover."+audioFileExtension]  }); // DESKTOP ONLY. Put it here to make it global.
+const navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click."+audioFileExtension]  }); // See js_for_different_browsers_and_devices
+
+let swipeUpSound, swipeDownSound;
+
 window.addEventListener("load",function() {
 
   // What to do on MOBILE DEVICES
   // Use ayFreym from js_for_all_container_parent_htmls
   // What to do on MOBILES
   if (deviceDetector.isMobile){
+    swipeUpSound = new Howl({  src: ["/user_interface/sounds/swipe_up."+audioFileExtension]  }); // See js_for_different_browsers_and_devices
+    swipeDownSound = new Howl({  src: ["/user_interface/sounds/swipe_down."+audioFileExtension]  }); // See js_for_different_browsers_and_devices
     // If something blocks the clickablity of any other element use pointerEvents = "none";
     containerDivOfTheNavigationMenu.classList.add("theSmallNavigationMenuMOBILEStyling"); // See css_for_all_container_parent_htmls.css
 
@@ -477,12 +483,12 @@ window.addEventListener("load",function() {
   //   // DEPRECATED: Since resize doesn't happen on iPhones, the very first sinking of the nav menu is handled in js_for_all_container_parent_htmls -> handleTheFirstGoingFullscreenOnMobiles()
   //   setTimeout(function () { /*!!!*/ // Try and see if 100ms delay will solve the opposite firing conflict between Chrome and Samsung Browser? Result: YES!
   //     if (!hasGoneFullscreen) { // Since iPhones don't allow fullscreen orientation change fires differently on Android and iOS.
-  //       deactivationSound2.play();
+  //       d-e-a-c-t-i-v-a-t-i-o-n-S-o-u-n-d-2.play();
   //       setTimeout(function () {    makeTheNavMenuComeUpOnMobiles();    },500);
   //       setTimeout(function () {    window.addEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);    },200); // animation duration is .4s inside css
   //     } // End of if
   //     else {
-  //       activationSound2.play();
+  //       a-c-t-i-v-a-t-i-o-n-S-o-u-n-d-2.play();
   //       // Hide the nav menu if open-fullscreen happened normally during a lesson without any preloading screen.
   //       // Preloading is triggered by any of the [choose language] buttons OR [continue from last position] button etc
   //       // In such cases makeTheNavMenuGoDownOnMobiles() must fire only after the preloading is done (iframe.load fires).
