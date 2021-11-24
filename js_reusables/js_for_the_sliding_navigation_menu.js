@@ -620,6 +620,9 @@ window.addEventListener("load",function() {
     } else {
       window.open("/information/index.html","_blank");
     }*/
+    if (ayFreym.src.search("blank.html") >= 0) { // This is the [choose the language you want to learn] screen
+      document.getElementsByTagName('MAIN')[0].style.left = "8000px"; // Hide the "Choose the language you want to learn" screen
+    }
     ayFreym.src = "/information/index.html";
   }
   /*____________END OF touch and mouse events_____________*/
