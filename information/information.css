@@ -30,7 +30,6 @@
     .monthlyButtonOnPhones{transform: translate(-50%,15%);}
     .monthlyButtonOnTablets{transform: translate(-50%,15%);}
   }
-
 }
 @media (orientation: landscape) {
   .photoContainerOnTablets{position: fixed; left: 3vw; top:5vh; transform: translate(0%,0%); min-height: 62vmin; overflow:hidden;}

@@ -26,9 +26,7 @@ img{
   /*pointer-events: none;*/ /*This makes Firefox on mobile go crazy with touch events! Set it to none only when necessary and only locally in a given lesson's css*/
 }
 /*See js_for_every_single_html.js for fonts*/
-/*Cannot use @import because frame html does not inherit fonts from parent html. Have done it via script.*/
-
-
+/*Cannot use @import because frame html does not inherit fonts from parent html. So we have done it via script.*/
 
 
 /*SHOULD THIS (i.e. the preloader's stuff) BE MOVED TO css_for_all_container_parent_htmls???*/

@@ -29,24 +29,10 @@
     100%{transform: scale(0.9); /*font-size:300%; letter-spacing: 1vmin;*/}
       }
       .latinTextFont{font-family:'Kanit';} /*REMOVE THIS IF User Interface is in non-Latin like Kanji etc*/
-      /* .nudgeDesktop{padding-bottom: 100px;} */
-      /* .nudgeMobile{padding-top: 15vh;} */
+
     </style>
     <script>
       window.addEventListener('DOMContentLoaded', function(){
-        /*const main = document.getElementById('thisContainsEverything');
-        if (deviceDetector.isMobile) {
-          // main.classList.add("nudgeMobile");
-        } else {
-          // main.classList.add("nudgeDesktop");
-        }
-
-        const notificationButtonInParent = window.parent.document.getElementsByTagName('FOOTER')[0];
-        if (deviceDetector.isMobile) {
-          // notificationButtonInParent.classList.add("???"); // The style rules must exist in the parent; NOT IN iFRAME
-        } else {
-          // notificationButtonInParent.classList.add("???"); // The style rules must exist in the parent; NOT IN iFRAME
-        }*/
         /**/
         if (userInterfaceLanguage=="ja") {
           document.getElementById('messageAfterTheLastLessonP').classList.remove("latinTextFont");
@@ -67,15 +53,14 @@
           document.getElementById('thisContainsEverything').classList.add("zoomInForLastNoticeAtTheEnd");
         }
       }, { once: true });
-      // UPDATE: It's now OK if the following two functions are not defined here. See js_for_all_iframed_lesson_htmls typeof conditionals
-      // function unloadTheSoundsOfThisLesson() {   /*Do nothing*/   } // This used to exist here otherwise nav buttons didn't function
-      // function unloadTheImagesOfThisLesson() {   /*Do nothing*/   } // This used to exist here otherwise nav buttons didn't function
+
       function handleClickTouch() {
-        if (parent.detectedOS.name == "iOS" || parent.detectedOS.name == "Mac OS" || parent.detectedBrowser.name == "Firefox") {
+        /*if (parent.detectedOS.name == "iOS" || parent.detectedOS.name == "Mac OS" || parent.detectedBrowser.name == "Firefox") {
           window.open('../../information','_parent'); // Firefox actually allows opening a new tab with _blank but that creates a conflict with the alert-pause
         } else {
           window.open('../../information','_blank');
-        }
+        }*/
+        parent.ayFreym.src = "/information/index.html";
       }
     </script>
   </head>

@@ -221,9 +221,3 @@ main{
   from {opacity:0;}
   to {opacity:1;}
 }
-
-/* NO LONGER USED??? */
-/* .postloaderInInteractablesStartHidden{   transform: translateX(-9999px);   opacity:0.1; transition: opacity 0.25s;  } */
-/* Postloader: White fullviewport cover*/
-/* .postloaderInInteractablesGetTotallyVisible{   transform: translateX(0px);   opacity:1;      } */
-/* Postloader: White fullviewport cover*/

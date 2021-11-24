@@ -125,9 +125,6 @@ footer:hover{   transform: translateX(-50%) scale(1.02); }
 footer:active{  transform: translateX(-50%) scale(0.98); }
 .footerGetLost{ transform: translateX(-50%) scale(0.0001); opacity: 0; }/* In notify_**.js add when notification is accepted or in js_for_pwa if installation was accepted but notification isn't supported*/
 
-/* .footerSlideUpMobile{margin-top:-100vmin;} */ /*WE ARE WORKING!!!*/
-/* .footerSlideUpDesktop{margin-top:0vmin;} */
-
 .footerDesktop{ top:100vh; }
 .footerDesktop div{display: flex; align-items: center; justify-content: center; min-width:240px; height: 100px;}
 .footerDesktop img{ height: 100px; }

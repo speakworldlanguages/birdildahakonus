@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', function(){
       document.getElementById('aboutResourcesP').classList.add("alegreya"); /* because, view source link does not exist on mobiles, so this is desktop-only.*/
     }
   }
-
+  /* DEPRECATED as we don't want to open a new tab anymore
   // Check if the opener tab (which is probably the main app) is still open.
   if (window.opener) {
     // Check if there is a Howler object in the opener.
@@ -27,8 +27,8 @@ window.addEventListener('DOMContentLoaded', function(){
       Howler.volume(window.opener.Howler.volume());
     }
   }
-
-  clickSound = new Howl({  src: ['/user_interface/sounds/financial_thirdparty_click.mp3']  });
+  */
+  clickSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_click."+parent.audioFileExtension]  });
   // ------- Fill the divs with text depending on the user interface language --------
   const filePathForLicense = "/LICENSE";
   fetch(filePathForLicense,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ const keepTheNiceLineBreaks = contentOfTheTxtFile.replace(/\n\s*/g, "<br>"); document.getElementById('putTheLicenseIntoThisP').innerHTML = keepTheNiceLineBreaks; });
@@ -57,7 +57,6 @@ window.addEventListener('DOMContentLoaded', function(){
 }, { once: true });
 // REMEMBER: Wait for “userInterfaceLanguage” variable to be ready. See js_for_every_single_html.js
 window.addEventListener('load', function(){
-
 
   const monthlyOpt = document.getElementById('idOfMonthlySupportOptionDiv'); // The 2 other duplicates will have been removed by the time this gets executed.
   // GOOD PRACTICE: It would be good if we could “SILENTLY” get the location of the user via IP detection (without device GPS because that pops another “allow-block” prompt).
@@ -94,13 +93,14 @@ window.addEventListener('load', function(){
 
   // addEventListeners to buttons to open relevant pages in _self
   monthlyOpt.addEventListener("click", function(){
-    clickSound.play();
+    clickSound.play(); // takes 4000ms
     document.getElementById('moveAllOfThisToLeftID').classList.add("niceFadeOutInfoSlow"); // See information.css
     // Create a switch-case here to go to euro or usd page on patreon
     // CAUTION: Switch must not take userInterfaceLanguage but browserLanguage // See js_for_every_single_html
-
-    setTimeout(function () {  document.location.href = 'https://patreon.com/ForTerranationalBonocracy_USD';  },3900);
-    //setTimeout(function () {  document.location.href = 'https://patreon.com/ForTerranationalBonocracy_EUR';  },3900);
+    // Wasn't able to embed PATREON in the iframe so we have to make this the point of no return
+    // Can't use document.location.href = 'https://patreon.com/ForTerranationalBonocracy_USD';
+    setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },3950);
+    //setTimeout(function () {  document.location.href = 'https://patreon.com/ForTerranationalBonocracy_EUR';  },3950);
   });
 
   /* __ Detect device and make the buttons blink on mobiles. __ */

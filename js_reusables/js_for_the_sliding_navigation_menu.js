@@ -88,19 +88,6 @@ containerDivOfTheNavigationMenu.appendChild(clickToFinanceDiv);
 
 // speedAdjustmentDiv and volumeAdjustmentDiv are for DESKTOPS ONLY. See the code below in window load event's desktop block.
 
-// Call these from bread.js and water.js etc to add or remove the navigation buttons
-// In the future, use a condition like if(userInterfaceDirection=="ltr") {} for a user interface that reads from right to left like Arabic.
-// Don't forget to do the same in whenLoadLastLessonOkButtonIsClickedOrTapped() inside js_for_all_container_parent_htmls.js
-/* DEPRECATED: See js_for_all_iframed_lesson_htmls.js for the new thing
-function addHomeButtonToTheNavigationMenu() {
-  if (deviceDetector.isMobile) {
-    containerDivOfTheNavigationMenu.insertBefore(clickToGoToMainMenuDiv,containerDivOfTheNavigationMenu.childNodes[0]); // Make it leftmost
-  } else {
-    containerDivOfTheNavigationMenu.insertBefore(clickToGoToMainMenuDiv,containerDivOfTheNavigationMenu.childNodes[1]); // Place it on the right of speedAdjustmentDiv
-  }
-  //console.log("HOME button is added to the menu");
-}
-*/
 // In the future, use a condition like if(userInterfaceDirection=="ltr") {} for a user interface that reads from right to left like Arabic.
 // Don't forget to check whenLoadLastLessonOkButtonIsClickedOrTapped() inside js_for_all_container_parent_htmls.js // EDIT: That doesn't exist anymore
 /*
@@ -189,6 +176,7 @@ fetch(filePathForResumeAfterPausedByButton,myHeaders).then(function(response){re
 // Sliding navigation menu button UI sounds
 const navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover."+audioFileExtension]  }); // DESKTOP ONLY. Put it here to make it global.
 const navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click."+audioFileExtension]  }); // See js_for_different_browsers_and_devices
+const specialClickOnBalanceScale = new Howl({  src: ["/user_interface/sounds/special_click."+audioFileExtension]  });
 
 let swipeUpSound, swipeDownSound;
 
@@ -469,47 +457,6 @@ window.addEventListener("load",function() {
     containerDivOfTheNavigationMenu.classList.add("hideWithSlowTransition");
   }
 
-  // ---------- Declaration of mobile functions ----------
-  // DEPRECATED: GO FULLSCREEN TO HIDE THE NAV MENU - EXIT TO REVEAL
-  // function hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen() {
-  //   // Safari on iPhone doesn't allow fullscreen! (iOS 14.7 July 2021)
-  //   // Therefore no resize means no hiding of the nav menu through here on iPhones.
-  //   // So these will work only where changing to fullscreen triggers the 'resize' event.
-  //   // REMEMBER: "resize" fires not only when going fullscreen but also when user rotates the device i.e. when orientation is changed.
-  //   window.removeEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);
-  //   // Use hasGoneFullscreen variable from js_for_handling_fullscreen_mode.js
-  //   // WARNING! “hasGoneFullscreen” has a boolean value that alternates every time “fullscreenchange” event fires.
-  //   // CAUTION! This may happen before or after “resize” event fires depending on the browser!
-  //   // DEPRECATED: Since resize doesn't happen on iPhones, the very first sinking of the nav menu is handled in js_for_all_container_parent_htmls -> handleTheFirstGoingFullscreenOnMobiles()
-  //   setTimeout(function () { /*!!!*/ // Try and see if 100ms delay will solve the opposite firing conflict between Chrome and Samsung Browser? Result: YES!
-  //     if (!hasGoneFullscreen) { // Since iPhones don't allow fullscreen orientation change fires differently on Android and iOS.
-  //       d-e-a-c-t-i-v-a-t-i-o-n-S-o-u-n-d-2.play();
-  //       setTimeout(function () {    makeTheNavMenuComeUpOnMobiles();    },500);
-  //       setTimeout(function () {    window.addEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);    },200); // animation duration is .4s inside css
-  //     } // End of if
-  //     else {
-  //       a-c-t-i-v-a-t-i-o-n-S-o-u-n-d-2.play();
-  //       // Hide the nav menu if open-fullscreen happened normally during a lesson without any preloading screen.
-  //       // Preloading is triggered by any of the [choose language] buttons OR [continue from last position] button etc
-  //       // In such cases makeTheNavMenuGoDownOnMobiles() must fire only after the preloading is done (iframe.load fires).
-  //       if (!preloadCoverIsShowingNow) { // This is created in js_for_preload_handling and is changed in
-  //         // No need to wait for smth to happen
-  //         setTimeout(function () {    makeTheNavMenuGoDownOnMobiles();    },2500);
-  //       } else {
-  //         // Must wait until preloadCoverIsShowingNow is set to false. That change happens in js_for_all_container_parent_htmls
-  //         let checkEvery250msOrSo = setInterval(isItDoneYet, 250);
-  //         function isItDoneYet() {
-  //           if (preloadCoverIsShowingNow == false) { // Yes, it is now done.
-  //             clearInterval(checkEvery250msOrSo); // Stop the timer.
-  //             makeTheNavMenuGoDownOnMobiles(); // Safely hide the nav menu as soon as possible now.
-  //           }
-  //         }
-  //       }
-  //       setTimeout(function () {    window.addEventListener('resize', hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen);    },200); // animation duration is .4s inside css
-  //     } // End of else
-  //   },100); /*!!!*/ // End of setTimeout. Set to 100ms assuming that nobody would enter and then exit full screen within 100 milliseconds.
-  //
-  // } // End of function hideOrUnhideTheNavigationMenuOnMobilesDependingOnFullscreen()
 
   // SWIPE UP-DOWN TO SEE-HIDE THE NAV MENU
   function handleSwipeGesture() {
@@ -570,7 +517,7 @@ window.addEventListener("load",function() {
 
   // REMEMBER: The task of unloading sounds and stopping annyang has been moved to js_for_all_iframed_lesson_htmls.js to be handled with window onbeforeunload
 
-  function goToPreviousLessonFunction() {
+  function goToPreviousLessonFunction() { // After the making of progress chart this became a bit unnecessary but don't know if it will be useful again
     navMenuClickSound.play();
     // After about 8 seconds the button must turn into a REFRESH button.
     // But it must go to the previous place if right now is the beginning of the lesson.
@@ -624,10 +571,9 @@ window.addEventListener("load",function() {
       const flashingDiv = document.createElement("DIV"); flashingDiv.classList.add("flashBordersWithInsetWhiteBoxShadow");
       document.body.appendChild(flashingDiv);
       setTimeout(function() {  flashingDiv.parentNode.removeChild(flashingDiv);  },1500);
-      // ayFreym.contentWindow.document.body.appendChild(flashingDiv);
     }
-    // ayFreym.contentWindow.document.location.href="http://myLink.com"; // or ayFreym.src = "folder/index.html";
-    // REMEMBER: If we navigate via location.href the browser WILL NOT update ayFreym.src
+    // NOTE THAT: Navigation can be done in two ways; 1- ayFreym.contentWindow.document.location.href="http://myLink.com"; // or 2- ayFreym.src = "folder/index.html";
+    // REMEMBER: If we navigate via location.href the browser WILL NOT update ayFreym.src and it will be false and stale
     // CAUTION! Changing the location with href will trigger window.onbeforeunload
   }
 
@@ -653,7 +599,7 @@ window.addEventListener("load",function() {
 
         /*Continue receiving speech if it was interrupted*/
         if (wasListeningWhenUserPaused) {
-          setTimeout(function() {          if (annyang){ annyang.start(); }           },1001);
+          setTimeout(function() {         if (annyang){ annyang.start(); }         },1001);
         }
       },30); // 30ms is not a superstition, it's a guesstimated safety measure.
     },250);
@@ -661,15 +607,20 @@ window.addEventListener("load",function() {
 
   function openFinancialMethodsPageFunction() {
     navMenuClickSound.play();
+    setTimeout(function () {  specialClickOnBalanceScale.play();  },100);
+    // handle remove class "ceramicBlinking" from within /information/index.html
+
     // stopAnnyangAndStopHowler(); // use contentWindow because the function has been moved to js_for_all_iframed_lesson_htmls.js
     // UNCLEAR: Does window.open() make onbeforeunload fire if the link opens in a new tab???
     // SAFARI IGNORES: window.open() with _blank due to pop-up blocking policy
     // EVEN THOUGH: Firefox allows _blank in window.open() we won't use it because it creates a conflict with "Continue lesson" alert as it force-focuses its tab and makes the entire Firefox flyover menu unnavigateable
+    /*
     if (detectedOS.name == "iOS" || detectedOS.name == "Mac OS" || detectedBrowser.name == "Firefox") {
       window.open("/information/index.html","_self");
     } else {
       window.open("/information/index.html","_blank");
-    }
+    }*/
+    ayFreym.src = "/information/index.html";
   }
   /*____________END OF touch and mouse events_____________*/
 },{ once: true });

@@ -1,6 +1,6 @@
 // This is included in parent htmls only. Not in lesson htmls.
 // Even though this is deferred, looks like we still need to wait for the load event before we call a function from another js file.
-
+// iPhone-Safari won't allow fullscreen as of 2021
 // See js_for_different_browsers_and_devices ... Also see js_for_the_sliding_navigation_menu
 let enterSound, exitSound, rightClickSound, touchstartSound;
 
@@ -14,18 +14,13 @@ window.addEventListener("load",function() {
   const iDocWindow = iFrameLocalConst.contentWindow || iFrameLocalConst.contentDocument;
 
   // HOW TO GO AND STAY IN FULLSCREEN ON MOBILES
-  /**/
-  // See js_for_all_container_parent_htmls to find how o-p-e-n-F-u-l-l-s-c-r-e-e-n() is called.
-  // DEPRECATED: o-p-e-n-F-u-l-l-s-c-r-e-e-n() is called via handleTheFirstGoingFullscreenOnMobiles() when either of these two things happen,
-  // 1- when user taps on a button in the main menu (language selection menu) 2- when user taps the "return to the last saved point" button
-  // But ALSO must RETURN TO FULLSCREEN WITH THE FIRST TOUCH if user navigates away from the app and comes back and THE REASON is
-  // BECAUSE most browsers won't allow going fullscreen without a user gesture... That means calling o-p-e-n-F-u-l-l-s-c-r-e-e-n() with Onblur Onfocus or document.visibilitychange won't work.
+  // Most browsers won't allow going fullscreen without a user gesture... That means calling o-p-e-n-F-u-l-l-s-c-r-e-e-n() with Onblur Onfocus or document.visibilitychange won't work.
   // So here is how we do it...
 
   if (deviceDetector.isMobile) {
     touchstartSound = new Howl({  src: ["/user_interface/sounds/touchstart_for_fullscreen."+audioFileExtension]  });
     // We cannot directly add an event listener for touchstart/mousedown on the iframe. So instead add it to the documentSmthSmth in the iFrame.
-    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnMobileBrowser); // Looks like we MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
+    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnMobileBrowser); // MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
     function iframeHasBeenLoadedOnMobileBrowser() {
       // Try touchend instead of touchstart to see if it will fix the console error » "fullscreen error"
       // ANSWER: Yes, it looks like trying to go fullscreen with touchstart was the cause of that error which made fullscreen work only with a double tap
@@ -43,7 +38,7 @@ window.addEventListener("load",function() {
     // THE RIGHT CLICK METHOD ON DESKTOPS
     var currentSrcParsed;
     // Every time the iframe is loaded, add the custom context menu to either the parent document or the framed document.
-    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnDesktopBrowser); // Looks like we MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
+    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnDesktopBrowser); // MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
     function iframeHasBeenLoadedOnDesktopBrowser() {
       // DEPRECATED: currentSrcParsed = iFrameLocalConst.src.substring(iFrameLocalConst.src.length - 10, iFrameLocalConst.src.length-5); // Get the name of the html file from a string like "/user_interface/blank.html"
       const currentSrc = iFrameLocalConst.src;
@@ -146,13 +141,9 @@ function closeFullscreen() {
 }
 
 function handleEnterSoundEtc() {
-  /*if (deviceDetector.isMobile) {   ???.play();  } // See js_for_different_browsers_and_devices.js
-  else {    ???.play();   }*/
   enterSound.play();
 }
 function handleExitSoundEtc() {
-  /*if (deviceDetector.isMobile) {   ???.play();  }
-  else {    ???.play(); }*/
   exitSound.play();
   if (typeof swipeMenuIsDisabled == "boolean") { // Check if it exists even though they are both at parent level
     swipeMenuIsDisabled = false; // Enable it (it could have been disabled because of a game-input-conflict) See js_for_the_sliding_navigation_menu.js

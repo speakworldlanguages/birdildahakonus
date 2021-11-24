@@ -1,7 +1,6 @@
 /*Set fontSize via script to set different sizes for different fonts. Consider using the percentage unit.*/
 body {
-  /*color: #34546d;*/ /* 34546d is DARK BLUE */ /*Forgot what it was for*/
-  /* In case of tablets and phones, the viewport may need adjustments */
+  /* In case of tablets and phones, see if the viewport needs adjustments. So far it works fine */
 }
 main{ /*This used to be a normal div with #idOfTheDivThatContainsEverything*/
   position: fixed;

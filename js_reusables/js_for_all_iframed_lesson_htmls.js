@@ -16,7 +16,16 @@ window.onload = function() { // DANGER: Do not use window.onload anywhere else. 
     if (parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { // Used to be in progress.js
       parent.containerDivOfTheNavigationMenu.removeChild(parent.clickToPauseTheAppDiv); //
     }
-  } else { // We have landed on a lesson or a special page
+  } else if (whereAreWe.search("information") != -1) { // information
+    if (deviceDetector.isMobile) {
+      setTimeout(function () {   parent.makeTheNavMenuGoDownOnMobiles();   },500); // See js_for_the_sliding_navigation_menu // The function checks if the menu was up
+    }
+    // Hide the installation&notification-subscription button (footer in parent)
+    parent.hideNotificationAndInstallation_2in1_button();
+    if (parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { // Used to be in progress.js
+      parent.containerDivOfTheNavigationMenu.removeChild(parent.clickToPauseTheAppDiv); //
+    }
+  } else { // We have landed on a lesson
     if (deviceDetector.isMobile) {
       setTimeout(function () {   parent.makeTheNavMenuGoDownOnMobiles();   },1500); // See js_for_the_sliding_navigation_menu // The function checks if the menu was up
     }
