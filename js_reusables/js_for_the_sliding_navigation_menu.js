@@ -182,7 +182,7 @@ let mouseIsOnMenuTriggerArea = false;
 /*---*/
 let continueAfterPauseByNavMenuPauseButton = "Paused?"; // Get the actual text from txt file and use it instead of this default.
 const filePathForResumeAfterPausedByButton = "/user_interface/text/"+userInterfaceLanguage+"/0-lesson_is_paused_by_button.txt";
-// See js_for_fetch_api_character_encoding.js for the headers thingy.
+// See js_for_every_single_html.js for the headers thingy.
 fetch(filePathForResumeAfterPausedByButton,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ continueAfterPauseByNavMenuPauseButton = contentOfTheTxtFile; });
 /* NOTE: Looks like the function declarations could have been tidier */
 

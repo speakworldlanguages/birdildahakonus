@@ -1,35 +1,39 @@
-.bilinguals{
-  position:fixed; z-index:2; color:white; background-color:#bcc9d3; min-width:43vmin; max-width:43vw;
-  bottom:23vmin;
+.containerOfBilingualLongButton{
+  position:fixed; z-index:2; left: 50%; transform: translateX(-50%) translateY(50%);
+  bottom:26vmin;
+  display: flex; justify-content: center; align-items: stretch;
+}
+.bilingualLongButton{
+  color:white; background-color:#bcc9d3;
   display: flex; flex-direction: column; justify-content: center;
-  padding-top: 0.6vmin; padding-bottom: 0.6vmin;
+  position: relative;
+  padding: 5px;
   border: 1px solid #9daebd;
-  /* cursor: pointer; */
   cursor: url('/user_interface/images/cursor/button_cursor_00.png') 16 6,auto;
   animation: hoverCursor 1.85s infinite;
   animation-direction: alternate;
+  font-size: 18px; overflow: hidden;
+  width: 50%; /*VALUES ARE FOR EACH ONE OF THE TWO,,, Like 45x2=90 in total*/
 }
 @media (orientation:portrait) {
-  .bilinguals{max-height:8vmin;} /*TESTED: Looks good on desktop*/
-  @media (max-width: 600px) { .bilinguals{max-height:10vmin;} }
-  @media (max-width: 500px) { .bilinguals{max-height:12vmin;} }
-  @media (max-width: 400px) { .bilinguals{max-height:14vmin;} }
+  .containerOfBilingualLongButton{width: 90vw;}
+  @media (max-width: 799px) { .bilingualLongButton{font-size: 17px;} .containerOfBilingualLongButton{bottom:28vmin;} }
+  @media (max-width: 599px) { .bilingualLongButton{font-size: 15px;} .containerOfBilingualLongButton{bottom:32vmin;} }
 }
 @media (orientation:landscape) {
-  .bilinguals{max-height:5vmin;}
-  @media (max-width: 1000px){ .bilinguals{max-height:10vmin; bottom:27vmin;} }
-  @media (max-width: 800px) { .bilinguals{max-height:12vmin; bottom:27.1vmin;} }
-  @media (max-width: 600px) { .bilinguals{max-height:14vmin; bottom:27.2vmin;} }
+  .containerOfBilingualLongButton{width: 70vw;}
+  @media (max-height: 799px) { .bilingualLongButton{font-size: 17px;} .containerOfBilingualLongButton{bottom:28vmin;} }
+  @media (max-height: 599px) { .bilingualLongButton{font-size: 15px;} .containerOfBilingualLongButton{bottom:32vmin;} }
 }
 
 .leftHalf{
-  right:50vw;  border-radius:10px 0px 0px 10px; text-align: right; padding-left: 2.1vmin; padding-right: 5px; overflow: hidden;
+  border-radius:10px 0px 0px 10px; text-align: right;
 }
 .rightHalf{
-  left:50vw;  border-radius:0px 10px 10px 0px; text-align: left; padding-right: 2.1vmin; padding-left: 5px; overflow: hidden;
+  border-radius:0px 10px 10px 0px; text-align: left;
 }
 
-.bilingualsMouseEnter{
+.bilingualLongButtonMouseEnter{
   background-color:#9daebd;
   border: 1px solid #8b9eaf;
 }

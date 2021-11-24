@@ -6,15 +6,15 @@
     <meta charset="utf-8">
     <meta name="robots" content="noindex" />
 
-    <link rel="stylesheet" href="../css_reusables/css_for_permanent_custom_cursor.css">
-    <link rel="stylesheet" href="../css_reusables/css_for_every_single_html.css">
-    <link rel="stylesheet" href="../css_reusables/css_for_all_iframed_lesson_htmls.css">
-    <link rel="stylesheet" href="../css_reusables/css_for_new_vocabulary_with_photos.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_permanent_custom_cursor.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_new_vocabulary_with_photos.css">
     <link rel="stylesheet" href="progress.css">
     <link rel="stylesheet" href="bilinguals.css">
 
-    <script defer src="../js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, fonts, fetch headers, onePixelTransparentGif...*/</script>
-    <script defer src="../js_reusables/js_for_all_iframed_lesson_htmls.js"></script>
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, fonts, fetch headers, onePixelTransparentGif...*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js"></script>
     <script defer src="progress.js">/*Handle things*/</script>
     <script defer src="get_ui_texts.js">/*Handle things*/</script>
   </head>
@@ -34,12 +34,15 @@
     <!-- END OF MAIN -->
 
     <!-- Change studied language button -->
-    <div class="bilinguals leftHalf" style=""> <!-- This will be filled by fetch -->
-      <p id="leftText1pID">... <span style="white-space: nowrap;">...</span> <span style="white-space: nowrap;">...</span></p>
+    <div class="containerOfBilingualLongButton" id="containerID">
+      <div class="bilingualLongButton leftHalf" style=""> <!-- This will be filled by fetch -->
+        <p id="leftText1pID">... <span style="white-space: nowrap;">...</span> <span style="white-space: nowrap;">...</span></p>
+      </div>
+      <div class="bilingualLongButton rightHalf" style=""> <!-- This will be filled by fetch -->
+        <p id="rightText1pID">... <span style="white-space: nowrap;">...</span> <span style="white-space: nowrap;">...</span></p>
+      </div>
     </div>
-    <div class="bilinguals rightHalf" style=""> <!-- This will be filled by fetch -->
-      <p id="rightText1pID">... <span style="white-space: nowrap;">...</span> <span style="white-space: nowrap;">...</span></p>
-    </div>
+
 
     <!-- FEATURE FOR THE FUTURE: Encode and download everything in localStorage -->
     <div class="" style=""> <!-- This will be hidden under main unless position:fixed; z-index:2; -->

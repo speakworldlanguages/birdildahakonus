@@ -5,7 +5,7 @@ const filePathForLeftTextWithoutInteraction = "/user_interface/text/"+userInterf
 fetch(filePathForLeftTextWithoutInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
   leftTextWithoutInteraction = contentOfTheTxtFile;
   leftText1.innerHTML = leftTextWithoutInteraction;
-});// See js_for_fetch_api_character_encoding.js for the headers thingy.
+});// See js_for_every_single_html.js for the headers thingy.
 
 let rightTextWithoutInteraction;
 const filePathForRightTextWithoutInteraction = "/user_interface/text/"+parent.theLanguageUserIsLearningNowToSetFilePaths+"/0-you_are_learning_"+parent.theLanguageUserIsLearningNowToSetFilePaths+".txt";
@@ -33,8 +33,8 @@ if (deviceDetector.isMobile) {
   leftText1.parentNode.addEventListener("touchstart",eitherTouch1F,{once:true});
   rightText1.parentNode.addEventListener("touchstart",eitherTouch1F,{once:true});
   function eitherTouch1F() {
-    leftText1.parentNode.classList.add("bilingualsMouseEnter");   leftText1.innerHTML = leftTextUponInteraction;
-    rightText1.parentNode.classList.add("bilingualsMouseEnter");  rightText1.innerHTML = rightTextUponInteraction;
+    leftText1.parentNode.classList.add("bilingualLongButtonMouseEnter");   leftText1.innerHTML = leftTextUponInteraction;
+    rightText1.parentNode.classList.add("bilingualLongButtonMouseEnter");  rightText1.innerHTML = rightTextUponInteraction;
     // Get ready for second touch
     leftText1.parentNode.addEventListener("touchstart",eitherTouch2F,{once:true});
     rightText1.parentNode.addEventListener("touchstart",eitherTouch2F,{once:true});
@@ -44,17 +44,15 @@ if (deviceDetector.isMobile) {
   }
 } else {
   /*DESKTOPS*/
-  leftText1.parentNode.addEventListener("mouseenter",eitherHoverF);
-  rightText1.parentNode.addEventListener("mouseenter",eitherHoverF);
+  document.getElementById('containerID').addEventListener("mouseenter",eitherHoverF); // Parent of parent
   function eitherHoverF() {
-    leftText1.parentNode.classList.add("bilingualsMouseEnter");   leftText1.innerHTML = leftTextUponInteraction;
-    rightText1.parentNode.classList.add("bilingualsMouseEnter");  rightText1.innerHTML = rightTextUponInteraction;
+    leftText1.parentNode.classList.add("bilingualLongButtonMouseEnter");   leftText1.innerHTML = leftTextUponInteraction;
+    rightText1.parentNode.classList.add("bilingualLongButtonMouseEnter");  rightText1.innerHTML = rightTextUponInteraction;
   }
-  leftText1.parentNode.addEventListener("mouseleave",eitherUnhoverF);
-  rightText1.parentNode.addEventListener("mouseleave",eitherUnhoverF);
+  document.getElementById('containerID').addEventListener("mouseleave",eitherUnhoverF);
   function eitherUnhoverF() {
-    leftText1.parentNode.classList.remove("bilingualsMouseEnter");   leftText1.innerHTML = leftTextWithoutInteraction;
-    rightText1.parentNode.classList.remove("bilingualsMouseEnter");  rightText1.innerHTML = rightTextWithoutInteraction;
+    leftText1.parentNode.classList.remove("bilingualLongButtonMouseEnter");   leftText1.innerHTML = leftTextWithoutInteraction;
+    rightText1.parentNode.classList.remove("bilingualLongButtonMouseEnter");  rightText1.innerHTML = rightTextWithoutInteraction;
   }
   leftText1.parentNode.addEventListener("mousedown",eitherClickF,{once:true});
   rightText1.parentNode.addEventListener("mousedown",eitherClickF,{once:true});
