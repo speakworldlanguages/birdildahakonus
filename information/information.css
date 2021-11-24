@@ -12,9 +12,9 @@
   .bigNavigationArrowToViewLicenseOnTabletsPosition{position:fixed; left:50vw; transform: translate(-50%,0%); top:73vh;}
   .bigNavigationArrowToViewLicenseOnTabletsSize{width:35vh;}
   .bigNavigationArrowToViewLicenseOnTabletsFontSize{font-size: 2.2vh; width: 34vh;}
-  .bigNavigationReturnArrowOnTablets{top:79vh;}
+  .bigNavigationReturnArrowOnTablets{top:79vh; position:fixed; left:50vw; transform: translateX(-50%);}
   .financeFontSizeOnTablets{font-size:2.1vh;}
-  .infoAboutNameOfLicenseOnTablets{position:fixed; left:50vw; transform: translateX(-50%); top:64vh; mix-blend-mode:normal; width:90vw;}
+  .infoAboutNameOfLicenseOnTablets{position:fixed; left:50vw; transform: translateX(-50%); top:64.8vh; mix-blend-mode:normal; width:90vw;}
   .licenseItselfOnTablets{position:fixed; top:5vmin; left:50vw; transform: translate(-50%,0%); min-width:200px; min-height:150px; max-height:75vh;}
   /* !!! PHONE PHONE PHONE PHONE PHONE PHONE PHONE PHONE !!! */
   .photoContainerOnPhones{position: fixed; left: 50vw; top:2.15vh; transform: translate(-50%,0%); min-height: 40vh; overflow:hidden; }
@@ -34,25 +34,25 @@
 }
 @media (orientation: landscape) {
   /* !!! TABLET TABLET TABLET TABLET TABLET TABLET TABLET !!! */
-  .photoContainerOnTablets{position: fixed; left: 3vw; top:5vh; transform: translate(0%,0%); min-height: 62vmin; overflow:hidden;}
-  .photoWebpOnTablets{height: 62vmin; width: 62vmin; }
-  .monthlyButtonOnTablets{position:fixed; right:4vw; transform: translate(0%,0%); top:15vh; min-width:53vw; min-height:3vh; max-width:55vw; margin:0px; padding:.8vmin;}
-  .onetimeButtonOnTablets{position:fixed; right:4vw; transform: translate(0%,0%); top:35vh; min-width:53vw; min-height:3vh; max-width:55vw; margin:0px; padding:.8vmin;}
-  .bigNavigationArrowToViewLicenseOnTabletsPosition{position:fixed; right:15vw; transform: translate(0%,0%); top:56vh;}
+  .photoContainerOnTablets{position: fixed; left: 4vw; top:5vh; transform: translate(0%,0%); min-height: 62vmin; overflow:hidden;}
+  .photoWebpOnTablets{height: 61vmin; width: 61vmin; }
+  .monthlyButtonOnTablets{position:fixed; right:30.7vw; transform: translate(50%,0%); top:15vh; min-width:53vw; min-height:3vh; max-width:55vw; margin:0px; padding:.8vmin;}
+  .onetimeButtonOnTablets{position:fixed; right:30.7vw; transform: translate(50%,0%); top:35vh; min-width:53vw; min-height:3vh; max-width:55vw; margin:0px; padding:.8vmin;}
+  .bigNavigationArrowToViewLicenseOnTabletsPosition{position:fixed; right:30.7vw; transform: translate(50%,0%); top:56vh;}
   .bigNavigationArrowToViewLicenseOnTabletsSize{width:55vh;}
   .bigNavigationArrowToViewLicenseOnTabletsFontSize{font-size: 3.5vh; width: 54vh;}
-  .bigNavigationReturnArrowOnTablets{top:66vh;}
+  .bigNavigationReturnArrowOnTablets{top:66vh; position:fixed; left:50vw; transform: translateX(-50%);}
   .financeFontSizeOnTablets{font-size:4vh;}
-  .infoAboutNameOfLicenseOnTablets{position:fixed; right:4vw; transform: translateX(0%); top:40vh; mix-blend-mode:normal; min-width:53vw; max-width:55vw}
+  .infoAboutNameOfLicenseOnTablets{position:fixed; right:30.7vw; transform: translateX(50%); top:38.5vh; mix-blend-mode:normal; min-width:53vw; max-width:55vw}
   .licenseItselfOnTablets{position:fixed; top:5vmin; left:50vw; transform: translate(-50%,0%); min-width:200px; min-height:150px; max-height:59vh;}
   /* !!! PHONE PHONE PHONE PHONE PHONE PHONE PHONE PHONE !!! */
-  .photoContainerOnPhones{position: fixed; left: 2.4vw; top:3vh; transform: translate(0%,0%); min-height: 64vmin; overflow:hidden;}
-  .photoWebpOnPhones{height: 64vmin; width: 64vmin; }
+  .photoContainerOnPhones{position: fixed; left: 4vw; top:3vh; transform: translate(0%,0%); min-height: 64vmin; overflow:hidden;}
+  .photoWebpOnPhones{height: 63vmin; width: 63vmin; }
   .financeFontSizeOnPhones{font-size:14px;}
-  .monthlyButtonOnPhones{position:fixed; right:9vw; transform: translate(0%,0%); top:15vh; min-width:43vw; min-height:2.5vh; max-width:49vw; margin:0px; padding:.8vmin;}
-  .onetimeButtonOnPhones{position:fixed; right:9vw; transform: translate(0%,0%); top:25vh; min-width:43vw; min-height:2.5vh; max-width:49vw; margin:0px; padding:.8vmin;}
-  .infoAboutNameOfLicenseOnPhones{position:fixed; right:3.5vw; transform: translateX(0%); top:40vh; mix-blend-mode:normal; width:53vw;}
-  .bigNavigationArrowToViewLicenseOnPhonesPosition{position:fixed; right:14.7vw; transform: translate(0%,0%) scale(1); top:59vh;}
+  .monthlyButtonOnPhones{position:fixed; right:30vw; transform: translate(50%,0%); top:15vh; min-width:43vw; min-height:2.5vh; max-width:49vw; margin:0px; padding:.8vmin;}
+  .onetimeButtonOnPhones{position:fixed; right:30vw; transform: translate(50%,0%); top:25vh; min-width:43vw; min-height:2.5vh; max-width:49vw; margin:0px; padding:.8vmin;}
+  .infoAboutNameOfLicenseOnPhones{position:fixed; right:30vw; transform: translateX(50%); top:40vh; mix-blend-mode:normal; width:53vw;}
+  .bigNavigationArrowToViewLicenseOnPhonesPosition{position:fixed; right:30vw; transform: translate(50%,0%) scale(1); top:59vh;}
   .bigNavigationReturnArrowOnPhones{top:66vh; position:fixed; left:50vw; transform: translateX(-50%) scale(1);}
   .licenseItselfOnPhones{position:fixed; top:5vmin; left:50vw; transform: translate(-50%,0%); min-width:100px; min-height:70px; max-height:58vh;}
 }

@@ -123,10 +123,15 @@ function bigSlideTowardsLeft() {
   document.getElementById('bringAllOfThisFromRightID').classList.add("addThisToMakeItSlideFromRight");
   document.getElementById('moveAllOfThisToLeftID').classList.remove("addThisToMakeItReturnFromLeft");
   document.getElementById('bringAllOfThisFromRightID').classList.remove("addThisToMakeItReturnToRight");
+  // Hide nav menu on mobiles if it was visible AND ALSO disable swipe-up
+  if (parent.navMenuIsUpAndVisible) {   parent.makeTheNavMenuGoDownOnMobiles();   }
+  parent.swipeMenuIsDisabled = true;
 }
 function returnWithBigSlideTowardsRight() {
   document.getElementById('moveAllOfThisToLeftID').classList.add("addThisToMakeItReturnFromLeft");
   document.getElementById('bringAllOfThisFromRightID').classList.add("addThisToMakeItReturnToRight");
   document.getElementById('moveAllOfThisToLeftID').classList.remove("addThisToMakeItSlideTowardsLeft");
   document.getElementById('bringAllOfThisFromRightID').classList.remove("addThisToMakeItSlideFromRight");
+  // Reenable swipe-up
+  parent.swipeMenuIsDisabled = false;
 }

@@ -130,10 +130,10 @@ volumeSlider.classList.add("volumeSliderAppearance");
 var speedAdjustmentCoefficient = 1.0; // 0 is SLOW,,, 1 is NORMAL,,, 2 is FAST // REMEMBER: This is NOT the slider position.
 
 // Variables for detecting the swipe-up
-var swipeMenuIsDisabled = false; // Must disable it during any touch controlled gameplay. Example: give_me_water.js in 1-1-3
+var swipeMenuIsDisabled = false; // Must disable it during any touch controlled gameplay. Example: give_me_water.js in 1-1-3 // Also see information.js bigSlideTowardsLeft()
 let touchStartY;
 let touchEndY;
-let navMenuIsUpAndVisible = true; // Nav menu is visible at first when the app starts.
+var navMenuIsUpAndVisible = true; // Nav menu is visible at first when the app starts. // Also see information.js bigSlideTowardsLeft()
 let navMenuIsMoving = false;
 // DEPRECATED: let navMenuOnMobileHasBeenHiddenForTheFirstTime = false; // So that the very first swipe-up can be ignored.
 var invisibleContainerOfContainerDivOfTheNavigationMenu = document.createElement("DIV");
