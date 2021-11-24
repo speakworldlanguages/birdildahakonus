@@ -2,15 +2,15 @@
 // Don't forget to update service-worker.js after adding/removing/changing something here
 /**/
 window.addEventListener("load",theVeryFirstCachingF,{once:true}); // Run only after DOMContentLoaded because -> js_for_different_browsers_and_devices.js
-async function theVeryFirstCachingF() {
+function theVeryFirstCachingF() {
   setTimeout(afterSomeMilliseconds,2000);
   function afterSomeMilliseconds() {
     if (!localStorage.thisIsNotTheFirstTimeEver) {
       // How do we chain these???
-      await cacheCoreAssetsOfTheApp();
-      await cacheAssetsOfLevel_111();
-      await cacheAssetsOfProgressChart();
-      await cacheAssetsOfInformationScreen();
+      cacheCoreAssetsOfTheApp();
+      cacheAssetsOfLevel_111();
+      cacheAssetsOfProgressChart();
+      cacheAssetsOfInformationScreen();
       localStorage.thisIsNotTheFirstTimeEver = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
     }
   }

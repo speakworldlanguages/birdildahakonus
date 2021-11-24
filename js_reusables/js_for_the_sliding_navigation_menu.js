@@ -90,12 +90,12 @@ containerDivOfTheNavigationMenu.appendChild(clickToFinanceDiv);
 
 // In the future, use a condition like if(userInterfaceDirection=="ltr") {} for a user interface that reads from right to left like Arabic.
 // Don't forget to check whenLoadLastLessonOkButtonIsClickedOrTapped() inside js_for_all_container_parent_htmls.js // EDIT: That doesn't exist anymore
-/*
+
 function addGoBackToPreviousButtonToTheNavigationMenu() {
-  if (deviceDetector.isMobile){
-    containerDivOfTheNavigationMenu.insertBefore(clickToGoToPreviousDiv,containerDivOfTheNavigationMenu.childNodes[0]); // Make it leftmost
+  if (userReadsLeftToRightOrRightToLeft == "rtl") {
+    containerDivOfTheNavigationMenu.appendChild(clickToGoToPreviousDiv); // Make it rightmost
   } else {
-    containerDivOfTheNavigationMenu.insertBefore(clickToGoToPreviousDiv,containerDivOfTheNavigationMenu.childNodes[1]); // Place it on the right of speedAdjustmentDiv
+    containerDivOfTheNavigationMenu.insertBefore(clickToGoToPreviousDiv,containerDivOfTheNavigationMenu.firstElementChild);  // Make it leftmost
   }
   //console.log("GO BACK button is added to the menu");
 }
@@ -103,7 +103,7 @@ function removeGoBackToPreviousButtonFromTheNavigationMenu() {
   containerDivOfTheNavigationMenu.removeChild(clickToGoToPreviousDiv); // Whatever its location was
   //console.log("GO BACK button is removed from the menu");
 }
-*/
+
 
 var speedAdjustmentDiv = document.createElement("DIV"); // ONLY FOR DESKTOPS
 speedAdjustmentDiv.classList.add("sliderContainerDivsWillLook");
@@ -475,7 +475,7 @@ window.addEventListener("load",function() {
     clickToGoToPreviousDiv.addEventListener("touchstart", function () {
       clickToGoToPreviousImgA.style.display = "none";
       clickToGoToPreviousImgD.style.display = "initial";
-      setTimeout(goToPreviousLessonFunction,270);
+      setTimeout(goToPreviousFunction,270);
       setTimeout(function () {
         clickToGoToPreviousImgD.style.display = "none";
         clickToGoToPreviousImgA.style.display = "initial";
@@ -509,7 +509,7 @@ window.addEventListener("load",function() {
       },900);
     } );
   } else { // Mouse
-    clickToGoToPreviousDiv.addEventListener("mousedown", function () { setTimeout(goToPreviousLessonFunction,30); }    );
+    clickToGoToPreviousDiv.addEventListener("mousedown", function () { setTimeout(goToPreviousFunction,30); }    );
     clickToGoToMainMenuDiv.addEventListener("mousedown", function () { setTimeout(goToMainMenuFunction,30); }          );
     clickToPauseTheAppDiv.addEventListener("mousedown", function () { setTimeout(pauseTheAppFunction,30); }     );
     clickToFinanceDiv.addEventListener("mousedown", function () { setTimeout(openFinancialMethodsPageFunction,30); }   );
@@ -517,36 +517,13 @@ window.addEventListener("load",function() {
 
   // REMEMBER: The task of unloading sounds and stopping annyang has been moved to js_for_all_iframed_lesson_htmls.js to be handled with window onbeforeunload
 
-  function goToPreviousLessonFunction() { // After the making of progress chart this became a bit unnecessary but don't know if it will be useful again
+  function goToPreviousFunction() { // After the making of progress chart this became a bit unnecessary but don't know if it will be useful again
     navMenuClickSound.play();
-    // After about 8 seconds the button must turn into a REFRESH button.
-    // But it must go to the previous place if right now is the beginning of the lesson.
-    if (ayFreym.contentWindow.thisLessonHasBeenLoadedFresh) { // See js_for_all_iframed...
-      // Try to use sessionStorage and do smth dynamic instead of relying on static objects
-
-      /*
-      // Use indexOfLessons object from js_object_of_all_lessons_listed.js
-      // Get the frame title and find the lesson index
-      let theTitleOfCurrentLesson = ayFreym.contentWindow.document.title; // Use ayFreym variable from js_for_all_container_parent_htmls.js
-      let theIndexOfCurrentLesson;
-      // Maybe “switch case” or “while” with breaks would be better instead of “for” but anyways...
-      for(i=0;i<indexOfLessons.title.length;i++)
-      { if (indexOfLessons.title[i] === theTitleOfCurrentLesson ){
-          theIndexOfCurrentLesson = i;
-        }
-      }
-      // Reveal the preloader screen cover
-      preloadHandlingDiv.classList.remove("addThisClassToHideThePreloader"); // See css_for_every_single_html
-      preloadHandlingDiv.classList.add("addThisClassToRevealThePreloader"); // See css_for_every_single_html
-      // Go to the previous lesson as soon as the cover is ready
-      setTimeout(function() {
-        ayFreym.src = indexOfLessons.path[theIndexOfCurrentLesson-1];
-      },1500);*/
-    } else {
-      ayFreym.contentWindow.location.reload(); // Refresh
-    }
+    // Remove itself (the go to previous button) and return to [Choose the language you want to learn] screen
+    setTimeout(removeGoBackToPreviousButtonFromTheNavigationMenu,300);
+    document.getElementsByTagName('MAIN')[0].style.left = "0px";
+    ayFreym.src = "/user_interface/blank.html";
   }
-
 
   function goToMainMenuFunction() { // Actually to progress chart; not the starting screen // See progress.js and js_for_preload_handling.js for other fade-navigation handling
     navMenuClickSound.play();
@@ -609,19 +586,13 @@ window.addEventListener("load",function() {
     navMenuClickSound.play();
     setTimeout(function () {  specialClickOnBalanceScale.play();  },100);
     // handle remove class "ceramicBlinking" from within /information/index.html
-
-    // stopAnnyangAndStopHowler(); // use contentWindow because the function has been moved to js_for_all_iframed_lesson_htmls.js
-    // UNCLEAR: Does window.open() make onbeforeunload fire if the link opens in a new tab???
-    // SAFARI IGNORES: window.open() with _blank due to pop-up blocking policy
-    // EVEN THOUGH: Firefox allows _blank in window.open() we won't use it because it creates a conflict with "Continue lesson" alert as it force-focuses its tab and makes the entire Firefox flyover menu unnavigateable
-    /*
-    if (detectedOS.name == "iOS" || detectedOS.name == "Mac OS" || detectedBrowser.name == "Firefox") {
-      window.open("/information/index.html","_self");
-    } else {
-      window.open("/information/index.html","_blank");
-    }*/
-    if (ayFreym.src.search("blank.html") >= 0) { // This is the [choose the language you want to learn] screen
+    const whereWeAreNow = ayFreym.src;
+    if (whereWeAreNow.search("blank.html") >= 0) { // This is the [Choose the language you want to learn] screen
       document.getElementsByTagName('MAIN')[0].style.left = "8000px"; // Hide the "Choose the language you want to learn" screen
+      // On the very first time, user hasn't selected a language so memoryCard has not been created yet
+      // The user must not be able to reach progress_chart without choosing a study-language first
+      // In this case we want the user to come back to the [Choose the language you want to learn] screen from the [information] screen
+      addGoBackToPreviousButtonToTheNavigationMenu();
     }
     ayFreym.src = "/information/index.html";
   }
