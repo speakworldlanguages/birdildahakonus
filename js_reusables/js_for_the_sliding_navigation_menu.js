@@ -593,6 +593,7 @@ window.addEventListener("load",function() {
       // The user must not be able to reach progress_chart without choosing a study-language first
       // In this case we want the user to come back to the [Choose the language you want to learn] screen from the [information] screen
       addGoBackToPreviousButtonToTheNavigationMenu();
+      // In this case, see how HOME button is prevented from being added to the nav menu in js_for_all_iframed_lesson_htmls.js
     }
     ayFreym.src = "/information/index.html";
   }

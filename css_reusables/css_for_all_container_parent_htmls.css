@@ -3,7 +3,10 @@ body{ /*Also see css_for_every_single_html.css*/
   overflow:hidden;  /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
   max-width:100vw;  /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
   max-height:100vh; /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
-  background-color: black; /*This is necessary because when HOME button is used to change iframe src this [body background] shows for a few milliseconds*/
+  /*background-color: black;*/ /*This was necessary because when HOME button is used to change iframe src this [body background] showed for a few milliseconds*/
+  /*Is it still the case after the addition of orbiting circles animation???*/
+  /*Anyhow let's make it same with main - check what happens when balance scale button is clicked before choosing a study-language*/
+  background-image: linear-gradient(#becbd5, #dbe2e8);
   /* The background color here is not related to the black fullscreen bugginess */
   /* Main background color of the app is #adbbc4 */
 }
