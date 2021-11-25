@@ -135,12 +135,10 @@ let touchStartY;
 let touchEndY;
 var navMenuIsUpAndVisible = true; // Nav menu is visible at first when the app starts. // Also see information.js bigSlideTowardsLeft()
 let navMenuIsMoving = false;
-// DEPRECATED: let navMenuOnMobileHasBeenHiddenForTheFirstTime = false; // So that the very first swipe-up can be ignored.
 var invisibleContainerOfContainerDivOfTheNavigationMenu = document.createElement("DIV");
 
 function makeTheNavMenuGoDownOnMobiles() {
   // Watch what's happening with swipeMenuIsDisabled
-    // DEPRECATED: navMenuOnMobileHasBeenHiddenForTheFirstTime = true;
     if (navMenuIsUpAndVisible && !navMenuIsMoving) { // It really was up
       invisibleContainerOfContainerDivOfTheNavigationMenu.classList.remove("addThisForAnimationAppearFromBottom");
       invisibleContainerOfContainerDivOfTheNavigationMenu.classList.add("addThisForAnimationSinkAndDisappear"); // See css_for_sliding_navigation_menu.css

@@ -124,8 +124,8 @@ function bigSlideTowardsLeft() {
   document.getElementById('moveAllOfThisToLeftID').classList.remove("addThisToMakeItReturnFromLeft");
   document.getElementById('bringAllOfThisFromRightID').classList.remove("addThisToMakeItReturnToRight");
   // Hide nav menu on mobiles if it was visible AND ALSO disable swipe-up
-  if (parent.navMenuIsUpAndVisible) {   parent.makeTheNavMenuGoDownOnMobiles();   }
-  parent.swipeMenuIsDisabled = true;
+  if (parent.navMenuIsUpAndVisible && deviceDetector.isMobile) {   parent.makeTheNavMenuGoDownOnMobiles();   }
+  parent.swipeMenuIsDisabled = true; // This has no effect on desktops // See js_for_the_sliding_navigation_menu.js
 }
 function returnWithBigSlideTowardsRight() {
   document.getElementById('moveAllOfThisToLeftID').classList.add("addThisToMakeItReturnFromLeft");
@@ -133,5 +133,5 @@ function returnWithBigSlideTowardsRight() {
   document.getElementById('moveAllOfThisToLeftID').classList.remove("addThisToMakeItSlideTowardsLeft");
   document.getElementById('bringAllOfThisFromRightID').classList.remove("addThisToMakeItSlideFromRight");
   // Reenable swipe-up
-  parent.swipeMenuIsDisabled = false;
+  parent.swipeMenuIsDisabled = false; // This has no effect on desktops // See js_for_the_sliding_navigation_menu.js
 }
