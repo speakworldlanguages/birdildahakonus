@@ -1,2 +1,0 @@
-﻿音声認識が機能していません
-それはWindowsまたはAndroidのChromeなら利用できます

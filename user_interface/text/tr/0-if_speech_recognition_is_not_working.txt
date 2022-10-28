@@ -1,2 +1,0 @@
-﻿Konuşma algılama çalışmıyor.
-Bu özellik Windows ya da Android üzerinde Chrome ile kullanılabilir.
