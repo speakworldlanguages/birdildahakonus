@@ -269,7 +269,6 @@ function hideWouldYouLikeToRestartTheAppBox() {
   setTimeout(function () {
     maybeYouShouldReloadBoxContainerDIV.style.animationName = "none";
     maybeYouShouldReloadBoxContainerDIV.style.display="none"; // Use [display none] instead of [removeChild]
-    maybeYouShouldReloadBoxIsNowBeingDisplayed = false; // See js_for_app_initialization_in_parent
   }, 340);
 }
 

@@ -2,8 +2,8 @@
 // See js_for_all_iframed_lesson_htmls AND blank.html
 var userIsOrWasJustViewing = "welcome-screen"; // First time users will stay at welcome-screen,,, continuing user's will teleport to progress-chart
 //
-var checkIfLoadingIsTakingTooLongTimeout; // See openFirstLesson below
-var maybeYouShouldReloadBoxIsNowBeingDisplayed = false;
+var checkIfLoadingIsTakingTooLongTimeout = 0; // See openFirstLesson below ALSO used by js_for_all_iframed_lesson_htmls -> onbeforeunload
+let maybeYouShouldReloadBoxIsNowBeingDisplayed = false; // Not accessed from any other js file as of Oct 2022
 // moved the declaration of itIsAlreadyCertainThatUserWantsToReload to inline in index.html
 function startTheTimerToSeeIfNextLessonLoadsFastEnough() { // Called by either beforeunload in blank.html OR by onbeforeunload in js_for_all_iframed_lesson_htmls OR beforeunload in about.js
   //console.log("window load timeout started ticking"); // Works OK
@@ -23,8 +23,8 @@ function stopTheTimerToSeeIfNextLessonLoadedFastEnough() { // See blank.html AND
   }
   // If it was too late and the box has been displayed but is no longer necessary because window did load after all, phew!
   if (maybeYouShouldReloadBoxIsNowBeingDisplayed) {
+    maybeYouShouldReloadBoxIsNowBeingDisplayed = false; // This must be set to false immediately even though NEVER MIND msg will still be visible for about 2.5 seconds,,, why -> because this is the point of no return
     loadWasSuccessfulDespiteTakingTooLong(); // Display [never mind] and disappear » js_for_info_boxes_in_parent
-    // maybeYouShouldReloadBoxIsNowBeingDisplayed boolean is handled by hideWouldYouLikeToRestartTheAppBox in js_for_info_boxes_in_parent
   }
 }
 /*________________LOAD/SAVE___________________*/

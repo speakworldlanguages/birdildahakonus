@@ -58,6 +58,7 @@ window.onload = function() { // DANGER: Do not use window.onload anywhere else. 
   // Clear timeout for [would you like to wait or refresh] box
   // WORKS MOST OF THE TIME BUT occasionally it either doesn't fire or fire too soon. Try adding a small delay to solve that.
   // Try to make sure beforeunload from previous html doesn't get late and fire after the load event of this html
+  // THERE IS ONLY 1 EXCEPTION in about/index.html and there it is handled manually by about.js
   setTimeout(function () { parent.stopTheTimerToSeeIfNextLessonLoadedFastEnough(); }, 1000); // A small delay: Try to fix beforeunload from previous lesson (probably) firing too late
 
   // Restart anti sleep timer
@@ -169,7 +170,10 @@ window.onbeforeunload = function() {
   if (screen.orientation) {
     parent.window.screen.orientation.unlock();
   }
-  //---
+  //--- IN CASE USER IS A FLASH NAVIGATOR: We must prevent double firing. Example: User navigates to about/index.html and immediately returns before window.load can clear the timeout
+  if (parent.checkIfLoadingIsTakingTooLongTimeout) { // If it was already ticking
+    parent.stopTheTimerToSeeIfNextLessonLoadedFastEnough(); // stop it so that we can restart it
+  }
   parent.startTheTimerToSeeIfNextLessonLoadsFastEnough(); // Also fires from openFirstLesson() in js_for_app_initialization_in_parent
 };
 
