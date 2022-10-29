@@ -34,6 +34,7 @@ window.addEventListener('DOMContentLoaded', function(){
       document.getElementById('aboutResourcesP').classList.add("patua"); /* because, view source link does not exist on mobiles, so this is desktop-only.*/
     }
   }
+  // MOVED: needHitoicJapaneseFonts into window load because the font file is almost 5MB
 
   clickSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_click.webm"]  }); // 1.3s is the climax and 2.6 is end of excitement
   // ------- Fill the divs with text depending on the user interface language --------
@@ -112,7 +113,6 @@ window.addEventListener('load', function(){
   if (deviceDetector.isMobile) { // PHONE & TABLET - PHONE & TABLET - PHONE & TABLET
     let clearThisIntervalIfNeedBe;
     // Use event.stopPropagation(); INLINE to prevent touch conflict
-    ////monthlyOpt.addEventListener("touchstart", function(){    }); // QUIT: parent.preventTouchConflictWithTheSlidingNavMenu(monthlyOpt); » See js_for_the_sliding_navigation_menu
     monthlyOpt.addEventListener("touchend", function(){  clickSound.play();  handleNavigationToPatreon();  clearInterval(clearThisIntervalIfNeedBe);  }, { once: true });
     clearThisIntervalIfNeedBe = setInterval(function () {
               monthlyOpt.classList.add("blinkByAddingRemovingThis");
@@ -125,6 +125,15 @@ window.addEventListener('load', function(){
     monthlyOpt.addEventListener("mouseenter", function(){    whiteFullnessDIV0.style.opacity = "0.15";  });
     monthlyOpt.addEventListener("mouseleave", function(){    whiteFullnessDIV0.style.opacity = "0";  });
     monthlyOpt.addEventListener("mouseup", function(){    clickSound.play();    handleNavigationToPatreon();  }, { once: true });
+  }
+  //--- Latin fonts are loaded with DOMContentLoaded but this one better start loading after window-load because it's almost 5MB
+  if (needHitoicJapaneseFonts) {
+    /*GET FONT*/
+    let dfKaiFont;
+    dfKaiFont = new FontFace('dfkai', "url(/user_interface/fonts/kaiu.ttf)");
+    dfKaiFont.load().then(function(loaded_face) {
+        document.fonts.add(loaded_face);
+    }).catch(function(error) {    console.error("Unable to get the font: " + error);  });
   }
 
 }, { once: true });
@@ -141,13 +150,18 @@ function handleNavigationToPatreon() {
   } else {
     firstLine.classList.add("markDesktop"); secondLine.classList.add("markDesktop");
   }
+  /*SET FONT*/
   if (needLatinFonts) { firstLine.style.fontFamily = 'manheart, serif'; secondLine.style.fontFamily = 'manheart, serif'; }
-  if (needHitoicJapaneseFonts) { firstLine.style.fontFamily = 'DFKai-SB, serif'; secondLine.style.fontFamily = 'DFKai-SB, serif'; } // kaiu.ttf exists in windows fonts by default, no?
+  if (needHitoicJapaneseFonts) { firstLine.style.fontFamily = 'DFKai-SB, dfkai, serif'; secondLine.style.fontFamily = 'DFKai-SB, dfkai, serif'; } // If kaiu.ttf exists in windows fonts try to use it (DFKai-SB),,, otherwise hope that it is loaded from /user_interface/fonts/ (dfkai:almost 5MB)
   //---
   setTimeout(function(){ markContainerDIV.appendChild(firstLine); markContainerDIV.appendChild(secondLine); },4000);
-  setTimeout(function(){ firstLine.style.opacity = "1";  },4500);
-  setTimeout(function(){ secondLine.style.opacity = "1";  },6500);
-  secondLine.style.textAlign = "justify";
+  setTimeout(function(){ firstLine.style.opacity = "1";  },4600);
+  setTimeout(function(){ secondLine.style.opacity = "1";  },6400);
+  if (needLatinFonts) {
+    //DEPRECATED secondLine.style.textAlign = "justify";
+    secondLine.classList.add("textAlignJustifyLTR"); // See css_for_every_single_html
+  }
+
   //setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },12000);
 }
 
