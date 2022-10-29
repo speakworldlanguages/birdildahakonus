@@ -141,12 +141,12 @@ if (needHitoicJapaneseFonts) {
     }).catch(function(error) {      console.error("Unable to get the font: " + error);    });
     /*SET FONTS*/
     document.body.style.fontFamily = '"Kosugi Maru", sans-serif';
-    /* TEST IF IT INHERITS FROM BODY ALREADY
-    // In this case (JA) the buttons use the same font with the body
+
+    // buttons DON'T INHERIT font-family FROM body - We still have to set them manually even though in this case (JA) the buttons use the same font with the body
     let allButtons = document.getElementsByTagName("BUTTON"); // HERE WE CAN: do styling for all buttons when user interface is JA
-    let i;
-    for (i = 0; i < allButtons.length; i++) { allButtons[i].style.fontFamily = '"Kosugi Maru", sans-serif'; } // BE SAFE: Will it inherit from document.body.style.fontFamily???
-    */
+    let b;
+    for (b = 0; b < allButtons.length; b++) { allButtons[b].style.fontFamily = '"Kosugi Maru", sans-serif'; }
+
     // Kosugi font looks better with more line-height and more letter-spacing
     let allPs = document.getElementsByTagName("P");
     let p;
