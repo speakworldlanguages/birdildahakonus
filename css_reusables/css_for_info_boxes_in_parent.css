@@ -27,7 +27,7 @@
   color: rgb(130,155,173);
   margin: 5vmin;
   padding-left: 4vmin; padding-right: 4vmin; padding-top: 5vmin; padding-bottom: 5vmin;
-  line-height: normal;
+  /* line-height: normal; */ /*Must be conditional and depend on the font and UI*/
   /* text-align: justify; */ /*Must use justify only in case latin fonts are used - So set it via script conditionally*/
   white-space: pre-wrap; /* pre means do not convert the line breaks into regular spaces. pre-wrap handles the overflow as well for longer lines */
   transform: translateY(-100vh);

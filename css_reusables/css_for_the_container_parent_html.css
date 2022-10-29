@@ -38,8 +38,8 @@ iframe{
 }
 
 p{
-  line-height: normal; /*Set it back to normal because it was set to ZERO in css_for_every_single_html.css*/
-  letter-spacing: 1px;
+  /*line-height: normal;*/ /*Use script to set conditionally*/ /*Set it back to normal because it was set to ZERO in css_for_every_single_html.css*/
+  /*letter-spacing: 1px;*/ /*Use script to set conditionally*/
   padding-left:7px;
   padding-right:7px;
 }

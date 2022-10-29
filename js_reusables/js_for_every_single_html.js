@@ -129,7 +129,7 @@ if (needLatinFonts) {
   /*Set line-height for latin fonts*/
   let allPs = document.getElementsByTagName("P");
   let p;
-  for (p = 0; p < allPs.length; p++) { allPs[p].style.lineHeight = "125%"; }
+  for (p = 0; p < allPs.length; p++) { allPs[p].parentNode.classList.add("latinLineHeightAndLetterSpacing"); } // See css_for_every_single_html
 }
 
 if (needHitoicJapaneseFonts) {
@@ -150,7 +150,7 @@ if (needHitoicJapaneseFonts) {
     // Kosugi font looks better with more line-height and more letter-spacing
     let allPs = document.getElementsByTagName("P");
     let p;
-    for (p = 0; p < allPs.length; p++) { allPs[p].style.lineHeight = "160%"; allPs[p].style.letterSpacing = "130%"; }
+    for (p = 0; p < allPs.length; p++) { allPs[p].parentNode.classList.add("cjkLineHeightAndLetterSpacing"); } // See css_for_every_single_html
 
     /* Use all ASIDE elements as a second type of button*/ // Auto inherits from body
     //let allAsides = document.getElementsByTagName("ASIDE");
