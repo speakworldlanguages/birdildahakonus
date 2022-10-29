@@ -30,14 +30,14 @@
         0%{transform: scale(0.5); /*font-size:200%; letter-spacing: .1vmin;*/}
       100%{transform: scale(0.9); /*font-size:300%; letter-spacing: 1vmin;*/}
       }
-      .latinTextFont{font-family:'kanit';} /*kanit is loaded here locally,,, unlike other fonts in js_for_every_single_html*/
+      /*DEPRECATED.latinTextFont{font-family:'kanit';}*/ /*kanit is loaded here locally,,, unlike other fonts in js_for_every_single_html*/
       /*All buttons (parent&frame) get the same font (patua) due to the setting in js_for_every_single_html*/
       main{filter:brightness(107%) saturate(37%) hue-rotate(9deg);}
       div:hover{cursor: url("/user_interface/images/cursor/button_cursor.png") 16 4,auto;}
     </style>
     <script>
       window.addEventListener('DOMContentLoaded', function(){
-        /**/
+        const pElement = document.getElementById('messageAfterTheLastLessonP');
         if (needLatinFonts) {
           /*GET FONT*/
           let kanitFont;
@@ -46,9 +46,12 @@
               document.fonts.add(loaded_face); // REMEMBER: it is frame level only!
           }).catch(function(error) {    console.error("Unable to get the font: " + error);  });
           /*SET FONT*/
-          document.getElementById('messageAfterTheLastLessonP').classList.add("latinTextFont");
+          pElement.style.fontFamily = "kanit";
+          pElement.classList.add("latinLineHeightAndLetterSpacing");
         }
-
+        if (needHitoicJapaneseFonts) {
+          pElement.classList.add("cjkLineHeightAndLetterSpacing");
+        }
 
         // REMEMBER: Wait for “userInterfaceLanguage” variable to be ready. See js_for_every_single_html.js
         // ------- Fill the divs with text depending on the user interface language --------

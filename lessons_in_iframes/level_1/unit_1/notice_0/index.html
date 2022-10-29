@@ -61,14 +61,20 @@
   <script>
     /*_________UI HANDLING__________*/
     window.addEventListener('DOMContentLoaded', function(){
+      const pElement = document.getElementById('putTheWordsInHereP');
       if (needLatinFonts) {
-        /*GET FONTS*/
+        /*GET FONT*/
         let speechBubbleFontFont;
         speechBubbleFontFont = new FontFace('speechBubbleFont', "url(/user_interface/fonts/RussoOne-Regular.ttf)");
         speechBubbleFontFont.load().then(function(loaded_face) {
             document.fonts.add(loaded_face);
         }).catch(function(error) {    console.error("Unable to get the font: " + error);  });
-        document.getElementById('putTheWordsInHereP').style.fontFamily = "speechBubbleFont";
+        /*SET FONT*/
+        pElement.style.fontFamily = "speechBubbleFont";
+        pElement.classList.add("latinLineHeightAndLetterSpacing");
+      }
+      if (needHitoicJapaneseFonts) {
+        pElement.classList.add("cjkLineHeightAndLetterSpacing");
       }
     }, { once: true });
   </script>

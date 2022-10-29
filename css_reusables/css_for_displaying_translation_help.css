@@ -22,7 +22,7 @@
   text-shadow: 0px 2px 0px #4d606f, 0px -2px 0px #4d606f, 2px 0px 0px #4d606f, -2px 0px 0px #4d606f, 2px 2px 0px #4d606f, -2px -2px 0px #4d606f, 2px -2px 0px #4d606f, -2px 2px 0px #4d606f;
   -webkit-text-stroke: .5px #a6c6de;
 }
-.theMobilesKanjiFontAdjustP{ /*-*/
+.theMobilesKanjiFontAdjustP{ /*See js_for_displaying_translation_help*/
   font-size: 22px;
 }
 /* DESKTOPS */

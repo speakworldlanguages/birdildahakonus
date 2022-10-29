@@ -31,16 +31,16 @@ main{
 }
 
 p{
-  /* line-height: normal; */
-  /* letter-spacing: normal; */
+  line-height: normal;
+  letter-spacing: normal;
 }
 
 .textAlignJustifyLTR{ text-align: justify; text-align-last: start; }
 .textAlignJustifyRTL{ text-align: justify; text-align-last: end; }
 .textAlignLeft{ text-align: left; } .toUseWBR_withCJK{ word-break:keep-all; }
 .textAlignRight{ text-align: right; }
-.latinLineHeightAndLetterSpacing{ line-height: 115%; }
-.cjkLineHeightAndLetterSpacing{ line-height: 140%; letter-spacing: 120%; }
+.latinLineHeightAndLetterSpacing{ line-height: 115%; } /*Hopefully override the default*/
+.cjkLineHeightAndLetterSpacing{ line-height: 140%; letter-spacing: 125%; } /*Hopefully override the default*/
 
 .flexCenterRow{display: flex; justify-content: center; align-items: center; flex-direction: row;}
 .flexCenterColumn{display: flex; justify-content: center; align-items: center; flex-direction: column;} /*Used in progress chart <MAIN>*/
@@ -65,6 +65,7 @@ img{
 
 /*Use address element as another type of button*/
 /*See css_for_proceed_buttons.css for the styling*/
+/*address elements have italic font-style by default, so we must set it to normal*/
 address{
   font-style: normal;
 }

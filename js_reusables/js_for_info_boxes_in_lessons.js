@@ -43,10 +43,11 @@ function createAndHandleInfoBoxType1BeforeLessonStarts() {
   if (needLatinFonts) {
     okButtonToCloseTheNotification1.style.fontFamily = '"Oxanium SemiBold", sans-serif';
     notificationBoxItself.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
+    putNotificationTxtIntoThisP1.classList.add("latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
   if (needHitoicJapaneseFonts) {
     notificationBoxItself.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
-    putNotificationTxtIntoThisP1.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
+    putNotificationTxtIntoThisP1.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
   notificationBoxItself.appendChild(okButtonToCloseTheNotification1);
 
@@ -78,10 +79,11 @@ function createAndHandleInfoBoxType1AmidLesson() {
   if (needLatinFonts) {
     okButtonToCloseTheNotification2.style.fontFamily = '"Oxanium SemiBold", sans-serif';
     notificationBoxItself2.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
+    putNotificationTxtIntoThisP2.classList.add("latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
   if (needHitoicJapaneseFonts) {
     notificationBoxItself2.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
-    putNotificationTxtIntoThisP2.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
+    putNotificationTxtIntoThisP2.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
   notificationBoxItself2.appendChild(okButtonToCloseTheNotification2);
 
@@ -135,12 +137,13 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio) {
   vocabularyBoxItself.classList.add("vocabularyRoundedBox"); // See css_for_info_boxes_in_lessons
   if (needLatinFonts) {
     vocabularyBoxItself.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
-    // Do we need any other settings???
+    putVocabularyTxtIntoThisP1.classList.add("latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
+    putVocabularyTxtIntoThisP2.classList.add("latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
   if (needHitoicJapaneseFonts) {
     vocabularyBoxItself.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
-    putVocabularyTxtIntoThisP1.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
-    putVocabularyTxtIntoThisP2.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
+    putVocabularyTxtIntoThisP1.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
+    putVocabularyTxtIntoThisP2.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
   vocabularyBoxContainer.appendChild(vocabularyBoxItself);
   //
