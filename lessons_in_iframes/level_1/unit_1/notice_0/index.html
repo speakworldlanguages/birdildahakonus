@@ -34,7 +34,7 @@
     </div>
     <div class="cinematicViewport">
       <div class="leftOrLowerDivision">
-        <div class="speechBubble"><p id="putTheWordsInHereP"></p></div>
+        <div class="speechBubble"><p style="white-space: pre-wrap;" id="putTheWordsInHereP"></p></div>
         <svg id="arrow_under_speech_bubble" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" xml:space="preserve" style="">
         <path id="arrow" fill="#FFFFFF" d="M76.778,34H23.222c-8.8,0-10.497,4.577-3.771,10.252l23.671,19.94
         	c3.783,3.192,9.974,3.175,13.757-0.017L80.55,44.26C87.275,38.585,85.578,34,76.778,34z"/>
@@ -69,6 +69,9 @@
             document.fonts.add(loaded_face);
         }).catch(function(error) {    console.error("Unable to get the font: " + error);  });
         document.getElementById('putTheWordsInHereP').style.fontFamily = "speechBubbleFont";
+      }
+      if (needHitoicJapaneseFonts) {
+        document.getElementById('putTheWordsInHereP').style.lineHeight = "175%";
       }
     }, { once: true });
   </script>
