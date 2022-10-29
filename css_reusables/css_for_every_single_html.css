@@ -39,7 +39,7 @@ p{
 .textAlignJustifyRTL{ text-align: justify; text-align-last: end; }
 .textAlignLeft{ text-align: left; } .toUseWBR_withCJK{ word-break:keep-all; }
 .textAlignRight{ text-align: right; }
-.latinLineHeightAndLetterSpacing{ line-height: 125%; }
+.latinLineHeightAndLetterSpacing{ line-height: 115%; }
 .cjkLineHeightAndLetterSpacing{ line-height: 140%; letter-spacing: 120%; }
 
 .flexCenterRow{display: flex; justify-content: center; align-items: center; flex-direction: row;}
