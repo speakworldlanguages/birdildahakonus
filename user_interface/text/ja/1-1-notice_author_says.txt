@@ -1,2 +1,2 @@
-﻿ご覧になっている<wbr>このパンは<wbr>私が家で作りました。
-このアプリを<wbr>どうぞお楽しみに<wbr>してください。
+﻿ご覧になっている<span style="white-space: nowrap;">このパンは</span><span style="white-space: nowrap;">私が家で作りました。</span>
+このアプリを<span style="white-space: nowrap;">どうぞお楽しみに</span><span style="white-space: nowrap;">してください。</span>
