@@ -82,7 +82,7 @@
     	dialog{ position: fixed; z-index: 12000; left:50%;top:50%;transform:translate(-50%,-50%);
         background-image: linear-gradient(#a6bac8,#d2dde6); border-radius:8px; border: 0px; padding: 20px 23px 30px 23px;
         font-family: "SF Pro","Helvetica","Roboto","Segoe UI Light","Segoe UI",sans-serif; font-size:1.2rem; color:white; text-align:center;}
-      dialog div {background-color: rgba(88,103,121,0.5); padding: 5px; border-radius: 8px; cursor: pointer; min-width:10ch; display: inline-block;}
+      dialog div {background-color: rgba(88,103,121,0.5); padding: 5px; border-radius: 8px; cursor: pointer; min-width:8ch; display: inline-block;}
       dialog div:hover{background-color: rgba(66,80,94,0.75);}
     	dialog::backdrop{background-image: linear-gradient(rgba(25,42,60,0.8),rgba(60,80,103,0.8));}
       @media (orientation: landscape) { dialog{min-width: 38ch; max-width: 45ch;} }
@@ -91,13 +91,13 @@
   </head>
   <body>
     <!-- Pre-preloader -->
-    <dialog data-nosnippet style=" line-height:3.0ch; white-space: normal;">
+    <dialog data-nosnippet style="line-height:3.0ch; white-space: normal;">
       <span style="white-space:nowrap;">Yükleme biraz</span> <span style="white-space:nowrap;">uzun sürüyor…</span>
       <p style="line-height:1ch;">&nbsp;</p>
       <span style="white-space:nowrap;">İnternet bağlantısının</span> <span style="white-space:nowrap;">durumuna bakıp</span>
       <span style="white-space:nowrap;">ne yapacağına</span> <span style="white-space:nowrap;">karar vermelisin</span>
       <p style="line-height:2ch;">&nbsp;</p>
-      <div style="outline:none;" onclick="this.parentNode.close();">Bekle</div>&nbsp;&nbsp;&nbsp;
+      <div style="outline:none;" onclick="this.parentNode.close();">Bekle</div>&nbsp;&nbsp;
       <div style="outline:none;" onclick="itIsAlreadyCertainThatUserWantsToReload = true; location.reload();">Baştan başlat</div>
     </dialog>
     <script>

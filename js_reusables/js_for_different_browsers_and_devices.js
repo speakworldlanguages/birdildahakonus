@@ -203,7 +203,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
       } else {
           // console.log("visible means user is back");
-          // WARNING: Returning from AUTO-SLEEP DOES NOT MAKE THIS FIRE! (It is not like user pressing ON/OFF button twice)
+          // IS THIS WRONG OR RIGHT?: Returning from AUTO-SLEEP DOES NOT MAKE THIS FIRE! - LATER DOUBT: really? (It is not like user pressing ON/OFF button twice)
           // AUTO-SLEEP is not counted as user being away according to document.hidden
           // This works only in case user presses ON/OFF button twice
           // MUST CHECK IF that is still the case with document.visibilityState === 'hidden' instead of document.hidden
