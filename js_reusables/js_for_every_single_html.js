@@ -145,7 +145,7 @@ if (needHitoicJapaneseFonts) {
     // Kosugi font looks better with more line-height
     let allPs = document.getElementsByTagName("P");
     let p;
-    for (p = 0; p < allPs.length; p++) {  allPs[p].style.lineHeight = "150%"; allPs[p].style.textAlign = "left"; }
+    for (p = 0; p < allPs.length; p++) { allPs[p].style.lineHeight = "150%"; }
 
     /* Use all ASIDE elements as a second type of button*/ // Auto inherits from body
     //let allAsides = document.getElementsByTagName("ASIDE");
