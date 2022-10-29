@@ -515,6 +515,10 @@ function whatToDoWhenBreadIsTaken() {
   setTimeout(function () {  if (canVibrate) { navigator.vibrate([15,150,50]); }  },350);
   setTimeout(function () { winSound1.play(); },500);
   setTimeout(function () { gainNode.disconnect(audioCtx.destination); sineWaveIsAudibleNow = false; },2010);
+  // Separate foreground from background with a drop-shadow
+  setTimeout(function () {
+    breadsFarAndNearDiv.classList.add("breadHeldInHandsDropShadow");
+  }, 600);
   // Cursor
   if (deviceDetector.device == "desktop") {
     setTimeout(function () { main.classList.remove("noCursor"); main.classList.add("defaultCursor"); },1500); // Bring cursor back,,, make it visible again
