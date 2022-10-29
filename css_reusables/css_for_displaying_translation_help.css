@@ -1,0 +1,53 @@
+/* Note: These rules used to be in css_for_lessons_with_interactables */
+/* MOBILES */
+.translationBoxOnMobilesSizePosition{position:fixed; left:0px; top:0px; width:100vw; height:101px; background-color: #728994; display: flex; align-items: center; justify-content: center;} /*-*/
+.touchableDraggableDivSizePosition{position:fixed; right:0vw; top:101px; width:73px; height:130px; background-color: transparent;} /*-*/
+.touchableDraggableImgSizePosition{position:fixed; right:0vw; top:101px; height:130px; background-color: transparent;} /*-*/
+.touchableDraggableInitial{opacity:0.5; transform: translateY(-101px); transition: transform 2.5s ease-out,opacity .35s; } /*-*/
+.toggleWithTouchStartTouchEnd{ opacity:1; transform: translateY(0px); transition: transform 0.7s ease-out,opacity .35s; } /*-*/
+.toggleToMakeItBlink{filter: drop-shadow(0px 0px 1px rgb(45,64,75));     opacity:0.95;} /*Only to get attention from first time users in 1-1-3*/
+.toggleToMakeItFlash{filter: drop-shadow(0px 0px 9px rgb(45,64,75));     opacity:0.95;} /*Only to get attention from first time users in 1-1-3*/
+@media (min-width: 400px){ /*A small nudge*/
+.touchableDraggableImgSizePosition{right:3vw;} /*-*/
+}
+@media (orientation:landscape) and (max-width:750px) {
+  .touchableDraggableImgSizePosition{height: 75px} /*-*/
+}
+.thetranslationAssistanceOnMobilesP{ /*-*/
+  white-space: pre-wrap;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 33px;
+  text-shadow: 0px 2px 0px #4d606f, 0px -2px 0px #4d606f, 2px 0px 0px #4d606f, -2px 0px 0px #4d606f, 2px 2px 0px #4d606f, -2px -2px 0px #4d606f, 2px -2px 0px #4d606f, -2px 2px 0px #4d606f;
+  -webkit-text-stroke: .5px #a6c6de;
+}
+.theMobilesKanjiFontAdjustP{ /*-*/
+  font-size: 22px;
+}
+/* DESKTOPS */
+.translationBoxOnDesktopsSizePosition{pointer-events: none; position:fixed; left:0px; top:83vh; width:100vw; height:120px; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .3s;} /*-*/
+.workaroundForGlassmorphismRevealHelp{ /*As of 2021 with Chrome version 87.0, backdrop filter and opacity don't work together. To achieve the desired effect use two layers: one with filter other with opacity animation*/
+  position:fixed; right:1vw; bottom: 1.5vw; width:120px; height:120px; border-radius: 8px; border: 2px solid rgba(255,255,255,.13); box-shadow: 0px 0px 15px 0 rgba( 1,1, 1, 0.15 ); /*-*/
+  backdrop-filter: blur( 7px ); /*-*/
+  -webkit-backdrop-filter: blur( 7px ); /*-*/
+}
+.mouseClickableDivSizePosition{position:fixed; right:1vw; bottom: 1.5vw; width:120px; height:120px; background-color: rgba(114,137,148,0.85); border: 2px solid rgba(255,255,255,.01); border-radius: 8px; opacity:.5; transition: opacity .3s;} /*-*/
+.mouseClickableDivSizePosition:hover{opacity:1; mix-blend-mode: normal; border: 2px solid rgba(255,255,255,.13);
+  cursor: url("/user_interface/images/cursor/button_cursor.png") 16 4,auto;
+} /*-*/
+.mouseClickableImgSizePosition{height:110px; position:absolute; left: 5px; top: 5px;} /*-*/
+.thetranslationAssistanceOnDesktopsP{ /*-*/
+  white-space: nowrap;
+  color: #728994;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: normal;
+  text-shadow: 0px 1.5px 0px white, 0px -1.5px 0px white, 1.5px 0px 0px white, -1.5px 0px 0px white, 1.5px 1.5px 0px white, -1.5px -1.5px 0px white, 1.5px -1.5px 0px white, -1.5px 1.5px 0px white;
+  -webkit-text-stroke: .3px #4d606f;
+  filter: drop-shadow(0px 0px 2px rgb(45,64,75));
+}
+.theDesktopsKanjiFontAdjustP{ /*-*/
+  font-size: 38px;
+  font-weight: normal;
+}

@@ -1,0 +1,196 @@
+main{
+  background-color: #adbbc4; /* The flat color that is behind all interactables */
+  /*Also see css_for_photos_and_videos_teach_a_new_word*/
+}
+
+
+/*--- DEPRECATED BUT MAY BE REUSED ---*/
+/* In the old version these were used in 1-4-3 AND 1-5-3
+.veryLongBackgroundImageContainer{
+  z-index: 0;
+  position: fixed;  top: 0;  bottom: 0;  left: 0;  right: 0;
+  display: flex;
+  flex-direction: column-reverse;
+	align-items: center;
+  overflow: hidden;
+}
+
+.veryLongBackgroundImageContainer img{
+  height: 100%;
+}
+*/
+/* In a previous version these were used in  1-2-3 1-2-4 1-3-3 1-3-4 1-4-3 1-5-3
+.typeOfDivThatContainsInteractables{
+  width:100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #adbbc4;
+}
+
+.typeOfDivThatContainsInteractables img{
+  max-width: 100vw;
+  height: 100vmin;
+  object-fit: scale-down;
+}
+*/
+/* In previous version,,, 1-2-3   1-2-4   1-3-3   1-3-4   1-4-3  1-5-3
+.controlTheAbsoluteDivWithinThisRelativeDiv{
+  position: relative;
+}
+*/
+/* 1-2-3  1-2-4  1-3-3   1-3-4   1-4-3  1-5-3
+.theClickableTapableArea{
+  display: block;
+  position: absolute;
+}
+*/
+/*
+.layeredOverImageContainer1000x1000{
+  pointer-events: none;
+  z-index: 50;
+  position: fixed;  top: 0;  bottom: 0;  left: 0;  right: 0;
+  display: flex;  flex-direction: column-reverse;	align-items: center;
+  overflow: hidden;
+}
+*/
+/*
+.changeFlexPositionPortraitLandscapeAndBackgroundColorToo{
+  position: fixed;  top: 0px;  left: 0px;  width: 100%;  height: 100%;
+  display: flex;  flex-direction: column;
+}
+*/
+/*
+.beSquareInPortraitAndFullWidthRectangleInLandscape{
+  overflow: hidden;
+  position: relative;
+}
+.beSquareInPortraitAndFullWidthRectangleInLandscape img{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media screen and (orientation:landscape){
+  .layeredOverImageContainer1000x1000 img{
+    height: 100%;
+    width: auto;
+  }
+  .layeredOverImageContainer2222x1000 img{
+    height: 100%;
+    width: auto;
+  }
+  .changeFlexPositionPortraitLandscapeAndBackgroundColorToo{
+*/
+    /* Used for the first time in 1-6-3 */
+/*
+    background-color: black;
+    justify-content: center;
+  }
+  .beSquareInPortraitAndFullWidthRectangleInLandscape{
+    height: 40vw;
+*/
+    /* 2.5 : 1 aspect ratio */
+/*
+    width: 100vw;
+  }
+  .beSquareInPortraitAndFullWidthRectangleInLandscape img{
+    width: 100%;
+  }
+  .addThisToAdjustPositionOnMobiles{
+    margin-left: -30vw;
+  }
+}
+
+@media (orientation:portrait){
+  .layeredOverImageContainer1000x1000 img{
+    height: auto;
+    width: 100%;
+  }
+  .layeredOverImageContainer2222x1000 img{
+    height: 100vmin;
+    width: auto;
+  }
+  .changeFlexPositionPortraitLandscapeAndBackgroundColorToo{
+*/
+    /* Used for the first time in 1-6-3 */
+
+/*
+    background-color: #adbbc4;
+    justify-content: flex-end;
+  }
+  .beSquareInPortraitAndFullWidthRectangleInLandscape{
+    width: 100vw;
+    height: 100vw;
+  }
+  .beSquareInPortraitAndFullWidthRectangleInLandscape img{
+    height: 100%;
+    width: auto;
+  }
+  .addThisToAdjustPositionOnMobiles{
+    margin-top: -20vh;
+  }
+}
+*/
+
+/* To be used in 1-4-3 bird flying away from the tree */
+/* CLICK-THROUGH: Make it transparent to mouse and touch so that it won’t block layers below. */
+/*
+.layeredOverImageContainer2222x1000{
+  pointer-events: none;
+  z-index: 51;
+  position: fixed;  top: 0;  bottom: 0;  left: 0;  right: 0;
+  display: flex;  flex-direction: column-reverse;	align-items: center;
+  overflow: hidden;
+}
+*/
+/* Used for the first time in 1-6-3 */
+/* Start hidden and animate in */
+/*opacity: 0.7;*/ /*backdrop filter doesn't work if opacity is changed*/
+/*
+.proceedToNextActionButton{
+  width: 130px;
+  height: 130px;
+  position: fixed;
+  top: -50%;
+  left: 50%;
+  transform: translate(-50%,-50%) scale(1);
+  border-radius: 25px;
+  border: 2px solid rgba(255,255,255,0.3);
+  background-color: rgba(211, 222, 229, 0.2);
+  box-shadow: 0px 0px 15px 0 rgba( 1,1, 1, 0.15 );
+  backdrop-filter: blur( 7px );
+  -webkit-backdrop-filter: blur( 7px );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color .2s, transform .2s ease-in-out, top 2s ease-in-out, left 4s ease-in;
+}
+.addThisToMakeItAppearFromTop{  top: 50%;  }
+.addThisToAdjustPositionOnDesktops{  margin-top: -21vh;  }
+.addThisToMakeItBlowAwayTowardsRight{  left: 500%;  }
+
+.proceedToNextActionButton:hover{
+  background-color: rgba(211, 222, 229, 0.35);
+  transform: translate(-50%,-50%) scale(1.04);
+}
+.proceedToNextActionButton img{
+  opacity: 0.7;
+  transition: opacity .3s;
+}
+.proceedToNextActionButton img:hover{
+  opacity: 1;
+}
+.addThisForFadeIn2000ms {animation-name: simpleFadeIn; animation-duration: 2s; animation-fill-mode: forwards;}
+*/
+/* For 1-6-3 state C */
+/*
+@keyframes simpleFadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+*/

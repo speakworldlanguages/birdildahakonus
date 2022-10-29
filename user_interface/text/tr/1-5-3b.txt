@@ -1,0 +1,2 @@
+﻿Anlamı "Bu ağaçta meyve var"
+"Şu ağaçta meyve yok"

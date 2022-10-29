@@ -1,0 +1,11 @@
+/*Set fontSize via script to set different sizes for different fonts. Consider using the percentage unit.*/
+
+video{
+  pointer-events: none; /*Disable long touch context menu*/ /*Note: pointer-events none has no effect on custom cursor*/
+}
+
+p{
+  line-height: 125%;
+}
+
+/* REMEMBER: <aside> elements <section> elements and <address> elements are used as other types of buttons. */

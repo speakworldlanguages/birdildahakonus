@@ -1,0 +1,105 @@
+/*Initial style rules for preload divs are placed inline within the htmls and/or set via script*/
+*, *::before, *::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /*With the star selector every div is selected. Divs don't inherit this from body if we set it like body{ box-sizing: border-box; } */
+}
+
+body{
+  line-height: 0px; /*necessary to remove the unwanted space below objects*/
+  /*disable highlighting text for a modern game feel*/
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Safari */
+  -khtml-user-select: none;    /* Konqueror HTML */
+  -moz-user-select: none;      /* Old versions of Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  /**/
+  text-align: center; /*Necessary! Flexboxes center the containers and not the text itself.*/ /*Divs seem to inherit this automatically. Must handle if some element doesn't inherit this rule automatically.*/
+  /**/
+  touch-action: none;/* https://stackoverflow.com/questions/37808180/disable-viewport-zooming-ios-10-safari    user:Pedro*/
+  /*Set touch-action to auto if a div must be pinch zoomed and|or panned*/
+  overflow:hidden;  /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
+  max-width:100vw;  /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
+  max-height:100vh; /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
+}
+main{
+  position: fixed;
+  top:0; left:0; width:100vw; height: 100vh; /*In the parent, the "left" value is to be changed via script to hide this div. See js_reusables/js_for_app_initialization_in_parent.js*/
+  overflow: hidden;
+  /*For background colors, see css_for_the_container_parent_html AND css_for_photos_and_videos_teach_a_new_word AND css_for_lessons_with_interactables*/
+}
+
+.flexCenterRow{display: flex; justify-content: center; align-items: center; flex-direction: row;}
+.flexCenterColumn{display: flex; justify-content: center; align-items: center; flex-direction: column;} /*Used in progress chart <MAIN>*/
+
+/*main:hover{ cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto; }*/ /*CANNOT MAKE THE CURSOR HIDEABLE WITH THIS*/
+/*So add defaultCursor class to all MAIN elements (parent&frame) manually via js_for_every_single_html*/
+.defaultCursor:hover{ cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto; }
+.noCursor{ cursor: none; } .noCursor:hover{ cursor: none; } .noCursor:active{ cursor: none; } /*Can't be too safe can you?*/
+
+/*Note that buttons are different at parent level and iframe level. See js_for_app_initialization_in_parent AND js_for_all_iframed_lesson_htmls*/
+button:hover{
+  cursor: url("/user_interface/images/cursor/button_cursor.png") 16 4,auto;
+}
+/*Note that the ASIDE tag is used as a second type of button in css_for_the_glassy_give_up_button*/
+/*aside:hover exists in css_for_the_glassy_give_up_button*/
+
+img{
+  /*pointer-events: none;*/ /*This makes Firefox on mobile go crazy with touch events! Set it to none only when necessary and only locally in a given lesson's css*/
+}
+/*See js_for_every_single_html.js for fonts*/
+/*Note that frame html does not inherit fonts from parent html. Careful with usage of @import.*/
+
+/*Use address element as another type of button*/
+/*See css_for_proceed_buttons.css for the styling*/
+address{
+  font-style: normal;
+}
+
+/*__________*/
+/*RIGHT CLICK - FULLSCREEN*/
+.rightClickMenuWithWebpsInside{
+  position: fixed;
+  z-index: 99999;
+  /*top:50%;*/
+  left:50%; /*This for mobile only in case the script allows the user to be able to touch and hold on the screen to open the context menu*/
+  transform: translateX(-50%); /*This has effect on desktops too*/
+  border-radius: 15px;
+  box-shadow: 0px -3px 3px rgba(0,0,0,0.1);
+  filter: contrast(91%);
+}
+
+.rightClickMenuWithWebpsInside:hover{
+  filter: contrast(108%);
+  box-shadow: 0px -3px 3px rgba(0,0,0,0.1);
+}
+.openFullscreenCursor:hover{cursor: url("/user_interface/images/cursor/fullscreen_open_cursor.png") 16 16,auto;}
+.exitFullscreenCursor:hover{cursor: url("/user_interface/images/cursor/fullscreen_exit_cursor.png") 16 16,auto;}
+/*___________*/
+/* Desaturate entire viewport to indicate window has lost focus and keyboard is not readable (like when user clicks something on windows native desktop)*/
+.grayAway{ animation-name: grayout; animation-duration: 0.35s; animation-fill-mode: forwards;}
+@keyframes grayout {  0%{filter: grayscale(0%);}  100%{filter: grayscale(100%);}  }
+.colorBack{ animation-name: grayin; animation-duration: 0.35s; animation-fill-mode: forwards;}
+@keyframes grayin {  0%{filter: grayscale(100%);}  100%{filter: grayscale(0%);}  }
+/*___________*/
+.addThisToAButtonForPlayStationStyleClick{ /* See js_for_all_iframed_lesson_htmls.js */
+  animation: playStationStyle 0.6s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes playStationStyle {
+  0%{
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  25%{
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100%{
+    opacity: 0;
+    transform: scale(0.1);
+    visibility: hidden; /*Not sure if we need display none instead of visibility hidden. Looks like it's working anyway.*/
+  }
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>☰</title>
+    <!-- 💬 ☰ ≡ ≣ ⁝ ⋮ ⦙ ⁞ -->
+  </head>
+  <body style="background-color: #9cb6c3; width:100vw; height:100vh; display:flex; justify-content: center; align-items: center; cursor: wait; overflow:hidden;">
+
+    <!-- An (almost) blank page -->
+    <div>
+      <!-- <p>.::⏳::.</p> -->
+    </div>
+
+
+    <script>
+    window.addEventListener("DOMContentLoaded",function() {
+      // Handle the case when browser's BACK button is used
+      // slidingNavMenu MUST NOT cause conflict!!!-
+      switch (parent.userIsOrWasJustViewing) { // See js_for_all_iframed_lesson_htmls
+        case "info-screen": // Case-1 If user came to blank.html from information (only possible if the STUDY HAS NOT STARTED)
+        // Which means new user had gone to information page immediately after first app load, before starting lessons
+          if (parent.itIsCertainlyNotTheNativeGoBackButtonThatIsNavigating) { // slidingNavMenu back button goToPreviousFunction() was used to come back
+            // Do nothing and let the app's custom buttons handle navigation
+            //// alert("return to welcome screen with natural navigation"); // Works accurately
+          } else { // User must have used the native browser back button
+            // Normally we would want to do what goToPreviousFunction would do in js_for_the_sliding_navigation_menu (EXCEPT url change)
+            // Problem is native back button DOES NOT UPDATE THE iFRAME src so in this case iframe src still shows "information" even though frame is displaying blank.html
+            // Therefore we must either force update iframe src here
+            // or SEND the user back to where he/she came from and expect him/her to use the app's own navigation button ,, not the browser back button
+            //// alert("used back button native eh ?"); // Works accurately
+            parent.ayFreym.src = "/information/index.html"; // Don't use location.href to navigate as it won't update the iframe src
+          }
+          break;
+
+        case "progress-chart": // Case-2 ,,, user came from progress_chart which is possible when goBackToWelcomeScreenLanguageSelection is clicked/touched
+          // Nothing to be handled here
+          // See js_for_the_bilingual_return_button » goBackToWelcomeScreenLanguageSelection to find the solution for touchend conflict
+          break;
+
+        case "some-lesson": // Case-3 ,,, (only possible if) first time user came back from bread.js
+          ////alert("used back button upon a freshly loaded BREAD lesson - correct?"); // Works accurately
+          parent.ayFreym.src = "/progress_chart/index.html"; // Don't use location.href to navigate as it won't update the iframe src
+          break;
+
+        default:
+        // Is it possible to reach to default despite the "break;"s???
+        // And would it be correct if we set???
+        parent.userIsOrWasJustViewing = "welcome-screen";
+      }
+
+
+    }, { once: true });
+
+    window.addEventListener("load",function() {
+      parent.stopTheTimerToSeeIfNextLessonLoadedFastEnough();
+      parent.itIsCertainlyNotTheNativeGoBackButtonThatIsNavigating = false; // Back to initial value
+
+      if (parent.navMenuIsUpAndVisible) {
+        parent.stopSlidingNavMenuCountdownToDisappearance(); // In a rare case where a swipe up happened just before coming back to welcome screen.
+      } else {
+        parent.makeTheNavMenuComeUpOnMobiles(); // Function checks if device is mobile and if the menu was up already,,, so it's safe
+        setTimeout(function () {   parent.stopSlidingNavMenuCountdownToDisappearance();   },100);
+      }
+    }, { once: true });
+
+    window.addEventListener("beforeunload",function() { // TESTED: It fires correctly
+      // See js_for_app_initialization_in_parent
+      parent.startTheTimerToSeeIfNextLessonLoadsFastEnough(); // Either going to information or 1-1-1 bread with a button click or to progres_chart automatically
+      parent.blockOtherWelcomeScreenButtonsUntilItIsSafe=false; // Prevention of touch/click chaos is not necessary anymore » i.e. clicking one language and another one immediately after
+    }, { once: true });
+    </script>
+
+
+  </body>
+</html>

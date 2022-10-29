@@ -1,0 +1,5 @@
+﻿toLowerCase() İngilizce'de olmayan ŞĞ gibi harfleri Windows'ta küçültüyor ama Mac OS'ta küçültmüyor.
+toLocaleLowerCase() kullanınca ise büyük İ nin küçüğü olarak verdiği i̇ ile normal i farklı demeko ("i̇" == "i") false
+
+Bu durumda ilk harfi ĞİÜŞÖÇ olan kelimelerin büyük harfle başlayan yazılışlarını da listeye eklemek gerek.
+Örneğin "su" yerine "şu" algılansa bile bunu kabul etmek istediğimizde listede hem [şu] hem de [Şu] bulunmalı.

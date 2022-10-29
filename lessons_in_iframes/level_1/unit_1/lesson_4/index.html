@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>1-1-4 📥</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex" />
+    <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- line-height for P elemets -->
+    <link rel="stylesheet" href="/css_reusables/css_for_lessons_with_interactables.css"> <!-- Fill MAIN with the right color -->
+    <link rel="stylesheet" href="/css_reusables/css_for_displaying_translation_help.css"> <!-- MOBILES: Draggable man | DESKTOPS: movie subtitle style -->
+    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css"> <!-- Wavesurfer teacher box visual style -->
+    <link rel="stylesheet" href="take_bread.css">
+
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, deviceDetector, fonts, fetch headers, onePixelTransparentGif...*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
+    <script defer src="/js_reusables/js_for_displaying_translation_help.js">/*Desktops: Like movie subtitles, Mobiles: Drag the figure down*/</script>
+    <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
+
+    <!-- Uncomment to use the console on mobiles -->
+    <!-- <script src="/third_party_js/eruda.min.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
+    <!-- In case of testing without error hunting, can use parent.console.log() -->
+
+    <script>
+      window.addEventListener("load",startDownloadingTheNextLesson,{once:true});
+      function startDownloadingTheNextLesson() {
+        if (!localStorage.loadFiles11nAnd121WasSuccessful) {
+          setTimeout(function () { const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_reusables/caching_functions_for_each_lesson/11notice_and_121.js"; document.body.appendChild(delayedScript); },6000);
+        } // Why wait for three seconds? Is it totally meaningless? We want to prioritize howler sounds of this lesson to be loaded before the files of the next lesson, but will it have any effect?
+      }
+    </script>
+
+    <!-- We do not need the microphone plugin in this case -->
+    <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <!--  -->
+    <script defer src="take_bread.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
+
+  </head>
+  <body>
+
+    <!-- MAIN :: Start blurred -->
+    <main style="filter: blur(8px); transition-property: filter; transition-timing-function: ease;"> <!-- See css_for_lessons_with_interactables -->
+
+      <!-- IN CASE z-index doesn't work it's better if we put this element before others so that it appears UNDER EVERYTHING ELSE-->
+      <div id="theGroundDivID" class="theGround"> </div> <!-- Filled with img repeat-x via css background -->
+
+      <!-- PICTOGRAM AND SPEECH BUBBLES -->
+      <div id="pictogramDivID" class="containerOfThePictogramMan"> <!-- position:absolute » Is that why filter blur doesn't work on main? -->
+        <!-- state A B C ... 540x1080 -->
+        <img src="take_bread_state_a.webp" style="height:100vmin;" class="img540x1080">
+        <img src="take_bread_state_b.webp" style="height:100vmin; display:none;" class="img540x1080">
+        <img src="take_bread_state_c.webp" style="height:100vmin; display:none;" class="img540x1080">
+        <!-- speech_bubble 540x1080 -->
+        <img src="speech_bubble_bread_and_hand.webp"  style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
+        <img src="speech_bubble_bread_and_arrow.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
+        <img src="speech_bubble_eat.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
+        <!-- moving eyes 540x1080 -->
+        <div id="movingEyesDivID" class="containerOfEyes delayedEyeMovement">
+          <img src="eyes_blinking_naturally.webp" style="height:100vmin;" class="img540x1080">
+          <img src="eyes_big_happy.webp"          style="height:100vmin; display:none;" class="img540x1080">
+          <img src="eyes_closed_happy.webp"       style="height:100vmin; display:none;" class="img540x1080">
+        </div>
+        <!-- area to make the giant hand cursor disappear -->
+        <div id="antigoofingID" style="position:absolute; width:18.5vmin; height:77vmin; left:3vmin; top:20vmin; z-index:90; pointer-events: all;"> </div>
+      </div>
+
+      <!-- FURNITURE -->
+      <div id="tableDivID" class="containerOfTheTable">
+        <!-- 540x1080 -->
+        <img src="the_table.webp" style="height:100vmin;">
+      </div>
+      <!-- TABLEWARE -->
+      <div id="emptyTrayDivID" class="trayContainer">
+        <img src="tray_without_hand.webp" style="width:20vmin;">
+      </div>
+      <!-- DIMMER -->
+      <div class="dimmer" style="pointer-events:none;"></div>
+      <!-- AWESOME BREAD -->
+      <div id="breadsFarAndNearID" class="containerOfTheTable" style="width:80vmin; margin-left:-15vmin; transition: transform 0.6s;"> <!-- use margin-left instead of transform:translateX(-15vmin); -->
+        <img src="far_bread.webp"  style="height:100vmin; transform-origin: 50% 46.62%; transform: scale(100%); transition: transform 0.8s, margin-top 0.8s, opacity 0.5s; right:0vmin; top: 0vmin;">
+        <img src="near_bread.webp" style="height:100vmin; transform-origin: 50% 46.62%; transform: scale(33%);  transition: transform 0.8s, opacity 0.5s; right:0vmin; top:-100vmin; position:relative; opacity:0;">
+        <img src="grab_the_loaf.webp" style="height:100vmin; right:0vmin; top:-200vmin; position:relative; display:none;">
+        <img src="bite1.webp"         style="height:100vmin; right:0vmin; top:-300vmin; position:relative; display:none; transform: scale(1.15);">
+        <img src="bite2.webp"         style="height:100vmin; right:0vmin; top:-400vmin; position:relative; display:none; transform: scale(1.15);">
+        <img src="bite3.webp"         style="height:100vmin; right:0vmin; top:-500vmin; position:relative; display:none; transform: scale(1.15);">
+
+        <div class="clickArea" style="position:absolute; width:21vmin; height:14vmin; left:29.5vmin; top:40vmin; pointer-events:all;"></div>
+        <div class="touchMoveArea" style="position:absolute; width:36vmin; height:65vmin; left:22vmin; bottom:0vmin; pointer-events:all;">
+          <div class="touchStartArea" style="position:relative; left:2%; width:96%; height:23.5vmin; pointer-events:all;"></div>
+        </div>
+      </div>
+      <!-- PINCH AREA (remove it on desktops)-->
+      <div class="pinchArea" style="position:fixed; left:0px; top:0px; width:100vw; height: 100vh; display:none;"></div>
+      <!-- TEETH -->
+      <div class="teethContainer upperTeethContainer fastBiteSlowBiteToggle" style="visibility:hidden;">
+        <div class="gums upperGum"></div>
+        <img src="teeth_upper.webp"> <!-- 2001x230 in file -->
+      </div>
+      <div class="teethContainer lowerTeethContainer fastBiteSlowBiteToggle" style="visibility:hidden;">
+        <div class="gums lowerGum"></div>
+        <img src="teeth_lower.webp"> <!-- 2001x230 in file -->
+      </div>
+
+    </main>
+    <!-- END OF MAIN -->
+
+  </body>
+</html>

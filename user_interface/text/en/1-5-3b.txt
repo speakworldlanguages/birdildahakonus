@@ -1,0 +1,2 @@
+It means "There is fruit in this tree"
+and "There is no fruit in that tree"

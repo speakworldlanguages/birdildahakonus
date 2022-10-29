@@ -1,0 +1,109 @@
+.theGround{
+  position: fixed;
+  bottom: 0px;
+  width:100vw;
+  background: url(the_ground_repeat_x.webp);
+  background-repeat: repeat-x;
+}
+.containerOfThePictogramMan{
+  position: fixed;
+  width: 50vmin; height: 100vmin;
+  pointer-events: none;
+  left: calc(50vw - 26vmin);
+}
+@media (orientation: portrait) {
+  .theGround{ height: 25.8vmin; background-size: 8.6vmin 25.8vmin; }
+  .containerOfThePictogramMan{bottom: 8.6vmin;} /*right: calc(50vw - 13vmin)*/
+  .containerOfTheTable{bottom: 8.6vmin;}/*left: calc(50vw - 3vmin)*/
+  .trayContainer{bottom: 48.6vmin;}/*left: calc(50vw - 3vmin)*/
+  /*---*/
+  .swipeInstructionPosition{bottom: calc(30vw + 40vh); right:50vmin; transform: translate(50%,0%); margin-right: 0vmin;}
+}
+@media (orientation: landscape) {
+  .theGround{ height: 8.6vmin; background-size: 8.6vmin 8.6vmin; }
+  .containerOfThePictogramMan{bottom: 0vmin;} /*right: calc(50vw - 7vmin)*/
+  .containerOfTheTable{bottom: 0vmin;}/*left: calc(50vw - 6vmin)*/
+  .trayContainer{bottom: 40vmin;}/*left: calc(50vw - 6vmin)*/
+  /*---*/
+  .swipeInstructionPosition{bottom: 50vh; right: calc(25vw - 16.1vmin); transform: translate(50%,46%);}
+}
+.img540x1080{ position: absolute; left: 0; top: 0; pointer-events: none; }
+/*Speech bubbles grow shrink*/
+.transformOriginBottomLeft{ transform-origin: 44% 25%; }
+/*Speech bubbles appear disappear*/
+.fadeIn{ animation-name: opacityAnim1; animation-duration: .6s; animation-fill-mode: forwards; }
+@keyframes opacityAnim1 {  0%{opacity: 0; transform: scale(.5);} 100%{opacity: 1; transform: scale(1);}  }
+.fadeOut{ animation-name: opacityAnim2; animation-duration: .6s; animation-fill-mode: forwards; }
+@keyframes opacityAnim2 {  0%{opacity: 1; transform: scale(1);} 100%{opacity: 0; transform: scale(.5);}  }
+/*---*/
+.containerOfEyes{position: absolute; left: 0; top: 0; width:100%; height: 100%;}
+.delayedEyeMovement{transition: left 0.3s, top 0.3s; transition-timing-function: ease;}
+/*---*/
+/* 540px by 1080 px */
+.containerOfTheTable{
+  position:fixed;  width: 50vmin; height: 100vmin;
+  pointer-events: none;
+  overflow: hidden;
+  display: flex; flex-direction: column; align-items: center;
+  left: calc(50vw - 25vmin);
+}
+.trayContainer{
+  transform-origin: 50% 50%;
+  position:fixed; width:50vmin; height:10vmin;
+  pointer-events: none;
+  display: flex; flex-direction: column; align-items: center;
+  left: calc(50vw - 25vmin);
+}
+
+.handCursorSize{position: fixed; width: 80px; transform: translate(-50%,-50%); pointer-events: none; z-index: 100; transition: opacity 0.2s;}
+/*Uncomment to test elements*/
+/* .clickArea{  border: 1px dotted gold;  } .clickArea:active{  border: 1px dotted coral;  } */
+/* .touchMoveArea{  border: 1px dotted red;  }  .touchMoveArea:active{  border: 1px dotted orange;  } */
+/* .touchStartArea{  border: 1px dotted blue;  }  .touchStartArea:active{  border: 1px dotted cyan;  } */
+/* .pinchArea{  border: 1px dotted green;  }  .pinchArea:active{  border: 1px dotted yellow;  } */
+
+.breadGlow{ animation-name: glowingBread; animation-duration: 2.7s; animation-fill-mode: forwards; }
+@keyframes glowingBread {
+  0%{  filter: brightness(1.2) hue-rotate(-8deg); }
+  27%{ filter: brightness(1.05) hue-rotate(-2deg); }
+  100%{ filter: brightness(1) hue-rotate(0deg); }
+}
+.dimmer{
+  position: fixed; left: 0px; top: 0px; width: 100vw; height: 100vh;
+  background-color: #00aaff;
+  mix-blend-mode: multiply;
+  opacity: 0; /*to 0.08 max*/
+  transition: opacity 1s;
+}
+.flashBlinkingBread{ animation-name: blinkBread; animation-duration: 0.7s; animation-fill-mode: forwards; }
+@keyframes blinkBread {
+  0%{  filter: brightness(1.1) hue-rotate(-8deg); } 24%{  filter: brightness(1.1) hue-rotate(-8deg); }
+  25%{ filter: brightness(1) hue-rotate(0deg); }    49%{  filter: brightness(1) hue-rotate(0deg);    }
+  50%{ filter: brightness(1.1) hue-rotate(-8deg); } 74%{  filter: brightness(1.1) hue-rotate(-8deg); }
+  75%{ filter: brightness(1) hue-rotate(0deg); }    98%{  filter: brightness(1) hue-rotate(0deg);    }
+  99%{ filter: brightness(1.1) hue-rotate(-8deg); } 100%{ filter: brightness(1.1) hue-rotate(-8deg); }
+}
+.getExtraLarge{ animation-name: biggerBread; animation-duration: 2.5s; animation-fill-mode: forwards; }
+@keyframes biggerBread {  0%{ transform: scale(1); }  100%{transform: scale(1.15);}  }
+.teethContainer{
+  position: fixed; left: 0px; width: 100vw; height: 100vh;
+  display: flex; align-items: center;
+  transition: top 0.10s, transform 0.20s;
+}
+.gums{ /* fill: 2e3a47 ,,, stroke: 243038 10px*/
+  position: absolute;
+  width: 100vw; height: calc(100vh - 30px);
+  background-color: #2e3a47;
+  z-index: -1;
+}
+.upperTeethContainer{  flex-direction: column-reverse; top:-100vh; z-index: 1;  }
+.lowerTeethContainer{  flex-direction: column; top:100vh; z-index: 1;  }
+.upperGum{  bottom: 30px;  border-bottom: 10px solid #243038;  }
+.lowerGum{  top: 30px;  border-top: 10px solid #243038;  }
+.fastBiteSlowBiteToggle{  transition: top 0.75s, transform 0.20s;  }
+.teethSizeDesktop{height: 115px;}
+.teethSizeMobile{width: 125vmin;}
+
+.swipeInstructionPosition{position: fixed; pointer-events: none; z-index: 90; filter: drop-shadow(0 0 6vmin #ebf9ff); transition: opacity 0.5s; width: 62vmin;}
+.itDisappears{ animation: simpleDisappear 1.5s;  animation-fill-mode: forwards; }
+@keyframes simpleDisappear { 0%{ opacity: 1; }  100%{ opacity: 0; visibility: hidden; } }

@@ -1,0 +1,67 @@
+/*--These apply to parent level (save/load) info boxes--*/
+.fullViewportBackgroundForSaveLoadBoxes:hover{ cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto; }
+.saveLoadRoundedInfoBox:hover{ cursor: url("/user_interface/images/cursor/button_cursor.png") 16 4,auto; }
+.buttonsUnderSaveLoadInfo:hover{ cursor: url("/user_interface/images/cursor/glow_cursor.png") 16 4,auto; }
+
+/* Watch the z-index of MAIN 999» See css_for_the_container_parent_html */
+/* Also watch the z-index of sliding-nav-menu-with-ceramic-buttons 1111 */
+/*height:100vh causes a centering problem on mobiles*/
+.fullViewportBackgroundForSaveLoadBoxes{
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background-color: rgba(119, 215, 247, 0.6);
+  mix-blend-mode: normal;
+  display: flex; justify-content: center; align-items: center;
+  z-index: 2222;
+  animation-name: theBlueBackgroundAppears; animation-duration: 0.33s; animation-fill-mode: forwards;
+}
+@keyframes theBlueBackgroundAppears { 0%{opacity:0;} 100%{opacity:1} }
+@keyframes theBlueBackgroundAndTheContentsDisappear { 0%{opacity:1;} 100%{opacity:0} }
+
+.saveLoadRoundedInfoBox{
+  display: flex;  justify-content: space-around;  align-items: center;  flex-direction: column;
+  max-width: 600px;  min-height: 20vh;
+  background-color: rgb(250, 251, 252);
+  mix-blend-mode: normal;
+  border-radius: 2.5vmin;
+  font-size: 4vmin;
+  color: rgb(130,155,173);
+  margin: 5vmin;
+  padding-left: 4vmin; padding-right: 4vmin; padding-top: 5vmin; padding-bottom: 5vmin;
+  line-height: normal;
+  text-align: justify;
+  white-space: pre-wrap; /* pre means do not convert the line breaks into regular spaces. pre-wrap handles the overflow as well for longer lines */
+  transform: translateY(-100vh);
+  animation-name: theInfoBoxAppears; animation-delay: 0.44s; animation-duration: 0.55s; animation-fill-mode: forwards;
+}
+@keyframes theInfoBoxAppears { 0%{transform: translateY(-100vh);} 100%{transform: translateY(0vh);} }
+@keyframes theInfoBoxDisappears { 0%{transform: translateY(0vh);} 100%{transform: translateY(-100vh);} }
+/* IT WORKS: Trying to target phones (and tablets) and especially in vertical position to increase the font size */
+@media (max-width: 666px) {  .saveLoadRoundedInfoBox {   font-size: 5.0vmin;  }   }
+@media (max-width: 555px) {  .saveLoadRoundedInfoBox {   font-size: 5.3vmin;  }   }
+@media (max-width: 444px) {  .saveLoadRoundedInfoBox {   font-size: 5.6vmin;  }   }
+
+.twoButtonsSideBySide{
+  display: flex;  justify-content: center;  align-items: center; flex-direction: row;
+  gap:20px;
+}
+
+.buttonsUnderSaveLoadInfo{ /*fontFamily depends on needLatinFonts true false » See js_for_info_boxes_in_lessons*/
+  min-width:100px;  min-height:62px;
+  padding-top: 1.5vmin; padding-bottom: 1vmin; padding-left: calc(4px + 2.2vmin); padding-right: calc(4px + 2.2vmin);
+  margin-top: 5vmin;
+  background-color: rgb(154,170,182);
+  border-radius: 1.5vmin;
+  border: 3px solid rgb(124, 144, 160);
+  color: white;
+  display: flex;  justify-content: center;  align-items: center;
+  text-shadow: none;
+  transform: scale(1);
+  transition: transform 0.1s, background-color 0.6s, border-color 0.6s;
+}
+.buttonsUnderSaveLoadInfo:hover{
+  background-color: rgb(93,114,137);
+  border: 3px solid rgb(73, 94, 110);
+}
+.buttonsUnderSaveLoadInfo:active{
+  transform: scale(0.85);
+}

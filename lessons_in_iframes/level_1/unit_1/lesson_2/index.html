@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>1-1-2 💧</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex" />
+    <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- MAIN is a full viewport DIV with flex center X center Y -->
+    <link rel="stylesheet" href="/css_reusables/css_for_photos_and_videos_teach_a_new_word.css"> <!-- MAIN has gradient background -->
+    <link rel="stylesheet" href="/css_reusables/css_for_the_glassy_give_up_button.css"> <!-- Using ASIDE as a button with glassmorphism -->
+    <link rel="stylesheet" href="/css_reusables/css_for_wavesurfer_microphone_divs.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css">
+
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, deviceDetector, fonts, fetch headers, onePixelTransparentGif...*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
+    <script defer src="/js_reusables/js_for_handling_speech_give_up.js">/*White listed browsers: wait for speech ,,, others: don't wait*/</script>
+    <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <script defer src="/third_party_js/wavesurfer.microphone.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <script defer src="/js_reusables/js_for_microphone_input_visualization.js">/*Start, Stop wavesurfer microphone*/</script>
+    <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
+    <script defer src="water.js">/*Progress handling for this lesson*/</script>
+
+    <!-- Uncomment to use the console on mobiles -->
+    <!-- <script src="/third_party_js/eruda.min.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
+
+    <script>
+      window.addEventListener("load",startDownloadingTheNextLesson,{once:true});
+      function startDownloadingTheNextLesson() {
+        if (!localStorage.loadFiles113WasSuccessful) {
+          setTimeout(function () { const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_reusables/caching_functions_for_each_lesson/113.js"; document.body.appendChild(delayedScript); },6000);
+        } // Why wait for three seconds? Is it totally meaningless? We want to prioritize howler sounds of this lesson to be loaded before the files of the next lesson, but will it have any effect?
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- MAIN -->
+    <main> <!-- BACKGROUND GRADIENT comes from css_for_photos_and_videos_teach_a_new_word | THE SIZE AND POSITION FIXED is in css_for_every_single_html -->
+      <!-- Photo pairs -->
+      <div id="doublesDivID" class="fullViewportFlexPortraitColumnLandscapeRow"> <!-- See css_for_photos_and_videos_teach_a_new_word.css -->
+        <div class="oneOfTheTwoDivsThatContainSquarePictures">
+          <img src="1.webp" id="imageA">
+          <img src="3.webp" style="display:none; top:-100%;" id="imageC">
+          <img src="5.webp" style="display:none; top:-200%;" id="imageE">
+        </div>
+        <div class="oneOfTheTwoDivsThatContainSquarePictures">
+          <img src="2.webp" id="imageB">
+          <img src="4.webp" style="display:none; top:-100%;" id="imageD">
+          <img src="6.webp" style="display:none; top:-200%;" id="imageF">
+        </div>
+      </div>
+      <!-- End of photo pairs -->
+    </main>
+    <!-- END OF MAIN -->
+
+    <!-- Videos -->
+    <div id="containerOfVideosDivID" style="display:none;">
+      <video src="v1_vp9.webm" id="video1" playsinline muted style="height: 91vh;"></video>
+      <video src="v2_vp9.webm" id="video2" playsinline muted style="height: 62vh; display:none;"></video>
+      <script>
+        window.addEventListener("DOMContentLoaded",function(){
+          if (window.parent.isApple || window.parent.detectedBrowser.name == "Firefox") {
+            const v1 = document.getElementById('video1'); v1.src = "v1_h264.mp4";
+            const v2 = document.getElementById('video2'); v2.src = "v2_h264.mp4";
+          }
+        },{ once: true });
+      </script>
+    </div>
+
+    <!-- Background darkening -->
+    <div id="fullVpDarkBlueDivID" style="display:none;"> </div>
+
+    <!-- Single photos looping -->
+    <div id="singlesDivID" class="" style="display:none;">
+        <img src="c1.webp"   class="positionAbsoluteImg">
+        <img src="c2.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img src="5.webp"    class="positionAbsoluteImg" style="visibility:hidden;" id="putWaterfall1OrRemove">
+        <img src="c3.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img src="c4.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img src="6.webp"    class="positionAbsoluteImg" style="visibility:hidden;" id="putWaterfall2OrRemove">
+        <img src="c5.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img src="c6.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img src="c7.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img src="c8.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img src="c9.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img src="c10.webp"  class="positionAbsoluteImg" style="visibility:hidden;">
+    </div>
+    <!-- SPECIAL CASE FOR HANDLING BIGGER FILES: Load or skip and reorder -->
+    <script>
+      window.addEventListener('DOMContentLoaded', function(){
+        /* waterfall webps are 4,68MB in total,,, and a bit hard on CPU ,,, Use https://downloadtimecalculator.com */
+        function getConnectionForWater() {return navigator.connection || navigator.mozConnection || navigator.webkitConnection || navigator.msConnection;}
+        var internetForWater = getConnectionForWater();
+        if (deviceDetector.isMobile) { // PHONE & TABLET
+          if(internetForWater){ // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
+            if(internetForWater.downlink>=2){ /*Fast enough: Let it load and display*/ // Get waterfalls and show
+              switchToAnimatedWebpWaterfallsMOBILE();
+            } else { preventRepetitionOf5And6(); } // Too slow: Loading of waterfalls won't make it in time
+          } else { switchToAnimatedWebpWaterfallsMOBILE(); } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
+        } else { // DESKTOP
+          if(internetForWater){ // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
+            if(internetForWater.downlink>=2){ /*Fast enough: Let it load and display*/ // Get waterfalls and show
+              switchToAnimatedWebpWaterfallsDESKTOP();
+            } else { preventRepetitionOf5And6(); } // Too slow: Loading of waterfalls won't make it in time
+          } else { switchToAnimatedWebpWaterfallsDESKTOP(); } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
+        }
+      }, { once: true });
+      function switchToAnimatedWebpWaterfallsDESKTOP() {
+        const turnIntoAWaterfall1 = document.getElementById('imageE'); turnIntoAWaterfall1.src = "waterfall1.webp";
+        const turnIntoAWaterfall2 = document.getElementById('imageF'); turnIntoAWaterfall2.src = "waterfall2.webp";
+      }
+      function switchToAnimatedWebpWaterfallsMOBILE() {
+        const turnIntoAWaterfall1 = document.getElementById('putWaterfall1OrRemove'); turnIntoAWaterfall1.src = "waterfall1.webp";
+        const turnIntoAWaterfall2 = document.getElementById('putWaterfall2OrRemove'); turnIntoAWaterfall2.src = "waterfall2.webp";
+      }
+      function preventRepetitionOf5And6() { // No waterfalls
+        const becomesUnnecessary1 = document.getElementById('putWaterfall1OrRemove'); becomesUnnecessary1.parentNode.removeChild(becomesUnnecessary1);
+        const becomesUnnecessary2 = document.getElementById('putWaterfall2OrRemove'); becomesUnnecessary2.parentNode.removeChild(becomesUnnecessary2);
+      }
+    </script>
+
+    <!-- “Now it’s your turn” animation 5100ms -->
+    <img id="nowYouSayItIMG" src="/user_interface/images/now_you_say_it_to_speech_recognition.webp" style="display:none;">
+    <script>
+    window.addEventListener("DOMContentLoaded",function(){
+      if (window.parent.isApple) {
+        const nowYouSayIt = document.getElementById('nowYouSayItIMG'); nowYouSayIt.src = "/user_interface/images/now_you_say_it_to_speech_recognition.gif";
+      }
+    },{ once: true });
+    </script>
+
+    <!-- GIVE UP\PROCEED TO NEXT -->
+    <aside class="glassButtonStartHidden"> <!-- See css_for_all_iframed_lesson_htmls.css -->
+      <p id="theTextInsideSkipNextButtonID">X</p> <!-- See js_for_handling_speech_give_up.js -->
+    </aside>
+    <!-- END OF GIVE UP\PROCEED TO NEXT -->
+
+  </body>
+</html>

@@ -1,0 +1,46 @@
+.bilingualLongButton:hover{cursor: url('/user_interface/images/cursor/button_cursor.png') 16 6,auto;}
+
+.containerOfBilingualLongButtonMOBILE{
+  position:fixed; z-index:2; left: 50%; transform: translateX(-50%) translateY(50%); /*translateY is needed to center its collapsing origin*/
+  bottom: calc(33px + 5vmin); /*The height of the thing depends on 3satır*fontsize(18) + 2*padding(5) + 2*border(1) = 66px*/
+  display: flex; justify-content: center; align-items: stretch;
+}
+.containerOfBilingualLongButtonDESKTOP{
+  position:fixed; z-index:2; left: 50%; transform: translateX(-50%) translateY(50%); /*translateY is needed to center its collapsing origin*/
+  bottom: calc(5px + 5vmin);
+  display: flex; justify-content: center; align-items: stretch;
+}
+.bilingualLongButton{
+  color:white; background-color:#bcc9d3;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+  padding: 5px;
+  border: 1px solid #9daebd;
+  font-size: 18px; overflow: hidden;
+  width: 50%; /*VALUES ARE FOR EACH ONE OF THE TWO,,, Like 45x2=90 in total*/
+}
+
+@media (orientation:portrait) {
+  .containerOfBilingualLongButtonMOBILE{width: 90vw;}
+  .containerOfBilingualLongButtonDESKTOP{width: 90vw;}
+@media (max-width: 799px) { .bilingualLongButton{font-size: 17px;} }
+@media (max-width: 599px) { .bilingualLongButton{font-size: 15px;} }
+}
+@media (orientation:landscape) {
+  .containerOfBilingualLongButtonMOBILE{width: 70vw;}
+  .containerOfBilingualLongButtonDESKTOP{width: 70vw;}
+@media (max-height: 799px) { .bilingualLongButton{font-size: 17px;} }
+@media (max-height: 599px) { .bilingualLongButton{font-size: 15px;} }
+}
+
+.leftHalf{
+  border-radius:10px 0px 0px 10px; text-align: right;
+}
+.rightHalf{
+  border-radius:0px 10px 10px 0px; text-align: left;
+}
+
+.bilingualLongButtonMouseEnter{
+  background-color:#9daebd;
+  border: 1px solid #8b9eaf;
+}

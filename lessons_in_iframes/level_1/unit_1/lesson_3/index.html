@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>1-1-3 📤</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex" />
+    <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- line-height for P elemets -->
+    <link rel="stylesheet" href="/css_reusables/css_for_lessons_with_interactables.css"> <!-- Fill MAIN with the right color -->
+    <link rel="stylesheet" href="/css_reusables/css_for_displaying_translation_help.css"> <!-- MOBILES: Draggable man | DESKTOPS: movie subtitle style -->
+    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css"> <!-- Wavesurfer teacher box visual style -->
+    <link rel="stylesheet" href="give_me_water.css">
+
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, deviceDetector, fonts, fetch headers, onePixelTransparentGif...*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
+    <script defer src="/js_reusables/js_for_displaying_translation_help.js">/*Desktops: Like movie subtitles, Mobiles: Drag the figure down*/</script>
+    <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
+
+    <!-- Uncomment to use the console on mobiles -->
+    <!-- <script src="/third_party_js/eruda.min.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
+    <!-- In case of testing without error hunting, can use parent.console.log() -->
+
+    <script>
+      window.addEventListener("load",startDownloadingTheNextLesson,{once:true});
+      function startDownloadingTheNextLesson() {
+        if (!localStorage.loadFiles114WasSuccessful) {
+          setTimeout(function () { const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_reusables/caching_functions_for_each_lesson/114.js"; document.body.appendChild(delayedScript); },6000);
+        } // Why wait for three seconds? Is it totally meaningless? We want to prioritize howler sounds of this lesson to be loaded before the files of the next lesson, but will it have any effect?
+      }
+    </script>
+
+    <!-- We do not need the microphone plugin in this case -->
+    <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <!--  -->
+    <script defer src="give_me_water.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
+
+  </head>
+  <body>
+
+    <!-- MAIN :: For some reason, applying filter blur via some class (in order to use keyframes) on main didn't work (and was mysterious) -->
+    <main style="filter: blur(8px); transition-property: filter;"> <!-- See css_for_lessons_with_interactables -->
+
+      <!-- IN CASE z-index doesn't work it's better if we put this element before others so that it appears UNDER EVERYTHING ELSE-->
+      <div id="theGroundDivID" class="theGround"> </div> <!-- Filled with img repeat-x via css background -->
+
+      <!-- PICTOGRAM AND SPEECH BUBBLES -->
+      <div id="pictogram1DivID" class="containerOfThePictogramMan"> <!-- position:absolute » Is that why filter blur doesn't work on main? -->
+        <!-- state A B C ... 540x1080 -->
+        <img src="give_me_water_state_a.webp"  style="height:100vmin;" class="img540x1080">
+        <img src="give_me_water_state_b0.webp" style="height:100vmin; display:none;" class="img540x1080">
+        <img src="give_me_water_state_b1.webp" style="height:100vmin; display:none;" class="img540x1080">
+        <img src="give_me_water_state_b2.webp" style="height:100vmin; display:none;" class="img540x1080">
+        <img src="give_me_water_state_c.webp"  style="height:100vmin; display:none;" class="img540x1080">
+        <img src="give_me_water_state_d.webp"  style="height:100vmin; display:none;" class="img540x1080">
+        <img src="give_me_water_state_e.webp"  style="height:100vmin; display:none;" class="img540x1080">
+        <!-- speech_bubble 540x1080 -->
+        <img src="speech_bubble_hand_give_me.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
+        <img src="speech_bubble_water.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
+        <!-- moving eyes 540x1080 -->
+        <div id="movingEyes1DivID" class="containerOfEyes delayedEyeMovement">
+          <img src="eyes_blinking_naturally.webp" style="height:100vmin;" class="img540x1080">
+        </div>
+      </div>
+
+      <!-- FURNITURE -->
+      <div id="tableDivID" class="containerOfTheTable">
+        <!-- 540x1080 -->
+        <img src="the_table.webp" style="height:100vmin;">
+      </div>
+
+      <div id="emptyTrayDivID" class="trayContainer">
+        <img src="tray_without_hand.webp" style="width:20vmin;">
+      </div>
+
+      <div id="theGlassDivID" class="glassContainerIfNoResizeHappens">
+        <img src="0_glass.webp" style="width:20vmin;">
+        <svg class="preciseHoverSvg" style="width:20vmin;" x="0px" y="0px" width="432px" height="432px" viewBox="0 0 432 432" xml:space="preserve">
+          <polygon id="preciseAreaID" points="110.706,239 144.276,425.146 148.471,429.578 283.04,429.95 288.104,425.184 321.313,239 316.667,233 115.664,233 "/>
+        </svg>
+        <div class="touchDetectionArea"></div> <!-- CAUTION: Must remove this on DESKTOPS immediately otherwise it will block the clicks -->
+      </div>
+
+      <!-- NICE INSTRUCTION ARROW -->
+      <div class="containerOfTheTable">
+        <!-- 540x1080 -->
+        <img id="niceDownArrowImgID" src="nice_arrow_down.webp" style="height:100vmin; display:none;">
+        <img id="niceLeftArrowImgID" src="nice_arrow_left.webp" style="height:100vmin; display:none;">
+      </div>
+
+      <div class="winTestOnDesktopHitArea1"></div>
+      <div class="winTestOnDesktopHitArea2"></div>
+      <div class="winTestOnMobileHitArea1"></div>
+      <div class="winTestOnMobileHitArea2"></div>
+
+    </main>
+    <!-- END OF MAIN -->
+
+  </body>
+</html>

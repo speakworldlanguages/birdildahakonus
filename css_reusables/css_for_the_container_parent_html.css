@@ -1,0 +1,308 @@
+body{ /*Also see css_for_every_single_html.css*/
+  /*REMEMBER: This (body) wont show where MAIN element covers the whole screen*/
+  /*CANNOT USE: @fontface here because different font files must be loaded depending on UI language*/
+  color: #34546d; /*??? Forgot what this was for,, perhaps necessary for information or about page,, test later if there is time*/
+
+  /*average tint of the information screen*/ /*this doesnt show on the very first screen because it is covered with MAIN element*/
+  /*Let's introduce a slight tint difference to see what happens during loading between two frames*/
+  background-color: #9aacb8; /* #bec8d0 #8cb2c2 */
+  /* Main background color of the app is #adbbc4 */
+}
+
+/*MAIN in parent i.e. WELCOME MENU*/
+main{
+  display: flex; flex-direction: column; align-items: center;
+  z-index: 999; /* Preloader is 9999 */
+  background-image: linear-gradient(0deg, #d6f8fd 0%, #a9f1f9 28%, #84dff5 55%, #43bbf1 100%);
+  line-height: 2rem; /*Is set to zero at body level. See css_for_every_single_html*/
+  transition: filter 0.4s;
+}
+/*See inline script in parent index.html*/
+.mainDesktop{justify-content: space-between;}
+/*touching the globe on mobiles should do brightness(0.88) contrast(1.15) » js_for_hover_simulation_and_scrollglobe*/
+.mainPhoneOrTablet{
+  justify-content: flex-start;
+  filter: brightness(1) contrast(1) hue-rotate(0deg);
+}
+/*Not too bad*/
+.mainChangeBrightness{
+  filter: brightness(0.82) contrast(1.35) hue-rotate(6deg);
+}
+
+iframe{
+  border: none;
+  width: 100%; /*  100vw is OK  */
+  height: 100%; /*  100vh is NOT OK because on mobiles 100vh means all screen height with the adress bar so it works only when the view is in fullscreen  */
+  position: fixed;
+  top: 0;        left: 0;        /*bottom:0;        right:0;*/
+}
+
+p{
+  line-height: normal; /*Set it back to normal because it was set to ZERO in css_for_every_single_html.css*/
+  letter-spacing: 1px;
+  padding-left:7px;
+  padding-right:7px;
+}
+
+/*select the language you want to learn BUTTONS*/
+button{
+  line-height: normal; /*Just to be safe: Set it back to normal because it was set to ZERO in css_for_every_single_html.css*/
+  background-color: rgba(255,255,255,0.3);
+  border: 3px solid rgba(255,255,255,0.5);
+  color: white;
+  border-radius: 19px;
+  padding: 6px 6px 9px 6px;
+  margin: 6px; /*Space between two buttons*/
+
+  font-size: 1.5rem; /* Must get smaller on narrow screens: See @media screen and (max-width: 600px) below*/
+  width: 100%;
+  transition: transform 0.2s;
+  transform: scale(1);
+}
+button:focus {outline:0;}
+.buttonDesktop:hover{
+  color: #92d7e7;  background-color: rgba(255,255,255,1);  box-shadow: 0px 0px 4px white;  transform: scale(1.03);
+}
+.simulatedHover{
+  color: #92d7e7;  background-color: rgba(255,255,255,1);  box-shadow: 0px 0px 4px white;  transform: scale(1.03);
+}
+.buttonMobile:focus{}/*Let it be; better not try to do something like a desktop hover thing: Reaction time is too slow*/
+
+.buttonMousedownOrTouchend{
+  animation-name: buttonBlink;
+  animation-duration: 1.2s;
+  animation-iteration-count: 1;
+  border-color: white;
+}
+@keyframes buttonBlink {
+  0%{transform: scale(1.03); background-color: white; color: #92d7e7;}
+  10%{transform: scale(0.7);}
+  20%{transform: scale(1.03);}
+  39%{background-color: white; color: #92d7e7;}
+  40%{background-color: #5b8eb3;  color: #ffffff;}
+  49%{background-color: #5b8eb3;  color: #ffffff;}
+  50%{background-color: white; color: #92d7e7;}
+  59%{background-color: white; color: #92d7e7;}
+  60%{background-color: #5b8eb3;  color: #ffffff;}
+  69%{background-color: #5b8eb3;  color: #ffffff;}
+  70%{background-color: white; color: #92d7e7;}
+  79%{background-color: white; color: #92d7e7;}
+  80%{background-color: #5b8eb3;  color: #ffffff;}
+  99%{background-color: #5b8eb3;  color: #ffffff;}
+  100%{background-color: rgba(255,255,255,1); color: #92d7e7;}
+}
+
+/*header contains [Choose the language you want to learn]*/
+header{
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  font-size: 2rem; /* !!! ATTENTION: works for Latin fonts but what about Asian fonts and other fonts??? */
+  color: white;
+  text-shadow: 0 0 2px white;
+}
+.headerDesktop{ /*See @media below for Phone and Tablet*/
+  height: 140px; /*Must match the value in css_for_sliding_navigation_menu.css*/
+}
+/*article contains the language buttons [like Hito language(Japanese)] and the scroll managing rotatable-globe inside canvas*/
+article{
+  display: flex; justify-content: center; align-items: center;
+  width: 100vw;
+  /* border: 1px dotted grey; */
+  overflow: hidden;
+}
+.articleDesktop{
+  height: calc(100vh - 300px);
+}
+.layerA2_desktop{
+  display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+  overflow-y: hidden; overflow-x: hidden;
+  padding: 9px 17px 9px 17px;
+}
+.layerA2_mobile{
+  display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+  overflow-y: hidden; overflow-x: hidden;
+  padding: 7px 12px 7px 12px;
+}
+/**/
+.layerB2_desktop{ display: flex; justify-content: space-evenly; align-items: center; }
+.layerB2_desktop:hover{cursor: url("/user_interface/images/cursor/rotate.png") 16 16,auto;}
+.layerB2_mobile{ display: flex; justify-content: space-evenly; align-items: center; }
+.layerB2_desktop img{ /*Rotate left-right arrows*/
+  pointer-events: none;
+  width: 12%;
+  transition: opacity 0.3s; /*See js_for_hover_simulation_and_scrollglobe » Find checkIfThereIsOverflow()*/
+}
+.layerB2_mobile img{ /*Rotate left-right arrows*/
+  pointer-events: none;
+  height: 30%;
+}
+canvas{
+  pointer-events: none;
+  transition: width 0.5s;
+}
+.canvasDesktop{width: 200px;}
+.zoomGlobeDesktop{width: 250px;}
+@media screen and (max-height: 600px) {  .canvasDesktop{width: 160px;}  .zoomGlobeDesktop{width: 200px;}  }
+@media screen and (max-height: 520px) {  .canvasDesktop{width: 120px;}  .zoomGlobeDesktop{width: 150px;}  }
+@media screen and (max-height: 440px) {  .canvasDesktop{width: 90px;}   .zoomGlobeDesktop{width: 112px;}  }
+
+.canvasPhoneOrTablet{ height: 88%; }
+/*footer contains [A project by Manheart Earthman]*/
+footer{
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  color: white; /*On Android changes via inline script in index.html*/
+}
+.footerDesktop{ /*See @media below for Phone and Tablet*/
+  height: 140px; /*Mind header height*/
+  font-size: 0.8rem;
+}
+.footerPhoneOrTablet{
+  width: 100vw; /*This way we can get away without using left 50% translateX -50% when moved to sliding-nav-menu on Android with appendChild*/
+  height: 48px;
+  font-size: 0.9rem;
+}
+@media screen and (max-width: 600px) {
+  header{  font-size: 1.6rem; /*Normally 2rem*/ text-shadow: 0 0 1px white;  } /*Phones and maybe smaller tablets too. N-O-T-E: Works nicely*/
+  button{  font-size: 1.22rem; /*Normally 1.5rem*/ border: 2.5px solid rgba(255,255,255,0.5); }
+}
+
+:root {
+  --desktopWidth: 420px;
+}
+
+@media screen and (orientation:portrait){
+  .headerPhoneOrTablet{   height: 23.6vmin;  }
+  .articlePhoneOrTablet{   height: calc(100vh - 70.6vmin);  } /*23.6+22+10=55.6 sliding nav menu height is 22vmin in css_for_sliding_navigation_menu*/
+  article{flex-direction: column;}
+  /*Desktops - PORTRAIT*/
+  .layerA1_desktop{ width:var(--desktopWidth); height: 65%; border-radius: 14px 14px 0px 0px; background-color: rgba(255,255,255,0.15); padding:12px 12px 6px 12px;}
+  .layerB1_desktop{ width:var(--desktopWidth); height: 35%; border-radius: 0px 0px 14px 14px; background-color: rgba(255,255,255,0.15); padding:6px 12px 12px 12px;}
+  .layerA2_desktop{ width:100%; height: 100%; border-radius: 12px; background-color: rgba(255,255,255,0.25); }
+  .layerB2_desktop{ width:100%; height: 100%; border-radius: 12px; background-color: rgba(255,255,255,0.25); }
+  .canvasDesktop{ transform: scale(0.4); }
+  /*Phones - PORTRAIT*/
+  .layerA1_mobile{ width:94vw; height: 65%; border-radius: 14px 14px 0px 0px; background-color: rgba(255,255,255,0.14); padding:12px 12px 6px 12px;}
+  .layerB1_mobile{ width:94vw; height: 35%; border-radius: 0px 0px 14px 14px; background-color: rgba(255,255,255,0.14); padding:6px 12px 12px 12px;}
+  .layerA2_mobile{ width:100%; height: 100%; border-radius: 12px; background-color: rgba(255,255,255,0.23); }
+  .layerB2_mobile{ width:100%; height: 100%; border-radius: 12px; background-color: rgba(255,255,255,0.23); }
+  /*Tablets (or huge phones)- PORTRAIT*/
+  @media screen and (min-width: 500px){
+    .layerA1_mobile{width:80vw;}
+    .layerB1_mobile{width:80vw;}
+  }
+}
+
+@media screen and (orientation:landscape){
+  .headerPhoneOrTablet{   height: 14.6vmin;  }
+  .articlePhoneOrTablet{   height: calc(100vh - 60vmin - 5px);  }
+  article{flex-direction: row;}
+  /*Desktops - LANDSCAPE*/
+  .layerA1_desktop{ width:var(--desktopWidth); height: 100%; border-radius: 14px 0px 0px 14px; background-color: rgba(255,255,255,0.15); padding:12px 6px 12px 12px;}
+  .layerB1_desktop{ width:var(--desktopWidth); height: 100%; border-radius: 0px 14px 14px 0px; background-color: rgba(255,255,255,0.15); padding:12px 12px 12px 6px;}
+  .layerA2_desktop{ width:100%; height: 100%; border-radius: 12px; background-color: rgba(255,255,255,0.25); }
+  .layerB2_desktop{ width:100%; height: 100%; border-radius: 12px; background-color: rgba(255,255,255,0.25); }
+  .canvasDesktop{ transform: scale(1); }
+  /*Phones - LANDSCAPE*/
+  .layerA1_mobile{ width:57%; height: 100%; border-radius: 14px 0px 0px 14px; background-color: rgba(255,255,255,0.14); padding:12px 6px 12px 12px;}
+  .layerB1_mobile{ width:40%; height: 100%; border-radius: 0px 14px 14px 0px; background-color: rgba(255,255,255,0.14); padding:12px 12px 12px 6px;}
+  .layerA2_mobile{ width:100%; height: 100%; border-radius: 12px; background-color: rgba(255,255,255,0.23); }
+  .layerB2_mobile{ width:100%; height: 100%; border-radius: 12px; background-color: rgba(255,255,255,0.23); }
+  /*Tablets or huge phones - LANDSCAPE*/
+  @media screen and (min-width: 900px){
+    .layerA1_mobile{width:46%;}
+    .layerB1_mobile{width:37%;}
+  }
+}
+
+/**/
+.allowMicDesktopBackground{ /*Don't need this on Android as it is done automatically*/
+  position: fixed; top:0; left:0; width:100vw; height:100vh; /*height:100vh causes a centering problem on mobiles*/
+  background-color: rgba(44, 139, 199, 0.5);
+  z-index: 3000; /* Watch the z-index of MAIN 999» See css_for_the_container_parent_html */
+                 /* Also watch the z-index of sliding-nav-menu-with-ceramic-buttons 1111 */
+  animation-name: theDarkeningBackgroundAppears; animation-duration: 0.7s; animation-fill-mode: forwards;
+  mix-blend-mode: multiply;
+  -webkit-backdrop-filter: grayscale(90%) ;
+  backdrop-filter: grayscale(90%);
+}
+.allowMicDesktopBackground:hover{ cursor: url("/user_interface/images/cursor/vibrant_cursor.png") 16 4,auto; }
+@keyframes theDarkeningBackgroundAppears { 0%{opacity:0;} 100%{opacity:1} }
+@keyframes theDarkeningBackgroundDisappears { 0%{opacity:1;} 100%{opacity:0} }
+
+.youMustAllowMicrophone{
+  z-index: 3333; /*main is 999, sliding nav is 1111, saveloadbox is 2222*/
+  position: fixed; min-width:330px; max-width:100vmin; height:90px; top:-100px; left:50vw; transform: translateX(-50%);
+  border-radius: 10px 10px 10px 10px;
+  background-color: white; border: 2px solid #ebf2fa;
+  font-size: 19px; color: #b0cdd1; font-weight: bold;
+  display: flex; justify-content: center;  align-items: center; padding: 10px;
+  animation-name: flashBlink; animation-duration: .6s; animation-iteration-count: infinite; animation-direction: alternate;
+  transition: margin-top 1.5s; transition-timing-function: ease;
+  box-shadow: rgba(255, 255, 255, 0.4) 0px 0px 12px 0px;
+}
+.letYouMustAllowMicrophoneDialogAppearMobile{margin-top:90px;}
+.letYouMustAllowMicrophoneDialogAppearDesktop{margin-top: calc(50vh + 50px);}
+.letYouMustAllowMicrophoneDialogDisappear{margin-top:-222px;}
+@keyframes flashBlink {  0%{ filter: contrast(1); } 45%{ filter: contrast(1); } 55%{ filter: contrast(1.25); } 100%{ filter: contrast(1.25); }  }
+
+/* _Glassmorphist background blur used for PLEASE DISCLOSE YOUR GENDER_ */
+.darkenTheWholeViewportClass{ /*Used by letTheIFrameTeachArabic() in js_for_app_initialization_in_parent*/
+  position: fixed;
+  z-index: 4000; /*Sliding navigation menu's z-index is 1100~1111*/
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(66, 91, 110, 0.7);
+  mix-blend-mode: multiply;
+  animation-name: fadeInAndBeClickable;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+  backdrop-filter: blur( 8px );                 /*------ Not supported by Firefox in 2021*/
+  -webkit-backdrop-filter: blur( 8px );         /*------ Not supported by Firefox in 2021*/
+}
+.gentlemenAndLadiesButtonClass{
+  box-shadow: 0px 0px 8px 0px white, 0px 0px 3px 0px white;
+  position: fixed;
+  background-color: white;
+  border-radius: 20px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 50%;
+  transition: all .3s;
+  z-index: 9990;
+}
+.gentlemenButtonClass{
+  transform: translate(-50%,-109%) scale(1);
+  animation-name: gentlemenSlideAnimation;
+  animation-duration: 1.8s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+.gentlemenButtonClass:hover{
+  transform: translate(-50%,-109%) scale(1.05);
+}
+.ladiesButtonClass{
+  transform: translate(-50%,9%) scale(1);
+  animation-name: ladiesSlideAnimation;
+  animation-duration: 1.8s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+.ladiesButtonClass:hover{
+  transform: translate(-50%,9%) scale(1.05);
+}
+@keyframes gentlemenSlideAnimation {
+  0%{ top: -50%; }
+  10%{ top: -50%; }
+  100%{ top: 50%; }
+}
+@keyframes ladiesSlideAnimation {
+  0%{ top: 150%; }
+  10%{ top: 150%; }
+  100%{ top: 50%; }
+}
+.bringGenderButtonToVerticalCenter{top: 50%; transform: translate(-50%,-50%) scale(1.15);}
+.fadeGenderButtonToZeroOpacity{opacity:0;}

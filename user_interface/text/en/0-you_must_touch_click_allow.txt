@@ -1,0 +1,4 @@
+﻿Touch here
+to play the game
+with device tilt
+(Choose <strong>[Allow]</strong>)

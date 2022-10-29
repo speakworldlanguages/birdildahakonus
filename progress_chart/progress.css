@@ -1,0 +1,61 @@
+nav:hover{ cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto; }
+.allUnitsInALevelContainer{ /*centered by main-flexbox*/
+  width:100vw; height: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  overflow-y: auto;
+  color: white; /* text color,,, in case text is added */
+}
+.allUnitsInALevelContainerDESKTOP{
+  margin-top: 150px;
+  margin-bottom: calc(43px + 5vmin); /* 5+18+5=33 See containerOfBilingualLongButtonDESKTOP in bilinguals.css */
+}
+.allUnitsInALevelContainerMOBILE{ margin-bottom: calc(80px + 5vmin); }
+@media (orientation:landscape){
+  .allUnitsInALevelContainerMOBILE{ margin-top: 0vh; }
+}
+@media (orientation:portrait){
+  .allUnitsInALevelContainerMOBILE{ margin-top: 15vh; }
+}
+
+.allLessonsInAUnitContainer{
+  min-width:200px; min-height: 80px;
+  background-color: #bcc9d3;
+  border-radius: 12px;
+  display: flex; justify-content: center; align-items: center;
+}
+
+.oneParticularLesson{
+  width:70px; height: 70px;
+  margin: 1.5vmin;
+  border-radius: 7px;
+  background-color: white;
+  display: flex; justify-content: center;  align-items: center;
+  transition: all 0.17s;
+  box-shadow: 0 1px 3px rgba(142,178,204,0.16), 0 1px 2px rgba(93,143,181,0.32);
+  border: 10px solid #f3f3f3; /*Close to WhiteSmoke*/
+}
+.oneParticularLesson img{
+  width:60px; height: 60px; pointer-events: none;
+}
+.oneParticularLesson:hover{
+  transform: scale(1.08);
+  box-shadow: 0 1px 5px rgba(220,239,248,0.16), 0 1px 4px rgba(93,143,181,0.32);
+}
+.oneParticularLesson:active{
+  transform: scale(0.8);
+}
+
+.thisLessonHasBeenViewedButNotCompleted{
+  border: 10px solid #ffffe4; /*Close to Ivory*/
+}
+
+.thisLessonHasBeenCompleted{
+  border: 10px solid #e4ffe4; /*Close to Honeydew*/
+}
+
+.eachWebp{
+  width:100%;
+  border-radius: 4px;
+  border: 6px solid white;
+  pointer-events: none;
+}

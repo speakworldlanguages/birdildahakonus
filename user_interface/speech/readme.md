@@ -1,0 +1,1 @@
+These audio files contain teacher's voice when he has to speak in user's native language to give instructions, guidance or to explain things.

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, minimum-scale=1.0"> <!-- For mobile devices -->
+    <link rel="icon" type="image/png" href="/user_interface/html_icon/animated_globe_icon_39.png" id="icon" sizes="32x32">
+
+    <title>💻 👷</title> <!-- Symbol &#128187; &#128119; -->
+
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_the_container_parent_html.css">
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="/information/information.css">
+
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*Memory card, userInterfaceLanguage, fetch headers, fonts*/</script>
+    <!-- ISSUE: js_for_all_iframed_lesson_htmls CHECKS IF thisIsTheParentWhichContainsAllIFramedLessons IN PARENT is "yes" -->
+    <!-- BUT HERE WE try to avoid js_for_all_iframed_lesson_htmls so direct linking to /about/index.html without the parent will be possible but that's not a big deal -->
+    <!-- IN CASE: js_for_all_iframed_lesson_htmls is enabled here, then REMEMBER THAT it will report whereAreWe..... = "lesson"; unless a new condition for about page is added -->
+    <script defer src="about.js">/*What to do here*/</script>
+    <!-- THE SLIDING NAV MENU IS HIDDEN with window load here and it is unhidden with window.onload in js_for_all_iframed_lesson_htmls -->
+
+    <!-- Uncomment the following to be able to use the browser console on mobile devices -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/2.5.0/eruda.min.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
+
+    <style>    .startWithNearZeroOpacity{opacity:0.05;}    </style>
+  </head>
+  <body>
+    <main style="z-index:0; filter:brightness(105%) saturate(.3);">
+    <!-- Provides background gradient. See css_for_the_container_parent_html.css -->
+    </main>
+
+
+    <div id="desktopOnly">
+      <!-- Elegant marble at bottom -->
+      <div style="position:fixed; left:50vw; transform: translateX(-50%) scale(0.75); top: 90.5vh;">
+        <svg version="1.1" id="noID" x="0px" y="0px" width="456.667px" height="68px" viewBox="0 0 456.667 68" enable-background="new 0 0 456.667 68" xml:space="preserve">
+          <path fill="#FFFFFF" d="M444.771,21c-9.966,0-14.341-9.17-13.132-21H27.028c1.209,11.83-3.167,21-13.132,21h-0.563v47h432V21	H444.771z"/>
+        </svg>
+      </div>
+
+      <div class="" style="position:fixed; left:50vw; transform: translateX(-50%); top: 95vh; width: 300vw; height: 5vh; background-color: white; box-shadow: 0px 0px 10px rgba(137,160,175,0.5);">
+      </div>
+      <!-- Go Back To Information -->
+      <div style="position:fixed; left:50vw; transform: translateX(-50%); top:88.9vh; min-width: 33vw; filter: drop-shadow(0 -0.5px 1px rgba(140, 178, 194,0.9)); border-radius:5px; padding:0.1vh;">
+        <a href="/information/index.html" target="_self" class="openAboutPageAnchor patua" style="position: relative;" draggable="false"><p id="goBackToInfoP" class="letterSpacingAnimation" style="">...</p></a>
+      </div>
+    </div>
+
+    <div id="mobileOnly">
+      <!-- About the app button -->
+      <!-- Even though the menu is hidden let's do event.stopPropagation(); and use it instead of parent.preventTouchConflictWithTheSlidingNavMenu(this); -->
+      <div class="flexCentering aboutPageButtonForMobiles startWithNearZeroOpacity niceFadeInFast" style="margin-top: 5vh;" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation(); parent.ayFreym.src='/information/index.html';">
+        <p id="goBackToInfoP">...</p>
+      </div>
+    </div>
+
+    <script>
+      const desktopDisplay = document.getElementById('desktopOnly');
+      const mobileDisplay = document.getElementById('mobileOnly');
+      window.addEventListener('DOMContentLoaded', function(){
+        if (deviceDetector.isMobile) {
+          desktopDisplay.parentNode.removeChild(desktopDisplay);
+        } else {
+          mobileDisplay.parentNode.removeChild(mobileDisplay);
+        }
+      }, { once: true });
+      window.addEventListener('load', function(){
+        parent.topContainerDivOfTheSlidingNavMenuForMobiles.style.visibility = "hidden"; // visibility hidden allows interaction with underlying elements while opacity 0 does not
+      }, { once: true });
+      //// function bringTheNavMenuBack() {
+      ////   parent.topContainerDivOfTheSlidingNavMenuForMobiles.style.visibility = "visible"; // Move this into js_for_all_iframed_lesson_htmls window onload
+      //// }
+    </script>
+
+
+    <!-- SHOWN IN ENGLISH regardless of userInterfaceLanguage -->
+    <div class="startWithNearZeroOpacity niceFadeInFastForAboutScreen" style="height: 87vh; position:fixed; left:50vw; top: 2vh; transform:translate(-50%,0%); background-color: rgba(188,215,232,0.2); border:3px solid rgba(255,255,255,0.2); border-radius:10px;">
+      <div class="" style="overflow-y:auto; line-height:normal; display: flex; flex-direction: column; align-items: center; width:96.5vw; height: 85.8vh; margin-bottom:0.1vh;">
+
+        <!-- SOFTWARE CREDITS -->
+        <p class="explainer" style="">
+          <span style="white-space:nowrap;">The following</span> <span style="white-space:nowrap;">open source javascript libraries</span> <span style="white-space:nowrap;">have been utilized</span> <span style="white-space:nowrap;">in the development of</span> <span style="white-space:nowrap;">this web application</span>
+        </p>
+        <div class="linksContainer" style="">
+          <a href="https://github.com/TalAter/annyang" target="_blank"> &lsaquo; annyang &rsaquo; by Tal Ater</a> <br>
+          <a href="https://github.com/faisalman/ua-parser-js" target="_blank"> &lsaquo; UAParser &rsaquo; by Faisal Salman</a> <br>
+          <a href="https://github.com/PoeHaH/devicedetector" target="_blank"> &lsaquo; devicedetector &rsaquo; by Maarten Belmans</a> <br>
+          <a href="https://github.com/goldfire/howler.js" target="_blank"> &lsaquo; howler &rsaquo; by James Simpson</a> <br>
+          <a href="https://github.com/katspaugh/wavesurfer.js" target="_blank"> &lsaquo; wavesurfer &rsaquo; by katspaugh</a> <br>
+          <a href="https://github.com/liriliri/eruda" target="_blank"> &lsaquo; eruda &rsaquo; by liriliri</a> <br>
+        </div>
+
+        <!-- VECTOR ART CREDITS -->
+        <p class="explainer" style="">
+          <span style="white-space:nowrap;">Some of the illustrations</span> <span style="white-space:nowrap;">found on the following sources</span> <span style="white-space:nowrap;">have been used as</span> <span style="white-space:nowrap;">groundwork for derivative art</span>
+        </p>
+        <div class="linksContainer" style="line-height:135%; letter-spacing:1.7px;">
+          <a href="https://icooon-mono.com/" target="_blank">https://icooon-mono.com/</a> <br>
+          <a href="http://pictogram2.com/" target="_blank">http://pictogram2.com/</a> <br>
+          <a href="https://kage-design.com/" target="_blank">https://kage-design.com/</a> <br>
+        </div>
+
+        <!-- PHOTO CREDITS -->
+        <p class="explainer" style="">
+          Photos that were not produced in the house were (mostly) found on the following sources and heavily processed/color-mastered
+        </p>
+        <div class="linksContainer" style="line-height:135%; letter-spacing:1.7px;">
+          <a href="#" target="_self">https://unsplash.com/</a>  <br>
+          <a href="#" target="_self">https://www.pexels.com/</a>  <br>
+          <a href="#" target="_self">https://pixabay.com/</a>  <br>
+          <a href="#" target="_self">https://pxhere.com/</a>  <br>
+          <a href="#" target="_self">https://www.piqsels.com/</a>  <br>
+          <a href="#" target="_self">https://www.pxfuel.com/</a>  <br>
+          <a href="#" target="_self">https://www.pikrepo.com/</a>  <br>
+          <a href="#" target="_self">https://www.publicdomainpictures.net/</a>  <br>
+          <a href="#" target="_self">https://www.maxpixel.net/</a>  <br>
+          <a href="#" target="_self">https://www.uihere.com/</a>  <br>
+          <a href="#" target="_self">https://pixnio.com/</a>  <br>
+          <a href="#" target="_self">https://pikist.com/</a>  <br>
+          <a href="#" target="_self">https://pikwizard.com</a>  <br>
+        </div>
+
+        <!-- VIDEO CREDITS -->
+        <p class="explainer" style="">
+          Some videos have been sourced from the following sites and were color-mastered before being used in the app
+        </p>
+        <div class="linksContainer" style="line-height:135%; letter-spacing:1.7px;">
+          <a href="#" target="_self">pexels.com</a>  <br>
+          <a href="#" target="_self">mixkit.co</a>   <br>
+          <a href="#" target="_self">videezy.com</a> <br>
+        </div>
+
+        <!-- AUDIO CREDITS -->
+        <p class="explainer" style="">
+          <span style="white-space:nowrap;">Special thanks</span> <span style="white-space:nowrap;">to these freesound.org users</span> <span style="white-space:nowrap;">who provided their audio recordings</span> <span style="white-space:nowrap;">to global public benefit</span>
+        </p>
+        <div class="linksContainer" style="line-height:115%; letter-spacing:1px;">
+
+          <!-- 582905 -->
+          <a target="_blank" href="https://freesound.org/people/ironcross32/"> &lsaquo;ironcross32&rsaquo; </a>
+
+          <!-- 348878 -->
+          <a target="_blank" href="https://freesound.org/people/cabled_mess/"> &lsaquo;Sebastian (cabled_mess)&rsaquo; </a>
+
+          <!-- 339343 CC Attribution -->
+          <a target="_blank" href="https://freesound.org/people/newagesoup/"> &lsaquo;newagesoup&rsaquo; </a>
+
+          <!-- 322897 & 342758 & 320655 & 320657 -->
+          <a target="_blank" href="https://freesound.org/people/rhodesmas/"> &lsaquo;Andy Rhode&rsaquo; </a>
+
+          <!-- 504790 & 504859 -->
+          <a target="_blank" href="https://freesound.org/people/Joao_Janz/"> &lsaquo;Joao Janz&rsaquo; </a>
+
+          <!-- 330046 & 330055 -->
+          <a target="_blank" href="https://freesound.org/people/PaulMorek/"> &lsaquo;Paul Morek&rsaquo; </a>
+
+          <!-- 387218 CC0 freesound username: SpiceProgram SKIP DUE TO GenderIdentityDisorder -->
+
+          <!-- 256112 -->
+          <a target="_blank" href="https://freesound.org/people/nckn/"> &lsaquo;nckn&rsaquo; </a>
+
+          <!-- 171697 -->
+          <a target="_blank" href="https://freesound.org/people/NenadSimic/"> &lsaquo;NenadSimic&rsaquo; </a>
+
+          <!-- 171670 171671 -->
+          <a target="_blank" href="https://freesound.org/people/Leszek_Szary/"> &lsaquo;Leszek Szary&rsaquo; </a>
+
+          <!-- 487612 -->
+          <a target="_blank" href="https://freesound.org/people/Bpianoholic/"> &lsaquo;Bpianoholic&rsaquo; </a>
+
+          <!-- 156295 CC0 freesound username: dayvonjersen SKIP DUE TO vulgar language -->
+
+          <!-- 184297 -->
+          <a target="_blank" href="https://freesound.org/people/Suz_Soundcreations/"> &lsaquo;Suzanne&rsaquo; </a>
+
+          <!-- 235720 -->
+          <a target="_blank" href="https://freesound.org/people/speedygonzo/"> &lsaquo;speedygonzo&rsaquo; </a>
+
+          <!-- 145719 -->
+          <a target="_blank" href="https://freesound.org/people/Zabuhailo/"> &lsaquo;Zabuhailo&rsaquo; </a>
+
+          <!-- 343764 & 271336 & 416710 & 398808 -->
+          <a target="_blank" href="https://freesound.org/people/InspectorJ/"> &lsaquo;Jonathan Shaw&rsaquo; </a>
+
+          <!-- 571568 -->
+          <a target="_blank" href="https://freesound.org/people/iainmccurdy/"> &lsaquo;iainmccurdy&rsaquo; </a>
+
+          <!-- 412525 -->
+          <a target="_blank" href="https://freesound.org/people/byronabadia/"> &lsaquo;Byron Abadia&rsaquo; </a>
+
+          <!-- 221488 -->
+          <a target="_blank" href="https://freesound.org/people/LloydEvans09/"> &lsaquo;LloydEvans09&rsaquo; </a>
+
+          <!-- 320165 -->
+          <a target="_blank" href="https://freesound.org/people/arnaud%20coutancier/"> &lsaquo;Arnaud Coutancier&rsaquo; </a>
+
+          <!-- 174777 -->
+          <a target="_blank" href="https://freesound.org/people/yottasounds/"> &lsaquo;Michael Beck&rsaquo; </a>
+
+          <!-- 444272 -->
+          <a target="_self" href="#"> &lsaquo;Çağan Çelik&rsaquo; </a>
+
+          <!-- 256493 -->
+          <a target="_blank" href="https://freesound.org/people/aldeainvisible/"> &lsaquo;aldeainvisible&rsaquo; </a>
+
+          <!-- 417702 -->
+          <a target="_blank" href="https://freesound.org/people/ganapataye/"> &lsaquo;ganapataye&rsaquo; </a>
+
+          <!-- 495650 CC0 Real name: Mattias Michael Lahoud ,,, freesound username: MATRIXXX_ ,,, SKIP DUE TO unacceptable craziness -->
+
+          <!-- 107785 CC0 Real name: Hans-Christoph Steiner ,,, freesound username: hans ,,, SKIP DUE TO uncertainty -->
+
+          <!-- 202145 CC0 Real name: Linus Agren ,,, freesound username: junkfood2121 ,,, SKIP DUE TO uploading shameful sounds-->
+
+          <!-- 185416 CC0 -->
+          <a target="_blank" href="https://freesound.org/people/unfa/"> &lsaquo;Tobiasz Karoń&rsaquo; </a>
+
+          <!-- 495813 -->
+          <a target="_blank" href="https://freesound.org/people/mealwyrm/"> &lsaquo;mealwyrm&rsaquo; </a>
+
+          <!-- 270404 -->
+          <a target="_blank" href="https://freesound.org/people/LittleRobotSoundFactory/"> &lsaquo;Morten&rsaquo; </a>
+
+          <!-- 397353 CC0 Real name: Unknown ,,, freesound username: plasterbrain SKIP DUE TO GenderIdentityDisorder -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!-- <a target="_blank" href="https://freesound.org/people/14Douderova_Adela/"> &lsaquo;14Douderova_Adela&rsaquo; </a> -->
+          <!-- 420000 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Aiwha/"> &lsaquo;Aiwha&rsaquo; </a> -->
+          <!-- 417452 189183 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/angelkunev/"> &lsaquo;angelkunev&rsaquo; </a> -->
+          <!-- 519065 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Anton/"> &lsaquo;Anton Woldhek&rsaquo; </a> -->
+          <!-- 7972 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/BeeProductive/"> &lsaquo;BeeProductive&rsaquo; </a> -->
+          <!-- 387209 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Benboncan/"> &lsaquo;Benboncan&rsaquo; </a> -->
+          <!-- 67884 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/BenjaminNelan/"> &lsaquo;BenjaminNelan&rsaquo; </a> -->
+          <!-- 321082 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/bruce965/"> &lsaquo;bruce965&rsaquo; </a> -->
+          <!-- 464108 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/bwg2020/"> &lsaquo;bwg2020&rsaquo; </a> -->
+          <!-- 456161 -->
+
+
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Caitlin_100/"> &lsaquo;Caitlin_100&rsaquo; </a> -->
+          <!-- 365552 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/crcavol/"> &lsaquo;crcavol&rsaquo; </a> -->
+          <!-- 154633 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/csmag/"> &lsaquo;csmag&rsaquo; </a> -->
+          <!-- 203604 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/derjuli/"> &lsaquo;derjuli&rsaquo; </a> -->
+          <!-- 274376 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/dersuperanton/"> &lsaquo;dersuperanton&rsaquo; </a> -->
+          <!-- 435847 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/debsound/"> &lsaquo;debsound&rsaquo; </a> -->
+          <!-- 320549 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/digifishmusic/"> &lsaquo;digifishmusic&rsaquo; </a> -->
+          <!-- 54190 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/dland/"> &lsaquo;dland&rsaquo; </a> -->
+          <!-- 320181 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Domar1979/"> &lsaquo;Domar1979&rsaquo; </a> -->
+          <!-- 207214 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/EminYILDIRIM/"> &lsaquo;Emin Yıldırım&rsaquo; </a> -->
+          <!-- 536090 536092 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/eric5335/"> &lsaquo;eric5335&rsaquo; </a> -->
+          <!-- 53380 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/FoolBoyMedia/"> &lsaquo;FoolBoyMedia&rsaquo; </a> -->
+          <!-- 352666 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/ftpalad/"> &lsaquo;ftpalad&rsaquo; </a> -->
+          <!-- 119918 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/FunWithSound/"> &lsaquo;FunWithSound&rsaquo; </a> -->
+          <!-- 456965 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Glaneur%20de%20sons/"> &lsaquo;Glaneur de sons&rsaquo; </a> -->
+          <!-- 104945 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Godowan/"> &lsaquo;Godowan&rsaquo; </a> -->
+          <!-- 235264 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/hawabaz/"> &lsaquo;hawabaz&rsaquo; </a> -->
+          <!-- 91358 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/HighPeakEmma/"> &lsaquo;HighPeakEmma&rsaquo; </a> -->
+          <!-- 520772 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/hinzebeat/"> &lsaquo;hinzebeat&rsaquo; </a> -->
+          <!-- 275585 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Huggy13ear/"> &lsaquo;Huggy13ear&rsaquo; </a> -->
+          <!-- 138979 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/huubjeroen/"> &lsaquo;huubjeroen&rsaquo; </a> -->
+          <!-- 113698 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/JFRecords/"> &lsaquo;JFRecords&rsaquo; </a> -->
+          <!-- 420506 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Julien%20Nicolas/"> &lsaquo;Julien Nicolas&rsaquo; </a> -->
+          <!-- 133801 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/junggle/"> &lsaquo;junggle&rsaquo; </a> -->
+          <!-- 30341 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/kangaroovindaloo/"> &lsaquo;kangaroovindaloo&rsaquo; </a> -->
+          <!-- 205966 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/klankbeeld/"> &lsaquo;klankbeeld&rsaquo; </a> -->
+          <!-- 131032 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/KuoShu/"> &lsaquo;KuoShu&rsaquo; </a> -->
+          <!-- 345137 345173 345179 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Leoctiurs/"> &lsaquo;Leoctiurs&rsaquo; </a> -->
+          <!-- 428185 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Lightnessko/"> &lsaquo;Lightnessko&rsaquo; </a> -->
+          <!-- 390324 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/LittleRainySeasons/"> &lsaquo;LittleRainySeasons&rsaquo; </a> -->
+          <!-- 335908 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/musita182/"> &lsaquo;musita182&rsaquo; </a> -->
+          <!-- 261267 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Nox_Sound/"> &lsaquo;Nox_Sound&rsaquo; </a> -->
+          <!-- 550338 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/odditonic/"> &lsaquo;odditonic&rsaquo; </a> -->
+          <!-- 194808 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/omgbong/"> &lsaquo;omgbong&rsaquo; </a> -->
+          <!-- 411596 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/peridactyloptrix/"> &lsaquo;peridactyloptrix&rsaquo; </a> -->
+          <!-- 196094 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/pinkinblue/"> &lsaquo;pinkinblue&rsaquo; </a> -->
+          <!-- 425971 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/PrimeJunt/"> &lsaquo;PrimeJunt&rsaquo; </a> -->
+          <!-- 135629 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/promete/"> &lsaquo;promete&rsaquo; </a> -->
+          <!-- 60143 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Q.K./"> &lsaquo;Q.K.&rsaquo; </a> -->
+          <!-- 56270 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Razzvio/"> &lsaquo;Razzvio&rsaquo; </a> -->
+          <!-- 79146 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Refrain/"> &lsaquo;Refrain&rsaquo; </a> -->
+          <!-- 265538 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/reinsamba/"> &lsaquo;reinsamba&rsaquo; </a> -->
+          <!-- 35631 33827 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/rivernile7/"> &lsaquo;rivernile7&rsaquo; </a> -->
+          <!-- 234244 249573 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/RutgerMuller/"> &lsaquo;RutgerMuller&rsaquo; </a> -->
+          <!-- 50702 50912 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Sandermotions/"> &lsaquo;Sandermotions&rsaquo; </a> -->
+          <!-- 277021 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/ScreamStudio/"> &lsaquo;ScreamStudio&rsaquo; </a> -->
+          <!-- 441593 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Sethroph/"> &lsaquo;Sethroph&rsaquo; </a> -->
+          <!-- 334210 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Slave2theLight/"> &lsaquo;Slave2theLight&rsaquo; </a> -->
+          <!-- 157121 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/soundscalpel.com/"> &lsaquo;soundscalpel.com&rsaquo; </a> -->
+          <!-- 110393 -->
+
+
+          <!-- <a target="_blank" href="https://freesound.org/people/steinhyrningur/"> &lsaquo;steinhyrningur&rsaquo; </a> -->
+          <!-- 466864 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Stevious42/"> &lsaquo;Stevious42&rsaquo; </a> -->
+          <!-- 259641 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/straget/"> &lsaquo;straget&rsaquo; </a> -->
+          <!-- 408741 405423 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/StrangeAcoustics/"> &lsaquo;StrangeAcoustics&rsaquo; </a> -->
+          <!-- 346106 -->
+
+          <!-- <a target="_blank" href="http://taira-komori.jpn.org/freesounden.html"> &lsaquo;Taira Komori&rsaquo; </a> -->
+          <!-- 212739 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Tetrisrocker/"> &lsaquo;Tetrisrocker&rsaquo; </a> -->
+          <!-- 458627 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/THE_bizniss/"> &lsaquo;THE_bizniss&rsaquo; </a> -->
+          <!-- 53269 53273 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Timmeh515/"> &lsaquo;Timmeh515&rsaquo; </a> -->
+          <!-- 413293 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/TinyJiro/"> &lsaquo;TinyJiro&rsaquo; </a> -->
+          <!-- 96891 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/Traveler/"> &lsaquo;Traveler&rsaquo; </a> -->
+          <!-- 16064 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/vonfleisch/"> &lsaquo;vonfleisch&rsaquo; </a> -->
+          <!-- 196699 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/WeeJee_vdH/"> &lsaquo;WeeJee_vdH&rsaquo; </a> -->
+          <!-- 267711 -->
+
+          <!-- <a target="_blank" href="https://freesound.org/people/xndrive/"> &lsaquo;xndrive&rsaquo; </a> -->
+          <!-- 428158 -->
+
+        </div>
+
+        <!-- YOUTUBE -->
+        <p class="explainer" style="">
+          <span style="white-space:nowrap;">If you are interested in</span> <span style="white-space:nowrap;">software development</span>
+          <span style="white-space:nowrap;">you can follow our videos</span> <span style="white-space:nowrap;">about the making of</span>
+          <span style="white-space:nowrap;">this PWA</span> <span style="white-space:nowrap;">(Progressive Web Application)</span>
+        </p>
+        <div class="linksContainer" style="line-height:135%; letter-spacing:1.7px;">
+          <a href="https://youtube.com/channel/UCvfQCf4OpjIOwjVTzldSpew" target="_blank">Manheart Earthman's Art&Software Design Channel on YouTube</a> <br>
+        </div>
+
+        <!-- https://github.com/speakworldlanguages -->
+        <p class="explainer" style="">
+          <span style="white-space:nowrap;">If you have the skill and time</span> <span style="white-space:nowrap;">to translate the user interface</span>
+          <span style="white-space:nowrap;">into your local language</span> <span style="white-space:nowrap;">you can visit</span> <span style="white-space:nowrap;">our organization page on GitHub</span> <span style="white-space:nowrap;">and let us know.</span>
+          <br>You can also report bugs, mistakes, errors etc <span style="white-space:nowrap;">about the software.</span>
+        </p>
+        <div class="linksContainer" style="line-height:135%; letter-spacing:1.7px;">
+          <a href="https://github.com/speakworldlanguages" target="_blank">Speak World Languages on GitHub</a> <br>
+        </div>
+
+        &nbsp;
+      </div>
+      &nbsp;
+    </div>
+  </body>
+</html>

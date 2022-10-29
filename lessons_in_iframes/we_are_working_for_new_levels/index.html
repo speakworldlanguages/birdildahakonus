@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- This will be parented by a container HTML -->
+    <title>🏁 🏆</title> <!-- Symbol &#127937;-->
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex" />
+
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_the_container_parent_html.css"> <!-- Get background gradient. -->
+    <link rel="stylesheet" href="/css_reusables/css_for_proceed_buttons.css">
+
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*Get fonts except kanit*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
+    <script defer src="/js_reusables/js_for_proceed_buttons.js">/*Set hover|touchstart sounds*/</script>
+    <!--MOVED HEADERS INTO js_for_every_single_html.js <script defer src="../../js_reusables/js_for_fetch_api_character_encoding.js">/*Display non-english characters correctly*/</script> -->
+
+    <!-- Uncomment to use the console on mobiles -->
+    <!-- <script src="/third_party_js/eruda.min.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
+
+    <style>
+      .zoomInForLastNoticeAtTheEnd{animation-name: niceZoom; animation-duration: 45s; animation-fill-mode: forwards; animation-timing-function: ease-out;}
+      @keyframes niceZoom {
+        0%{transform: scale(1); /*font-size:200%; letter-spacing: .1vmin;*/}
+      100%{transform: scale(1.25); /*font-size:300%; letter-spacing: 1vmin;*/}
+      }
+      .zoomInForLastNoticeAtTheEndPhones{animation-name: niceZoomPhones; animation-duration: 15s; animation-fill-mode: forwards; animation-timing-function: ease-out;}
+      @keyframes niceZoomPhones {
+        0%{transform: scale(0.5); /*font-size:200%; letter-spacing: .1vmin;*/}
+      100%{transform: scale(0.9); /*font-size:300%; letter-spacing: 1vmin;*/}
+      }
+      .latinTextFont{font-family:'kanit';} /*kanit is loaded here locally,,, unlike other fonts in js_for_every_single_html*/
+      /*All buttons (parent&frame) get the same font (patua) due to the setting in js_for_every_single_html*/
+      main{filter:brightness(107%) saturate(37%) hue-rotate(9deg);}
+      div:hover{cursor: url("/user_interface/images/cursor/button_cursor.png") 16 4,auto;}
+    </style>
+    <script>
+      window.addEventListener('DOMContentLoaded', function(){
+        /**/
+        if (needLatinFonts) {
+          /*GET FONT*/
+          let kanitFont;
+          kanitFont = new FontFace('kanit', "url(/user_interface/fonts/Kanit-ExtraLight.ttf)");
+          kanitFont.load().then(function(loaded_face) {
+              document.fonts.add(loaded_face); // REMEMBER: it is frame level only!
+          }).catch(function(error) {    console.error("Unable to get the font: " + error);  });
+          /*SET FONT*/
+          document.getElementById('messageAfterTheLastLessonP').classList.add("latinTextFont");
+        }
+
+
+        // REMEMBER: Wait for “userInterfaceLanguage” variable to be ready. See js_for_every_single_html.js
+        // ------- Fill the divs with text depending on the user interface language --------
+        const filePathForMessageText = "/user_interface/text/"+userInterfaceLanguage+"/after_last_lesson_message.txt";
+        const filePathForButtonText = "/user_interface/text/"+userInterfaceLanguage+"/after_last_lesson_button.txt";
+        fetch(filePathForMessageText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.getElementById('messageAfterTheLastLessonP').innerHTML = contentOfTheTxtFile; });
+        fetch(filePathForButtonText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.getElementById('goToInfoPageButton').innerHTML = contentOfTheTxtFile; });
+
+
+        if (deviceDetector.device == "phone") {
+          document.getElementById('particularZoomOnPhonesA').classList.add("zoomInForLastNoticeAtTheEndPhones");
+          document.getElementById('particularZoomOnPhonesB').classList.add("zoomInForLastNoticeAtTheEnd");
+        }
+        else { // tablet & desktop
+          document.getElementById('thisContainsEverything').classList.add("zoomInForLastNoticeAtTheEnd");
+        }
+
+        const touchOrClick = document.getElementsByTagName('ADDRESS')[0];
+
+        if (deviceDetector.isMobile) {
+          // Solved touch conflict with stopPropagation instead of touchOrClick.addEventListener("touchstart",function () { parent.preventTouchConflictWithTheSlidingNavMenu(touchOrClick); }); // Exists in js_for_the_sliding_navigation_menu
+          touchOrClick.addEventListener("touchend",navigateToInformation);
+        } else {
+          touchOrClick.addEventListener("mouseup",navigateToInformation);
+        }
+
+      }, { once: true });
+
+      function navigateToInformation() {
+        setTimeout(function () {          parent.ayFreym.src = "/information/index.html";        }, 500);
+      }
+    </script>
+  </head>
+
+  <body style="background-color: #adbbc4;"> <!-- Main palette color -->
+    <!-- js_for_all_iframed_lesson_htmls will handle preloader -->
+    <script>
+      /*Remove PAUSE BUTTON from nav menu ,, watch the timing in js_for_all_iframed_lesson_htmls.js otherwise it will be added back*/
+      window.addEventListener("load",function () {
+        setTimeout(function () {
+          if (parent.containerDivOfTheNavigationMenu.contains(parent.clickToPauseTheAppDiv)) { // Used to be in progress.js
+            parent.containerDivOfTheNavigationMenu.removeChild(parent.clickToPauseTheAppDiv); // Should we use display none instead???
+          }
+        },250); // works
+      }, { once: true })
+    </script>
+
+    <main> <!-- See what css file is giving style to main,,, As of August 2022 it is set to css_for_the_container_parent_html -->
+    </main>
+
+    <div id="thisContainsEverything" class="" style="position:fixed; left:0; top:0; width:100vw; height:100vh; overflow:hidden; display:flex; flex-direction: column; align-items: center; justify-content: center; z-index:1111;">
+      <div id="particularZoomOnPhonesA">
+        <p id="messageAfterTheLastLessonP" class="" style="color:#476175; font-size:170%; letter-spacing: -0.1vmin; white-space: pre;">...</p>
+      </div>
+      <img id="particularZoomOnPhonesB" src="we_are_working.webp" alt="" style="height:38vh; pointer-events:none;" draggable="false">
+      <address id="goToInfoPageButton" style="" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">...</address>
+    </div>
+
+  </body>
+</html>

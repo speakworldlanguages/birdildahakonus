@@ -1,0 +1,3 @@
+﻿音声認識が機能していません
+それはWindowsまたはAndroidのChromeなら使用できます
+|WindowsまたはAndroidでChromeを使ってみませんか

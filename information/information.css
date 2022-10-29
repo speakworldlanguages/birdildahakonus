@@ -1,0 +1,223 @@
+.photoContainerOnDesktops{position: fixed; left: 50vw; top:3vh; transform: translate(-50%,0vh); min-height: 44vh; overflow:hidden; }
+.photoWebpOnDesktops{height: 44vh; width: 44vh; }
+.authorsNameOnDesktops{font-size: 2.2vh; line-height: 3vh; font-weight: bold; padding-bottom: 12px;}
+.authorsNameOnTablets{font-size: 3vmin; line-height: 4vmin; font-weight: bold; padding-bottom: 9px;}
+.authorsNameOnPhones{font-size: 3.6vmin; line-height: 4.4vmin; font-weight: bold; padding-bottom: 7px;}
+@media (max-width: 390px){  .authorsNameOnPhones{letter-spacing: -0.1vmin;}  }
+.monthlyButtonOnPhones:focus {outline: none; user-select: none;} .monthlyButtonOnPhones:active {outline: none; user-select: none;}
+.monthlyButtonOnTablets:focus {outline: none; user-select: none;} .monthlyButtonOnTablets:active {outline: none; user-select: none;}
+@media (orientation: portrait) {
+  /* !!! TABLET TABLET TABLET TABLET TABLET TABLET TABLET !!! */
+  .photoContainerOnTablets{position: fixed; left: 50vw; top:2.15vh; transform: translate(-50%,0%); min-height: 42vh; overflow:hidden; }
+  .photoWebpOnTablets{height: 42vh; width: 42vh; }
+  .monthlyButtonOnTablets{position:fixed; left:50vw; transform: translate(-50%,0%); top:53.9vh;}
+  .buttonSizeOnTablets{min-width:85vw; min-height:11vmin; max-width:90vw; margin:0px; padding:.8vmin;}
+  /*.onetimeButtonOnTablets{position:fixed; left:50vw; transform: translate(-50%,0%); top:63vh; min-width:85vw; min-height:3vh; max-width:90vw; margin:0px; padding:.8vmin;}*/
+  .bigNavigationArrowToViewLicenseOnTabletsPosition{position:fixed; left:50vw; transform: translate(-50%,0%); top:71.5vh;}
+  .bigNavigationArrowToViewLicenseOnTabletsSize{width:35vh;}
+  .bigNavigationArrowToViewLicenseOnTabletsFontSize{font-size: 2.2vh; width: 34vh;}
+  .bigNavigationReturnArrowOnTablets{top:79vh; position:fixed; left:50vw; transform: translateX(-50%);}
+  .financeFontSizeOnTablets{font-size:2.1vh;}
+  .infoAboutNameOfLicenseOnTablets{position:fixed; left:50vw; transform: translateX(-50%); top:63.4vh; mix-blend-mode:normal; width:90vw;}
+  .licenseItselfOnTablets{position:fixed; top:5vmin; left:50vw; transform: translate(-50%,0%); min-width:200px; min-height:150px; max-height:75vh;}
+  /* !!! PHONE PHONE PHONE PHONE PHONE PHONE PHONE PHONE !!! */
+  .photoContainerOnPhones{position: fixed; left: 50vw; top:2.15vh; transform: translate(-50%,0%); min-height: 40vh; overflow:hidden; }
+  .photoWebpOnPhones{height: 40vh; width: 40vh; }
+  .financeFontSizeOnPhones{font-size:14px;}
+  .monthlyButtonOnPhones{position:fixed; left:50vw; transform: translate(-50%,0%); top:52.5vh;}
+  .buttonSizeOnPhones{min-width:94vw; min-height:15vmin; max-width:95vw; margin:0px; padding:.7vmin;}
+  /*.onetimeButtonOnPhones{position:fixed; left:50vw; transform: translate(-50%,0%); top:62vh; min-width:94vw; min-height:2.5vh; max-width:95vw; margin:0px; padding:.7vmin;}*/
+  .infoAboutNameOfLicenseOnPhones{position:fixed; left:50vw; transform: translateX(-50%); top:64vh; mix-blend-mode:normal; width:99vw;}
+  .bigNavigationArrowToViewLicenseOnPhonesPosition{position:fixed; left:50vw; transform: translate(-50%,-10%) scale(0.7); top:73.3vh;}
+  .bigNavigationReturnArrowOnPhones{top:85vh; position:fixed; left:50vw; transform: translateX(-50%) scale(0.7);}
+  .licenseItselfOnPhones{position:fixed; top:5vmin; left:50vw; transform: translate(-50%,0%); min-width:100px; min-height:70px; max-height:82vh;}
+  /*VERY TALL SCREENS*/
+  @media (max-aspect-ratio: 13/20){
+    .monthlyButtonOnPhones{transform: translate(-50%,15%);}
+    .monthlyButtonOnTablets{transform: translate(-50%,15%);}
+  }
+}
+:root {
+  --fromRight: 29.3vw;
+}
+@media (orientation: landscape) {
+  /* !!! TABLET TABLET TABLET TABLET TABLET TABLET TABLET !!! */
+  .photoContainerOnTablets{position: fixed; left: 3.2vw; top:3.7vh; transform: translate(0%,0%); min-height: 60vmin; overflow:hidden;}
+  .photoWebpOnTablets{height: 58vmin; width: 58vmin; }
+  .monthlyButtonOnTablets{position:fixed; right:var(--fromRight); transform: translate(50%,0%); top:15vh;}
+  .buttonSizeOnTablets{min-width:53vw; min-height:11vmin; max-width:55vw; margin:0px; padding:.8vmin;}
+  /*.onetimeButtonOnTablets{position:fixed; right:30.7vw; transform: translate(50%,0%); top:35vh; min-width:53vw; min-height:3vh; max-width:55vw; margin:0px; padding:.8vmin;}*/
+  .bigNavigationArrowToViewLicenseOnTabletsPosition{position:fixed; right:var(--fromRight); transform: translate(50%,0%); top:56vh;}
+  .bigNavigationArrowToViewLicenseOnTabletsSize{width:55vh;}
+  .bigNavigationArrowToViewLicenseOnTabletsFontSize{font-size: 3.5vh; width: 54vh;}
+  .bigNavigationReturnArrowOnTablets{top:81vh; position:fixed; left:50vw; transform: translateX(-50%) scale(0.9);}
+  .financeFontSizeOnTablets{font-size:4vh;}
+  .infoAboutNameOfLicenseOnTablets{position:fixed; right:var(--fromRight); transform: translateX(50%); top:38.5vh; mix-blend-mode:normal; min-width:53vw; max-width:55vw}
+  .licenseItselfOnTablets{position:fixed; top:4.9vmin; left:50vw; transform: translate(-50%,0%); min-width:200px; min-height:150px; max-height:74vh;}
+  /* !!! PHONE PHONE PHONE PHONE PHONE PHONE PHONE PHONE !!! */
+  .photoContainerOnPhones{position: fixed; left: 4vw; top:3vh; transform: translate(0%,0%); min-height: 64vmin; overflow:hidden;}
+  .photoWebpOnPhones{height: 61vmin; width: 61vmin; }
+  .financeFontSizeOnPhones{font-size:14px;}
+  .monthlyButtonOnPhones{position:fixed; right:30vw; transform: translate(50%,0%); top:13.3vh;}
+  .buttonSizeOnPhones{min-width:43vw; min-height:12vmin; max-width:52vw; margin:0px; padding:.8vmin;}
+  /*.onetimeButtonOnPhones{position:fixed; right:30vw; transform: translate(50%,0%); top:25vh; min-width:43vw; min-height:2.5vh; max-width:49vw; margin:0px; padding:.8vmin;}*/
+  .infoAboutNameOfLicenseOnPhones{position:fixed; right:30vw; transform: translateX(50%); top:34vh; mix-blend-mode:normal; width:53vw;}
+  .bigNavigationArrowToViewLicenseOnPhonesPosition{position:fixed; right:30vw; transform: translate(50%,0%) scale(1); top:48.5vh;}
+  .bigNavigationReturnArrowOnPhones{top:80vh; position:fixed; left:50vw; transform: translateX(-50%) scale(0.9);}
+  .licenseItselfOnPhones{position:fixed; top:5vmin; left:50vw; transform: translate(-50%,0%); min-width:100px; min-height:70px; max-height:71vh;}
+}
+.animateZoomPhoto{animation-name: zoomInVerySlowly; animation-delay: 1s; animation-duration: 7s; animation-fill-mode: forwards;}
+@keyframes zoomInVerySlowly {
+  from {transform: translateY(0%) scale(1) ;}
+  to {transform: translateY(7%) scale(1.2);}
+}
+
+.hoverableAndClickableChoice{ transform: scale(1); transition: transform 0.2s; background:linear-gradient(270deg, #fe434c 0%, #7badc2 64%, #2fdaff 100%); color: white; margin:0px; padding:6px; border-radius:10px; border: .3vmin solid white; cursor:pointer;}
+.flexCentering{display: flex; justify-content: center; align-items: center;}
+.hoverableAndClickableChoice:hover{ transform: scale(1.01); filter: hue-rotate(2deg); text-shadow: 0px 0px 3px white; box-shadow: 0px 0px 6px white; border: .3vmin solid white;}
+.hoverableAndClickableChoice:active{transform: scale(0.85); filter: brightness(1.4); outline: none; user-select: none;}
+.hoverableAndClickableChoice:focus{outline: none; user-select: none;}
+
+.blinkAnimationThreePhased{animation-name: threePhases; animation-duration: 2s; animation-delay: 3s; animation-iteration-count: infinite;}
+@keyframes threePhases {
+  0%{filter: brightness(1.05);}
+  32%{filter: brightness(1.05);}
+  33%{filter: brightness(1.15);}
+  65%{filter: brightness(1.15);}
+  66%{filter: brightness(1.22);}
+  100%{filter: brightness(1.22);}
+}
+
+.blinkByAddingRemovingThis{filter: brightness(1.2); box-shadow: 0px 0px 6px white;}
+
+a.openAboutPageAnchor:link, a.openAboutPageAnchor:visited{color: white; text-decoration: none;}
+a.openAboutPageAnchor:hover{text-decoration: none;}
+a.openAboutPageAnchor:active{}
+.letterSpacingAnimation{letter-spacing: 0.8px; transition: all 1.8s ease-out}
+.letterSpacingAnimation:hover{letter-spacing: 3px;}
+
+@font-face {
+  font-family: earthmanFont;
+  src: url(/user_interface/fonts/ManheartEarthman.otf);
+}
+
+::-webkit-scrollbar { /* width */
+  width: 7px;
+}
+::-webkit-scrollbar-track { /* Track */
+  background: rgba(255,255,255,0.2);
+  box-shadow: inset 0 0 2px rgba(82,110,133,0.5);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb { /* Handle */
+  background: rgba(95,115,133,0.65);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { /* Handle on hover */
+  background: rgba(95,115,133,0.99);
+}
+
+.addThisToMakeItSlideTowardsLeft{animation-name: slideToLeftAndDisappear; animation-duration: 2.5s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;}
+@keyframes slideToLeftAndDisappear {
+  from {transform: translateX(0vw); opacity:1;}
+  to {transform: translateX(-100vw); opacity:1;}
+}
+.addThisToMakeItSlideFromRight{animation-name: slideFromRightAndAppear; animation-duration: 2.5s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;}
+@keyframes slideFromRightAndAppear {
+  from {transform: translateX(100vw); opacity:1;}
+  to {transform: translateX(0px); opacity:1;}
+}
+.addThisToMakeItReturnFromLeft{animation-name: returnFromLeft; animation-duration: 2.5s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;}
+@keyframes returnFromLeft {
+  from {transform: translateX(-100vw); opacity:1;}
+  to {transform: translateX(0vw); opacity:1;}
+}
+.addThisToMakeItReturnToRight{animation-name: returnToRight; animation-duration: 2.5s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;}
+@keyframes returnToRight {
+  from {transform: translateX(0vw); opacity:1;}
+  to {transform: translateX(100vw); opacity:1;}
+}
+
+.kanit{font-family: 'kanit', 'Oxanium SemiBold', sans-serif;} /*Kanit is loaded via information.js*/
+.patua{font-family: 'patua', 'Titillium Web Light', sans-serif; font-size: 2.25vh;} /*Loaded via js_for_every_single_html,,, As of 2022 this is desktop-only therefore font-size can stay here.*/
+/* CAN: move kavivanar font to here from inline style to tidy things up */
+
+@media (max-aspect-ratio: 13/10) {
+  .movePositionWhenNarrowOnDesktops{margin-top: 2.4vh;}
+}
+
+.niceFadeInFast{animation-name: niceFadeIn; animation-duration: 0.75s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;}
+.niceFadeInSlow1{animation-name: niceFadeIn; animation-duration: 2.25s; animation-fill-mode: forwards; animation-timing-function: ease-in-out; animation-delay: 1s}
+.niceFadeInSlow2{animation-name: niceFadeIn; animation-duration: 2.50s; animation-fill-mode: forwards; animation-timing-function: ease-in-out; animation-delay: 1.5s}
+.niceFadeInSlow3{animation-name: niceFadeIn; animation-duration: 2.75s; animation-fill-mode: forwards; animation-timing-function: ease-in-out; animation-delay: 2.0s}
+@keyframes niceFadeIn {
+  0%{opacity:0.01;}
+100%{opacity:1;}
+}
+
+/*Hovering on button (mouseenter) brightens everything*/
+.whiteFullness0{z-index: 10000; position: fixed; top:0px; left: 0px; width:100vw; height:100vh; background-color: white;
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 0.8s;
+  pointer-events: none;
+}
+/*-- Before leaving --*/
+.whiteFullness1{z-index: 20000; position: fixed; top:0px; left: 0px; width:100vw; height:100vh; background-color: #f1f3f4;/*Chrome console color*/}
+.whiteFadeIn{animation-name: fineFadeIn; animation-duration: 4.8s; animation-fill-mode: forwards; animation-timing-function: linear;}
+@keyframes fineFadeIn {
+  0%{opacity:0.01;}
+  25%{opacity:0.45;}
+  50%{opacity:0.9;}
+  99%{opacity:1;}
+  100%{opacity:1;}
+}
+.markContainer{
+  z-index: 20001;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: fixed; top:0%; left: 0%; width: 100vw; height: 100vh;
+}
+mark{
+  background-color: rgba(0,0,0,0);
+  color: rgba(0,0,0,0.9);
+  line-height: normal;
+  /*Set font via script depending on Latin or Kanji etc*/
+
+  -webkit-user-select: text; /* Safari */
+  -ms-user-select: text; /* IE 10 and IE 11 */
+  user-select: text; /* Standard syntax */
+}
+.markDesktop{
+  opacity: 0;
+  font-size: 200%; max-width: 85vw; min-width: 62vw; transform: translateY(-3.5vmin);
+  transition: opacity 4s;
+  letter-spacing: 1.2px;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: rgba(0,0,0,0.9);
+}
+.markTabletAndPhone{
+  opacity: 0;
+  font-size: 6.5vmin; width: 80vw;
+  transition: opacity 3.5s;
+  letter-spacing: 0.5px;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(0,0,0,0.5);
+}
+mark::selection{
+  background-color: rgba(0,0,0,0);
+  color: black;
+}
+
+.aboutPageButtonForMobiles{
+  position:fixed; left:50vw; transform: translateX(-50%);
+  top:86vh; min-width: 33vw;
+  border-radius:10px; padding:5px;
+  border: 1px solid #9daebd;
+  border-radius:10px;
+  font-size: calc(3.3vmin + 3px); overflow: hidden;
+  color:white; background-color:#bcc9d3;
+}
+.aboutPageButtonForMobiles:active{
+  background-color:#9daebd;
+  border: 1px solid #8b9eaf;
+}

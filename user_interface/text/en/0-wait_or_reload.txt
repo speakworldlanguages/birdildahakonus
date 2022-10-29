@@ -1,0 +1,1 @@
+﻿It's taking a bit long to load...<br>What would you like to do?|Keep waiting|Reload the app|Never mind<br>Here we go

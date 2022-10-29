@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head> <!-- This is dilogrenherkeslekonus (a speakworldlanguages.app clone) -->
+
+    <script> var thisIsTheParentWhichContainsAllIFramedLessons = "yes"; </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable = no"> <!-- For mobile device screens to display things properly. As of 2022 Safari ignores this. -->
+    <title>Dil Öğren Ki Yeryüzünün Yabancısı Değil Yerlisi Ol</title>
+    <meta name="description" content="Dinledikten sonra aynısını mikrofona söyle! Öğrendiklerini hemen kullan ki aklında kalsın!">
+    <meta name="author" content="Beykağan Alper Bilgekılınç Topraksoy">
+
+    <!-- https://pedro.agency/digital-marketing/how-to-stop-google-ignoring-your-meta-descriptions/ --> <!-- https://ahrefs.com/blog/meta-robots/ -->
+
+    <link rel="alternate" hreflang="ja" href="https://hanaserutoiidesuy.one">
+    <!-- <link rel="alternate" hreflang="ko" href="https://???"> -->
+    <!-- <link rel="alternate" hreflang="zh" href="https://???"> -->
+    <!-- <link rel="alternate" hreflang="ms" href="https://???"> -->
+    <!-- <link rel="alternate" hreflang="tr" href="https://???"> -->
+    <!-- <link rel="alternate" hreflang="ar" href="https://???"> -->
+    <link rel="alternate" hreflang="en" href="https://speakworldlanguages.app">
+
+    <link rel="icon" type="image/png" href="/user_interface/html_icon/animated_globe_icon_39.png" id="icon" sizes="32x32"> <!-- This appears next to the title in the browser's TABS and plays as an animation. See js_for_icon_and_title_animation.js -->
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_the_container_parent_html.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_sliding_navigation_menu.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_preloader_and_orbiting_circles.css"><!-- Contains globe preloader hide-reveal classes -->
+    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_parent.css"><!-- Visual style of save/load info boxes -->
+
+    <script src="/third_party_js/annyang.min.js">/*Speech Recognition library by Tal Ater - Github: TalAter*/</script>
+    <script src="/third_party_js/ua-parser.min.js">/*JS library for getting the browser and OS names by Faisal Salman - Github: faisalman*/</script>
+    <!-- IN THE PAST HERE WAS <script src="/third_party_js/devicedetector-min.js">/*BUT WAS MOVED TO every_single_html.js - A device detector by Maarten Belmans - Github: PoeHaH*/</script> -->
+    <script src="/third_party_js/howler.min.js">/*An audio handler - Github: goldfire*/</script>
+    <!-- <script src="/third_party_js/localforage.min.js">/*IN THE FUTURE: Use indexedDB; store large blobs like recorded audio or pass data to the service worker*/</script> -->
+
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*Memory card, userInterfaceLanguage, fetch headers, fonts*/</script>
+    <script defer src="/js_reusables/js_for_redirection_to_the_proper_domain.js">/*Check if UI language and browser language match, protection against unauthorized embedding*/</script>
+    <script defer src="/js_reusables/js_for_handling_fullscreen_mode.js">/*Handle right-clicks, double-clicks...*/</script>
+    <script defer src="/js_reusables/js_for_app_initialization_in_parent.js">/*Fake antisleep video, be careful with iPhone fullscreen openfirstlesson, load last studied language codes...*/</script>
+    <script defer src="/js_reusables/js_for_hover_simulation_and_scrollglobe.js">/*Hover simulation for touch devices and rotatable globe with unique drag scrolling*/</script>
+    <script defer src="/js_reusables/js_for_different_browsers_and_devices.js">/*Whitelist browsers, handling visibilitychange: what happens when user leaves the app*/</script>
+    <script defer src="/js_reusables/js_for_icon_and_title_animation.js">/*A rotating globe next to the title that appears in the browser-tab*/</script>
+    <script defer src="/js_reusables/js_for_the_sliding_navigation_menu.js">/*NAVIGATION*/</script>
+    <script defer src="/js_reusables/js_for_info_boxes_in_parent.js">/*[Your progress will be saved] box and [Your progress has been loaded] box*/</script>
+    <script defer src="/js_reusables/js_for_cache_handling_with_initial_load.js">/*Get the files in advance to minimize waiting time - The latter caching will be handled from within each iframed html*/</script>
+    <!-- <script src="/js_reusables/js_for_online_and_offline_modes.js">/*IN THE FUTURE: As of 2022 this still is a futuristic idea only: Detect and handle online offline mode */</script> -->
+    <!-- <script defer src="/js_reusables/js_for_pwa.js">/*IN THE FUTURE: Progressive Web App - Handle installation*/</script> -->
+    <!--  -->
+
+    <!-- THERE SEEMS TO BE A CONFLICT between eruda and the canvas element, but it's still usable -->
+    <!-- Uncomment the following to be able to use the browser console on mobile devices -->
+    <!-- <script src="third_party_js/eruda.min.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
+
+    <!-- Firebase : WARN-ING Code is outdated -->
+    <!-- <script type="module" src="notify_tr.js"></script> -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script>
+      window.addEventListener("load",function(){   startTracking();   }, { once: true });
+      function startTracking() {
+        setTimeout(function () { const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "https://www.googletagmanager.com/gtag/js?id=G-8FWCR3LS62"; document.body.appendChild(delayedScript); },6000);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8FWCR3LS62');
+      }
+    </script>
+
+    <!-- PWA -->
+    <!-- Idea: We could have manifest_iOS.json and manifest_default.json and set href when DOMContentLoaded happens -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Dil Öğren Herkesle Konuş">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#4d606f">
+    <link rel="apple-touch-icon" href="/user_interface/homescreen_icon/icon_for_pwa_tr.png">
+    <link rel="manifest" href="/manifest_tr.json">
+    <script>
+      if ("serviceWorker" in navigator) {  window.addEventListener("DOMContentLoaded",()=>{  navigator.serviceWorker.register("service-worker.js");  });  } // Takes too long compared to window load (almost a second)
+    </script>
+
+    <!-- Inline style is for the pre-preloader dialog modal box only -->
+    <style>
+    	dialog{ position: fixed; z-index: 12000; left:50%;top:50%;transform:translate(-50%,-50%);
+        background-image: linear-gradient(#a6bac8,#d2dde6); border-radius:8px; border: 0px; padding: 20px 23px 30px 23px;
+        font-family: "SF Pro","Helvetica","Roboto","Segoe UI Light","Segoe UI",sans-serif; font-size:1.2rem; color:white; text-align:center;}
+      dialog div {background-color: rgba(88,103,121,0.5); padding: 5px; border-radius: 8px; cursor: pointer; min-width:10ch; display: inline-block;}
+      dialog div:hover{background-color: rgba(66,80,94,0.75);}
+    	dialog::backdrop{background-image: linear-gradient(rgba(25,42,60,0.8),rgba(60,80,103,0.8));}
+      @media (orientation: landscape) { dialog{min-width: 38ch; max-width: 45ch;} }
+      @media (orientation: portrait) { dialog{min-width: 80vmin; max-width: 90vmin;} }
+    </style>
+  </head>
+  <body>
+    <!-- Pre-preloader -->
+    <dialog data-nosnippet style=" line-height:3.0ch; white-space: normal;">
+      <span style="white-space:nowrap;">Yükleme biraz</span> <span style="white-space:nowrap;">uzun sürüyor…</span>
+      <p style="line-height:1ch;">&nbsp;</p>
+      <span style="white-space:nowrap;">İnternet bağlantısının</span> <span style="white-space:nowrap;">durumuna bakıp</span>
+      <span style="white-space:nowrap;">ne yapacağına</span> <span style="white-space:nowrap;">karar vermelisin</span>
+      <p style="line-height:2ch;">&nbsp;</p>
+      <div style="outline:none;" onclick="this.parentNode.close();">Bekle</div>&nbsp;&nbsp;&nbsp;
+      <div style="outline:none;" onclick="itIsAlreadyCertainThatUserWantsToReload = true; location.reload();">Baştan başlat</div>
+    </dialog>
+    <script>
+      // Code for pre-preloader
+      var itIsAlreadyCertainThatUserWantsToReload = false; // In this case we want to skip the "Are you sure" prompt caused by beforeunload in js_for_app_init,,, Must always be false except the info box case in in js_for_info_boxes_in_parent and the dialog element here where user obviously sure as he/himself or she/herself makes the choice
+      let auditTheVeryFirstLoadTimeout;
+      document.addEventListener('readystatechange', (event) => {
+        if (event.target.readyState === 'interactive') { auditTheVeryFirstLoadTimeout = setTimeout(function () { document.getElementsByTagName('dialog')[0].showModal(); }, 8000); } // 8s should be good » Lesson reload box (not this dialog) appears if load still hasn't happened in 14s~20s,,, js_for_app_init AND js_for_info_boxes_in_parent
+        else if (event.target.readyState === 'complete') { clearTimeout(auditTheVeryFirstLoadTimeout); document.getElementsByTagName('dialog')[0].close(); }
+      });
+    </script>
+    <!-- Preloader with beautiful globe -->
+    <div id="idOfThePreloadHandlingDiv" style="position: fixed; top:0; left:0; bottom:0; right:0; background-color: white; display: flex; justify-content: center; align-items: center; z-index: 9999;">
+      <!-- The initial style is left inline as a safe measure against slow network etc. -->
+      <img id="globeFrameZeroImgID" src="/user_interface/images/preload_globe_100x150_frame0.webp" alt="Loading..." draggable="false">
+      <!-- The hiding and showing of this div is manipulated via script. See inline script below -->
+    </div>
+    <!-- Preloader with nice green and blue circles -->
+    <div id="orbitingCirclesDivID" class="orbitingCirclesTopContainer" style="display:none;">
+      <div class="loadingio-spinner-interwind-f4cl6mjzf0h"><div class="ldio-d52i6xebzgm">
+      <div><div><div><div></div></div></div><div><div><div></div></div></div></div>
+      </div></div>
+    </div>
+    <!-- When asking for permisson about microphone -->
+    <div id="allowMicrophoneDivID" class="youMustAllowMicrophone">
+      <img src="/user_interface/images/microphone.webp" style="width:50px;" alt="Please allow microphone" draggable="false">
+      <p data-nosnippet>?</p>
+      <!-- VERY IMPORTANT: p element must be the second child in the div so that it can be selected with children[1],,, See js_for_different_browsers_and_devices -->
+    </div>
+
+    <!-- THE MAIN MENU -->
+    <main> <!-- See css_for_the_container_parent_html.css & js_for_app_initialization_in_parent.js-->
+      <header> <!-- Font setting is in js_for_every_single_html -->
+        <p>Öğrenmek istediğin <span style="white-space:nowrap;">dili seç</span></p>
+      </header>
+      <article>
+        <div id="layerA1_ID">
+          <div id="layerA2_ID">
+            <!-- See js_for_app_initialization_in_parent.js and find mouseDownMenuButtonF touchEndMenuButtonF -->
+
+            <button name="hito"       id="ja">Hito Dili (Japonca)</button>
+            <button name="renmen"     id="zh">Renmen Dili (Çince)</button>
+            <button name="kishi"      id="tr">Kişi Dili (Türkçe)</button>
+            <button name="3rabiyyah"  id="ar">Ennaas Dili (Arapça)</button>
+            <!-- Piypıl Dili (İngilizce) -->
+            <!-- MUST UPDATE function startTeaching(usersChoice) in js_for_app_initialization_in_parent when new buttons are added -->
+          </div>
+        </div>
+        <div id="layerB1_ID">
+          <div id="layerB2_ID">
+            <img src="/user_interface/images/arrow_left.webp" alt="Rotate left" draggable="false">
+            <canvas width="250" height="250">Karşı uçtan alınıyor</canvas>
+            <img src="/user_interface/images/arrow_right.webp" alt="Rotate right" draggable="false">
+          </div>
+        </div>
+
+      </article>
+      <footer><p>Bilgekılınç Topraksoy <span style="white-space:nowrap;">tarafından geliştirilmiştir</span></p>
+      </footer>
+    </main>
+
+    <!-- LESSONS WILL BE DISPLAYED ONE BY ONE THROUGH THIS IFRAME -->
+    <iframe src="" allowfullscreen></iframe>
+    <!-- allowfullscreen is needed to be able to call requestFullscreen on the iframe, even though, as of Oct 2022 such a call never happens. See js_for_handling_fullscreen_mode -->
+
+    <!-- MAKE THE APP LOAD slightly FASTER BY ASSIGNING src OF THE IMAGE FILES AFTER window load -->
+    <script>
+      var preloadHandlingDiv; // REMEMBER: This will be called from bread.js, water.js etc
+      window.addEventListener("load",handleLoad,{once:true});
+      function handleLoad() {
+        const preloadGlobeImg = document.getElementById('globeFrameZeroImgID');
+        preloadGlobeImg.src = "/user_interface/images/preload_globe_100x150.webp"; // Switch from the 16KB single frame webp to the animated one 449KB one. Which will probably be ready until user chooses a language to learn.
+        preloadHandlingDiv = document.getElementById('idOfThePreloadHandlingDiv');
+        preloadHandlingDiv.classList.add("addThisClassToHideThePreloader"); // See css_for_the_container_parent_html
+        //---
+        const frame = document.getElementsByTagName('IFRAME')[0];
+        frame.src = "/user_interface/blank.html"; // it is only 1 kb -> REMEMBER: ayFreym.addEventListener('load',...) in js_for_app_initialization_in_parent
+        //---
+        const main = document.getElementsByTagName('MAIN')[0];
+        const header = document.getElementsByTagName('HEADER')[0];
+        const article = document.getElementsByTagName('ARTICLE')[0];
+        const a1 = document.getElementById('layerA1_ID');
+        const a2 = document.getElementById('layerA2_ID');
+        const b1 = document.getElementById('layerB1_ID');
+        const b2 = document.getElementById('layerB2_ID');
+        const canvas = document.getElementsByTagName('CANVAS')[0];
+        const buttons = document.getElementsByTagName('BUTTON');
+        const footer = document.getElementsByTagName('FOOTER')[0];
+        // Handle styles depending on user's device
+        if (deviceDetector.device == "desktop") {
+          main.classList.add("mainDesktop");
+          header.classList.add("headerDesktop");
+          article.classList.add("articleDesktop");
+          a1.classList.add("layerA1_desktop");
+          a2.classList.add("layerA2_desktop");
+          b1.classList.add("layerB1_desktop");
+          b2.classList.add("layerB2_desktop");
+          canvas.classList.add("canvasDesktop");
+          let i; for (i = 0; i < buttons.length; i++) { buttons[i].classList.add("buttonDesktop"); }
+          footer.classList.add("footerDesktop");
+        }
+        else {
+          main.classList.add("mainPhoneOrTablet");
+          header.classList.add("headerPhoneOrTablet");
+          article.classList.add("articlePhoneOrTablet");
+          a1.classList.add("layerA1_mobile");
+          a2.classList.add("layerA2_mobile");
+          b1.classList.add("layerB1_mobile");
+          b2.classList.add("layerB2_mobile");
+          canvas.classList.add("canvasPhoneOrTablet");
+          let i; for (i = 0; i < buttons.length; i++) { buttons[i].classList.add("buttonMobile"); }
+          footer.classList.add("footerPhoneOrTablet");
+          if (!isApple) { // Android
+            topContainerDivOfTheSlidingNavMenuForMobiles.appendChild(footer);
+            footer.style.position = "absolute";
+            footer.style.bottom = "0px";
+            footer.style.color = "rgba(136,166,158,0.6)";
+            footer.style.backgroundColor = "white";
+          }
+        }
+      }
+    </script>
+
+    <!-- WHAT TO DISPLAY DURING APP MAINTENANCE :: UNCOMMENT WHEN NECESSARY -->
+    <div data-nosnippet id="removeThisID" onmouseup="adminAccess()" style="position: fixed; z-index:50000; width:100vw; height:100vh; background-color:white; display:flex; align-items:center; justify-content:center; flex-direction: column;">
+      <img data-nosnippet src="/user_interface/images/maintenance.png" alt="...">
+      <p data-nosnippet style="color:#040a17;">Şu anda hizmet veremiyoruz<br>çünkü bakım yapıyoruz</p>
+    </div>
+    <script>let secretCounter=0; function adminAccess() { secretCounter++; if (secretCounter>7) { document.body.removeChild(document.getElementById('removeThisID')); } }</script>
+    <!-- END OF WHAT TO DISPLAY DURING APP MAINTENANCE -->
+
+  </body>
+</html>

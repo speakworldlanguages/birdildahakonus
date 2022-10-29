@@ -1,0 +1,2 @@
+﻿İnternet bağlantı hızı yavaş.
+Konuşma algılama özelliği düzgün çalışmayabilir.

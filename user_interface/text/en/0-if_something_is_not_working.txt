@@ -1,0 +1,3 @@
+﻿Speech recognition is not working.
+Try using Chrome on Windows or Android.
+|For the best user experience using Chrome on Windows is recommended.

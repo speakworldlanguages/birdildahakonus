@@ -1,0 +1,53 @@
+/*The address element is used as a button [See how you can help]*/
+/*Buttons use same rules for all devices. REMEMBER: Glassmorphism needs different rules for different devices*/
+/*Width and height of the boxes come from font-size plus padding*/
+/* ADDRESS element is turned into the button for [See how you can help] in we_are_working_for_new_levels */
+address {
+  border-radius: 5px;
+  padding: 10px;
+  margin: 7px; /*Space between two buttons AS WELL AS drop-shadow area around the button*/
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  background-color: #57d6d0;
+  font-size: 25px;/* 3.5vmin is good on desktop but too small for mobile. Better be at least 5.5vmin on phone.*/
+  transition: all 0.1s;
+  white-space: pre; line-height: normal;
+}
+address:hover {
+  border: 3px solid #30d9cf;
+  color: #ffffff;
+  background-color: #22b3a7;
+  transform: scale(1.05); /*Just a tiny bit bigger than idle size*/
+  text-shadow: 0px 0px 2px white, 0px 0px 2px #36f4e9;
+  box-shadow: 0px 0px 6px white, 0px 0px 4px #36f4e9, 0px 0px 2px #36f4e9;
+  cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto;
+}
+address:active {
+  background-color: #30d9cf;
+}
+address:focus {outline:0;}
+
+/* SECTION element is turned into the button for [Next] in author's notice */
+section {
+  border-radius: 5px;
+  padding: 10px; margin: 7px;
+  background-image: linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.6));
+  background-color: #5caccc;
+  border: 3px solid rgba(255, 255, 255, 0.65);
+  color: white;
+  font-size: 25px;
+  transition: all 0.15s;
+  white-space: pre; line-height: normal;
+}
+section:hover {
+  background-color: #439cbf;
+  transform: scale(1.025);
+  text-shadow: 0px 0px 1.5px white;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  cursor: url("/user_interface/images/cursor/button_cursor.png") 16 4,auto;
+}
+section:active {
+  background-color: #267899;
+}
+section:focus {outline:0;}
+/*See css_for_every_single_html about playstation style click animation*/
