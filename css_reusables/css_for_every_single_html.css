@@ -31,8 +31,8 @@ main{
 }
 
 p{
-  line-height: normal;
-  letter-spacing: normal;
+  /* line-height: normal; */
+  /* letter-spacing: normal; */
 }
 
 .textAlignJustifyLTR{ text-align: justify; text-align-last: start; }
