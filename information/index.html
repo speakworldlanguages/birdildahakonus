@@ -20,7 +20,7 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/2.5.0/eruda.min.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
-    <style>    .startWithNearZeroOpacity{opacity:0.01;}  .displayNone{display: none;}  .moreLineHeight{line-height: 135%;} .lessLetterSpacing{letter-spacing: -0.5px;}</style>
+    <style>    .startWithNearZeroOpacity{opacity:0.01;}  .displayNone{display: none;} </style>
   </head>
   <!-- CAREFUL: Mind viewport maximum-scale=1.0, minimum-scale=1.0 with body overflow hidden. See css_for_the_container_parent_html.css -->
   <body>
@@ -74,8 +74,8 @@
           </div>
         </div>
 
-        <!-- About The Software | Let this one be DESKTOP ONLY -->
-        <div style="position:fixed; left:50vw; transform: translateX(-50%); top:88.9vh; min-width: 33vw; filter: drop-shadow(0 -0.5px 1px rgba(140, 178, 194,0.9)); border-radius:5px; padding:0.1vh;">
+        <!-- About The Software | On DESKTOPs it is an anchor tag, on mobiles it is a div as button -->
+        <div style="position:fixed; left:50vw; transform: translateX(-50%); top:88.8vh; min-width: 33vw; filter: drop-shadow(0 -0.5px 1px rgba(140, 178, 194,0.9)); border-radius:5px; padding:0.1vh;">
           <a href="/about/index.html" target="_self" class="openAboutPageAnchor" style="position: relative;"><p id="aboutResourcesP" class="letterSpacingAnimation" style="">...</p></a>
         </div>
       </div>
@@ -85,7 +85,7 @@
       <div id="bringAllOfThisFromRightID" style="transform: translateX(100vw);">
         <!-- License itself -->
         <div class="" style="position:fixed; top:50vh; left:50vw; transform: translate(-50%,-56%); min-width:400px; min-height:300px; max-height:78vh; overflow-y: auto; background-color: rgba(95,115,133,0.4); border:3px solid rgba(95,115,133,0.6); border-radius:10px; mix-blend-mode: color-burn;">
-          <p id="putTheLicenseIntoThisP" style="font-family: kavivanar, earthmanFont; font-size: 24px; color: white; mix-blend-mode:color-dodge; text-align: justify; width:90vw;">Error reading the license file</p>
+          <p id="putTheLicenseIntoThisP" class="textAlignJustifyLTR" style="font-family: kavivanar, earthmanFont; font-size: 24px; color: white; mix-blend-mode:color-dodge; width:90vw;">Loading the license file</p>
         </div>
         <!-- Big navigation arrow 180 -->
         <div onmousedown="returnWithBigSlideTowardsRight();" class="" style="position:fixed; left:50vw; transform: translateX(-50%); top:85vh; cursor: w-resize; ">
@@ -141,7 +141,7 @@
       <div id="bringAllOfThisFromRightID" style="transform: translateX(100vw);">
         <!-- License itself on tablets -->
         <div class="licenseItselfOnTablets" style="overflow-y: auto; background-color: rgba(95,115,133,0.4); border:3px solid rgba(95,115,133,0.6); border-radius:10px; mix-blend-mode: color-burn;">
-          <p id="putTheLicenseIntoThisP" style="font-family: kavivanar, earthmanFont; font-size: 24px; color: white; mix-blend-mode:color-dodge; text-align: justify; width:90vw;">Loading the license file</p>
+          <p id="putTheLicenseIntoThisP" class="textAlignJustifyLTR" style="font-family: kavivanar, earthmanFont; font-size: 24px; color: white; mix-blend-mode:color-dodge; width:90vw;">Loading the license file</p>
         </div>
         <!-- Big navigation arrow 180 on tablets -->
         <div ontouchstart="returnWithBigSlideTowardsRight();" class="bigNavigationReturnArrowOnTablets" style="">
@@ -199,7 +199,7 @@
       <div id="bringAllOfThisFromRightID" style="transform: translateX(100vw);">
         <!-- License itself on phones -->
         <div class="licenseItselfOnPhones" style="overflow-y: auto; background-color: rgba(95,115,133,0.4); border:3px solid rgba(95,115,133,0.6); border-radius:10px; mix-blend-mode: color-burn;">
-          <p id="putTheLicenseIntoThisP" style="font-family: kavivanar, earthmanFont; font-size: 18px; color: white; mix-blend-mode:color-dodge; text-align: justify; width:90vw;">Loading the license file</p>
+          <p id="putTheLicenseIntoThisP" class="textAlignJustifyLTR" style="font-family: kavivanar, earthmanFont; font-size: 18px; color: white; mix-blend-mode:color-dodge; width:90vw;">Loading the license file</p>
         </div>
         <!-- Big navigation arrow 180 on phones -->
         <div ontouchstart="returnWithBigSlideTowardsRight();" class="bigNavigationReturnArrowOnPhones" style="">
