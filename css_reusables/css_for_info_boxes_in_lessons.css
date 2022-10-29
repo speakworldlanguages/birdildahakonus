@@ -25,7 +25,7 @@
   color: rgb(130,155,173);
   margin: 5vmin; /*Will take effect on very narrow screens only*/
   padding-left: 4vmin; padding-right: 4vmin; padding-top: 5vmin; padding-bottom: 5vmin;
-  text-align: justify;
+  /* text-align: justify; */ /*Must use justify with latin fonts only - so will set it via script conditionally*/
   white-space: pre-wrap; /* pre means do not convert the line breaks into regular spaces. pre-wrap handles the overflow as well for longer lines */
 }
 /* IT WORKS: Trying to target phones (and tablets) and especially in vertical position to increase the font size */
@@ -75,7 +75,7 @@
   color: #daecfa;
   margin: 5vmin; /*Will take effect on mobiles only*/
   padding-left: 4vmin; padding-right: 4vmin; padding-top: 5vmin; padding-bottom: 5vmin;
-  text-align: justify;
+  /* text-align: justify; */ /*Must use justify with latin fonts only - so will set it via script conditionally*/
   white-space: pre-wrap; /* pre means do not convert the line breaks into regular spaces. pre-wrap handles the overflow as well for longer lines */
   animation-name: vocabularyWavesurferAppears; animation-duration: .5s; animation-fill-mode: forwards;
 }

@@ -30,6 +30,11 @@ main{
   /*For background colors, see css_for_the_container_parent_html AND css_for_photos_and_videos_teach_a_new_word AND css_for_lessons_with_interactables*/
 }
 
+.textAlignJustifyLTR{ text-align: justify; text-align-last: start; }
+.textAlignJustifyRTL{ text-align: justify; text-align-last: end; }
+.textAlignLeft{ text-align: left; } .toUseWBR_withCJK{word-break:keep-all;}
+.textAlignRight{ text-align: right; }
+
 .flexCenterRow{display: flex; justify-content: center; align-items: center; flex-direction: row;}
 .flexCenterColumn{display: flex; justify-content: center; align-items: center; flex-direction: column;} /*Used in progress chart <MAIN>*/
 

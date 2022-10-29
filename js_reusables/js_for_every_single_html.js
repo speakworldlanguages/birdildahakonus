@@ -126,6 +126,10 @@ if (needLatinFonts) {
   let allAddresses = document.getElementsByTagName("ADDRESS"); /* Not used in the parent but can if need be */ /* See css_for_proceed_buttons.css */
   let a;
   for (a = 0; a < allAddresses.length; a++) {  allAddresses[a].style.fontFamily = '"Oxanium SemiBold", sans-serif';  }
+  /*Set line-height for latin fonts*/
+  let allPs = document.getElementsByTagName("P");
+  let p;
+  for (p = 0; p < allPs.length; p++) { allPs[p].style.lineHeight = "125%"; }
 }
 
 if (needHitoicJapaneseFonts) {
@@ -137,15 +141,16 @@ if (needHitoicJapaneseFonts) {
     }).catch(function(error) {      console.error("Unable to get the font: " + error);    });
     /*SET FONTS*/
     document.body.style.fontFamily = '"Kosugi Maru", sans-serif';
+    /* TEST IF IT INHERITS FROM BODY ALREADY
     // In this case (JA) the buttons use the same font with the body
     let allButtons = document.getElementsByTagName("BUTTON"); // HERE WE CAN: do styling for all buttons when user interface is JA
     let i;
     for (i = 0; i < allButtons.length; i++) { allButtons[i].style.fontFamily = '"Kosugi Maru", sans-serif'; } // BE SAFE: Will it inherit from document.body.style.fontFamily???
-
-    // Kosugi font looks better with more line-height
+    */
+    // Kosugi font looks better with more line-height and more letter-spacing
     let allPs = document.getElementsByTagName("P");
     let p;
-    for (p = 0; p < allPs.length; p++) { allPs[p].style.lineHeight = "150%"; }
+    for (p = 0; p < allPs.length; p++) { allPs[p].style.lineHeight = "160%"; allPs[p].style.letterSpacing = "130%"; }
 
     /* Use all ASIDE elements as a second type of button*/ // Auto inherits from body
     //let allAsides = document.getElementsByTagName("ASIDE");

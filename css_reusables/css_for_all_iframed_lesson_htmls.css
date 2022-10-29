@@ -5,7 +5,7 @@ video{
 }
 
 p{
-  line-height: 125%;
+  /* line-height: 125%; */ /*Wouldn't it be better if this is set by js_for_every_single_html?*/
 }
 
-/* REMEMBER: <aside> elements <section> elements and <address> elements are used as other types of buttons. */
+/* REMEMBER: <aside> elements, <section> elements and <address> elements are used as other types of buttons. */

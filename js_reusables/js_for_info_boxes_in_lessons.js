@@ -42,6 +42,11 @@ function createAndHandleInfoBoxType1BeforeLessonStarts() {
   okButtonToCloseTheNotification1.classList.add("okButtonUnderNotification"); // See css_for_info_boxes_in_lessons
   if (needLatinFonts) {
     okButtonToCloseTheNotification1.style.fontFamily = '"Oxanium SemiBold", sans-serif';
+    notificationBoxItself.classList.add("textAlignJustifyLTR"); // See css_for_every_single_html
+  }
+  if (needHitoicJapaneseFonts) {
+    notificationBoxItself.classList.add("textAlignLeft"); // See css_for_every_single_html
+    putNotificationTxtIntoThisP1.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
   }
   notificationBoxItself.appendChild(okButtonToCloseTheNotification1);
 
@@ -72,6 +77,11 @@ function createAndHandleInfoBoxType1AmidLesson() {
   okButtonToCloseTheNotification2.classList.add("okButtonUnderNotification"); // See css_for_info_boxes_in_lessons
   if (needLatinFonts) {
     okButtonToCloseTheNotification2.style.fontFamily = '"Oxanium SemiBold", sans-serif';
+    notificationBoxItself2.classList.add("textAlignJustifyLTR"); // See css_for_every_single_html
+  }
+  if (needHitoicJapaneseFonts) {
+    notificationBoxItself2.classList.add("textAlignLeft"); // See css_for_every_single_html
+    putNotificationTxtIntoThisP2.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
   }
   notificationBoxItself2.appendChild(okButtonToCloseTheNotification2);
 
@@ -123,6 +133,15 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio) {
   document.body.appendChild(vocabularyBoxContainer);
   const vocabularyBoxItself = document.createElement("DIV");
   vocabularyBoxItself.classList.add("vocabularyRoundedBox"); // See css_for_info_boxes_in_lessons
+  if (needLatinFonts) {
+    vocabularyBoxItself.classList.add("textAlignJustifyLTR"); // See css_for_every_single_html
+    // Do we need any other settings???
+  }
+  if (needHitoicJapaneseFonts) {
+    vocabularyBoxItself.classList.add("textAlignLeft"); // See css_for_every_single_html
+    putVocabularyTxtIntoThisP1.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
+    putVocabularyTxtIntoThisP2.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
+  }
   vocabularyBoxContainer.appendChild(vocabularyBoxItself);
   //
   if (!txtStringForP1) { // If download has failed or not finished yet

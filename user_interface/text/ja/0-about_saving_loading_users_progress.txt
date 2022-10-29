@@ -1,1 +1,1 @@
-﻿あなたの進歩、<span style="white-space: nowrap;">このデバイスに</span><span style="white-space: nowrap;">保存します</span>|今までの進歩、<span style="white-space: nowrap;">ロードされました</span>
+﻿あなたの進歩、<wbr>このデバイスで<wbr>保存します|今までの進歩、<wbr>ロードしました
