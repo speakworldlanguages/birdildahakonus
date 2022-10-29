@@ -1,3 +1,4 @@
-﻿感謝を会話の相手に<span style="white-space: nowrap;">伝える言葉なら</span>
+﻿<span style="white-space: nowrap;">感謝を会話の相手に</span><span style="white-space: nowrap;">伝える言葉なら</span>
 いろいろありますね
-さきほど聞いたのは<span style="white-space: nowrap;">そのなかで最も基本的</span>
+さきほど聞いたのは
+<span style="white-space: nowrap;">そのなかで最も基本的</span>

@@ -1,1 +1,1 @@
-﻿アラビア語で命令形は男女区別があります。会話の相手は男性か女性か、それによって話言葉が違います。
+﻿アラビア語で命令形は男女区別が<span style="white-space: nowrap;">あります。</span>会話の相手は男性か女性か、<span style="white-space: nowrap;">それによって</span>話言葉が違います。

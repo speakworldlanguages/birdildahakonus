@@ -141,6 +141,12 @@ if (needHitoicJapaneseFonts) {
     let allButtons = document.getElementsByTagName("BUTTON"); // HERE WE CAN: do styling for all buttons when user interface is JA
     let i;
     for (i = 0; i < allButtons.length; i++) { allButtons[i].style.fontFamily = '"Kosugi Maru", sans-serif'; } // BE SAFE: Will it inherit from document.body.style.fontFamily???
+
+    // Kosugi font looks better with more line-height
+    let allPs = document.getElementsByTagName("P");
+    let p;
+    for (p = 0; p < allPs.length; p++) {  allPs[p].style.lineHeight = "150%"; allPs[p].style.textAlign = "left"; }
+
     /* Use all ASIDE elements as a second type of button*/ // Auto inherits from body
     //let allAsides = document.getElementsByTagName("ASIDE");
     //let j;
