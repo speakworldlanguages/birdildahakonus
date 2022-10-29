@@ -224,7 +224,7 @@
     <!-- WHAT TO DISPLAY DURING APP MAINTENANCE :: UNCOMMENT WHEN NECESSARY -->
     <div data-nosnippet id="removeThisID" onmouseup="adminAccess()" style="position: fixed; z-index:50000; width:100vw; height:100vh; background-color:white; display:flex; align-items:center; justify-content:center; flex-direction: column;">
       <img data-nosnippet src="/user_interface/images/maintenance.png" alt="...">
-      <p data-nosnippet style="color:#040a17;">Şu anda hizmet veremiyoruz<br>Çünkü bakım yapıyoruz</p>
+      <p data-nosnippet style="color:#040a17; line-height:normal;">Şu anda hizmet veremiyoruz<br>Çünkü bakım yapıyoruz</p>
     </div>
     <script>let secretCounter=0; function adminAccess() { secretCounter++; if (secretCounter>7) { document.body.removeChild(document.getElementById('removeThisID')); } }</script>
     <!-- END OF WHAT TO DISPLAY DURING APP MAINTENANCE -->
