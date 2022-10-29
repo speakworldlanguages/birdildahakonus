@@ -128,13 +128,13 @@ window.addEventListener('DOMContentLoaded', function(){
       // In that case, instead of onchange, we can check if the permission-state has actually changed with a setInterval and then clearInterval once user's answer is detected.
       if (result1.state == 'granted') {
         willUserTalkToSpeechRecognition = true;
-        console.log("Microphone permission already granted previously");
+        console.log("Microphone permission already granted i.e. previously taken");
       } else if (result1.state == 'denied') {
         willUserTalkToSpeechRecognition = false;
         console.log("Microphone permission is already set to DENIED");
       } else {
         // Which means (result1.state == 'prompt') // Please allow will be showing unless removed
-        localStorage.removeItem("allowMicrophoneDialogHasAlreadyBeenDisplayed");
+        localStorage.removeItem("allowMicrophoneDialogHasAlreadyBeenDisplayed"); // IDEA: Instead of removing it, we can actually use it to work around annoying permission policies of Safari.
         console.log("Microphone permission must be taken");
       }
     }).catch(function () { // Handle Firefox? ...hopefully
