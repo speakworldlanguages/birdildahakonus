@@ -97,10 +97,10 @@ function createAndHandleGoBackOrProceedBox() {
     if (needLatinFonts) {
       cancelButtonToCloseTheWillSaveBoxDIV.style.fontFamily = '"Oxanium SemiBold", sans-serif'; // Not the default UI font » Titillium
       proceedButtonToCloseTheWillSaveBoxDIV.style.fontFamily = '"Oxanium SemiBold", sans-serif'; // Not the default UI font » Titillium
-      saveLoadInfoBoxItselfDIV.classList.add("textAlignJustifyLTR"); // See css_for_every_single_html
+      saveLoadInfoBoxItselfDIV.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
     }
     if (needHitoicJapaneseFonts) {
-      saveLoadInfoBoxItselfDIV.classList.add("textAlignLeft"); // See css_for_every_single_html
+      saveLoadInfoBoxItselfDIV.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
       willTryToSaveYourProgressNoteP.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
     }
   } else {
@@ -163,10 +163,10 @@ function createAndHandleProgressHasBeenLoadedBox() { // Called if memoryCard exi
   goodButtonToUnlockSoundUnderLoadedDIV.classList.add("buttonsUnderSaveLoadInfo"); // See css_for_info_boxes_in_parent
   if (needLatinFonts) {
     goodButtonToUnlockSoundUnderLoadedDIV.style.fontFamily = '"Oxanium SemiBold", sans-serif'; // Not the default UI font » Titillium
-    progressLoadOkNoticeBoxItselfDIV.classList.add("textAlignJustifyLTR"); // See css_for_every_single_html
+    progressLoadOkNoticeBoxItselfDIV.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
   if (needHitoicJapaneseFonts) {
-    progressLoadOkNoticeBoxItselfDIV.classList.add("textAlignLeft"); // See css_for_every_single_html
+    progressLoadOkNoticeBoxItselfDIV.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
     yourProgressWasSuccessfullyLoadedNoteP.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
   }
 
@@ -219,10 +219,10 @@ function createAndHandleMaybeYouShouldReloadBox() {
     if (needLatinFonts) {
       keepWaitingButtonInTheReloadBoxDIV.style.fontFamily = '"Oxanium SemiBold", sans-serif'; // Not the default UI font » Titillium
       okLetsTryRefreshingTheBrowserBoxDIV.style.fontFamily = '"Oxanium SemiBold", sans-serif'; // Not the default UI font » Titillium
-      maybeYouShouldReloadBoxItselfDIV.classList.add("textAlignJustifyLTR"); // See css_for_every_single_html
+      maybeYouShouldReloadBoxItselfDIV.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
     }
     if (needHitoicJapaneseFonts) {
-      maybeYouShouldReloadBoxItselfDIV.classList.add("textAlignLeft"); // See css_for_every_single_html
+      maybeYouShouldReloadBoxItselfDIV.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
       maybeYouShouldReloadNoteP.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
       neverMindThisBoxNoteP.classList.add("toUseWBR_withCJK"); // See css_for_every_single_html
     }

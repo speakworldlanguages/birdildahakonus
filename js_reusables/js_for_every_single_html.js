@@ -126,10 +126,12 @@ if (needLatinFonts) {
   let allAddresses = document.getElementsByTagName("ADDRESS"); /* Not used in the parent but can if need be */ /* See css_for_proceed_buttons.css */
   let a;
   for (a = 0; a < allAddresses.length; a++) {  allAddresses[a].style.fontFamily = '"Oxanium SemiBold", sans-serif';  }
-  /*Set line-height for latin fonts*/
+  /* Didn't work - will try setting each element via js that creates it
+  //Set line-height for latin fonts
   let allPs = document.getElementsByTagName("P");
   let p;
   for (p = 0; p < allPs.length; p++) { allPs[p].parentNode.classList.add("latinLineHeightAndLetterSpacing"); } // See css_for_every_single_html
+  */
 }
 
 if (needHitoicJapaneseFonts) {
@@ -146,12 +148,12 @@ if (needHitoicJapaneseFonts) {
     let allButtons = document.getElementsByTagName("BUTTON"); // HERE WE CAN: do styling for all buttons when user interface is JA
     let b;
     for (b = 0; b < allButtons.length; b++) { allButtons[b].style.fontFamily = '"Kosugi Maru", sans-serif'; }
-
+    /* Didn't work - will try setting each element via js that creates it
     // Kosugi font looks better with more line-height and more letter-spacing
     let allPs = document.getElementsByTagName("P");
     let p;
     for (p = 0; p < allPs.length; p++) { allPs[p].parentNode.classList.add("cjkLineHeightAndLetterSpacing"); } // See css_for_every_single_html
-
+    */
     /* Use all ASIDE elements as a second type of button*/ // Auto inherits from body
     //let allAsides = document.getElementsByTagName("ASIDE");
     //let j;
