@@ -308,7 +308,7 @@ async function loadTheVoiceOfTheTeacherInLesson111() { // See setLangCodeForFile
 
   let errorHappened = false;
   try {
-    console.log("Begin caching secondary-assets-for-1-1-1");
+    console.log("Begin caching secondary-assets-for-1-1-1 \n,,, primary ones already included in the first 6");
     await myCache.addAll(listOfFiles);
   } catch(err) {
     console.error(err);

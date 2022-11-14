@@ -1,6 +1,13 @@
 "use strict";
 // CAREFUL! DEFER or NOT DEFER
 
+if (window.location.href == parent.ayFreym.src) {
+  //console.log("EXPECTED NORMAL NAVIGATION");
+} else {
+  console.log("POSSIBLE USE OF BROWSER BUTTONS\nframe src will be updated to prevent navigation errors");
+  parent.ayFreym.src = window.location.href;
+}
+
 // The following can be used to prompt the user to add the app to HOMESCREEN and/or get Push Notifications AS SOON AS he/she seems to be seriously using the app
 /*
 if (sessionStorage.iFrameLoadHasHappenedThisManyTimes) {  sessionStorage.iFrameLoadHasHappenedThisManyTimes = Number(sessionStorage.iFrameLoadHasHappenedThisManyTimes) + 1;  }

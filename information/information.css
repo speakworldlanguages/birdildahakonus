@@ -156,14 +156,14 @@ a.openAboutPageAnchor:active{}
 }
 
 /*Hovering on button (mouseenter) brightens everything*/
-.whiteFullness0{z-index: 10000; position: fixed; top:0px; left: 0px; width:100vw; height:100vh; background-color: white;
+.whiteFullness0{z-index: 10000; position: fixed; top:0px; left: 0px; width:100vw; height:100%; background-color: white; /*height used to be 100vh*/
   mix-blend-mode: overlay;
   opacity: 0;
   transition: opacity 0.8s;
   pointer-events: none;
 }
 /*-- Before leaving --*/
-.whiteFullness1{z-index: 20000; position: fixed; top:0px; left: 0px; width:100vw; height:100vh; background-color: #f1f3f4;/*Chrome console color*/}
+.whiteFullness1{z-index: 20000; position: fixed; top:0px; left: 0px; width:100vw; height:100%; background-color: #f1f3f4;/*Chrome console color*/}
 .whiteFadeIn{animation-name: fineFadeIn; animation-duration: 4.8s; animation-fill-mode: forwards; animation-timing-function: linear;}
 @keyframes fineFadeIn {
   0%{opacity:0.01;}
@@ -175,7 +175,7 @@ a.openAboutPageAnchor:active{}
 .markContainer{
   z-index: 20001;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  position: fixed; top:0%; left: 0%; width: 100vw; height: 100vh;
+  position: fixed; top:0%; left: 0%; width: 100vw; height: 100%; /*height used to be 100vh*/
 }
 mark{
   background-color: rgba(0,0,0,0);

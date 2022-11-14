@@ -95,7 +95,7 @@ main{
 
 #fullVpDarkBlueDivID{
   position: fixed; pointer-events: none;
-  left: 0px; top: 0px; width: 100vw; height:100vh;
+  left: 0px; top: 0px; width: 100vw; height:100%; /*height used to be 100vh*/
 }
 .darkenLightenBackground{  animation-name: lightDarkLightAnim;  animation-timing-function: ease; animation-fill-mode: forwards;  }
 @keyframes lightDarkLightAnim {

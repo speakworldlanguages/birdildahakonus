@@ -14,7 +14,7 @@
 .leftOrLowerDivision{display: flex; justify-content: flex-end;	align-items: center; flex-direction: column;}
 .rightOrUpperDivision{display: flex; justify-content: space-evenly; /*gap: 2vh;*/	align-items: center; flex-direction: column;}
 #arrow_under_speech_bubble {width:6vh; height:6vh; position: relative;}
-.speechBubble{position: absolute; min-height: 15vh; background-color: white; border-radius: 11px; padding: 2.2vh 3.7vh 2.2vh 3.7vh; color: #4b6273; text-align: justify; }
+.speechBubble{position: absolute; min-height: 15vh; background-color: white; border-radius: 11px; padding: 2.2vh 3.7vh 2.2vh 3.7vh; color: #4b6273;}
 .leftOrLowerDivision img {filter: drop-shadow(0px 0px 15px rgba(255,255,255,0.9));}
 
 @media (orientation: landscape) {

@@ -215,7 +215,7 @@ footer{
 
 /**/
 .allowMicDesktopBackground{ /*Don't need this on Android as it is done automatically*/
-  position: fixed; top:0; left:0; width:100vw; height:100vh; /*height:100vh causes a centering problem on mobiles*/
+  position: fixed; top:0; left:0; width:100vw; height:100vh; /*Note THAT height:100vh causes a centering problem on mobiles, but IN THIS CASE it's desktop only so it's OK*/
   background-color: rgba(44, 139, 199, 0.5);
   z-index: 3000; /* Watch the z-index of MAIN 999» See css_for_the_container_parent_html */
                  /* Also watch the z-index of sliding-nav-menu-with-ceramic-buttons 1111 */

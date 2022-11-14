@@ -25,7 +25,7 @@ body{
 }
 main{
   position: fixed;
-  top:0; left:0; width:100vw; height: 100vh; /*In the parent, the "left" value is to be changed via script to hide this div. See js_reusables/js_for_app_initialization_in_parent.js*/
+  top:0; left:0; width:100vw; height: 100%; /* height used to be 100vh | Note: In the parent, the "left" value is to be changed via script to hide this div. See js_reusables/js_for_app_initialization_in_parent.js*/
   overflow: hidden;
   /*For background colors, see css_for_the_container_parent_html AND css_for_photos_and_videos_teach_a_new_word AND css_for_lessons_with_interactables*/
 }

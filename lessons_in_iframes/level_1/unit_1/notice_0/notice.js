@@ -2,6 +2,7 @@
 let whatTheAuthorHasToSay = " ";
 let clonedButtons0, clonedButtons1;
 let speechMustStartImmediately = false;
+let theSilentSpeechOfTheAuthor;
 
 window.addEventListener('DOMContentLoaded', function(){
   clonedButtons0 = document.getElementsByTagName('SECTION')[0];
@@ -44,6 +45,13 @@ window.addEventListener('DOMContentLoaded', function(){
 
 let bgmSound, hoverSound, clickSound;
 window.addEventListener('load', function(){
+  theSilentSpeechOfTheAuthor = document.querySelector('.speechBubble');
+  if (userReadsLeftToRightOrRightToLeft == "rtl") { // js_for_every_single_html
+    theSilentSpeechOfTheAuthor.classList.add("textAlignRight"); // css_for_every_single_html
+  } else {
+    theSilentSpeechOfTheAuthor.classList.add("textAlignLeft"); // css_for_every_single_html
+  }
+
   bgmSound = new parent.Howl({ src: ["/user_interface/sounds/looping_bgm_stereo_therapy.webm"], loop: true });
   bgmSound.once('load', function(){
     setTimeout(function () {   bgmSound.play(); bgmSound.fade(0,0.6,15000);   }, 4000);
