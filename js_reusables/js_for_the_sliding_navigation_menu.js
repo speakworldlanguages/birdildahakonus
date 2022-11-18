@@ -1,4 +1,7 @@
 "use strict";
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
+
 // NOTE: Do not use “const” for things that need to be accessible from elsewhere. Only use “var” for such variables.
 // The buttons have 4 (webp img) states : A, B, C and D. If we use one variable and only change the src it works but it is very glitchy.
 // Therefore we have to use four variables for each webp and change the css rule “display block none” instead of changing the src.

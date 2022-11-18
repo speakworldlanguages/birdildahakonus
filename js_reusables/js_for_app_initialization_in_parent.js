@@ -1,4 +1,7 @@
 "use strict";
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
+
 // See js_for_all_iframed_lesson_htmls AND blank.html
 var userIsOrWasJustViewing = "welcome-screen"; // First time users will stay at welcome-screen,,, continuing user's will teleport to progress-chart
 //

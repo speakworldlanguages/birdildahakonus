@@ -1,6 +1,8 @@
 /* tilt-to-steer.js */
-/* v0.1 */
-/* Released to the public domain (do whatever you want with it) by Manheart Earthman aka Beykan Alper Topraksoy */
+/* January 2023 */
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+/* Released to the public domain (do whatever you want with it) */
+
 /* NOTE: This library does not feature a perfect solution to the gimbal lock problem. */
 /* It only gives you numbers that will hopefully be good enough to steer a car in a racing game etc that would run in any screen orientation. */
 /* Call startReadingTilt() and then */

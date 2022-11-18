@@ -1,4 +1,7 @@
 "use strict";
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
+
 const leftText1 = document.getElementById('leftText1pID'); const rightText1 = document.getElementById('rightText1pID');
 
 let leftTextWithoutInteraction;

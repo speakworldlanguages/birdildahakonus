@@ -1,4 +1,6 @@
 "use strict";
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
 
 const allNavElements = document.getElementsByTagName('NAV');
 const hoverProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_hover.webm"]  });
@@ -39,18 +41,18 @@ const lesson111 = document.getElementById('1_1_1');
 const lesson112 = document.getElementById('1_1_2');
 const lesson113 = document.getElementById('1_1_3');
 const lesson114 = document.getElementById('1_1_4');
+const lesson121 = document.getElementById('1_2_1');
 
 if (parent.savedProgress[studiedLangCode].lesson_BREAD_IsViewed) {  lesson111.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_BREAD_IsCompleted) {  lesson111.classList.add("thisLessonHasBeenCompleted");  } // Override background-color
-
 if (parent.savedProgress[studiedLangCode].lesson_WATER_IsViewed) {  lesson112.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_WATER_IsCompleted) {  lesson112.classList.add("thisLessonHasBeenCompleted");  } // Override background-color
-
 if (parent.savedProgress[studiedLangCode].lesson_GIVEMEWATER_IsViewed) {  lesson113.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_GIVEMEWATER_IsCompleted) {  lesson113.classList.add("thisLessonHasBeenCompleted");  } // Override background-color
-
 if (parent.savedProgress[studiedLangCode].lesson_TAKEBREAD_IsViewed) {  lesson114.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_TAKEBREAD_IsCompleted) {  lesson114.classList.add("thisLessonHasBeenCompleted");  } // Override background-color
+if (parent.savedProgress[studiedLangCode].lesson_GLASS_IsViewed) {  lesson121.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
+if (parent.savedProgress[studiedLangCode].lesson_GLASS_IsCompleted) {  lesson121.classList.add("thisLessonHasBeenCompleted");  }
 /*__Handle Mobile and Desktop separately__*/
 // handleFadingAndNavigation exists in js_for_app_initialization_in_parent
 if (deviceDetector.isMobile) {
@@ -58,9 +60,11 @@ if (deviceDetector.isMobile) {
   lesson112.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html"); });
   lesson113.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_3/index.html"); });
   lesson114.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_4/index.html"); });
+  lesson121.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_1/index.html"); });
 } else {
   lesson111.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_1/index.html"); });
   lesson112.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html"); });
   lesson113.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_3/index.html"); });
   lesson114.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_4/index.html"); });
+  lesson121.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_1/index.html"); });
 }

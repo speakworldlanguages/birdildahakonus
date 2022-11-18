@@ -1,4 +1,7 @@
 "use strict";
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
+
 // AUDIO INPUT WAVEFORM VISUALIZATION IS CPU INTENSIVE. On Android devices it is either too slow or incompatible ->  Won't work together with speech recognition.
 // ALSO: There is a problem with making wavesurfer canvas width 100% on 1920x1080 desktop resolution. Use 50% and scaleX(2) instead!
 // NOTE: wavesurfer.js is included and run by iframed lesson htmls where necessary. It is not included by the container parent html.

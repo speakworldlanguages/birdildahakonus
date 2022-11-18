@@ -1,4 +1,7 @@
 "use strict";
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
+
 // Note that: If service-worker.js was feeding custom responses it may need to stop doing so after things are updated here i.e. adding/removing/changing files/assets
 // Some of the caching below is to shorten the waiting time between lessons
 // And some are only for offline mode or to make the app start faster at the second visit/run

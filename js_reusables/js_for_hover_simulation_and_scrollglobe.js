@@ -1,4 +1,7 @@
 "use strict";
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
+
 let ctx;
 let initialX=0,differenceX=0;
 const buttonsInLinkedJS = document.getElementsByTagName('BUTTON');

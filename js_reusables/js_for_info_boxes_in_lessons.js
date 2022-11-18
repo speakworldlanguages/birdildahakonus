@@ -1,4 +1,7 @@
 "use strict";
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
+
 /*-----*/
 // TYPE1: Generic info box » Watch how 1 of 2 possible texts is injected into the button
 

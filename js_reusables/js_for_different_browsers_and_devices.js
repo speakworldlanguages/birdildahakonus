@@ -1,9 +1,12 @@
 "use strict";
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
+
 var willUserTalkToSpeechRecognition = false;
 var detectedBrowser, detectedBrowserName;
 var detectedOS;
 var detectedBrand, detectedBrandName;
-// DEPRECATED var audioFileExtension = "ogg"; // Default to ogg except for Safari // Ogg is better than mp3 but Safari won't play it.
+// DEPRECATED,,, Will use opus/webm instead of var audioFileExtension = "ogg"; // Default to ogg except for Safari // Ogg is better than mp3 but Safari won't play it.
 var isApple = false;
 var isSafari = false;
 var isAndroid = false;

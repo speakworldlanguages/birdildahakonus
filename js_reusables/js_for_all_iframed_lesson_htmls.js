@@ -1,5 +1,6 @@
 "use strict";
-// CAREFUL! DEFER or NOT DEFER
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
 
 if (window.location.href == parent.ayFreym.src) {
   //console.log("EXPECTED NORMAL NAVIGATION");

@@ -31,7 +31,7 @@
       function startDownloadingTheNextLesson() {
         if (!localStorage.loadFiles112WasSuccessful) {
           setTimeout(function () { const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_reusables/caching_functions_for_each_lesson/112.js"; document.body.appendChild(delayedScript); },6000);
-        } // Why wait for three seconds? Is it totally meaningless? We want to prioritize howler sounds of this lesson to be loaded before the files of the next lesson, but will it have any effect?
+        } // Why wait for a few seconds? Is it totally meaningless? We want to prioritize howler sounds of this lesson to be loaded before the files of the next lesson, but will it have any effect?
       }
     </script>
   </head>

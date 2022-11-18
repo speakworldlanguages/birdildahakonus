@@ -1,5 +1,7 @@
 "use strict";
-// This is DEFERRED in html
+// Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
+// May be modified by AUTHORIZED PEOPLE ONLY
+
 // IMPORTANT: Find countdownForGiveUpSkipOrGoToNext because we must adjust its value for each lesson
 
 /* __ SAVE PROGRESS TO LOCAL STORAGE __ */
