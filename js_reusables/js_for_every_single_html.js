@@ -1,70 +1,70 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 // IMPORTANT! Everything below will run in PARALLEL both on PARENT and iFRAME.
 // CAUTION: Mind the duplication!
 
-/*_____DUMMY IMG____*/
-var onePixelTransparentGif = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="; // Use wherever needed. Like in resetting webp animation playback.
-function resetWebp(theWebpInsideImgElement) {
-  const originalSrc = theWebpInsideImgElement.src;
-  theWebpInsideImgElement.src = onePixelTransparentGif;
-  setTimeout(function () { theWebpInsideImgElement.src = originalSrc; }, 250);
-}
-
-/*_____PHONE TABLET OR DESKTOP???__________https://github.com/PoeHaH/devicedetector__________________*/
-var deviceDetector=function(){var b=navigator.userAgent.toLowerCase(),a=function(a){void 0!==a&&(b=a.toLowerCase());return/(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(b)?"tablet":/(mobi|ipod|phone|blackberry|opera mini|fennec|minimo|symbian|psp|nintendo ds|archos|skyfire|puffin|blazer|bolt|gobrowser|iris|maemo|semc|teashark|uzard)/.test(b)?"phone":"desktop"};return{device:a(),detect:a,isMobile:"desktop"!=a()?!0:!1,userAgent:b}}();
 
 /*_____CAN VIBRATE???: https://stackoverflow.com/questions/56926591/navigator-vibrate-break-the-code-on-ios-browsers/66134699*/
 const canVibrate = window.navigator.vibrate;
-
-/*DISABLE ALL LONG-TOUCH-MENUs on mobiles*/
-// window.oncontextmenu IS NO GOOD - BECAUSE IT TRIGGERS AN ANNOYING VIBRATION everytime a long touch happens USE-pointer events none carefully or prevent default for touchstart
-if (deviceDetector.isMobile) {
-  window.ontouchstart = function(event) {     event.preventDefault();     /*Let's allow bubbling event.stopPropagation();*/     return false;    }; // It looks like this is working, no?
-} else { } // We need the right click menu on desktops » it opens the [start-fullscreen-mode] box
 
 
 // Must give the user the option to change the user interface language and allow him/her to choose any available language other than the browser's language if necessary.
 // Until that time, UI language will automatically take the browser's language.
 // POSSIBLE GOOD PRACTICE: Check if browser language and IP-geolocation match. Ask the user which language he/she wants for the GUI if the location and language is different.
 var browserLanguage = navigator.language.substring(0,2).toLowerCase(); // Is used for 1- js_for_redirection_to_the_proper_domain » Comparing domains and UI languages 2- information.js » Set currency(Euro) according to user's (estimated) country
-var domainNameOfTheClone = window.location.hostname.toLowerCase(); // Should work for both parent and frame
+var full_URL_ofTheClone = window.location.href.toLowerCase(); // Should work for both parent and frame
 
 // These variables will exist both in parent html and in frame html separately at the same time.
-var userInterfaceLanguage;
+var userInterfaceLanguage = null;
 var userReadsLeftToRightOrRightToLeft = "ltr"; /*Default is ltr » Use this to flip the arrow signs etc with transform rotate 180deg or scaleX -1 if UI is in Arabic or another rtl language*/
 var needLatinFonts = false;
 var needHitoicJapaneseFonts = false; // Kosugi Motoya font is for Hitoic only - It doesn't have simplified chinese or hangul characters
 
 // Set user interface and fonts
-if (domainNameOfTheClone.search("hanaserutoii") >= 0) {
+if (full_URL_ofTheClone.search("hanaserutoii") >= 0 || full_URL_ofTheClone.search("syabererutoii") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
   // JA - hanaserutoiidesuyone or ...github.io
   userInterfaceLanguage = "ja";
   userReadsLeftToRightOrRightToLeft = "ltr";
   needHitoicJapaneseFonts = true;
-} else if (domainNameOfTheClone.search("dilogren") >= 0) {
+} else if (full_URL_ofTheClone.search("birdildahakon") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
   // TR - dilogrenherkeslekonus or ...github.io
   userInterfaceLanguage = "tr";
-  userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullan
+  userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullanmak yerine txt dosyalarını dönüştürücü ile ters çevirmek daha mantıklı mı?
   needLatinFonts = true;
 } else {
   // EN
-  userInterfaceLanguage = "en"; // Unlike teaching-files' paths we can go without implementing the american vs british difference and display a united user interface
+  userInterfaceLanguage = "en"; // Unlike teaching-files' paths we can go without implementing the american vs british difference and display a united user interface or can we?
   userReadsLeftToRightOrRightToLeft = "ltr";
   needLatinFonts = true;
 }
 
 /*_____HEADERS to make fetch work with txt files with non-english characters properly________*/
 var myHeaders = new Headers(); // Apache server default ayarları yüzünden böyle buna gerek var.
-// ASLINDA: langCodeForTeachingFilePaths değişkeninin tr olma olasılığı var ki hatta userInterfaceLanguage tr olmasa bile.
-// AMA HER NASILSA DOĞRU ÇALIŞIYOR: Ş ğ are somehow displayed correctly even though the text file is called without charset=iso-8859-9 from js_for_the_bilingual_return_button
+// Çağrılan txt dosyasındaki ÇĞİÖŞÜçğıöşü'nın ��������� yerine doğru görünmesi için charset=iso-8859-9 gerek; charset=utf-8 ile olmuyor.
+// Dikkat! Bunun doğru çalışması için çağrılan txt dosyasının UTF-8 ile kaydedilmiş olması gerek.
+
+// ASLINDA: langCodeForTeachingFilePaths değişkeninin tr_istanbul olma olasılığı var ki hattã userInterfaceLanguage tr olmasa bile.
+// AMA ŞU HER NASILSA DOĞRU ÇALIŞIYOR:
+/* // Ş ğ are somehow displayed correctly even though the text file is called without charset=iso-8859-9 from js_for_the_bilingual_return_button
 if (userInterfaceLanguage=="tr") { // PLACE IT RIGHT AFTER userInterfaceLanguage ASSIGNMENTS
-  // Çağrılan txt dosyasındaki ÇĞİÖŞÜçğıöşü'nın ��������� yerine doğru görünmesi için charset=iso-8859-9 gerek; charset=utf-8 ile olmuyor.
-  // Dikkat! Bunun doğru çalışması için çağrılan txt dosyasının UTF-8 ile kaydedilmiş olması gerek.
   myHeaders.append('Content-Type','text/plain; charset=iso-8859-9');
 }
+*/
+// YİNE DE GARANTİ OLSUN DİYE BİZ ŞÖYLE YAPALIM:
+if (langCodeForTeachingFilePaths) { // parent window level
+  if (userInterfaceLanguage=="tr" || langCodeForTeachingFilePaths.substring(0,2)=="tr") {
+    myHeaders.append('Content-Type','text/plain; charset=iso-8859-9');
+  }
+}
+if (parent.langCodeForTeachingFilePaths) { // iframe window level
+  if (userInterfaceLanguage=="tr" || parent.langCodeForTeachingFilePaths.substring(0,2)=="tr") {
+    myHeaders.append('Content-Type','text/plain; charset=iso-8859-9');
+  }
+}
+
+
 
 /*___________________________________*/
 // Get all the cool fonts for BOTH PARENT HTML AND IFRAME HTML
@@ -151,6 +151,7 @@ if (needHitoicJapaneseFonts) {
     let allButtons = document.getElementsByTagName("BUTTON"); // HERE WE CAN: do styling for all buttons when user interface is JA
     let b;
     for (b = 0; b < allButtons.length; b++) { allButtons[b].style.fontFamily = '"Kosugi Maru", sans-serif'; }
+
     /* Didn't work - will try setting each element via js that creates it
     // Kosugi font looks better with more line-height and more letter-spacing
     let allPs = document.getElementsByTagName("P");
@@ -161,11 +162,40 @@ if (needHitoicJapaneseFonts) {
     //let allAsides = document.getElementsByTagName("ASIDE");
     //let j;
     //for (j = 0; j < allAsides.length; j++) {  allAsides[j].style.fontFamily = '"Kosugi Maru", sans-serif';  }
+    
 }
 
+
+/*_____DUMMY IMG____*/
+var onePixelTransparentGif = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="; // Use wherever needed. Like in resetting webp animation playback.
+function resetWebp(theWebpInsideImgElement) {
+  // To use await and make the code execution pause if necessary »»» return new Promise(resolve => { });
+  // and call resolve() when ready
+    const originalSrc = theWebpInsideImgElement.src;
+    theWebpInsideImgElement.src = onePixelTransparentGif;
+    function revert() { theWebpInsideImgElement.src = originalSrc; }
+    requestAnimationFrame(revert); // use raf instead of setTimeout // setTimeout(function () {   }, 50);
+}
 
 /*__CUSTOM CURSOR__*/
 const theMainElement = document.getElementsByTagName("MAIN")[0];
 if (theMainElement) {
   theMainElement.classList.add("defaultCursor"); // See css_for_every_single_html
+}
+
+/*__Check support for dvw dvh__*/
+var dynamicViewportUnitsAreSupported = null;
+if ('CSS' in window && 'supports' in window.CSS) {
+  // Check if the browser supports the specific CSS feature
+  if (window.CSS.supports('width', '1dvw') && window.CSS.supports('height', '1dvh')) {
+    //console.warn('Dynamic viewport units are supported.'); // TESTED: It works
+    dynamicViewportUnitsAreSupported = true;
+  } else {
+    //console.warn('Dynamic viewport units are not fully supported.'); // TESTED: It works
+    dynamicViewportUnitsAreSupported = false;
+  }
+} else {
+  // Ancient browsers
+  // console.warn('Browser does not support CSS.supports.'); // Couldn't test because it's hard to find such an old browser in 2023 but will probably work
+  dynamicViewportUnitsAreSupported = false;
 }

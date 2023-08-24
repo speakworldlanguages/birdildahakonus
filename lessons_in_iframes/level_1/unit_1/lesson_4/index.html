@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-
+    <!-- TAKEBREAD -->
     <title>1-1-4 📥</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex" />
@@ -11,35 +11,43 @@
     <link rel="stylesheet" href="/css_reusables/css_for_lessons_with_interactables.css"> <!-- Fill MAIN with the right color -->
     <link rel="stylesheet" href="/css_reusables/css_for_displaying_translation_help.css"> <!-- MOBILES: Draggable man | DESKTOPS: movie subtitle style -->
     <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css"> <!-- Wavesurfer teacher box visual style -->
-    <link rel="stylesheet" href="take_bread.css">
-
-    <script defer src="/js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, deviceDetector, fonts, fetch headers, onePixelTransparentGif...*/</script>
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <link rel="stylesheet" href="/lessons_in_iframes/level_1/unit_1/lesson_4/take_bread.css">
+    <!-- Empty line 1 -->
+    <!-- Empty line 2 -->
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*LET userInterfaceLanguage DEPEND ON DOMAIN NAME, fetch headers, fonts, resetWebp, canVibrate, defaultCursor*/</script>
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
     <script defer src="/js_reusables/js_for_displaying_translation_help.js">/*Desktops: Like movie subtitles, Mobiles: Drag the figure down*/</script>
     <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
-
-    <!-- Uncomment to use the console on mobiles -->
-    <!-- <script src="/third_party_js/eruda.min.js"></script> -->
-    <!-- <script>eruda.init();</script> -->
-    <!-- In case of testing without error hunting, can use parent.console.log() -->
-
-    <script>
-      window.addEventListener("load",startDownloadingTheNextLesson,{once:true});
-      function startDownloadingTheNextLesson() {
-        if (!localStorage.loadFiles11nAnd121WasSuccessful) {
-          setTimeout(function () { const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_reusables/caching_functions_for_each_lesson/11notice_and_121.js"; document.body.appendChild(delayedScript); },6000);
-        } // Why wait for three seconds? Is it totally meaningless? We want to prioritize howler sounds of this lesson to be loaded before the files of the next lesson, but will it have any effect?
-      }
-    </script>
-
+    <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
     <!-- We do not need the microphone plugin in this case -->
     <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
-    <!--  -->
-    <script defer src="take_bread.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <script defer src="/lessons_in_iframes/level_1/unit_1/lesson_4/take_bread.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
+    <!-- Empty line 1 -->
+    <!-- Empty line 2 -->
+    <!-- Uncomment to use the console on mobiles -->
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
 
+    <script> /*CACHE THE NEXT LESSON and make it offline ready*/
+      window.addEventListener("load",startDownloadingFilesForTheNextLessonIfNecessary,{once:true});
+      function startDownloadingFilesForTheNextLessonIfNecessary() { // Wait for a short while and get the files if device is still online, otherwise wait for internet connectivity.
+        setTimeout(afterSomeSeconds,7001); // After being offline, attempt downloading if two consecutive firings of updateOnlineStatus both report ONLINE // See js_for_online_and_offline_modes
+        function afterSomeSeconds() { // As of August 2023 parent.internetConnectivityIsNiceAndUsable is updated every 7000ms
+          if (parent.internetConnectivityIsNiceAndUsable) { // Start getting the files for the next lesson
+            const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_for_cache_handling/121_and_bakernotice1.js"; document.body.appendChild(delayedScript);
+          } else { // Check & Retry
+            let connectivityCheckInterval = setInterval(function () { // Analyse the recursion logic
+              if (parent.internetConnectivityIsNiceAndUsable) { clearInterval(connectivityCheckInterval); startDownloadingFilesForTheNextLessonIfNecessary(); }
+            }, 2000);
+          }
+        }
+      }
+    </script>
   </head>
-  <body>
 
+  <body>
     <!-- MAIN :: Start blurred -->
     <main style="filter: blur(8px); transition-property: filter; transition-timing-function: ease;"> <!-- See css_for_lessons_with_interactables -->
 
@@ -49,18 +57,18 @@
       <!-- PICTOGRAM AND SPEECH BUBBLES -->
       <div id="pictogramDivID" class="containerOfThePictogramMan"> <!-- position:absolute » Is that why filter blur doesn't work on main? -->
         <!-- state A B C ... 540x1080 -->
-        <img src="take_bread_state_a.webp" style="height:100vmin;" class="img540x1080">
-        <img src="take_bread_state_b.webp" style="height:100vmin; display:none;" class="img540x1080">
-        <img src="take_bread_state_c.webp" style="height:100vmin; display:none;" class="img540x1080">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/take_bread_state_a.webp" style="height:100vmin;" class="img540x1080">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/take_bread_state_b.webp" style="height:100vmin; display:none;" class="img540x1080">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/take_bread_state_c.webp" style="height:100vmin; display:none;" class="img540x1080">
         <!-- speech_bubble 540x1080 -->
-        <img src="speech_bubble_bread_and_hand.webp"  style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
-        <img src="speech_bubble_bread_and_arrow.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
-        <img src="speech_bubble_eat.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/speech_bubble_bread_and_hand.webp"  style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/speech_bubble_bread_and_arrow.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/speech_bubble_eat.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
         <!-- moving eyes 540x1080 -->
         <div id="movingEyesDivID" class="containerOfEyes delayedEyeMovement">
-          <img src="eyes_blinking_naturally.webp" style="height:100vmin;" class="img540x1080">
-          <img src="eyes_big_happy.webp"          style="height:100vmin; display:none;" class="img540x1080">
-          <img src="eyes_closed_happy.webp"       style="height:100vmin; display:none;" class="img540x1080">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/eyes_blinking_naturally.webp" style="height:100vmin;" class="img540x1080">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/eyes_big_happy.webp"          style="height:100vmin; display:none;" class="img540x1080">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/eyes_closed_happy.webp"       style="height:100vmin; display:none;" class="img540x1080">
         </div>
         <!-- area to make the giant hand cursor disappear -->
         <div id="antigoofingID" style="position:absolute; width:18.5vmin; height:77vmin; left:3vmin; top:20vmin; z-index:90; pointer-events: all;"> </div>
@@ -69,22 +77,22 @@
       <!-- FURNITURE -->
       <div id="tableDivID" class="containerOfTheTable">
         <!-- 540x1080 -->
-        <img src="the_table.webp" style="height:100vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/the_table.webp" style="height:100vmin;">
       </div>
       <!-- TABLEWARE -->
       <div id="emptyTrayDivID" class="trayContainer">
-        <img src="tray_without_hand.webp" style="width:20vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/tray_without_hand.webp" style="width:20vmin;">
       </div>
       <!-- DIMMER -->
       <div class="dimmer" style="pointer-events:none;"></div>
       <!-- AWESOME BREAD -->
       <div id="breadsFarAndNearID" class="containerOfTheTable" style="width:80vmin; margin-left:-15vmin; transition: transform 0.6s;">
-        <img src="far_bread.webp"  style="height:100vmin; transform-origin: 50% 46.62%; transform: scale(100%); transition: transform 0.8s, margin-top 0.8s, opacity 0.5s; right:0vmin; top: 0vmin;">
-        <img src="near_bread.webp" style="height:100vmin; transform-origin: 50% 46.62%; transform: scale(33%);  transition: transform 0.8s, opacity 0.5s; right:0vmin; top:-100vmin; position:relative; opacity:0;">
-        <img src="grab_the_loaf.webp" style="height:100vmin; right:0vmin; top:-200vmin; position:relative; display:none;">
-        <img src="bite1.webp"         style="height:100vmin; right:0vmin; top:-300vmin; position:relative; display:none; transform: scale(1.15);">
-        <img src="bite2.webp"         style="height:100vmin; right:0vmin; top:-400vmin; position:relative; display:none; transform: scale(1.15);">
-        <img src="bite3.webp"         style="height:100vmin; right:0vmin; top:-500vmin; position:relative; display:none; transform: scale(1.15);">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/far_bread.webp"  style="height:100vmin; transform-origin: 50% 46.62%; transform: scale(100%); transition: transform 0.8s, margin-top 0.8s, opacity 0.5s; right:0vmin; top: 0vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/near_bread.webp" style="height:100vmin; transform-origin: 50% 46.62%; transform: scale(33%);  transition: transform 0.8s, opacity 0.5s; right:0vmin; top:-100vmin; position:relative; opacity:0;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/grab_the_loaf.webp" style="height:100vmin; right:0vmin; top:-200vmin; position:relative; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/bite1.webp"         style="height:100vmin; right:0vmin; top:-300vmin; position:relative; display:none; transform: scale(1.15);">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/bite2.webp"         style="height:100vmin; right:0vmin; top:-400vmin; position:relative; display:none; transform: scale(1.15);">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/bite3.webp"         style="height:100vmin; right:0vmin; top:-500vmin; position:relative; display:none; transform: scale(1.15);">
 
         <div class="clickArea" style="position:absolute; width:21vmin; height:14vmin; left:29.5vmin; top:40vmin; pointer-events:all;"></div>
         <div class="touchMoveArea" style="position:absolute; width:36vmin; height:65vmin; left:22vmin; bottom:0vmin; pointer-events:all;">
@@ -92,19 +100,80 @@
         </div>
       </div>
       <!-- PINCH AREA (remove it on desktops) | height used to be 100vh -->
-      <div class="pinchArea" style="position:fixed; left:0px; top:0px; width:100vw; height:100%; display:none;"></div>
+      <div class="pinchArea" style="position:fixed; left:0px; top:0px; width:100vw; width:100dvw; height:100%; height:100dvh; display:none;"></div>
       <!-- TEETH -->
       <div class="teethContainer upperTeethContainer fastBiteSlowBiteToggle" style="visibility:hidden;">
         <div class="gums upperGum"></div>
-        <img src="teeth_upper.webp"> <!-- 2001x230 in file -->
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/teeth_upper.webp"> <!-- 2001x230 in file -->
       </div>
       <div class="teethContainer lowerTeethContainer fastBiteSlowBiteToggle" style="visibility:hidden;">
         <div class="gums lowerGum"></div>
-        <img src="teeth_lower.webp"> <!-- 2001x230 in file -->
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_4/teeth_lower.webp"> <!-- 2001x230 in file -->
       </div>
 
     </main>
     <!-- END OF MAIN -->
+
+    <script>
+      var aGreaterTouchStartArea = document.querySelector(".touchStartArea");
+      var aBetterClickArea = document.querySelector(".clickArea");
+      var swipeInstructionPart1 = document.createElement("IMG");
+      var swipeInstructionPart2 = document.createElement("IMG");
+      var pinchInstruction = document.createElement("IMG");
+      var aGreaterTouchMoveArea = document.querySelector(".touchMoveArea");
+      var thePinchArea = document.querySelector(".pinchArea"); // It is the whole viewport
+      var handCursor = document.createElement("IMG");
+      var upperTeeth = document.querySelector(".upperTeethContainer");
+      var lowerTeeth = document.querySelector(".lowerTeethContainer");
+      var keyboardInstructionPart1 = document.createElement("IMG");
+      var keyboardInstructionPart2 = document.createElement("IMG");
+      /*
+      document.addEventListener('readystatechange', (event) => {
+        if (event.target.readyState === 'complete') {  whatMustBeDoneAtFirstOnThisDevice();  }
+      });
+      */
+      // Must check if DOMContentLoaded is too early to access deviceDetector under new settings. See js_for_all_iframed_lesson_htmls and js_for_different_browsers_and_devices
+      // TESTED: It looks like everything is working OK.
+      window.addEventListener('DOMContentLoaded', whatMustBeDoneAtFirstOnThisDevice, { once: true });
+      function whatMustBeDoneAtFirstOnThisDevice() {
+        if (deviceDetector.device == "tablet") { //howToInteractInstruction
+          // TABLETS - TABLETS - TABLETS
+          aBetterClickArea.parentNode.removeChild(aBetterClickArea);
+          upperTeeth.children[1].classList.add("teethSizeMobile");
+          lowerTeeth.children[1].classList.add("teethSizeMobile");
+          swipeInstructionPart1.src = "/lessons_in_iframes/level_1/unit_1/lesson_4/tablet_swipe_a.webp"; // Fade in included in webp
+          swipeInstructionPart1.classList.add("howToInteractInstruction"); //// swipeInstructionPart1.style.opacity = "0.01";
+          swipeInstructionPart2.src = "/lessons_in_iframes/level_1/unit_1/lesson_4/tablet_swipe_b.webp";
+          swipeInstructionPart2.classList.add("howToInteractInstruction");
+          pinchInstruction.src = "/lessons_in_iframes/level_1/unit_1/lesson_4/tablet_pinch.webp";
+          pinchInstruction.classList.add("howToInteractInstruction");
+        } else if (deviceDetector.device == "phone") {
+          // PHONES - PHONES - PHONES
+          aBetterClickArea.parentNode.removeChild(aBetterClickArea);
+          upperTeeth.children[1].classList.add("teethSizeMobile");
+          lowerTeeth.children[1].classList.add("teethSizeMobile");
+          swipeInstructionPart1.src = "/lessons_in_iframes/level_1/unit_1/lesson_4/phone_swipe_a.webp"; // Fade in included in webp
+          swipeInstructionPart1.classList.add("howToInteractInstruction");   //// swipeInstructionPart1.style.opacity = "0.01";
+          swipeInstructionPart2.src = "/lessons_in_iframes/level_1/unit_1/lesson_4/phone_swipe_b.webp";
+          swipeInstructionPart2.classList.add("howToInteractInstruction");
+          pinchInstruction.src = "/lessons_in_iframes/level_1/unit_1/lesson_4/phone_pinch.webp";
+          pinchInstruction.classList.add("howToInteractInstruction");
+        } else {
+          // DESKTOPS - DESKTOPS - DESKTOPS
+          aGreaterTouchMoveArea.parentNode.removeChild(aGreaterTouchMoveArea); //aGreaterTouchStartArea will also be removed since it is contained by aGreaterTouchMoveArea
+          thePinchArea.parentNode.removeChild(thePinchArea); // Even though it's set to display none and will never turn to block on desktops
+          handCursor.src = "/user_interface/images/cursor/hand_cursor.webp";
+          handCursor.classList.add("handCursorSize");
+          upperTeeth.children[1].classList.add("teethSizeDesktop");
+          lowerTeeth.children[1].classList.add("teethSizeDesktop");
+          keyboardInstructionPart1.src = "/lessons_in_iframes/level_1/unit_1/lesson_4/keyboard_whole.webp"; // Fade in included in webp
+          keyboardInstructionPart1.classList.add("howToInteractInstruction"); //// keyboardInstructionPart1.style.opacity = "0.01";
+          keyboardInstructionPart2.src = "/lessons_in_iframes/level_1/unit_1/lesson_4/keyboard_down_arrow.webp";
+          keyboardInstructionPart2.classList.add("howToInteractInstruction");  // Try to get away with applying class for mobile
+          keyboardInstructionPart1.style.width = "55vmin";  keyboardInstructionPart2.style.width = "55vmin"; // Override value in css // Looks good enough
+        }
+      }
+    </script>
 
   </body>
 </html>

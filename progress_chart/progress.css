@@ -1,29 +1,61 @@
 nav:hover{ cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto; }
-.allUnitsInALevelContainer{ /*centered by main-flexbox*/
-  width:100vw; height: 100%;
-  display: flex; flex-direction: column; align-items: center;
-  gap: 1.5%;
-  overflow-y: auto;
+
+/*See css_for_sliding_navigation_menu » height: calc(22vmin + 48px)*/
+.allLevelsInTheAppContainer{
+  position: fixed; left: 0px; top: 0px; width:100vw; width:100dvw;
+  /*Do not use full height » Leave space to avoid getting blocked by the sliding-nav-menu*/
+  height: calc(100% - 22vmin); /*Use calc instead of ~80vmin to handle both portrait and landscape*/
+  /*Probably useless in this case» flex-shrink: 0;*/
+  display: flex;  /*Use row-reverse for RTL languages*/
+	align-items: center; /*The middle of the space left after subtracting an amount for the sliding-nav-menu*/
+  overflow-x: hidden;
+  overflow-y: auto; /* THIS IS NECESSARY WHEN progress_chart is viewed on a small phone in landscape mode */
+}
+@supports (height: 100dvh) {  .allLevelsInTheAppContainer{height: calc(100dvh - 22vmin);}  }
+
+.allLevelsInTheAppContainerDESKTOP{ margin-top: 3vmin; } /*Anything taller than 700px*/
+@media screen and (max-height: 700px) { .allLevelsInTheAppContainerDESKTOP{ margin-top: 4vmin; } }
+@media screen and (max-height: 650px) { .allLevelsInTheAppContainerDESKTOP{ margin-top: 5vmin; } }
+@media screen and (max-height: 600px) { .allLevelsInTheAppContainerDESKTOP{ margin-top: 6vmin; } }
+
+.flexDirectionForLTR{flex-direction: row; justify-content: left; /*Like left:0*/} /*See DOMContentLoaded*/
+.flexDirectionForRTL{flex-direction: row-reverse; justify-content: right; /*Like right:0*/} /*See DOMContentLoaded*/
+
+/* EACH SWIPEABLE SCREEN */
+.allUnitsInALevelContainer{
+  /*Contained by allLevelsInTheAppContainer*/
+  /*Contains the 3 units of a level [12 lessons (4x3)]*/
+  /*When the container is too small flex stops respecting 100vw and shrinks the div until no more emptiness remains in it*/
+  /* » So we force flex to respect 100vw by setting flex-shrink to 0*/
+  flex-shrink: 0;
+  /*!important doesn't do anything here except the fact that it warns the developer by indicating that something is indeed important*/
+  /*Chrome 107 and earlier don't support dvw » We can handle that without using @supports by attempting to overwrite the first value, like this*/
+  width:100vw !important; width:100dvw !important;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
   color: white; /* text color,,, in case text is added */
+  /* DEPRECATED gap: 1.5%; */
+  transform: translateX(0vw);
+  transition: transform 1s ease-in-out;
 }
-.allUnitsInALevelContainerDESKTOP{
-  margin-top: 150px;
-  margin-bottom: calc(43px + 5vmin); /* 5+18+5=33 See containerOfBilingualLongButtonDESKTOP in bilinguals.css */
-}
-.allUnitsInALevelContainerMOBILE{ margin-bottom: calc(80px + 5vmin); }
+@supports (height: 100dvw) {  .allUnitsInALevelContainer{transform: translateX(0dvw);}  }
+
+/*
 @media (orientation:landscape){
-  .allUnitsInALevelContainerMOBILE{ margin-top: 0vh; }
+
 }
 @media (orientation:portrait){
-  .allUnitsInALevelContainerMOBILE{ margin-top: 15vh; }
+
 }
+*/
 
 .allLessonsInAUnitContainer{
   min-width:80px; min-height: 80px;
   background-color: #bcc9d3;
   border-radius: 12px;
   display: flex; justify-content: center; align-items: center;
+  margin-top: 0.46vmin; margin-bottom: 0.46vmin;
 }
+
 
 .oneParticularLesson{
   width:70px; height: 70px;

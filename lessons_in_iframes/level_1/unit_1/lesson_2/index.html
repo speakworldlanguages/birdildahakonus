@@ -1,142 +1,133 @@
 <!DOCTYPE html>
 <html>
   <head>
-
-    <title>1-1-2 💧</title>
+    <!-- GIVEMEWATER -->
+    <title>1-1-2 📤</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex" />
     <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
     <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
-    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Disable long-touch on video -->
-    <link rel="stylesheet" href="/css_reusables/css_for_photos_and_videos_teach_a_new_word.css"> <!-- MAIN has gradient background -->
-    <link rel="stylesheet" href="/css_reusables/css_for_the_glassy_give_up_button.css"> <!-- Using ASIDE as a button with glassmorphism -->
-    <link rel="stylesheet" href="/css_reusables/css_for_wavesurfer_microphone_divs.css">
-    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css">
-
-    <script defer src="/js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, deviceDetector, fonts, fetch headers, onePixelTransparentGif...*/</script>
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Disable long-touch on video  -->
+    <link rel="stylesheet" href="/css_reusables/css_for_lessons_with_interactables.css"> <!-- Fill MAIN with the right color -->
+    <link rel="stylesheet" href="/css_reusables/css_for_displaying_translation_help.css"> <!-- MOBILES: Draggable man | DESKTOPS: movie subtitle style -->
+    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css"> <!-- Wavesurfer teacher box visual style -->
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <link rel="stylesheet" href="/lessons_in_iframes/level_1/unit_1/lesson_2/give_me_water.css">
+    <!-- Empty line 1 -->
+    <!-- Empty line 2 -->
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*LET userInterfaceLanguage DEPEND ON DOMAIN NAME, fetch headers, fonts, resetWebp, canVibrate, defaultCursor*/</script>
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
-    <script defer src="/js_reusables/js_for_handling_speech_give_up.js">/*White listed browsers: wait for speech ,,, others: don't wait*/</script>
-    <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
-    <script defer src="/third_party_js/wavesurfer.microphone.min.js">/*Audio visualization. Github: katspaugh*/</script>
-    <script defer src="/js_reusables/js_for_microphone_input_visualization.js">/*Start, Stop wavesurfer microphone*/</script>
+    <script defer src="/js_reusables/js_for_displaying_translation_help.js">/*Desktops: Like movie subtitles, Mobiles: Drag the figure down*/</script>
     <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
-    <script defer src="water.js">/*Progress handling for this lesson*/</script>
-
+    <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
+    <!-- We do not need the microphone plugin in this case -->
+    <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <script defer src="/lessons_in_iframes/level_1/unit_1/lesson_2/give_me_water.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
+    <!-- Empty line 1 -->
+    <!-- Empty line 2 -->
     <!-- Uncomment to use the console on mobiles -->
-    <!-- <script src="/third_party_js/eruda.min.js"></script> -->
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
-    <script>
-      window.addEventListener("load",startDownloadingTheNextLesson,{once:true});
-      function startDownloadingTheNextLesson() {
-        if (!localStorage.loadFiles113WasSuccessful) {
-          setTimeout(function () { const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_reusables/caching_functions_for_each_lesson/113.js"; document.body.appendChild(delayedScript); },6000);
-        } // Why wait for a few seconds? Is it totally meaningless? We want to prioritize howler sounds of this lesson to be loaded before the files of the next lesson, but will it have any effect?
+    <script> /*CACHE THE NEXT LESSON and make it offline ready*/
+      window.addEventListener("load",startDownloadingFilesForTheNextLessonIfNecessary,{once:true});
+      function startDownloadingFilesForTheNextLessonIfNecessary() { // Wait for a short while and get the files if device is still online, otherwise wait for internet connectivity.
+        setTimeout(afterSomeSeconds,7001); // After being offline, attempt downloading if two consecutive firings of updateOnlineStatus both report ONLINE // See js_for_online_and_offline_modes
+        function afterSomeSeconds() { // As of August 2023 parent.internetConnectivityIsNiceAndUsable is updated every 7000ms
+          if (parent.internetConnectivityIsNiceAndUsable) { // Start getting the files for the next lesson
+            const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_for_cache_handling/113.js"; document.body.appendChild(delayedScript);
+          } else { // Check & Retry
+            let connectivityCheckInterval = setInterval(function () { // Analyse the recursion logic
+              if (parent.internetConnectivityIsNiceAndUsable) { clearInterval(connectivityCheckInterval); startDownloadingFilesForTheNextLessonIfNecessary(); }
+            }, 2000);
+          }
+        }
       }
     </script>
   </head>
 
   <body>
-    <!-- MAIN -->
-    <main> <!-- BACKGROUND GRADIENT comes from css_for_photos_and_videos_teach_a_new_word | THE SIZE AND POSITION FIXED is in css_for_every_single_html -->
-      <!-- Photo pairs -->
-      <div id="doublesDivID" class="fullViewportFlexPortraitColumnLandscapeRow"> <!-- See css_for_photos_and_videos_teach_a_new_word.css -->
-        <div class="oneOfTheTwoDivsThatContainSquarePictures">
-          <img src="1.webp" id="imageA">
-          <img src="3.webp" style="display:none; top:-100%;" id="imageC">
-          <img src="5.webp" style="display:none; top:-200%;" id="imageE">
-        </div>
-        <div class="oneOfTheTwoDivsThatContainSquarePictures">
-          <img src="2.webp" id="imageB">
-          <img src="4.webp" style="display:none; top:-100%;" id="imageD">
-          <img src="6.webp" style="display:none; top:-200%;" id="imageF">
+    <!-- MAIN :: For some reason, applying filter blur via some class (in order to use keyframes) on main didn't work (and was mysterious) -->
+    <main style="filter: blur(8px); transition-property: filter;"> <!-- See css_for_lessons_with_interactables -->
+
+      <!-- IN CASE z-index doesn't work it's better if we put this element before others so that it appears UNDER EVERYTHING ELSE-->
+      <div id="theGroundDivID" class="theGround"> </div> <!-- Filled with img repeat-x via css background -->
+
+      <!-- PICTOGRAM AND SPEECH BUBBLES -->
+      <div id="pictogram1DivID" class="containerOfThePictogramMan"> <!-- position:absolute » Is that why filter blur doesn't work on main? -->
+        <!-- state A B C ... 540x1080 -->
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/give_me_water_state_a.webp"  style="height:100vmin;" class="img540x1080">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/give_me_water_state_b0.webp" style="height:100vmin; display:none;" class="img540x1080">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/give_me_water_state_b1.webp" style="height:100vmin; display:none;" class="img540x1080">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/give_me_water_state_b2.webp" style="height:100vmin; display:none;" class="img540x1080">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/give_me_water_state_c.webp"  style="height:100vmin; display:none;" class="img540x1080">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/give_me_water_state_d.webp"  style="height:100vmin; display:none;" class="img540x1080">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/give_me_water_state_e.webp"  style="height:100vmin; display:none;" class="img540x1080">
+        <!-- speech_bubble 540x1080 -->
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/speech_bubble_hand_give_me.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/speech_bubble_water.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
+        <!-- moving eyes 540x1080 -->
+        <div id="movingEyes1DivID" class="containerOfEyes delayedEyeMovement">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/eyes_blinking_naturally.webp" style="height:100vmin;" class="img540x1080">
         </div>
       </div>
-      <!-- End of photo pairs -->
+
+      <!-- FURNITURE -->
+      <div id="tableDivID" class="containerOfTheTable">
+        <!-- 540x1080 -->
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/the_table.webp" style="height:100vmin;">
+      </div>
+
+      <div id="emptyTrayDivID" class="trayContainer">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/tray_without_hand.webp" style="width:20vmin;">
+      </div>
+
+      <div id="theGlassDivID" class="glassContainerIfNoResizeHappens">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_2/0_glass.webp" style="width:20vmin;">
+        <svg class="preciseHoverSvg" style="width:20vmin;" x="0px" y="0px" width="432px" height="432px" viewBox="0 0 432 432" xml:space="preserve">
+          <polygon id="preciseAreaID" points="110.706,239 144.276,425.146 148.471,429.578 283.04,429.95 288.104,425.184 321.313,239 316.667,233 115.664,233 "/>
+        </svg>
+        <div class="touchDetectionArea"></div> <!-- CAUTION: Must remove this on DESKTOPS immediately otherwise it will block the clicks -->
+      </div>
+
+      <!-- NICE INSTRUCTION ARROW -->
+      <div class="containerOfTheTable">
+        <!-- 540x1080 -->
+        <img draggable="false" id="niceDownArrowImgID" src="/lessons_in_iframes/level_1/unit_1/lesson_2/nice_arrow_down_give_me_water.webp" style="height:100vmin; display:none;">
+        <img draggable="false" id="niceLeftArrowImgID" src="/lessons_in_iframes/level_1/unit_1/lesson_2/nice_arrow_left_give_me_water.webp" style="height:100vmin; display:none;">
+      </div>
+
+      <div class="winTestOnDesktopHitArea1"></div>
+      <div class="winTestOnDesktopHitArea2"></div>
+      <div class="winTestOnMobileHitArea1"></div>
+      <div class="winTestOnMobileHitArea2"></div>
+
     </main>
     <!-- END OF MAIN -->
 
-    <!-- Videos -->
-    <div id="containerOfVideosDivID" style="display:none;">
-      <video src="v1_vp9.webm" id="video1" playsinline muted style="height: 91vh;"></video>
-      <video src="v2_vp9.webm" id="video2" playsinline muted style="height: 62vh; display:none;"></video>
-      <script>
-        window.addEventListener("DOMContentLoaded",function(){
-          if (window.parent.isApple || window.parent.detectedBrowser.name == "Firefox") {
-            const v1 = document.getElementById('video1'); v1.src = "v1_h264.mp4";
-            const v2 = document.getElementById('video2'); v2.src = "v2_h264.mp4";
-          }
-        },{ once: true });
-      </script>
-    </div>
-
-    <!-- Background darkening -->
-    <div id="fullVpDarkBlueDivID" style="display:none;"> </div>
-
-    <!-- Single photos looping -->
-    <div id="singlesDivID" class="" style="display:none;">
-        <img src="c1.webp"   class="positionAbsoluteImg">
-        <img src="c2.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="5.webp"    class="positionAbsoluteImg" style="visibility:hidden;" id="putWaterfall1OrRemove">
-        <img src="c3.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c4.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="6.webp"    class="positionAbsoluteImg" style="visibility:hidden;" id="putWaterfall2OrRemove">
-        <img src="c5.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c6.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c7.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c8.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c9.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c10.webp"  class="positionAbsoluteImg" style="visibility:hidden;">
-    </div>
-    <!-- SPECIAL CASE FOR HANDLING BIGGER FILES: Load or skip and reorder -->
     <script>
-      window.addEventListener('DOMContentLoaded', function(){
-        /* waterfall webps are 4,68MB in total,,, and a bit hard on CPU ,,, Use https://downloadtimecalculator.com */
-        function getConnectionForWater() {return navigator.connection || navigator.mozConnection || navigator.webkitConnection || navigator.msConnection;}
-        var internetForWater = getConnectionForWater();
-        if (deviceDetector.isMobile) { // PHONE & TABLET
-          if(internetForWater){ // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
-            if(internetForWater.downlink>=2){ /*Fast enough: Let it load and display*/ // Get waterfalls and show
-              switchToAnimatedWebpWaterfallsMOBILE();
-            } else { preventRepetitionOf5And6(); } // Too slow: Loading of waterfalls won't make it in time
-          } else { switchToAnimatedWebpWaterfallsMOBILE(); } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
-        } else { // DESKTOP
-          if(internetForWater){ // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
-            if(internetForWater.downlink>=2){ /*Fast enough: Let it load and display*/ // Get waterfalls and show
-              switchToAnimatedWebpWaterfallsDESKTOP();
-            } else { preventRepetitionOf5And6(); } // Too slow: Loading of waterfalls won't make it in time
-          } else { switchToAnimatedWebpWaterfallsDESKTOP(); } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
+      var youMustMoveTheMouseNowImg = document.createElement("IMG");
+      var aBetterTouchArea = document.querySelector(".touchDetectionArea");
+      var winAreaMobileDiv1 = document.querySelector(".winTestOnMobileHitArea1");
+      var winAreaMobileDiv2 = document.querySelector(".winTestOnMobileHitArea2");
+      var winAreaDesktopDiv1 = document.querySelector(".winTestOnDesktopHitArea1");
+      var winAreaDesktopDiv2 = document.querySelector(".winTestOnDesktopHitArea2");
+      // ---
+      window.addEventListener('DOMContentLoaded', whatMustBeDoneAtFirstOnThisDevice, { once: true });
+      function whatMustBeDoneAtFirstOnThisDevice() {
+        if (deviceDetector.device == "desktop") {
+          youMustMoveTheMouseNowImg.src = "/lessons_in_iframes/level_1/unit_1/lesson_2/move_the_mouse.webp";
+          youMustMoveTheMouseNowImg.classList.add("youMustMoveTheMouseToContinue");
+          aBetterTouchArea.parentNode.removeChild(aBetterTouchArea);
+          winAreaMobileDiv1.parentNode.removeChild(winAreaMobileDiv1);
+          winAreaMobileDiv2.parentNode.removeChild(winAreaMobileDiv2);
+        } else {
+          winAreaDesktopDiv1.parentNode.removeChild(winAreaDesktopDiv1);
+          winAreaDesktopDiv2.parentNode.removeChild(winAreaDesktopDiv2);
         }
-      }, { once: true });
-      function switchToAnimatedWebpWaterfallsDESKTOP() {
-        const turnIntoAWaterfall1 = document.getElementById('imageE'); turnIntoAWaterfall1.src = "waterfall1.webp";
-        const turnIntoAWaterfall2 = document.getElementById('imageF'); turnIntoAWaterfall2.src = "waterfall2.webp";
-      }
-      function switchToAnimatedWebpWaterfallsMOBILE() {
-        const turnIntoAWaterfall1 = document.getElementById('putWaterfall1OrRemove'); turnIntoAWaterfall1.src = "waterfall1.webp";
-        const turnIntoAWaterfall2 = document.getElementById('putWaterfall2OrRemove'); turnIntoAWaterfall2.src = "waterfall2.webp";
-      }
-      function preventRepetitionOf5And6() { // No waterfalls
-        const becomesUnnecessary1 = document.getElementById('putWaterfall1OrRemove'); becomesUnnecessary1.parentNode.removeChild(becomesUnnecessary1);
-        const becomesUnnecessary2 = document.getElementById('putWaterfall2OrRemove'); becomesUnnecessary2.parentNode.removeChild(becomesUnnecessary2);
       }
     </script>
-
-    <!-- “Now it’s your turn” animation 5100ms -->
-    <img id="nowYouSayItIMG" src="/user_interface/images/now_you_say_it_to_speech_recognition.webp" style="display:none;">
-    <script>
-    window.addEventListener("DOMContentLoaded",function(){
-      if (window.parent.isApple) {
-        const nowYouSayIt = document.getElementById('nowYouSayItIMG'); nowYouSayIt.src = "/user_interface/images/now_you_say_it_to_speech_recognition.gif";
-      }
-    },{ once: true });
-    </script>
-
-    <!-- GIVE UP\PROCEED TO NEXT -->
-    <aside class="glassButtonStartHidden"> <!-- See css_for_all_iframed_lesson_htmls.css -->
-      <p id="theTextInsideSkipNextButtonID">X</p> <!-- See js_for_handling_speech_give_up.js -->
-    </aside>
-    <!-- END OF GIVE UP\PROCEED TO NEXT -->
 
   </body>
 </html>

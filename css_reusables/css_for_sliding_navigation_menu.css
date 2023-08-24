@@ -6,9 +6,9 @@
   z-index: 1111;
   position: fixed;
   left: 0px;
-  right: 0px;
+  right: 0px; /*Fit without using 100dvw*/
   bottom: 0vh; /*See js_for_the_sliding_navigation_menu.js*/
-  height: calc(22vmin + 48px);
+  height: calc(22vmin + 48px); /*See parent index.html for the relocation of the footer for the condition (!isApple) AND SEE 48px height of footerPhoneOrTablet in css_for_the_container_parent_html*/
   overflow: hidden;
   margin-bottom: 0vmin;
   transition: margin-bottom 0.5s;
@@ -19,7 +19,7 @@
 .theSmallNavigationMenuMOBILEStyling{
   position: absolute;
   top: 0.5vmin;
-  width: 100vw;
+  width: 100%; /*The container of this has left: 0px; right: 0px; SO IT SHOULD WORK WITHOUT width: 100vw; width: 100dvw;*/
   height: 21vmin;
   display: flex;  align-items: center;  justify-content: center;
   overflow: hidden;
@@ -72,7 +72,7 @@
 
 /* When user clicks HOME button while already viewing progress chart */
 .flashBordersWithInsetWhiteBoxShadow{ /*See js_for_the_sliding_navigation_menu.js*/
-  position: fixed; left: 0; top: 0; width: 100vw; height: 100%; pointer-events: none; /*height used to be 100vh*/
+  position: fixed; left: 0; top: 0; width: 100vw; width: 100dvw; height: 100%; height: 100dvh; pointer-events: none; /*height used to be 100vh*/
   animation-name: flashBorders; animation-duration: 0.25s; animation-iteration-count: 4; animation-fill-mode: forwards;
   box-shadow:0px 0px 200px 30px #dceff8 inset;
   background-color: rgba(255, 255, 255, 0.07);

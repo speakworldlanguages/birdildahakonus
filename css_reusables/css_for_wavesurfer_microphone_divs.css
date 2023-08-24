@@ -4,14 +4,14 @@
   position: fixed;
   z-index: 87; /*Give up button is 88 in css_for_photos_and_videos_teach_a_new_word.css*/
   box-sizing: border-box;
-  width: 50%;
+  width: 50vw; width: 50dvw;
   height:100px;
   opacity: 0;
   visibility: hidden;
   filter: drop-shadow(0px 0px 5px rgb(57, 76, 90));
-  bottom: 0%;
-  left: 50%;
-  transform: translate(-50%, 48%) scaleX(2) scaleY(2.2); /*Through trial-error*/
+  bottom: 0px;
+  left: 50vw; left: 50dvw;
+  transform: translate(-50%, 50%) scaleX(2) scaleY(2); /*Through trial-error*/
 }
 
 .addThisToMakeItFadeIn{

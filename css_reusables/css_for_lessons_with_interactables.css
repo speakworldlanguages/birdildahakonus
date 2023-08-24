@@ -31,8 +31,8 @@ main{
 }
 
 .typeOfDivThatContainsInteractables img{
-  max-width: 100vw;
-  height: 100vmin;
+  max-width: 100vw; max-width: 100dvw;
+  height: 100vmin; height: 100dvmin;
   object-fit: scale-down;
 }
 */
@@ -94,7 +94,7 @@ main{
 */
     /* 2.5 : 1 aspect ratio */
 /*
-    width: 100vw;
+    width: 100vw; width: 100dvw;
   }
   .beSquareInPortraitAndFullWidthRectangleInLandscape img{
     width: 100%;
@@ -122,8 +122,8 @@ main{
     justify-content: flex-end;
   }
   .beSquareInPortraitAndFullWidthRectangleInLandscape{
-    width: 100vw;
-    height: 100vw;
+    width: 100vw; width: 100dvw;
+    height: 100vw; height: 100dvw;
   }
   .beSquareInPortraitAndFullWidthRectangleInLandscape img{
     height: 100%;

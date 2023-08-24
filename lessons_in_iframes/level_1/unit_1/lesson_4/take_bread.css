@@ -1,13 +1,13 @@
 .theGround{
   position: fixed;
   bottom: 0px;
-  width:100vw;
+  left:0px; width:100vw;  width:100dvw;
   background: url(the_ground_repeat_x.webp);
   background-repeat: repeat-x;
 }
 .containerOfThePictogramMan{
   position: fixed;
-  width: 50vmin; height: 100vmin;
+  width: 50vmin; height: 100vmin; /*DO WE NEED dvmin units for height in this case???*/
   pointer-events: none;
   left: calc(50vw - 26vmin);
 }
@@ -17,7 +17,7 @@
   .containerOfTheTable{bottom: 8.6vmin;}/*left: calc(50vw - 3vmin)*/
   .trayContainer{bottom: 48.6vmin;}/*left: calc(50vw - 3vmin)*/
   /*---*/
-  .swipeInstructionPosition{bottom: calc(30vw + 40vh); right:50vmin; transform: translate(50%,0%); margin-right: 0vmin;}
+  .howToInteractInstruction{bottom: calc(30vw + 40vh); right:50vmin; transform: translate(50%,0%); margin-right: 0vmin;}
 }
 @media (orientation: landscape) {
   .theGround{ height: 8.6vmin; background-size: 8.6vmin 8.6vmin; }
@@ -25,7 +25,7 @@
   .containerOfTheTable{bottom: 0vmin;}/*left: calc(50vw - 6vmin)*/
   .trayContainer{bottom: 40vmin;}/*left: calc(50vw - 6vmin)*/
   /*---*/
-  .swipeInstructionPosition{bottom: 50vh; right: calc(25vw - 16.1vmin); transform: translate(50%,46%);}
+  .howToInteractInstruction{bottom: 50vh; right: calc(25vw - 16.1vmin); transform: translate(50%,46%);}
 }
 .img540x1080{ position: absolute; left: 0; top: 0; pointer-events: none; }
 /*Speech bubbles grow shrink*/
@@ -74,7 +74,7 @@
   100%{ filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.15)); }
 }
 .dimmer{
-  position: fixed; left: 0px; top: 0px; width: 100vw; height: 100%; /*height used to be 100vh*/
+  position: fixed; left: 0px; top: 0px; width: 100vw; width: 100dvw; height: 100%; height: 100dvh; /*height used to be 100vh*/
   background-color: #00aaff;
   mix-blend-mode: multiply;
   opacity: 0; /*to 0.08 max*/
@@ -90,8 +90,10 @@
 }
 .getExtraLarge{ animation-name: biggerBread; animation-duration: 2.5s; animation-fill-mode: forwards; }
 @keyframes biggerBread {  0%{ transform: scale(1); }  100%{transform: scale(1.15);}  }
+/*As of August2023 animations of divs function without dvw or dvh units*/
+/*Test and see if dvw or dvh units are needed and use @supports to assing if so*/
 .teethContainer{
-  position: fixed; left: 0px; width: 100vw; height: 100vh; /*100vh works but should we still use 100% instead???*/
+  position: fixed; left: 0px; width: 100vw; height: 100vh; /*100vh works*/
   display: flex; align-items: center;
   transition: top 0.10s, transform 0.20s;
 }
@@ -109,6 +111,6 @@
 .teethSizeDesktop{height: 115px;}
 .teethSizeMobile{width: 125vmin;}
 
-.swipeInstructionPosition{position: fixed; pointer-events: none; z-index: 90; filter: drop-shadow(0 0 6vmin #ebf9ff); transition: opacity 0.5s; width: 62vmin;}
+.howToInteractInstruction{position: fixed; pointer-events: none; z-index: 90; filter: drop-shadow(0 0 6vmin #ebf9ff); transition: opacity 0.5s; width: 62vmin;}
 .itDisappears{ animation: simpleDisappear 1.5s;  animation-fill-mode: forwards; }
 @keyframes simpleDisappear { 0%{ opacity: 1; }  100%{ opacity: 0; visibility: hidden; } }

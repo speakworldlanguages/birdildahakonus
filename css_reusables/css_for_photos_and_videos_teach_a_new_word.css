@@ -1,5 +1,6 @@
 main{
-  background-image: linear-gradient(#becbd5,#dbe2e8); /* We need this in photo-pair lessons. BUT WE NEED A FLAT COLOR in interactables */
+  background-image: linear-gradient(#becbd5,#dbe2e8); /* We need this gradient in photo-pair lessons. BUT WE NEED A FLAT COLOR in interactables */
+  /* See main in css_for_every_single_html */
   /*Also see css_for_lessons_with_interactables*/
 }
 
@@ -26,7 +27,6 @@ main{
   border-radius: 10px;
   position: relative; /*NECESSARY: Use this with top:-100% -200% instead of absolute,,, absolute didn't work to place images correctly on top of each other*/
   /*Reason why absolute didn't work is because these have inherited [display: flex] from their parent but they should have been display: block;*/
-  /*Also note that main is both left:0 right:0,,, and could have been left:0 width:100vw*/
   pointer-events: none; /*Disable click drag*/
 }
 
@@ -90,12 +90,12 @@ main{
 }
 .makePhotosAppear{  animation-name: dispBlockAndFadeToFullOpacity; animation-timing-function: ease; animation-fill-mode: forwards;  }
 @keyframes dispBlockAndFadeToFullOpacity {
-  0%{ opacity: 0; }  100%{ opacity: 1; } /* display: block; does not work here */
+  0%{ opacity: 0; visibility: visible; }  100%{ opacity: 1; } /* display: block; does not work here */
 }
 
 #fullVpDarkBlueDivID{
   position: fixed; pointer-events: none;
-  left: 0px; top: 0px; width: 100vw; height:100%; /*height used to be 100vh*/
+  left: 0px; top: 0px; width: 100vw; width: 100dvw; height:100%; height:100dvh; /*height used to be 100vh*/
 }
 .darkenLightenBackground{  animation-name: lightDarkLightAnim;  animation-timing-function: ease; animation-fill-mode: forwards;  }
 @keyframes lightDarkLightAnim {
@@ -105,12 +105,32 @@ main{
   100%{ background-color: rgba(66,85,102,0); }
 }
 
-#nowYouSayItIMG{ /*Must reset this IMG before doing [display:block] with src=onePixelTransparentGif*/
+
+.nowYouSayItImgContainer{
   position: fixed; pointer-events: none;
-  width:250px; /*Good for both desktops and mobiles*/
-  left: 50%; top:50%;
-  transform: translate(-50%,-50%); /*No flexbox container*/
+  width:250px; height:250px; /*Good for both desktops and mobiles*/
+  left: 50%; top:50%; margin: 0px; padding: 0px;
+  transform: translate(-50%,-50%);
+  overflow: hidden;
 }
+#nowYouSayItImgID{
+  pointer-events: none;
+  width:250px; /*leave height to auto as webp height will be 250px while avif height will be 2500px*/
+  left: 0px; top:0px;
+}
+.animateAvifSprite{ /*Make the duration a bit less than webp » webp is 5100ms*/
+  animation-name: spriteFrames;
+  animation-duration: 4.9s;
+  animation-fill-mode: forwards;
+  animation-timing-function: steps(10,jump-none); /* 10 steps for 2500px long 10 framed sprite » 2500 - 250 = 2250 */
+}
+@keyframes spriteFrames {
+  /* 0%{ margin-top: 0px; } MARGIN TOP IS INACCURATE: Steps are miscalculated » It moves some frames slightly out of position
+  100%{ margin-top: -2250px; } */
+  0%{ transform: translateY(0px);}
+  100%{ transform: translateY(-2250px); }
+}
+
 
 #singlesDivID{
   position: fixed; pointer-events: none;

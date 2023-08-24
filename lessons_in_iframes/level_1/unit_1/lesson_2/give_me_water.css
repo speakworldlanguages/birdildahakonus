@@ -1,0 +1,136 @@
+.theGround{
+  position: fixed;
+  left:0px; width:100vw;  width:100dvw;
+  bottom: 0px; height: 8.6vmin; /*We probably don't want dvmin units for height in this case*/
+  background: url(the_ground_repeat_x.webp);
+  background-repeat: repeat-x;
+  background-size: 8.6vmin 8.6vmin;
+}
+.containerOfThePictogramMan{
+  position: fixed;
+  bottom: 0vmin; /*left: 7.5vmin;*/
+  width: 50vmin; height: 100vmin; /*DO WE NEED dvmin units for height in this case???*/
+  pointer-events: none;
+}
+@media (max-aspect-ratio: 4/3) {
+  .theGround{ height: 25.8vmin; background-size: 8.6vmin 25.8vmin; }
+  .containerOfThePictogramMan{bottom: 8.6vmin; left: 3vmin;}
+  .winTestOnDesktopHitArea1{left: 11vmin; bottom: 70.6vmin;}
+  .winTestOnDesktopHitArea2{left: 8vmin;  bottom: 45.6vmin;}
+  .winTestOnMobileHitArea1{ left: 7.5vmin; bottom: 18.6vmin;}
+  .winTestOnMobileHitArea2{ left: 7.5vmin; bottom: 48.6vmin;}
+  .containerOfTheTable{bottom: 8.6vmin; right: -5vmin;}
+  .trayContainer{bottom: 48.6vmin; right: -5vmin;}
+  .glassContainerIfNoResizeHappens{bottom:58.6vmin; right:10vmin;}
+}
+@media (min-aspect-ratio: 4/3) {
+  .theGround{ height: 8.6vmin; background-size: 8.6vmin 8.6vmin; }
+  .containerOfThePictogramMan{bottom: 0vmin; left: 24vmin;}
+  .winTestOnDesktopHitArea1{left: 32vmin; bottom: 62vmin;}
+  .winTestOnDesktopHitArea2{left: 29vmin; bottom: 37vmin;}
+  .winTestOnMobileHitArea1{ left: 28.5vmin; bottom: 10vmin;}
+  .winTestOnMobileHitArea2{ left: 28.5vmin; bottom: 40vmin;}
+  .containerOfTheTable{bottom: 0vmin; right: 17vmin;}
+  .trayContainer{bottom: 40vmin; right: 17vmin;}
+  .glassContainerIfNoResizeHappens{bottom:50vmin; right:32vmin;}
+}
+.img540x1080{ position: absolute; left: 0; top: 0; pointer-events: none; }
+/*Speech bubbles grow shrink*/
+.transformOriginBottomLeft{ transform-origin: 44% 25%; }
+/*Speech bubbles appear disappear*/
+.fadeIn{ animation-name: opacityAnim1; animation-duration: .6s; animation-fill-mode: forwards; }
+@keyframes opacityAnim1 {  0%{opacity: 0; transform: scale(.5);} 100%{opacity: 1; transform: scale(1);}  }
+.fadeOut{ animation-name: opacityAnim2; animation-duration: .6s; animation-fill-mode: forwards; }
+@keyframes opacityAnim2 {  0%{opacity: 1; transform: scale(1);} 100%{opacity: 0; transform: scale(.5);}  }
+/*---*/
+.containerOfEyes{position: absolute; left: 0; top: 0; width:100%; height: 100%;}
+.delayedEyeMovement{transition: left 0.3s, top 0.3s; transition-timing-function: ease;}
+/*---*/
+.winTestOnDesktopHitArea1{
+  z-index: 400; position: fixed;
+  width: 12vmin; height: 14vmin;
+  border-radius: 6vmin 6vmin 0vmin 0vmin;
+  background-color: rgba(33, 33, 133, 0.0);
+}
+.winTestOnDesktopHitArea2{
+  z-index: 401; position: fixed;
+  width: 17vmin; height: 25vmin;
+  border-radius: 0vmin 0vmin 7vmin 7vmin;
+  background-color: rgba(22, 122, 22, 0.0);
+}
+.winTestOnMobileHitArea1{
+  z-index: 403; position: fixed;
+  width: 20vmin; height: 30vmin;
+  border-radius: 0vmin 0vmin 9vmin 9vmin;
+  background-color: rgba(33, 33, 133, 0.0);
+}
+.winTestOnMobileHitArea2{
+  z-index: 404; position: fixed;
+  width: 17.5vmin; height: 20vmin;
+  border-radius: 8vmin 8vmin 0vmin 0vmin;
+  background-color: rgba(22, 122, 22, 0.0);
+}
+/*---*/
+/* 540px by 1080 px */
+.containerOfTheTable{
+  position:fixed;
+  width: 50vmin;
+  height: 100vmin; /*DO WE NEED dvmin units for height in this case???*/
+  pointer-events: none;
+}
+
+.trayContainer{
+  transform-origin: 50% 50%;
+  position:fixed; width:50vmin; height:10vmin;
+  /* bottom:40vmin; right:0vmin; */
+  pointer-events: none;
+  display: flex;   flex-direction: column;   align-items: center;
+}
+
+.glassContainerIfNoResizeHappens{
+  pointer-events: none;
+  z-index: 30;
+  position:fixed; width:20vmin; height:20vmin;
+}
+.glassContainerOnceResizeHappens{
+  pointer-events: none;
+  z-index: 30;
+  position:fixed; width:20vmin; height:20vmin;
+  top:-15vmin; left:-10vmin;
+}
+.preciseHoverSvg{
+  pointer-events: all;
+  position:absolute; width:20vmin; height:20vmin;
+  top:0px; left:0px;
+  opacity: 0;
+  mix-blend-mode: overlay;
+}
+.glassContainerWithFirstTouch{
+  pointer-events: none;
+  z-index: 30;
+  position:fixed; width:20vmin; height:20vmin;
+  top: 0px; left: 0px;
+}
+.startDoingTransitions{transition: all 0.2s;}
+.touchDetectionArea{
+  pointer-events: all;
+  position:absolute; width:18vmin; height:18vmin;
+  top:6vmin; left:1vmin;
+  opacity: 0;
+  background: radial-gradient(rgba(106, 232, 235, 1),rgba(244, 254, 255, 0.4),rgba(255, 255, 255, 0.0),rgba(255, 255, 255, 0.0));
+  mix-blend-mode: color-dodge;
+  transition: opacity 0.25s;
+}
+
+/*Pause happens when browser window is resized*/
+.youMustMoveTheMouseToContinue{
+  position:fixed; top:50%; left:50%; transform: translate(-50%,-50%);
+  height: 62vmin;
+  pointer-events: none;
+}
+.noMoreFlyingGlass{animation-name: theEnd; animation-duration: 0.3s; animation-fill-mode: forwards;}
+@keyframes theEnd {
+  0%{opacity: 1; transform: scale(1);}
+  100%{opacity: 0; transform: scale(0.85);}
+}
+/*The ending looks BETTER WITHOUT CAMERA ZOOM in this case*/

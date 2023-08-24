@@ -1,69 +1,75 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 // This is included in parent htmls only. Not in lesson htmls.
 // Even though this is deferred, looks like we still need to wait for the load event before we call a function from another js file.
 // iPhone-Safari won't allow fullscreen as of 2022 UNLESS the app is added to HOMESCREEN and started from there
 // See js_for_different_browsers_and_devices ... Also see js_for_the_sliding_navigation_menu
-let enterSound, exitSound, touchstartSound;
+let enterSound, exitSoundIsAlsoTouchStart;
 
 var hasGoneFullscreen = false;
 // Go fullscreen by touching anywhere on the screen.
 window.addEventListener("load",function() {
   enterSound = new Howl({  src: ["/user_interface/sounds/fullscreen_open.webm"]  });
-  exitSound = new Howl({  src: ["/user_interface/sounds/fullscreen_exit.webm"]  });
+  exitSoundIsAlsoTouchStart = new Howl({  src: ["/user_interface/sounds/fullscreen_exit.webm"]  });
 
-  const iFrameLocalConst = document.getElementsByTagName('IFRAME')[0]; // Used to be .getElementById('theIdOfTheIframe'); // Check js_for_app_initialization_in_parent.js prevent conflicts
-  const iDocWindow = iFrameLocalConst.contentWindow || iFrameLocalConst.contentDocument;
+  const iFrameInFullscreenHandling = document.getElementsByTagName('IFRAME')[0]; // Used to be .getElementById('theIdOfTheIframe'); // Check js_for_the_parent_all_browsers_all_devices.js prevent conflicts
+  let iFrameWindowInFullscreenHandling = null;
+  let iFrameDocumentInFullscreenHandling = null;
 
   // HOW TO GO AND STAY IN FULLSCREEN ON MOBILES
   // Most browsers won't allow going fullscreen without a user gesture... That means calling o-p-e-n-F-u-l-l-s-c-r-e-e-n() with Onblur Onfocus or document.visibilitychange won't work.
   // So here is how we do it...
 
-  if (deviceDetector.isMobile) {
+  if (deviceDetector.isMobile) { // NOTE: DOMContentLoaded is or can be too early for deviceDetector at parent level
     // TABLETS&PHONES TABLETS&PHONES TABLETS&PHONES TABLETS&PHONES TABLETS&PHONES
-    touchstartSound = new Howl({  src: ["/user_interface/sounds/fullscreen_exit.webm"]  }); // There used to be a different touchstart_for_fullscreen sound. New fullscreen_exit sound is also suitable as the touchstart sound.
-    // We cannot directly add an event listener for touchstart/mousedown on the iframe. So instead add it to the documentSmthSmth in the iFrame.
-    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnMobileBrowser); // MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
+    // Long ago there used to be a different touchstart_for_fullscreen sound. The new fullscreen_exit sound is work nicely as the touchstart sound.
+    // parent window
+    window.document.addEventListener("touchend", handleTouchForFullscreen);
+    window.document.addEventListener("touchstart", handleTouchSoundBeforeFullscreen);
+    // We cannot directly add an event listener for touchstart/mousedown on the iframe.
+    // MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
+    iFrameInFullscreenHandling.addEventListener("load",iframeHasBeenLoadedOnMobileBrowser);
     function iframeHasBeenLoadedOnMobileBrowser() {
+      iFrameWindowInFullscreenHandling = iFrameInFullscreenHandling.contentWindow;
+      iFrameDocumentInFullscreenHandling = iFrameInFullscreenHandling.contentDocument;
       // Try touchend instead of touchstart to see if it will fix the console error » "fullscreen error"
       // ANSWER: Yes, it looks like trying to go fullscreen with touchstart was the cause of that error which made fullscreen work only with a double tap
-      window.document.addEventListener("touchend", handleTouchForFullscreen);
-      window.document.addEventListener("touchstart", handleTouchSoundBeforeFullscreen);
-      iDocWindow.document.addEventListener("touchend", handleTouchForFullscreen);
-      iDocWindow.document.addEventListener("touchstart", handleTouchSoundBeforeFullscreen);
+      iFrameDocumentInFullscreenHandling.addEventListener("touchend", handleTouchForFullscreen);
+      iFrameDocumentInFullscreenHandling.addEventListener("touchstart", handleTouchSoundBeforeFullscreen);
     }
     function handleTouchForFullscreen() {
       if (!hasGoneFullscreen){ openFullscreen(); }
     }
     function handleTouchSoundBeforeFullscreen() {
-      if (detectedOS.name != "iOS" && !hasGoneFullscreen) { touchstartSound.play(); } // iPhones as of 2022 (Safari 16.0) still don't allow fullscreen.
+      if (detectedOS_name != "ios" && !hasGoneFullscreen) { exitSoundIsAlsoTouchStart.play(); } // iPhones as of 2022 (Safari 16.0) still don't allow fullscreen.
     }
   } else {
     // DESKTOPS DESKTOPS DESKTOPS DESKTOPS DESKTOPS
-    // THE RIGHT CLICK METHOD ON DESKTOPS
-    var currentSrcParsed;
-    // Every time the iframe is loaded, add the custom context menu to either the parent document or the framed document.
-    iFrameLocalConst.addEventListener("load",iframeHasBeenLoadedOnDesktopBrowser); // MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
-    function iframeHasBeenLoadedOnDesktopBrowser() {
-      const currentSrc = iFrameLocalConst.src;
-      // When user is viewing the main menu
-      if (currentSrc.search("blank.html") >= 0) { // At the welcome screen
-        document.addEventListener('contextmenu', rightClickHandlerFunction);
-        document.addEventListener('mousedown', coordinatesF);
-        window.onkeyup = function(e) {  if ( e.keyCode === 27 ) {    toggleRightClickMenuOff();   }  }; // When the “Esc”ape key is hit
-        document.addEventListener('mousedown', toggleRightClickMenuOff);
-        document.addEventListener('dblclick', toggleFullScreen);
-      } else { // When user is viewing a lesson
-        iFrameLocalConst.contentWindow.document.addEventListener('contextmenu', rightClickHandlerFunction);
-        iFrameLocalConst.contentWindow.document.addEventListener('mousedown', coordinatesF);
-        iFrameLocalConst.contentWindow.onkeyup = function(e) {  if ( e.keyCode === 27 ) {    toggleRightClickMenuOff();   }  }; // When the “Esc”ape key is hit
-        iFrameLocalConst.contentWindow.addEventListener('mousedown', toggleRightClickMenuOff);
-        iFrameLocalConst.contentWindow.addEventListener('dblclick', toggleFullScreen); // NOTE: dblclick means either left double-click or right double-click
-      }
+    // THE RIGHT CLICK HANDLING ON DESKTOPS FOR parent window
+    document.addEventListener('contextmenu', rightClickHandlerFunction);
+    document.addEventListener('mousedown', handleCoordinatesAndCancellation);
+    window.addEventListener("keyup",function (e) { if ( e.keyCode === 27 ) { hideTheRightClickMenu(); } });
+    document.addEventListener('dblclick', toggleFullScreen);
 
+    // THE RIGHT CLICK HANDLING ON DESKTOPS FOR iframe window
+    // Every time the iframe is loaded, add the custom context menu to the framed document.
+    // MUST NOT use once:true as with every new html the DOM within the iframe is destroyed and rebuilt
+    iFrameInFullscreenHandling.addEventListener("load",iframeHasBeenLoadedOnDesktopBrowser);
+    // WARNING!!! This double fires when a returning user views progress chart
+    // Probably because blank.html makes it fire before progress_chart/index.html is loaded
+    // Anyhow
+    function iframeHasBeenLoadedOnDesktopBrowser() { //console.log("iFrame LOAD fired in FULLSCREEN HANDLING");
+      iFrameWindowInFullscreenHandling = iFrameInFullscreenHandling.contentWindow;
+      iFrameDocumentInFullscreenHandling = iFrameInFullscreenHandling.contentDocument;
+      // event listeners
+      iFrameDocumentInFullscreenHandling.addEventListener('contextmenu', rightClickHandlerFunction);
+      iFrameDocumentInFullscreenHandling.addEventListener('mousedown', handleCoordinatesAndCancellation);
+      iFrameWindowInFullscreenHandling.addEventListener("keyup",function (e) { if ( e.keyCode === 27 ) { hideTheRightClickMenu(); } });
+      iFrameDocumentInFullscreenHandling.addEventListener('dblclick', toggleFullScreen);
     } // This line is the end of iframeHasBeenLoadedOnDesktopBrowser()
+
   } // End of “else”
 
 },{ once: true });
@@ -82,33 +88,42 @@ rightClickMenu.classList.add("rightClickMenuWithWebpsInside"); // See css_for_ev
 var isContextMenuDisplayed = false;
 
 var x,y;
-function coordinatesF(event) {   x=event.clientX;  y=event.clientY;     }
-
-function rightClickHandlerFunction(event) {
-  event.preventDefault();
-  if (!hasGoneFullscreen) {
-    goFullscreenWebp.style.display = "block";
-    exitFullscreenWebp.style.display = "none";
-  } else {
-    goFullscreenWebp.style.display = "none";
-    exitFullscreenWebp.style.display = "block";
-  }
-  rightClickMenu.style.left = String(x)+"px";
-  rightClickMenu.style.top = String(y)+"px";
-  document.body.appendChild(rightClickMenu);
-  isContextMenuDisplayed = true;
-  rightClickMenu.addEventListener("mousedown",toggleFullScreen,{ once: true });
+function handleCoordinatesAndCancellation(event) {
+  x=event.clientX;  y=event.clientY;
+  requestAnimationFrame(oneFrameLater);
+  function oneFrameLater() { requestAnimationFrame(twoFramesLater); }
+  function twoFramesLater() { if (isContextMenuDisplayed) { hideTheRightClickMenu(); } }
 }
 
-function toggleFullScreen() { // Note: It double fires during a lesson if main menu was already fullscreened before arriving at the lesson.
+function rightClickHandlerFunction(event) {
+  event.preventDefault(); // Let it propagate
+  requestAnimationFrame(orderlyTiming);
+  function orderlyTiming() {
+    if (!hasGoneFullscreen) {
+      goFullscreenWebp.style.display = "block";
+      exitFullscreenWebp.style.display = "none";
+    } else {
+      goFullscreenWebp.style.display = "none";
+      exitFullscreenWebp.style.display = "block";
+    }
+    rightClickMenu.style.left = String(x)+"px";
+    rightClickMenu.style.top = String(y)+"px";
+    document.body.appendChild(rightClickMenu);
+    isContextMenuDisplayed = true;
+    rightClickMenu.addEventListener("mousedown",toggleFullScreen,{ once: true });
+  }
+}
+
+function toggleFullScreen() { console.log("TOGGLED FULLSCREEN MODE");
   if (!hasGoneFullscreen) {
     openFullscreen();
   } else {
     closeFullscreen();
   }
+  hideTheRightClickMenu();
 }
 
-function toggleRightClickMenuOff() {
+function hideTheRightClickMenu() {
   if (isContextMenuDisplayed) {
     document.body.removeChild(rightClickMenu);
     isContextMenuDisplayed = false;
@@ -153,7 +168,7 @@ function handleChangeToFullscreen() { // Fires both desktop and mobile » See th
 }
 
 function handleChangeBackToVisibleAddressBar() { // Fires both desktop and mobile » See the fullscreenchange event below
-  exitSound.play();
+  exitSoundIsAlsoTouchStart.play();
   if (deviceDetector.isMobile) { // No need to handle iOS - Android differently » iPhones (as of 2022) never fire fullscreenchange event
     // Remove extra height from sliding-nav-menu
     removeExtraHeightFromNavMenuEtc(); // See js_for_the_sliding_navigation_menu

@@ -1,183 +1,121 @@
 <!DOCTYPE html>
 <html>
   <head>
-
-    <title>1-1-!!!</title>
+    <!-- SPOON -->
+    <title>1-2-3 🥄</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex" />
     <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
-    <!-- NO CURSOR at all for this level! On desktops the game will be played either with a gamepad or mouse physics -->
     <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
-    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- MAIN is a full viewport DIV with flex center X center Y -->
-    <link rel="stylesheet" href="/css_reusables/css_for_lessons_with_interactables.css"> <!-- Fill MAIN with the right color -->
-    <link rel="stylesheet" href="give_me_water.css">
-
-    <script defer src="/js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, deviceDetector, fonts, fetch headers, onePixelTransparentGif...*/</script>
-    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*createNotificationBox, createVocabBox, button sounds, iframeLoadCounter...*/</script>
-    <script defer src="/js_reusables/js_for_displaying_translation_help.js">/*Desktops: Like movie subtitles, Mobiles: Drag the figure down*/</script>
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Disable long-touch on video -->
+    <link rel="stylesheet" href="/css_reusables/css_for_photos_and_videos_teach_a_new_word.css"> <!-- MAIN has gradient background -->
+    <link rel="stylesheet" href="/css_reusables/css_for_the_glassy_give_up_button.css"> <!-- Using ASIDE as a button with glassmorphism -->
+    <link rel="stylesheet" href="/css_reusables/css_for_wavesurfer_microphone_divs.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css">
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <!-- Empty line 1 -->
+    <!-- Empty line 2 -->
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*LET userInterfaceLanguage DEPEND ON DOMAIN NAME, fetch headers, fonts, resetWebp, canVibrate, defaultCursor*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
+    <script defer src="/js_reusables/js_for_handling_speech_give_up.js">/*White listed browsers: wait for speech ,,, others: don't wait*/</script>
+    <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <script defer src="/third_party_js/wavesurfer.microphone.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <script defer src="/js_reusables/js_for_microphone_input_visualization.js">/*Start, Stop wavesurfer microphone*/</script>
     <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
-    <!-- Add tilt-to-steer.js dynamically if the device is mobile -->
-
+    <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_3/spoon.js">/*Progress handling for this lesson*/</script>
+    <!-- Empty line 1 -->
     <!-- Uncomment to use the console on mobiles -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/2.5.0/eruda.min.js"></script> -->
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
-    <!--  -->
-    <script src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
 
-    <!--  -->
-    <script defer src="give_me_water.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
-    <script defer src="play_with_mouse.js">/* Control with mouse and proceed */</script>
-    <script defer src="play_with_gamepad.js">/* Control with gamepad and proceed */</script>
-    <script defer src="play_with_tablet_or_phone.js">/* Control with accelerometer and tiltometer of phone or tablet */</script>
-
-  </head>
-  <body>
-    <!-- MAIN -->
-    <main id="mainID"> <!-- See css_for_lessons_with_interactables -->
-
-      <!-- <div id="devWindowDivID"  style="font-size: 4.2vmin; position: absolute; top:35vmin; left:30vmin; width: 50vmin; height: 25vmin; border: 2px dotted black;">OUTPUT</div> -->
-
-      <!-- INPUT DEVICES FOR DESKTOP: Contains 184KB » Remove this ASAP on mobiles -->
-      <div id="chooseInputDeviceDESKTOPDivID" class="chooseInputDeviceContainer">
-        <img src="" style="height:65vmin;" id="gamepadOrMouseImgID"> <!-- load it only on desktops: src » gamepad_or_mouse.webp -->
-        <img src="" style="height:65vmin; display:none;" id="chooseGamepadImgID"> <!-- load it only on desktops: src » choose_gamepad.webp -->
-        <img src="" style="height:65vmin; display:none;" id="chooseMouseImgID"> <!-- load it only on desktops: src » choose_mouse.webp -->
-      </div>
-
-      <!-- WEBPS -->
-      <div id="pictogram1DivID" class="containerOfThePictogramMan blurThingsAtStartWithThis"> <!-- position:fixed » so it's OK to use absolute inside this -->
-        <!-- state A B C ... 540x1080 -->
-        <img src="give_me_water_state_a.webp"  style="height:100vmin;" class="img540x1080">
-        <img src="give_me_water_state_b0.webp" style="height:100vmin; display:none;" class="img540x1080">
-        <img src="give_me_water_state_b1.webp" style="height:100vmin; display:none;" class="img540x1080">
-        <img src="give_me_water_state_b2.webp" style="height:100vmin; display:none;" class="img540x1080">
-        <img src="give_me_water_state_c.webp"  style="height:100vmin; display:none;" class="img540x1080">
-        <img src="give_me_water_state_d.webp"  style="height:100vmin; display:none;" class="img540x1080">
-        <!-- speech_bubble 540x1080 -->
-        <img src="speech_bubble_water.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
-        <img src="speech_bubble_hand_give_me.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
-        <!-- moving eyes 540x1080 -->
-        <div id="movingEyes1DivID" class="containerOfEyes delayedEyeMovement">
-          <img src="eyes_blinking_naturally.webp" style="height:100vmin;" class="img540x1080">
-        </div>
-      </div>
-      <div id="pictogram2DivID" style="display:none;" class="containerOfThePictogramMan"> <!-- position:fixed » so it's OK to use absolute inside this -->
-        <!-- state A or D ... 540x1080 -->
-        <img src="give_me_water_state_a.webp"  style="height:100vmin;" class="img540x1080">
-        <img src="give_me_water_state_d.webp"  style="height:100vmin; display:none;" class="img540x1080">
-        <!-- speech_bubble 540x1080 -->
-        <img src="speech_bubble_slow_down.webp" style="height:100vmin; display:none;" class="img540x1080 transformOriginBottomLeft">
-        <!-- moving eyes 540x1080 -->
-        <div id="movingEyes2DivID" class="containerOfEyes delayedEyeMovement">
-          <img src="eyes_watching.webp" style="height:100vmin;" class="img540x1080">
-          <img src="eyes_see_falling_object.webp" style="height:100vmin; visibility: hidden;" class="img540x1080">
-          <img src="eyes_squint_its_broken.webp" style="height:100vmin; visibility: hidden;" class="img540x1080">
-          <img src="eyes_happy_blinking.webp" style="height:100vmin; visibility: hidden;" class="img540x1080">
-        </div>
-      </div>
-      <div id="tableDivID" class="containerOfTheTable blurThingsAtStartWithThis"> <!-- position:fixed » so it's OK to use absolute inside this -->
-        <!-- 540x1080 -->
-        <img src="the_table.webp" style="height:100vmin;">
-        <div id="clickableAreaDivID" class="clickablity"></div>
-      </div>
-      <div id="theGroundDivID"class="theGround blurThingsAtStartWithThis"> </div>
-      <div id="trayOnHandDivID" class="containerOfTrayOnHand blurThingsAtStartWithThis" style="">
-        <!-- img -->
-        <img src="tray_without_hand.webp" style="width:20vmin;"> <!-- childAt[0] -->
-        <img src="tray_with_hand.webp" style="width:20vmin; display:none;"> <!-- childAt[1] -->
-      </div>
-      <div id="glassOuterContainerDivID" class="outerContainerOfTheGlass blurThingsAtStartWithThis" style="">
-        <div id="glassMiddleContainerDivID" class="middleContainerOfTheGlass">
-          <div id="glassInnerContainerDivID" class="rotatableInnermostGlass">
-            <!-- img -->
-            <img src="-9_glass.webp" style="width:20vmin; display:none;">
-            <img src="-8_glass.webp" style="width:20vmin; display:none;">
-            <img src="-7_glass.webp" style="width:20vmin; display:none;">
-            <img src="-6_glass.webp" style="width:20vmin; display:none;">
-            <img src="-5_glass.webp" style="width:20vmin; display:none;">
-            <img src="-4_glass.webp" style="width:20vmin; display:none;">
-            <img src="-3_glass.webp" style="width:20vmin; display:none;">
-            <img src="-2_glass.webp" style="width:20vmin; display:none;">
-            <img src="-1p5_glass.webp" style="width:20vmin; display:none;">
-            <img src="-1_glass.webp" style="width:20vmin; display:none;">
-            <img src="-0p5_glass.webp" style="width:20vmin; display:none;">
-            <img src="0_glass.webp" style="width:20vmin;">
-            <img src="0p5_glass.webp" style="width:20vmin; display:none;">
-            <img src="1_glass.webp" style="width:20vmin; display:none;">
-            <img src="1p5_glass.webp" style="width:20vmin; display:none;">
-            <img src="2_glass.webp" style="width:20vmin; display:none;">
-            <img src="3_glass.webp" style="width:20vmin; display:none;">
-            <img src="4_glass.webp" style="width:20vmin; display:none;">
-            <img src="5_glass.webp" style="width:20vmin; display:none;">
-            <img src="6_glass.webp" style="width:20vmin; display:none;">
-            <img src="7_glass.webp" style="width:20vmin; display:none;">
-            <img src="8_glass.webp" style="width:20vmin; display:none;">
-            <img src="9_glass.webp" style="width:20vmin; display:none;">
-            <!-- Use createElement to load breaking glass animations. When falling happens, empty this div and append. -->
-          </div>
-        </div>
-      </div>
-
-    </main>
-    <!-- END OF MAIN -->
-
-    <!-- iOS GET PERMISSION BUTTON -->
-    <div id="iOSpermissionButtonDivID" class="centerOfScreenPermissionButton">
-        <p id="theTextInsidePermissionButtonPID" class="" style="white-space: pre-wrap; display:block;">👆 & Allow</p> <!-- See css_for_all_iframed_lesson_htmls.css -->
-    </div>
-    <!-- min-width:300px; min-height:200px; border-radius:30px; display:flex; justify-content: center; align-items: center; padding:20px; -->
-    <!-- END OF iOS GET PERMISSION BUTTON -->
-
-    <!-- INPUT GUIDANCE FOR TABLETS: Contains 522KB » Remove this ASAP on desktops and phones. IT IS OUTSIDE MAIN because we don't want any zooming on this -->
-    <div id="showHowToUseTouchAndTiltTABLETDivID" class="chooseInputDeviceContainer touchTiltInstructions">
-      <img src="" style="width:80vmin;"> <!-- load it only on tablets: src » touch_tablet.webp -->
-      <img src="" style="width:80vmin; display:none;"> <!-- load it only on tablets: src » tilt_tablet.webp -->
-    </div>
-    <!-- INPUT GUIDANCE FOR PHONES: Contains 381KB » Remove this ASAP on desktops and tablets. IT IS OUTSIDE MAIN because we don't want any zooming on this -->
-    <div id="showHowToUseTouchAndTiltPHONEDivID" class="chooseInputDeviceContainer touchTiltInstructions">
-      <img src="" style="width:100vmin;"> <!-- load it only on phones: src » touch_phone.webp -->
-      <img src="" style="width:100vmin; display:none;"> <!-- load it only on phones: src » tilt_phone.webp -->
-    </div>
-
-    <script>
-      const notNecessaryOnTABLETorPHONE = document.getElementById("chooseInputDeviceDESKTOPDivID");
-      const notNecessaryOnPHONEorDESKTOP = document.getElementById("showHowToUseTouchAndTiltTABLETDivID");
-      const notNecessaryOnDESKTOPorTABLET = document.getElementById("showHowToUseTouchAndTiltPHONEDivID");
-      const notNecessaryExceptOnIOS = document.getElementById("iOSpermissionButtonDivID");
-      window.addEventListener('DOMContentLoaded', function(){   getRidOfUnnecessaries();   }, { once: true });
-      function getRidOfUnnecessaries() {
-        // CAUTION: Do not cause double calling of removeChild... Check give_me_water.js
-        if (deviceDetector.device == "phone") {
-          notNecessaryOnTABLETorPHONE.parentNode.removeChild(notNecessaryOnTABLETorPHONE);
-          notNecessaryOnPHONEorDESKTOP.parentNode.removeChild(notNecessaryOnPHONEorDESKTOP);
-          notNecessaryOnDESKTOPorTABLET.children[0].src = "touch_phone.webp";
-          notNecessaryOnDESKTOPorTABLET.children[1].src = "tilt_phone.webp";
-        } else if (deviceDetector.device == "tablet") {
-          notNecessaryOnTABLETorPHONE.parentNode.removeChild(notNecessaryOnTABLETorPHONE);
-          notNecessaryOnDESKTOPorTABLET.parentNode.removeChild(notNecessaryOnDESKTOPorTABLET);
-          notNecessaryOnPHONEorDESKTOP.children[0].src = "touch_tablet.webp";
-          notNecessaryOnPHONEorDESKTOP.children[1].src = "tilt_tablet.webp";
-        } else { // desktop
-          notNecessaryOnPHONEorDESKTOP.parentNode.removeChild(notNecessaryOnPHONEorDESKTOP);
-          notNecessaryOnDESKTOPorTABLET.parentNode.removeChild(notNecessaryOnDESKTOPorTABLET);
-          notNecessaryOnTABLETorPHONE.children[0].src = "gamepad_or_mouse.webp";
-          notNecessaryOnTABLETorPHONE.children[1].src = "choose_gamepad.webp";
-          notNecessaryOnTABLETorPHONE.children[2].src = "choose_mouse.webp";
-        }
-        // CAUTION: Do not cause double calling of removeChild... Check give_me_water.js
-        if (parent.detectedOS.name != "iOS") {
-          notNecessaryExceptOnIOS.parentNode.removeChild(notNecessaryExceptOnIOS);
-        }
-      }
-      window.addEventListener("load",startDownloadingLesson114,{once:true});
-      function startDownloadingLesson114() {
-        if (!localStorage.thisIsNotTheFirstTimeIn113) {
-          setTimeout(function () {
-            //parent.cacheAssetsOfLevel_114(); // See js_for_caching_unconditional_assets.js
-            localStorage.thisIsNotTheFirstTimeIn113 = "right"; // Never try to re-cache or overwrite anything. Not sure if this is necessary but can't be too safe.
-          },5000); // Allow fetch to get all the uncached files for this lesson first if there are any
+    <script> /*CACHE THE NEXT LESSON and make it offline ready*/
+      window.addEventListener("load",startDownloadingFilesForTheNextLessonIfNecessary,{once:true});
+      function startDownloadingFilesForTheNextLessonIfNecessary() { // Wait for a short while and get the files if device is still online, otherwise wait for internet connectivity.
+        setTimeout(afterSomeSeconds,7001); // After being offline, attempt downloading if two consecutive firings of updateOnlineStatus both report ONLINE // See js_for_online_and_offline_modes
+        function afterSomeSeconds() { // As of August 2023 parent.internetConnectivityIsNiceAndUsable is updated every 7000ms
+          if (parent.internetConnectivityIsNiceAndUsable) { // Start getting the files for the next lesson
+            const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_for_cache_handling/124.js"; document.body.appendChild(delayedScript);
+          } else { // Check & Retry
+            let connectivityCheckInterval = setInterval(function () { // Analyse the recursion logic
+              if (parent.internetConnectivityIsNiceAndUsable) { clearInterval(connectivityCheckInterval); startDownloadingFilesForTheNextLessonIfNecessary(); }
+            }, 2000);
+          }
         }
       }
     </script>
+  </head>
+
+  <body>
+    <!-- MAIN -->
+    <main> <!-- BACKGROUND GRADIENT comes from css_for_photos_and_videos_teach_a_new_word | THE SIZE AND POSITION FIXED is in css_for_every_single_html -->
+      <!-- Photo pairs -->
+      <div id="doublesDivID" class="fullViewportFlexPortraitColumnLandscapeRow"> <!-- See css_for_photos_and_videos_teach_a_new_word.css -->
+        <div class="oneOfTheTwoDivsThatContainSquarePictures">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/1a.avif" id="imageA">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/2a.avif" style="display:none; top:-100%;" id="imageC">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/3a.avif" style="display:none; top:-200%;" id="imageE">
+        </div>
+        <div class="oneOfTheTwoDivsThatContainSquarePictures">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/1b.avif" id="imageB">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/2b.avif" style="display:none; top:-100%;" id="imageD">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/3b.avif" style="display:none; top:-200%;" id="imageF">
+        </div>
+      </div>
+      <!-- End of photo pairs -->
+    </main>
+    <!-- END OF MAIN -->
+
+    <!-- Videos -->
+    <div id="containerOfVideosDivID" style="display:none;">
+      <video src="/lessons_in_iframes/level_1/unit_2/lesson_3/v1_vp9.webm" id="video1" playsinline muted style="height: 91vh;"></video>
+      <video src="/lessons_in_iframes/level_1/unit_2/lesson_3/v2_vp9.webm" id="video2" playsinline muted style="width: 90vw; display:none;"></video>
+      <script>
+        window.addEventListener("DOMContentLoaded",function(){
+          if (isApple || isFirefox) { // Override webm,,, force mp4
+            const v1 = document.getElementById('video1'); v1.src = "/lessons_in_iframes/level_1/unit_2/lesson_3/v1_h264.mp4"; // Cannot rely on <source>
+            const v2 = document.getElementById('video2'); v2.src = "/lessons_in_iframes/level_1/unit_2/lesson_3/v2_h264.mp4"; // Cannot rely on <source>
+          } // UNCERTAIN: Probably cannot save load time by using else to set the src to webm files and start the video with an empty src, no?
+        },{ once: true });
+      </script>
+    </div>
+
+    <!-- Background darkening -->
+    <div id="fullVpDarkBlueDivID" style="display:none;"> </div>
+
+    <!-- Single photos looping -->
+    <div id="singlesDivID" class="" style="display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/c1.avif"   class="positionAbsoluteImg">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/c2.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/c3.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/c4.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/c5.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/c6.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/c7.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/c8.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/c9.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_3/c10.avif"  class="positionAbsoluteImg" style="visibility:hidden;">
+    </div>
+
+    <!-- “Now it’s your turn” animation 5100ms -->
+    <div class="nowYouSayItImgContainer" style="display:none;">
+      <img draggable="false" id="nowYouSayItImgID" src="/user_interface/images/now_you_say_it_to_speech_recognition.webp">
+    </div>
+    <script>
+    window.addEventListener("DOMContentLoaded",function(){ // Wait for js_for_all_iframed_lesson_htmls to get isApple from parser in parent
+      if (isApple) {
+        // Safari animated webp bugfix: Both iOS and MacOS Safari have the bug as of October 2022 Safari16.0
+        const nowYouSayItImg = document.getElementById('nowYouSayItImgID'); nowYouSayItImg.src = "/user_interface/images/now_you_say_it_to_speech_recognition.avif";
+      }
+    },{once:true});
+    </script>
+
+    <!-- GIVE UP\PROCEED TO NEXT -->
+    <aside class="glassButtonStartHidden"> <!-- See css_for_all_iframed_lesson_htmls.css -->
+      <p id="theTextInsideSkipNextButtonID">X</p> <!-- See js_for_handling_speech_give_up.js -->
+    </aside>
+    <!-- END OF GIVE UP\PROCEED TO NEXT -->
+
   </body>
 </html>

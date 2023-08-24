@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>⛔</title>
+    <!-- 💢 📶 -->
+  </head>
+  <body style="margin:0px; padding:0px; background-color:#9cb6c3; width:100vw; width:100dvw; height:100vh; height:100dvh; display:flex; justify-content: center; align-items: center; flex-direction: column; overflow:hidden;">
+    <div>
+      <h2 style="text-align: center; line-height:2.5rem; max-width:80vw; color:#4c6f83;">💢<br>Internet connection <span style="white-space:nowrap;">is lost or too slow</span></h2>
+    </div>
+    <div>
+      <!-- Avoid using text-align-last as it would depend on UI language » LTR vs RTL -->
+      <p style="text-align: center; line-height:1.75rem; max-width:80vw; color:#ddeef5;">The app will continue <span style="white-space:nowrap;">when you get back online</span><br>📶</p>
+    </div>
+
+    <script type="text/javascript">
+      parent.stopTheTimerToSeeIfNextLessonLoadedFastEnough(); // This is a safety overkill as onbeforeunload in js_for_all_iframed_lesson_htmls won't start the timer if device is offline
+      // orbiting-circles is fully managed by handleFadingAndNavigation() in js_for_the_parent_all_browsers_all_devices
+      // Remove preloader cover if was showing: rotating-globe
+      // Which is normally done by js_for_all_iframed_lesson_htmls » window.onload
+      // DO NOT USE if contains
+      parent.preloadHandlingDiv.classList.remove("addThisClassToRevealThePreloader"); // See css_for_the_container_parent_html
+      parent.preloadHandlingDiv.classList.add("addThisClassToHideThePreloader"); // See css_for_the_container_parent_html
+
+      let checkInterval = setInterval(checkIfIsOnlineNow,2000);
+      function checkIfIsOnlineNow() {
+        if (parent.internetConnectivityIsNiceAndUsable) {
+          clearInterval(checkInterval);
+          parent.proceedToTheNextLessonNowThatWeAreOnlineAgain(); // js_for_online_and_offline_modes.js
+        }
+      }
+    </script>
+
+  </body>
+</html>

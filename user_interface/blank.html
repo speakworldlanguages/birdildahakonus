@@ -6,7 +6,7 @@
     <!-- 💬 ☰ ≡ ≣ ⁝ ⋮ ⦙ ⁞ -->
   </head>
   <!-- height used to be 100vh -->
-  <body style="background-color: #9cb6c3; width:100vw; height:100%; display:flex; justify-content: center; align-items: center; cursor: wait; overflow:hidden;">
+  <body style="background-color: #9cb6c3; width:100vw; width:100dvw; height:100%; height:100dvh; display:flex; justify-content: center; align-items: center; cursor: wait; overflow:hidden;">
 
     <!-- An (almost) blank page -->
     <div>
@@ -53,6 +53,8 @@
 
     }, { once: true });
 
+
+
     window.addEventListener("load",function() {
       parent.stopTheTimerToSeeIfNextLessonLoadedFastEnough();
       parent.itIsCertainlyNotTheNativeGoBackButtonThatIsNavigating = false; // Back to initial value
@@ -66,8 +68,8 @@
     }, { once: true });
 
     window.addEventListener("beforeunload",function() { // TESTED: It fires correctly
-      // See js_for_app_initialization_in_parent
-      parent.startTheTimerToSeeIfNextLessonLoadsFastEnough(); // Either going to information or 1-1-1 bread with a button click or to progres_chart automatically
+      // See js_for_the_parent_all_browsers_all_devices
+      parent.startTheTimerToSeeIfNextLessonLoadsFastEnough(); // Either going to information or lesson 1-1-1 with a button click or to progres_chart automatically
       parent.blockOtherWelcomeScreenButtonsUntilItIsSafe=false; // Prevention of touch/click chaos is not necessary anymore » i.e. clicking one language and another one immediately after
     }, { once: true });
     </script>

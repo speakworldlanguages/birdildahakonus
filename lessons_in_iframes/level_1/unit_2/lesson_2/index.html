@@ -1,17 +1,335 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- DRINKWATERFROMGLASS -->
+    <title>1-2-2 🥤</title>
     <meta charset="utf-8">
-    <title></title>
-
-
-
-    <script defer src="/js_reusables/js_for_every_single_html.js">/*Get fonts*/</script>
+    <meta name="robots" content="noindex" />
+    <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Disable long-touch on video  -->
+    <link rel="stylesheet" href="/css_reusables/css_for_lessons_with_interactables.css"> <!-- Fill MAIN with the right color -->
+    <link rel="stylesheet" href="/css_reusables/css_for_displaying_translation_help.css"> <!-- MOBILES: Draggable man | DESKTOPS: movie subtitle style -->
+    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css"> <!-- Wavesurfer teacher box visual style -->
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <link rel="stylesheet" href="/lessons_in_iframes/level_1/unit_2/lesson_2/drink_water_from_glass.css">
+    <!-- Empty line 1 -->
+    <!-- Empty line 2 -->
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*LET userInterfaceLanguage DEPEND ON DOMAIN NAME, fetch headers, fonts, resetWebp, canVibrate, defaultCursor*/</script>
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
-    <script defer src="proceed.js">/*Teach and let user play the lesson game*/</script>
+    <script defer src="/js_reusables/js_for_displaying_translation_help.js">/*Desktops: Like movie subtitles, Mobiles: Drag the figure down*/</script>
+    <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
+    <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
+    <!-- We do not need the microphone plugin in this case -->
+    <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_2/drink_water_from_glass.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
+    <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_2/drink_water_from_glass_desktop.js">/* MUST BE DEFERRED: Code for gameplay on desktops */</script>
+    <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_2/drink_water_from_glass_mobile.js">/* MUST BE DEFERRED: Code for gameplay on desktops */</script>
+    <!-- Uncomment to use the console on mobiles -->
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
 
+    <script> /*CACHE THE NEXT LESSON and make it offline ready*/
+      window.addEventListener("load",startDownloadingFilesForTheNextLessonIfNecessary,{once:true});
+      function startDownloadingFilesForTheNextLessonIfNecessary() { // Wait for a short while and get the files if device is still online, otherwise wait for internet connectivity.
+        setTimeout(afterSomeSeconds,7001); // After being offline, attempt downloading if two consecutive firings of updateOnlineStatus both report ONLINE // See js_for_online_and_offline_modes
+        function afterSomeSeconds() { // As of August 2023 parent.internetConnectivityIsNiceAndUsable is updated every 7000ms
+          if (parent.internetConnectivityIsNiceAndUsable) { // Start getting the files for the next lesson
+            const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_for_cache_handling/123.js"; document.body.appendChild(delayedScript);
+          } else { // Check & Retry
+            let connectivityCheckInterval = setInterval(function () { // Analyse the recursion logic
+              if (parent.internetConnectivityIsNiceAndUsable) { clearInterval(connectivityCheckInterval); startDownloadingFilesForTheNextLessonIfNecessary(); }
+            }, 2000);
+          }
+        }
+      }
+    </script>
   </head>
+
   <body>
+    <!-- MAIN :: For some reason, applying filter blur via some class (in order to use keyframes) on main didn't work (and was mysterious) -->
+    <main style="filter: blur(8px); transition-property: filter;"> <!-- See css_for_lessons_with_interactables -->
+
+      <div class="pictogramDrinkingWaterPose">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/a_pictogram_stays_blurred.webp" style="width:100vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/b_pictogram_from_blur_to_focus.webp" style="width:100vmin; display: none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/c_pictogram_from_focus_to_blur.webp" style="width:100vmin; display: none;">
+      </div>
+
+      <div class="tiltTheGlassGulpGulpGulp">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/a_glass_stays_in_focus.webp" style="width:100vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/b_glass_from_focus_to_blur.webp" style="width:100vmin; display: none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/c_glass_from_blur_to_focus.webp" style="width:100vmin; display: none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/glass_touch_click_flashing.webp" style="width:100vmin; display: none;">
+      </div>
+
+      <svg class="tiltTheGlassGulpGulpGulp" style="width:100vmin; height:100vmin;" version="1.2" baseProfile="tiny" id="" x="0px" y="0px" width="1200px" height="1200px" viewBox="0 0 1200 1200" xml:space="preserve">
+      <path id="exactAreaID" fill-rule="evenodd" fill="#808080" d="M634.683,377.691c24.271,2.313,48.376,6.917,71.361,14.837
+      	c26.358,9.081,59.322,26.474,54.497,58.976C749.812,523.784,724,671.333,711.5,743.5c-1.094,6.313-2.269,16.883-5.562,24.637
+      	c-11.546,27.188-55.006,32.736-80.213,34.553c-35.185,2.535-71.357,2.73-104.138-12.16c-11.377-5.168-22.033-11.967-26.982-23.971
+      	c-6.127-14.861-10.229-36.854-12.105-49.309c-9-59.75-24.521-159.3-37.595-238.896c-2.49-15.161-9.923-37.54-1.093-51.512
+      	c8.951-14.162,24.599-23.167,39.561-29.682c26.985-11.751,55.146-16.034,83.78-18.659
+      	C589.234,376.477,612.685,375.595,634.683,377.691C658.954,380.004,629.025,377.152,634.683,377.691z"/>
+      </svg>
+
+      <div class="alreadyAtTheCenter" style="display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_00.webp" style="width:100vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_01.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_02.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_03.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_04.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_05.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_06.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_07.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_08.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_09.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_10.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_11.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_12.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_13.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_14.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_15.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/0/0_16.webp" style="width:100vmin; display:none;">
+      </div>
+
+      <div class="alreadyAtTheCenter" style="display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_00.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_01.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_02.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_03.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_04.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_05.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_06.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_07.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_08.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_09.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_10.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_11.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_12.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_13.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_14.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_15.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_16.webp" style="width:100vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_17.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_18.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_19.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_20.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_21.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_22.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_23.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_24.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_25.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_26.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_27.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/1/1_28.webp" style="width:100vmin; display:none;">
+      </div>
+
+      <div class="alreadyAtTheCenter" style="display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_00.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_01.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_02.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_03.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_04.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_05.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_06.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_07.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_08.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_09.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_10.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_11.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_12.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_13.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_14.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_15.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_16.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_17.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_18.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_19.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_20.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_21.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_22.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_23.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_24.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_25.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_26.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_27.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_28.webp" style="width:100vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_29.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_30.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_31.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_32.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_33.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_34.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_35.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_36.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_37.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_38.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_39.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/2/2_40.webp" style="width:100vmin; display:none;">
+      </div>
+
+      <div class="alreadyAtTheCenter" style="display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_00.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_01.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_02.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_03.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_04.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_05.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_06.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_07.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_08.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_09.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_10.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_11.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_12.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_13.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_14.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_15.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_16.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_17.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_18.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_19.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_20.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_21.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_22.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_23.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_24.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_25.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_26.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_27.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_28.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_29.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_30.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_31.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_32.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_33.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_34.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_35.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_36.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_37.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_38.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_39.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_40.webp" style="width:100vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_41.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_42.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_43.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_44.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_45.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_46.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_47.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_48.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_49.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_50.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/3/3_51.webp" style="width:100vmin; display:none;">
+      </div>
+
+      <div class="alreadyAtTheCenter" style="display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_00.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_01.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_02.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_03.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_04.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_05.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_06.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_07.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_08.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_09.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_10.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_11.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_12.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_13.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_14.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_15.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_16.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_17.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_18.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_19.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_20.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_21.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_22.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_23.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_24.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_25.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_26.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_27.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_28.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_29.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_30.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_31.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_32.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_33.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_34.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_35.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_36.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_37.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_38.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_39.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_40.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_41.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_42.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_43.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_44.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_45.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_46.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_47.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_48.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_49.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_50.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_51.webp" style="width:100vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_52.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_53.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_54.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_55.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_56.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_57.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_58.webp" style="width:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_2/lesson_2/4/4_59.webp" style="width:100vmin; display:none;">
+      </div>
+
+      <div class="instruction" style="display:none;">
+        <img draggable="false" src="" style="width:calc(35vmax + 35vmin);">
+      </div>
+      <!-- Better if it is just a bit smaller on tablets -->
+      <div class="instruction" style="display:none; width:100vmin; height:100vmin;">
+        <img draggable="false" src="" style="width:80vmin; display:none; position:absolute; top:10vmin; left:10vmin;">
+        <img draggable="false" src="" style="width:80vmin; display:none; position:absolute; top:10vmin; left:10vmin;">
+        <img draggable="false" src="" style="width:80vmin; display:none; position:absolute; top:10vmin; left:10vmin;">
+      </div>
+      <div class="instruction" style="display:none;">
+        <img draggable="false" src="" style="width:100vmin; display:none;">
+        <img draggable="false" src="" style="width:100vmin; display:none;">
+        <img draggable="false" src="" style="width:100vmin; display:none;">
+      </div>
+    </main>
+    <!-- END OF MAIN -->
+
+    <script>
+      var showHowDesktop = document.querySelectorAll('.instruction')[0];
+      var showHowTablet = document.querySelectorAll('.instruction')[1];
+      var showHowPhone = document.querySelectorAll('.instruction')[2];
+      // ---
+      window.addEventListener('DOMContentLoaded', whatMustBeDoneAtFirstOnThisDevice, { once: true });
+      function whatMustBeDoneAtFirstOnThisDevice() {
+        if (deviceDetector.device == "desktop") {
+          showHowTablet.parentNode.removeChild(showHowTablet);
+          showHowPhone.parentNode.removeChild(showHowPhone);
+          showHowDesktop.children[0].src = "/lessons_in_iframes/level_1/unit_2/lesson_2/mousewheel_show_how.webp";
+        } else if (deviceDetector.device == "tablet") {
+          showHowDesktop.parentNode.removeChild(showHowDesktop);
+          showHowPhone.parentNode.removeChild(showHowPhone);
+          showHowTablet.children[0].src = "/lessons_in_iframes/level_1/unit_2/lesson_2/tablet_swipe_show_how_a.webp";
+          showHowTablet.children[1].src = "/lessons_in_iframes/level_1/unit_2/lesson_2/tablet_swipe_show_how_b_loop.webp";
+          showHowTablet.children[2].src = "/lessons_in_iframes/level_1/unit_2/lesson_2/tablet_tilt_show_how.webp";
+        } else { // phone
+          showHowTablet.parentNode.removeChild(showHowTablet);
+          showHowDesktop.parentNode.removeChild(showHowDesktop);
+          showHowPhone.children[0].src = "/lessons_in_iframes/level_1/unit_2/lesson_2/phone_swipe_show_how_a.webp";
+          showHowPhone.children[1].src = "/lessons_in_iframes/level_1/unit_2/lesson_2/phone_swipe_show_how_b_loop.webp";
+          showHowPhone.children[2].src = "/lessons_in_iframes/level_1/unit_2/lesson_2/phone_tilt_show_how.webp";
+        }
+      }
+    </script>
 
   </body>
 </html>

@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 var letTheUserSeeTheTranslation;
 var injectTextIntoTheHelpBoxP;
@@ -18,6 +18,8 @@ function toggleTranslationOnMobiles() {
   letTheUserSeeTheTranslation.classList.toggle("toggleWithTouchStartTouchEnd");
 }
 
+// Check if DOMContentLoaded is too early for deviceDetector
+// It should work OK as long as js_for_all_iframed_lesson_htmls is listed before(above) this js file
 window.addEventListener('DOMContentLoaded', function(){
 
   if (deviceDetector.isMobile) { // TABLETS AND PHONES

@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 // We don't want appearance sounds for any of these boxes,,, see each note below
 let closeTheBoxSound;
@@ -10,7 +10,9 @@ const willTryToSaveYourProgressNoteP = document.createElement("P"); willTryToSav
 const yourProgressWasSuccessfullyLoadedNoteP = document.createElement("P"); yourProgressWasSuccessfullyLoadedNoteP.innerHTML = "...";
 const maybeYouShouldReloadNoteP = document.createElement("P"); maybeYouShouldReloadNoteP.innerHTML = "...";
 const neverMindThisBoxNoteP = document.createElement("P"); neverMindThisBoxNoteP.innerHTML = "...";
-var safariHowToPermanentlyAllowMicP = document.createElement("P"); safariHowToPermanentlyAllowMicP.innerHTML = "..."; // See the alert() in js_for_app_initialization_in_parent
+/* DEPRECATE or not?
+var safariHowToPermanentlyAllowMicP = document.createElement("P"); safariHowToPermanentlyAllowMicP.innerHTML = "..."; // See the alert() in js_for_the_parent_all_browsers_all_devices
+*/
 // --- Buttons made of DIV elements
 const cancelButtonToCloseTheWillSaveBoxDIV = document.createElement("DIV");
 cancelButtonToCloseTheWillSaveBoxDIV.innerHTML = "&#10062;"; // Default content of the OK box is a "cross ❎" mark
@@ -27,7 +29,7 @@ okLetsTryRefreshingTheBrowserBoxDIV.innerHTML = "&#9989;"; // Default content of
 //-
 
 // ---
-window.addEventListener("DOMContentLoaded",function() {
+window.addEventListener("DOMContentLoaded",function() { // NOTE: DOMContentLoaded is or can be too early for deviceDetector at parent level
 
   closeTheBoxSound = new Howl({  src: ["/user_interface/sounds/notification3_close.webm"]  });
 
@@ -37,11 +39,12 @@ window.addEventListener("DOMContentLoaded",function() {
   fetch(pathOfSaveLoadInfoNoticeTexts,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleInfoNoticeTexts(contentOfTheTxtFile);    });
   fetch(pathOfThreeBoxClosingTexts,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){     handleBoxClosingTexts(contentOfTheTxtFile);    });
   fetch(pathOfKeepWaitingOrReloadTexts,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ handleReloadDialogTexts(contentOfTheTxtFile);  });
+  /* DEPRECATE or not?
   if (isSafari) { // Get the needed string for the alert box
     const pathOfHowToAllowMicPermanentlyOnSafariTexts = "/user_interface/text/"+userInterfaceLanguage+"/0-allow_microphone_permanently_on_safari.txt";
     fetch(pathOfHowToAllowMicPermanentlyOnSafariTexts,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ handleSafariMicHowToTexts(contentOfTheTxtFile);  });
   }
-
+  */
 }, { once: true });
 
 function handleInfoNoticeTexts(receivedTxt) {
@@ -60,15 +63,16 @@ function handleReloadDialogTexts(receivedTxt) {
   neverMindThisBoxNoteP.innerHTML = receivedTxt.split("|")[3];
 }
 
+/* DEPRECATE or not?
 function handleSafariMicHowToTexts(receivedTxt) {
-  safariHowToPermanentlyAllowMicP.innerHTML = receivedTxt.split("|")[0]; // Get ready to put it into the alert box in js_for_app_initialization_in_parent
+  safariHowToPermanentlyAllowMicP.innerHTML = receivedTxt.split("|")[0]; // Get ready to put it into the alert box in js_for_the_parent_all_browsers_all_devices
   if (deviceDetector.device == "desktop") {
     safariHowToPermanentlyAllowMicP.innerHTML += receivedTxt.split("|")[1];
   } else {
     safariHowToPermanentlyAllowMicP.innerHTML += receivedTxt.split("|")[2];
   }
 }
-
+*/
 
 /*-- Your progress will be saved box --*/
 // We don't want an appearance sound because another button sound is already playing as this appears
@@ -130,14 +134,14 @@ function createAndHandleGoBackOrProceedBox() {
       // Play disappear animation and remove and do nothing
       hideTheSaveLoadBoxAndDismissTheNotice();
       // WHY? IT WORKED BUT » document.body.removeChild(saveLoadInfoBoxContainerDIV); was causing an error after its first usage (from 2nd time and on)
-      setTimeout(function () { reject(false); },350); // Let the .then().catch() fire in js_for_app_init
+      setTimeout(function () { reject(false); },350); // Let the .then().catch() fire in js_for_the_parent_all_browsers_all_devices
     }
     function proceedButtonIsClicked() {
       closeTheBoxSound.play();
       // Play disappear animation and remove and proceed
       hideTheSaveLoadBoxAndDismissTheNotice();
       // WHY? IT WORKED BUT » document.body.removeChild(saveLoadInfoBoxContainerDIV); was causing an error after its first usage (from 2nd time and on)
-      setTimeout(function () { resolve(true); },350); // Let the .then().catch() fire in js_for_app_init
+      setTimeout(function () { resolve(true); },350); // Let the .then().catch() fire in js_for_the_parent_all_browsers_all_devices
     }
     function hideTheSaveLoadBoxAndDismissTheNotice() {
       saveLoadInfoBoxContainerDIV.style.animationName = "theBlueBackgroundAndTheContentsDisappear"; // Should take 330ms » See css_for_info_boxes_in_parent
@@ -156,15 +160,20 @@ function createAndHandleGoBackOrProceedBox() {
 // We don't want an appearance sound because sound is not unlocked yet but will be so with the first user gesture on this box
 const progressLoadOkNoticeBoxContainerDIV = document.createElement("DIV");
 const progressLoadOkNoticeBoxItselfDIV = document.createElement("DIV");
-function createAndHandleProgressHasBeenLoadedBox() { // Called if memoryCard exists in localStorage » See js_for_app_init
+function createAndHandleProgressHasBeenLoadedBox() { // Called if memoryCard exists in localStorage » See js_for_the_parent_all_browsers_all_devices
 
+  if (!document.body.contains(progressLoadOkNoticeBoxContainerDIV)) {
+    document.body.appendChild(progressLoadOkNoticeBoxContainerDIV);
+    progressLoadOkNoticeBoxContainerDIV.appendChild(progressLoadOkNoticeBoxItselfDIV);
+    progressLoadOkNoticeBoxItselfDIV.appendChild(yourProgressWasSuccessfullyLoadedNoteP);
+    progressLoadOkNoticeBoxItselfDIV.appendChild(goodButtonToUnlockSoundUnderLoadedDIV);
+  }
+  // ---
+  progressLoadOkNoticeBoxContainerDIV.style.display = "flex"; // CAUTION: It's not block, it's flex » Necessary with the second call and later
   progressLoadOkNoticeBoxContainerDIV.classList.add("fullViewportBackgroundForSaveLoadBoxes"); // See css_for_info_boxes_in_parent
-  document.body.appendChild(progressLoadOkNoticeBoxContainerDIV);
   progressLoadOkNoticeBoxItselfDIV.classList.add("saveLoadRoundedInfoBox"); // See css_for_info_boxes_in_parent
-  progressLoadOkNoticeBoxContainerDIV.appendChild(progressLoadOkNoticeBoxItselfDIV);
-  progressLoadOkNoticeBoxItselfDIV.appendChild(yourProgressWasSuccessfullyLoadedNoteP);
-
   goodButtonToUnlockSoundUnderLoadedDIV.classList.add("buttonsUnderSaveLoadInfo"); // See css_for_info_boxes_in_parent
+  // ---
   if (needLatinFonts) {
     goodButtonToUnlockSoundUnderLoadedDIV.style.fontFamily = '"Oxanium SemiBold", sans-serif'; // Not the default UI font » Titillium
     progressLoadOkNoticeBoxItselfDIV.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
@@ -174,9 +183,7 @@ function createAndHandleProgressHasBeenLoadedBox() { // Called if memoryCard exi
     progressLoadOkNoticeBoxItselfDIV.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
     yourProgressWasSuccessfullyLoadedNoteP.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
-
-  progressLoadOkNoticeBoxItselfDIV.appendChild(goodButtonToUnlockSoundUnderLoadedDIV);
-
+  // ---
   if (deviceDetector.isMobile) {
     goodButtonToUnlockSoundUnderLoadedDIV.addEventListener("touchend",okGoodButtonIsClicked); // Clickable only once in a session
   }
@@ -186,9 +193,14 @@ function createAndHandleProgressHasBeenLoadedBox() { // Called if memoryCard exi
 
   function okGoodButtonIsClicked() {
     closeTheBoxSound.play();
-    // Play disappear animation and remove and do nothing
+    // Play disappear animation and get ready for a new call
     progressLoadOkNoticeBoxContainerDIV.style.animationName = "theBlueBackgroundAndTheContentsDisappear"; // Should take 330ms » See css_for_info_boxes_in_parent
-    setTimeout(function () { document.body.removeChild(progressLoadOkNoticeBoxContainerDIV); },333); // And it will never reappear until another session
+    setTimeout(function () {
+      progressLoadOkNoticeBoxContainerDIV.style.animationName = "";
+      progressLoadOkNoticeBoxContainerDIV.classList.remove("fullViewportBackgroundForSaveLoadBoxes"); // See css_for_info_boxes_in_parent
+      progressLoadOkNoticeBoxContainerDIV.style.display = "none";
+      // Do not use remove() as it may be needed many times
+    },333); // And it will never reappear until another session
   }
 }
 
@@ -262,7 +274,7 @@ function createAndHandleMaybeYouShouldReloadBox() {
     closeTheBoxSound.play();
     // Play disappear animation and remove and REFRESH
     hideWouldYouLikeToRestartTheAppBox();
-    setTimeout(function () {  itIsAlreadyCertainThatUserWantsToReload = true;  location.reload();  }, 350); // See js_for_app_initialization_in_parent » Better if onbeforeunload is bypassed in this case
+    setTimeout(function () {  itIsAlreadyCertainThatUserWantsToReload = true;  location.reload();  }, 350); // See js_for_the_parent_all_browsers_all_devices » Better if onbeforeunload is bypassed in this case
   }
 
 }
@@ -275,11 +287,67 @@ function hideWouldYouLikeToRestartTheAppBox() {
   }, 340);
 }
 
-function loadWasSuccessfulDespiteTakingTooLong() {
+function loadWasSuccessfulDespiteTakingTooLong() { // Called by stopTheTimerToSeeIfNextLessonLoadedFastEnough
   maybeYouShouldReloadNoteP.style.display = "none";
   neverMindThisBoxNoteP.style.display = "block";
   maybeYouShouldReloadBoxButtonsContainerDIV.style.display = "none"; // Hide the buttons before completely disappearing
   setTimeout(function () {
     hideWouldYouLikeToRestartTheAppBox();
   }, 2000); // Let user read the [Never mind] statement for a moment
+}
+
+
+
+
+// DIALOG BOX to be shown when the app is paused
+// _________ See js_for_the_sliding_navigation_menu » pauseTheAppFunction
+function createAndHandleTheAppIsPausedBox() {
+  return new Promise(resolve => {
+    // See js_for_every_single_html.js for the fetch headers thingy.
+    const taughtLanguage = langCodeForTeachingFilePaths.substr(0,2); // en_east en_west will use the same user interface text folder
+    let theAppIsPausedDialogBoxTextsInTaughtLanguage = "⋮⋮|▶️";
+    const filePathForAppIsPausedBoxWithResumeButtonInTaughtLanguage = "/user_interface/text/"+taughtLanguage+"/0lesson-is_paused_message_and_unpause_button.txt";
+    fetch(filePathForAppIsPausedBoxWithResumeButtonInTaughtLanguage,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ theAppIsPausedDialogBoxTextsInTaughtLanguage = contentOfTheTxtFile; updateTheBox(); });
+
+    let theAppIsPausedDialogBoxTextsInKnownLanguage = "⦙⦙|▷"; // Get the actual text from txt file and use it instead of this default.
+    const filePathForAppIsPausedBoxWithResumeButtonInKnownLanguage = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-is_paused_message_and_unpause_button.txt";
+    fetch(filePathForAppIsPausedBoxWithResumeButtonInKnownLanguage,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ theAppIsPausedDialogBoxTextsInKnownLanguage = contentOfTheTxtFile; updateTheBox(); });
+
+    // CREATE A CUSTOM bilingual "App is paused" box with a "Continue" button using: theAppIsPausedDialogBoxTextsInKnownLanguage
+    const darkenWholeViewportDiv = document.createElement("DIV");
+    darkenWholeViewportDiv.classList.add("darkenTheWholeViewportClass"); // css_for_the_container_parent_html
+    document.body.appendChild(darkenWholeViewportDiv);
+    const theAppIsPausedBox = document.createElement("DIV");
+    theAppIsPausedBox.classList.add("theAppIsPausedBoxFiftyFiftyCentered"); // css_for_info_boxes_in_parent
+    document.body.appendChild(theAppIsPausedBox);
+    const theAppIsPausedMessage1 = document.createElement("P");
+    theAppIsPausedMessage1.innerHTML = theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[0];
+    theAppIsPausedBox.appendChild(theAppIsPausedMessage1);
+    const theAppIsPausedMessage2 = document.createElement("P");
+    theAppIsPausedMessage2.innerHTML = "(" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[0] + ")";
+    theAppIsPausedBox.appendChild(theAppIsPausedMessage2);
+
+    const unpauseButton = document.createElement("DIV");
+    unpauseButton.classList.add("buttonsUnderSaveLoadInfo"); // See css_for_info_boxes_in_parent
+    unpauseButton.innerHTML = " " + theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[1] + " <wbr> (" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[1] + ") ";
+    theAppIsPausedBox.appendChild(unpauseButton);
+    function updateTheBox() {
+      theAppIsPausedMessage1.innerHTML = theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[0];
+      theAppIsPausedMessage2.innerHTML = "(" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[0] + ")";
+      unpauseButton.innerHTML = " " + theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[1] + " <wbr> (" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[1] + ") ";
+    }
+
+    // When user clicks|touches [UNPAUSE] button to continue
+    if (deviceDetector.isMobile) {
+      unpauseButton.addEventListener("touchstart",removeThePromptAndResolve,{once:true});
+    } else {
+      unpauseButton.addEventListener("mousedown",removeThePromptAndResolve,{once:true});
+    }
+    function removeThePromptAndResolve() {
+      unpauseButton.remove(); theAppIsPausedMessage2.remove(); theAppIsPausedMessage1.remove();
+      theAppIsPausedBox.remove();
+      darkenWholeViewportDiv.remove();
+      resolve();
+    }
+  });
 }

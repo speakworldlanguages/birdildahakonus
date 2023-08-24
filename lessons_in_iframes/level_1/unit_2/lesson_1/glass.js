@@ -1,13 +1,12 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without obtaining permission
 
-// This is DEFERRED in html
-// IMPORTANT: Find countdownForGiveUpSkipOrGoToNext because we must adjust its value for each lesson
+// IMPORTANT: Find countdownForGiveUpSkipOrGoToNext and adjust its value for each lesson depending on the number of c1 c2 c3 ... visuals
 
 /* __ SAVE PROGRESS TO LOCAL STORAGE __ */
-// See js_for_app_initialization_in_parent to find how savedProgress.ja savedProgress.zh savedProgress.tr savedProgress.ar savedProgress.en are created
-const studiedLang = parent.langCodeForTeachingFilePaths;
+// See js_for_the_parent_all_browsers_all_devices to find how savedProgress.ja savedProgress.zh savedProgress.tr savedProgress.ar savedProgress.en are created
+const studiedLang = parent.langCodeForTeachingFilePaths.substr(0,2); // en_east en_west will use the same save-slot
 // !!! VERY CAREFUL: Watch the lesson name!!!
 parent.savedProgress[studiedLang].lesson_GLASS_IsViewed=true; // Create and add... or overwrite the same thing
 parent.saveJSON = JSON.stringify(parent.savedProgress); // Convert
@@ -15,7 +14,7 @@ localStorage.setItem("memoryCard", parent.saveJSON); // Save
 
 // All settings here will depend on the content of the lesson
 let theNewWordUserIsLearningNowAndPossibleMishaps; // Get this from txt file
-// CAUTION: parent.langCodeForTeachingFilePaths variable depends on localStorage data being available. See js_for_app_initialization_in_parent.js
+// CAUTION: parent.langCodeForTeachingFilePaths variable depends on localStorage data being available. See js_for_the_parent_all_browsers_all_devices.js
 const filePathForTheWordOrPhrase = "/speech_recognition_answer_key/"+parent.langCodeForTeachingFilePaths+"/1-2-1-glass.txt";
 // See js_for_every_single_html.js for the headers setting.
 fetch(filePathForTheWordOrPhrase,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ theNewWordUserIsLearningNowAndPossibleMishaps = contentOfTheTxtFile; });
@@ -38,20 +37,28 @@ const whatGlassSoundsLike2 = new parent.Howl({  src: ["/lessons_in_iframes/level
 //3
 //4
 //5
-const successTone = new parent.Howl({  src: ["/user_interface/sounds/success1.webm"]  });
+const successTone = new parent.Howl({  src: ["/user_interface/sounds/success1a.webm"]  });
 const notificationDingTone = new parent.Howl({  src: ["/user_interface/sounds/ding.webm"]  });
 /* Sound initialization happens on the parent but the consts exist in frame. SEE js_for_all_iframed_lesson_htmls » FIND onbeforeunload. */
-function unloadTheSoundsOfThisLesson() {
-  notificationDingTone.unload();
-  successTone.unload();
-  //5
-  //4
-  //3
-  whatGlassSoundsLike2.unload();
-  whatGlassSoundsLike1.unload();
-  sayGH.unload();  sayF.unload();  sayDE.unload();  sayC.unload();  sayAB.unload();
+// listOfAllSoundsInThisLesson is also used by pauseTheAppFunction in js_for_the_sliding_navigation_menu
+var listOfAllSoundsInThisLesson = [
+  notificationDingTone,
+  //successTone, // EXCEPTION: See unloadThatLastSoundWhichCannotBeUnloadedNormally
+  whatGlassSoundsLike2,
+  whatGlassSoundsLike1,
+  sayGH,
+  sayF,
+  sayDE,
+  sayC,
+  sayAB
+];
+function unloadTheSoundsOfThisLesson() { // See onbeforeunload in js_for_all_iframed_lesson_htmls
+  for (let i = 0; i < listOfAllSoundsInThisLesson.length; i++) {
+      const snd = listOfAllSoundsInThisLesson[i]; snd.unload();
+  }
+  parent.unloadThatLastSoundWhichCannotBeUnloadedNormally(successTone); // Exists in js_for_navigation_handling,,, unloads the sound after 5s
 }
-/* It looks like unloadTheImagesOfThisLesson() is unnecessary because imgs get destroyed when iframe.src is changed */
+
 /* ___VISUAL ELEMENTS THAT REQUIRE TIMING___ */
 const imgA = document.getElementById("imageA");
 const imgB = document.getElementById("imageB");
@@ -67,7 +74,7 @@ const main = document.getElementsByTagName('MAIN')[0];
 const vidsContainer = document.getElementById('containerOfVideosDivID');
 const containerOfDoubles = document.getElementById('doublesDivID');
 const fullVpDarkBlue = document.getElementById('fullVpDarkBlueDivID');
-const nowYouSayIt = document.getElementById('nowYouSayItIMG');
+const nowYouSayIt = document.querySelector('.nowYouSayItImgContainer');
 const containerOfSingles = document.getElementById('singlesDivID');
 
 const giveUpAndContinueButtonASIDE = document.getElementsByTagName('ASIDE')[0];
@@ -93,9 +100,9 @@ function startTheLesson()
   // No fade time for fx sound
   // No SFX
   // No fading away for fx sound
-  setTimeout(function(){ sayAB.play(); }, sayTime); // Assume that teacher will be talking for 5000ms
+  new SuperTimeout(function(){ sayAB.play(); }, sayTime); // Assume that teacher will be talking for 5000ms
   // No fading back for fx sound
-  setTimeout(function () { blurABandBringVid1OverAB();   /* No fade-to-zero for fx sound */   }, proceedTime); // slow, normal, fast
+  new SuperTimeout(function () { blurABandBringVid1OverAB();   /* No fade-to-zero for fx sound */   }, proceedTime); // slow, normal, fast
 }
 
 function blurABandBringVid1OverAB() {
@@ -110,16 +117,16 @@ function blurABandBringVid1OverAB() {
   if (deviceDetector.isMobile){ main.classList.add("grayscaleUngrayscalePauseUnpauseAtMid"); } /*Easy on CPU*/
   else { main.classList.add("blurUnblurPauseUnpauseAtMid"); }
 
-  setTimeout(function(){ main.style.animationPlayState = "paused"; }, blurTime*500); // Full blur in fast:1s, normal:1.75s, slow:2.5s // Using "paused" can give inaccurate results, but in this case it is usable even if it can't stop at exactly 50%
+  new SuperTimeout(function(){ main.style.animationPlayState = "paused"; }, blurTime*500); // Full blur in fast:1s, normal:1.75s, slow:2.5s // Using "paused" can give inaccurate results, but in this case it is usable even if it can't stop at exactly 50%
   // Bring the 1st video
   vidsContainer.classList.add("videoAppearsOverPhotos");
   vidsContainer.style.animationDuration = (blurTime/3).toFixed(2)+"s";
   vidsContainer.style.display = "block"; vid1.currentTime = startTime;
-  setTimeout(function(){
+  new SuperTimeout(function(){
     vid1.play(); // Let video play and then go back to double photos (still image pairs),,, total video length ~ ???s.
-    setTimeout(function(){ whatGlassSoundsLike1.play(); }, sayTime-4500);
-    setTimeout(function(){ sayC.play(); }, sayTime);
-    setTimeout(function(){ removeVid1AndReturnToAB(); }, proceedTime);
+    new SuperTimeout(function(){ whatGlassSoundsLike1.play(); }, sayTime-4500);
+    new SuperTimeout(function(){ sayC.play(); }, sayTime);
+    new SuperTimeout(function(){ removeVid1AndReturnToAB(); }, proceedTime);
   }, blurTime*500 - 500); // Video will start playing 0.5s before it is unblurred
 }
 
@@ -133,13 +140,13 @@ function removeVid1AndReturnToAB() {
   // Blur it away ...
   vidsContainer.classList.remove("videoAppearsOverPhotos"); vidsContainer.classList.add("videoDisappearsOverPhotos"); // CONSIDER: animationDuration
   vidsContainer.style.animationDuration = (blurTime/2).toFixed(2)+"s";
-  setTimeout(function(){
+  new SuperTimeout(function(){
     vidsContainer.removeChild(vid1);  vidsContainer.style.display = "none";  vidsContainer.classList.remove("videoDisappearsOverPhotos"); // Reset
     vid2.style.display = "block"; // Get ready for the next one
   }, 2750); // Longest it can take is 5000/2=2500
   main.style.animationPlayState = "running"; // Unblur back in
-  setTimeout(function(){ main.classList.remove("blurUnblurPauseUnpauseAtMid"); main.classList.remove("grayscaleUngrayscalePauseUnpauseAtMid"); }, 3500); // 2500+750 = 3250 is the longest possible // To be able to restart // It's OK to omit if (isMobile)
-  setTimeout(function(){ goFromABtoCD(); }, blurTime*500); // Half of the value in milliseconds
+  new SuperTimeout(function(){ main.classList.remove("blurUnblurPauseUnpauseAtMid"); main.classList.remove("grayscaleUngrayscalePauseUnpauseAtMid"); }, 3500); // 2500+750 = 3250 is the longest possible // To be able to restart // It's OK to omit if (isMobile)
+  new SuperTimeout(function(){ goFromABtoCD(); }, blurTime*500); // Half of the value in milliseconds
 }
 
 function goFromABtoCD() {
@@ -153,15 +160,15 @@ function goFromABtoCD() {
   imgA.classList.add("makePhotosDisappear");  imgA.style.animationDuration = String(changeTime)+"s";
   imgB.classList.add("makePhotosDisappear");  imgB.style.animationDuration = String(changeTime)+"s";
 
-  setTimeout(function(){
+  new SuperTimeout(function(){
     imgC.style.display = "block ";   imgC.classList.add("makePhotosAppear");   imgC.style.animationDuration = String(changeTime)+"s";
     imgD.style.display = "block ";   imgD.classList.add("makePhotosAppear");   imgD.style.animationDuration = String(changeTime)+"s";
     // No fx sound
     // No fade time
   }, changeTime*500); // Overlap images instead of to-white-from-white
-  setTimeout(function(){ sayDE.play(); }, changeTime*500 + sayTime);
+  new SuperTimeout(function(){ sayDE.play(); }, changeTime*500 + sayTime);
   // No fading back-to-full-volume for fx sound
-  setTimeout(function(){ blurCDandBringVid2OverCD(); }, changeTime*500 + proceedTime);
+  new SuperTimeout(function(){ blurCDandBringVid2OverCD(); }, changeTime*500 + proceedTime);
 }
 
 function blurCDandBringVid2OverCD() {
@@ -176,16 +183,16 @@ function blurCDandBringVid2OverCD() {
   if (deviceDetector.isMobile){ main.classList.add("grayscaleUngrayscalePauseUnpauseAtMid"); } /*Easy on CPU*/
   else { main.classList.add("blurUnblurPauseUnpauseAtMid"); }
 
-  setTimeout(function(){ main.style.animationPlayState = "paused"; }, blurTime*500); // To full blur in fast:1s, normal:1.75s, slow:2.5s
+  new SuperTimeout(function(){ main.style.animationPlayState = "paused"; }, blurTime*500); // To full blur in fast:1s, normal:1.75s, slow:2.5s
   // Bring the 2nd video
   vidsContainer.classList.add("videoAppearsOverPhotos");
   vidsContainer.style.animationDuration = (blurTime/3).toFixed(2)+"s";
   vidsContainer.style.display = "block"; vid2.currentTime = startTime;
-  setTimeout(function(){
+  new SuperTimeout(function(){
     vid2.play(); // total video length ~ ???s.
-    setTimeout(function(){ whatGlassSoundsLike2.play(); }, sayTime-4500);
-    setTimeout(function(){ sayF.play(); }, sayTime);
-    setTimeout(function(){ removeVid2AndReturnToCD(); }, proceedTime);
+    new SuperTimeout(function(){ whatGlassSoundsLike2.play(); }, sayTime-4500);
+    new SuperTimeout(function(){ sayF.play(); }, sayTime);
+    new SuperTimeout(function(){ removeVid2AndReturnToCD(); }, proceedTime);
   }, blurTime*500 - 500); // Video will start playing 0.5s before it is unblurred
 }
 
@@ -199,13 +206,13 @@ function removeVid2AndReturnToCD() {
   // Blur it away ...
   vidsContainer.classList.remove("videoAppearsOverPhotos"); vidsContainer.classList.add("videoDisappearsOverPhotos"); // Watch animationDuration
   vidsContainer.style.animationDuration = (blurTime/2).toFixed(2)+"s";
-  setTimeout(function(){
+  new SuperTimeout(function(){
     vidsContainer.removeChild(vid2);  vidsContainer.style.display = "none";
     // There is no 3rd video so there is no need to remove("videoDisappearsOverPhotos")
   }, 2750); // Longest it can take is 5000/2=2500
   main.style.animationPlayState = "running"; // Unblur back in
-  setTimeout(function(){ main.classList.remove("blurUnblurPauseUnpauseAtMid"); main.classList.remove("grayscaleUngrayscalePauseUnpauseAtMid"); }, 3500); // 2500+750 = 3250 is the longest possible // Not necessary as there won't be any other animations on MAIN BUT: Just to keep things tidy
-  setTimeout(function(){ goFromCDtoEF(); }, blurTime*500); // Half of the value in milliseconds
+  new SuperTimeout(function(){ main.classList.remove("blurUnblurPauseUnpauseAtMid"); main.classList.remove("grayscaleUngrayscalePauseUnpauseAtMid"); }, 3500); // 2500+750 = 3250 is the longest possible // Not necessary as there won't be any other animations on MAIN BUT: Just to keep things tidy
+  new SuperTimeout(function(){ goFromCDtoEF(); }, blurTime*500); // Half of the value in milliseconds
 }
 
 function goFromCDtoEF() {
@@ -219,16 +226,16 @@ function goFromCDtoEF() {
   imgC.classList.remove("makePhotosAppear");  imgC.classList.add("makePhotosDisappear");  imgC.style.animationDuration = String(changeTime)+"s";
   imgD.classList.remove("makePhotosAppear");  imgD.classList.add("makePhotosDisappear");  imgD.style.animationDuration = String(changeTime)+"s";
 
-  setTimeout(function(){
+  new SuperTimeout(function(){
     imgE.style.display = "block ";   imgE.classList.add("makePhotosAppear");   imgE.style.animationDuration = String(changeTime)+"s";
     imgF.style.display = "block ";   imgF.classList.add("makePhotosAppear");   imgF.style.animationDuration = String(changeTime)+"s";
     // No fx sound
     // No fade time
   }, changeTime*500); // Overlap images instead of to-white-from-white
-  setTimeout(function(){ sayGH.play(); }, changeTime*500 + sayTime);
+  new SuperTimeout(function(){ sayGH.play(); }, changeTime*500 + sayTime);
   // No more videos to bring
   // No fading back-to-full-volume
-  setTimeout(function () {
+  new SuperTimeout(function () {
     continueLesson();
   }, changeTime*500 + proceedTime);
 }
@@ -247,23 +254,24 @@ function display_nowItsYourTurn_animation() {
     default:     changeTime = 2; dingTimeMeansProceedTime = 3600;
   }
   containerOfDoubles.classList.add("makePhotosDisappear"); containerOfDoubles.style.animationDuration = String(changeTime)+"s";
-  setTimeout(function(){ containerOfDoubles.parentNode.removeChild(containerOfDoubles); }, changeTime*1000 + 250); // Remove shortly after opacity hits zero
+  new SuperTimeout(function(){ containerOfDoubles.parentNode.removeChild(containerOfDoubles); }, changeTime*1000 + 250); // Remove shortly after opacity hits zero
 
   fullVpDarkBlue.style.display = "block"; fullVpDarkBlue.classList.add("darkenLightenBackground"); fullVpDarkBlue.style.animationDuration = String(changeTime*2)+"s";
-  setTimeout(function(){ fullVpDarkBlue.style.animationPlayState = "paused"; }, changeTime*1000); // Paused at halfway
+  new SuperTimeout(function(){ fullVpDarkBlue.style.animationPlayState = "paused"; }, changeTime*1000); // Paused at halfway
   // nowYouSayIt takes 5100ms
   // Display the “It's your turn” animation if the user's browser is whitelisted.
-  setTimeout(function(){
-    if (parent.willUserTalkToSpeechRecognition) {
+  new SuperTimeout(function(){
+    if (parent.willUserTalkToSpeechRecognition && parent.internetConnectivityIsNiceAndUsable) {
       nowYouSayIt.style.display = "block"; // See » css_for_photos_and_videos_teach_a_new_word » to find how it is centered
-      setTimeout(function(){ nowYouSayIt.src = onePixelTransparentGif; nowYouSayIt.parentNode.removeChild(nowYouSayIt); }, 5101);
+      if (nowYouSayIt.children[0].src.includes(".avif")) {        nowYouSayIt.children[0].classList.add("animateAvifSprite");      }
+      new SuperTimeout(function(){ resetWebp(nowYouSayIt.children[0]); nowYouSayIt.style.display = "none"; }, 5101);
       countdownForGiveUpSkipOrGoToNext = 40000; // For whitelisted browsers » Should depend on how many photos there are!
     }
   }, changeTime*1000 - 600);
-  setTimeout(function(){ speakToTheMic(); }, dingTimeMeansProceedTime); // Makes the DING tone play
-  setTimeout(function(){
+  new SuperTimeout(function(){ speakToTheMic(); }, dingTimeMeansProceedTime); // Makes the DING tone play
+  new SuperTimeout(function(){
     containerOfSingles.style.display = "block"; containerOfSingles.classList.add("singlesContainerAppears"); // Fixed animation duration (1.5s) to avoid conflict
-    setTimeout(function(){ showSinglesOneByOne(); }, 1500);
+    new SuperTimeout(function(){ showSinglesOneByOne(); }, 1500);
   }, dingTimeMeansProceedTime + changeTime*200);
 }
 
@@ -275,7 +283,7 @@ function showSinglesOneByOne() {
     case "fast": changeTime = 2.00; break;
     default:     changeTime = 3.50;
   }
-  setInterval(bringTheNext, changeTime*1000); // Minor issue: Changing speedAdjustmentSetting will not take effect after this starts ticking
+  new SuperInterval(bringTheNext, changeTime*1000); // Minor issue: Changing speedAdjustmentSetting will not take effect after this starts ticking
   function bringTheNext() {
     let now = i%modulus; let next = (i+1)%modulus;
     allSingles[now].classList.remove("simpleFadeIn");    allSingles[now].classList.add("simpleFadeOut");  allSingles[now].style.animationDuration  = String(changeTime/2)+"s";
@@ -292,15 +300,15 @@ var preventGiveUpButtonIfSuccessHappens;
 let aMatchWasFound = false;
 function speakToTheMic() {
 
-  setTimeout(function () {
+  new SuperTimeout(function () {
     // The GIVE-UP-BUTTON appears (which turns into a Go-To-Next-Button on Firefox2021 etc).
     // If speech is recognized, use clearTimeout to prevent its "showing-up".
-    preventGiveUpButtonIfSuccessHappens = setTimeout(function () { // This must start ticking only after countdownForGiveUpSkipOrGoToNext is updated.
+    preventGiveUpButtonIfSuccessHappens = new SuperTimeout(function () { // This must start ticking only after countdownForGiveUpSkipOrGoToNext is updated.
       giveUpAndContinueButtonASIDE.classList.add("addThisToGlassButtonToUnhide");
     },countdownForGiveUpSkipOrGoToNext); // This must start ticking only after countdownForGiveUpSkipOrGoToNext is updated.
   },120);
 
-  // setLanguage() for annyang is in /js_reusables/js_for_app_initialization_in_parent.js
+  // setLanguage() for annyang is in /js_reusables/js_for_the_parent_all_browsers_all_devices.js
   // DEPRECATED var commands = {}; // Let's keep the older code for reference only here in bread.js to remember how we started out
   const eachWordArray = theNewWordUserIsLearningNowAndPossibleMishaps.split("|"); // The text files in speech_recognition_answer_key must be written with the | (bar) character as the separator between phrases.
   parent.console.log("Speech recognition is waiting for: "+eachWordArray[0]);
@@ -320,39 +328,36 @@ function speakToTheMic() {
         notificationDingTone.play(); // Android has its native DING tone. So let this DING tone play on desktops and iOS devices.
     }
     // Start listening.
-    setTimeout(function() {  parent.annyang.start();  },500);
-    setTimeout(function() {  startAudioInputVisualization();  },600); // Will work everywhere except on Android. See js_for_microphone_input_visualization.js
+    new SuperTimeout(function() {  parent.annyang.start();  },500);
+    new SuperTimeout(function() {  startAudioInputVisualization();  },600); // Will work everywhere except on Android. See js_for_microphone_input_visualization.js
     // New method of detecting matches
     parent.annyang.addCallback('result', compareAndSeeIfTheAnswerIsCorrect);
     function compareAndSeeIfTheAnswerIsCorrect(phrasesArray) {
       parent.console.log('Speech recognized. Possibly said: '+phrasesArray);
-      // Check if there is a match // Maybe this is better than adding commands, no?
+      // Check if there is a match
       let j;
-      for(j=0;j<eachWordArray.length;j++)
-      {
+      for(j=0;j<eachWordArray.length;j++) {
         let k;
         for (k = 0; k < phrasesArray.length; k++) {
-          // BULGULAR: toLowerCase() Windows'ta büyük Ş yi küçük ş ye çeviriyor ama Mac OS üzerinde çevirmiyor
-          // Onun yerine toLocaleLowerCase() kullanılırsa büyük I İngilizcedeki gibi küçük i ye dönüşmek yerine küçük ı ya dönüşüyor
-          // Seçenek1: toLocaleLowerCase() KULLANMAYIP speech_recognition_answer_key içindeki cevapları buna dikkat ederek girmek
-          // Seçenek2: tr için özel koşul yazmak -> OLMADI NEDEN ÇÜNKÜ büyük [İ] yi [i̇] ye yanlış dönüştürüyor. İki farklı küçük i çıkıyor ve ("i̇" == "i") false veriyor
-          /* Doğru çevirseydi şöyle bir şey yapabilirdik
-          let searchResult;
-          if (parent.langCodeForTeachingFilePaths == "tr") { searchResult = phrasesArray[k].toLocaleLowerCase().search(eachWordArray[j].toLocaleLowerCase()); }
-          else { searchResult = phrasesArray[k].toLowerCase().search(eachWordArray[j].toLowerCase()); }
-          */
-          // Note: We don't need toLocaleLowerCase() for Cyrillic script (confirmed on Windows), toLowerCase() does the job right already
-          if (phrasesArray[k].toLowerCase().search(eachWordArray[j].toLowerCase()) >= 0) {
-            if (!aMatchWasFound) {
-              aMatchWasFound = true;
-              stopListeningAndProceedToNext();
+          const fromPhraseToSingleWords = phrasesArray[k].split(" ");
+          let z;
+          for (z = 0; z < fromPhraseToSingleWords.length; z++) {
+            let searchResult = false;
+            if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; }
+            if (!aMatchWasFound && searchResult) {
+              aMatchWasFound = true; // Using this, we make sure that stopListeningAndProceedToNext fires only and only once
+              if (parent.annyang.getSpeechRecognizer().interimResults) { console.log("Correct answer detected with interimResults enabled");
+                setTimeout(function () { stopListeningAndProceedToNext(); }, 250); // Interim results is or can be too quick (especially on Windows)
+              } else { console.log("Correct answer detected without interimResults");
+                stopListeningAndProceedToNext();
+              }
             } else {
-              // Prevent double firing by doing nothing
+              // Prevent a possible second firing (or any further firings) of stopListeningAndProceedToNext by doing nothing
             }
-          }
-        }
-      }
-    }
+          } // End of for z
+        } // End of for k
+      } // End of for j
+    } // END OF compareAndSeeIfTheAnswerIsCorrect
   }
 
 } /* END OF speakToTheMic */
@@ -362,28 +367,48 @@ function stopListeningAndProceedToNext() {
   if (!userHasGivenUp) { // Real success of speech recognition
     successTone.play(); fullVpDarkBlue.style.animationPlayState = "running"; containerOfSingles.classList.add("brightenUp");
     if (canVibrate) {  navigator.vibrate([14, 133, 12, 111, 12, 133, 20]);  } // See js_for_every_single_html.js for canVibrate
-    clearTimeout(preventGiveUpButtonIfSuccessHappens);
+    preventGiveUpButtonIfSuccessHappens.clear(); // Used to be clearTimeout(preventGiveUpButtonIfSuccessHappens); // i.e. without supertimeout.js
     giveUpAndContinueButtonASIDE.classList.add("addThisToGlassButtonWhenSuccessHappens");
   } else { // Give up and continue
     containerOfSingles.classList.add("darkenDown");
     if (canVibrate) {  navigator.vibrate([13]);  } // See js_for_every_single_html.js for canVibrate
   }
-  // Stop all microphone activity as soon as success happens and don’t wait until “beforeunload” fires. See js_for_all_iframed_lesson_htmls to find what happens with window.onbeforeunload
+  // Stop all microphone activity as soon as success happens and don’t wait until “beforeunload” fires.
+  // See js_for_all_iframed_lesson_htmls to find what happens with window.onbeforeunload
   if (parent.annyang) { // As of 2021, Firefox says annyang is undefined. But the app still has to work without Web Speech API so the code must be wrapped in if(parent.annyang).
     parent.annyang.removeCallback(); // Remove all script activity // Instead of DEPRECATED parent.annyang.removeCommands();
-    parent.annyang.abort(); // OR should we??? //if (!parent.isApple) {  parent.annyang.abort();  } // ISSUE THAT NEEDS SERIOUS CARE: Safari doesn't allow mic permanently; it allows for only 1 listening session and prompts for permission everytime mic restarts
+    // parent.annyang.abort(); // OR should we??? //if (!parent.isApple) {  parent.annyang.abort();  } // ISSUE THAT NEEDS SERIOUS CARE: Safari doesn't allow mic permanently; it allows for only 1 listening session and prompts for permission everytime mic restarts
+    if (isApple) { parent.annyang.pause(); }
+    else { parent.annyang.abort(); }
   }
-  // Stop Wavesurfer microphone: Don't wait for "beforeunload" and kill it immediately even though it will fire one more time with window.onbeforeunload
-  // SINCE: user could navigate away in the middle of mic session » it has to exist both in js_for_all_iframed_lesson_htmls and here
-  stopAudioInputVisualization();
-  /* GET READY TO EXIT THIS LESSON */
-  let endTime;
-  switch (parent.speedAdjustmentSetting) { case "slow": endTime = 4600; break;    case "fast": endTime = 3000; break;    default: endTime = 3600; }
-  setTimeout(function() { showPreloaderBeforeExit(); },endTime-1500); // See js_for_all_iframed_lesson_htmls AND See css_for_preloader_and_orbiting_circles
-  // REMEMBER: iframe.src change makes window.onbeforeunload fire in js_for_all_iframed_lesson_htmls.js which has unloadTheSoundsOfThisLesson();
-  setTimeout(function() { parent.ayFreym.src = "/lessons_in_iframes/level_1/unit_2/lesson_2/index.html"; },endTime);
+  // Stop Wavesurfer microphone: We don't want to wait for "beforeunload" so we call the function immediately even though it will fire one more time with window.onbeforeunload
+  // We cannot disable "beforeunload" BECAUSE if user navigates away in the middle of a mic session we want the mic turned off
+  // Yet, we also want to hide the visualization asap when success happens, therefore it has to be armed both in js_for_all_iframed_lesson_htmls and here
+  stopAudioInputVisualization(); // See js_for_microphone_input_visualization
+
   /* Save progress */
-  parent.savedProgress[studiedLang].lesson_GLASS_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
+  if (!userHasGivenUp) { // User was successful with speech recognition
+    parent.savedProgress[studiedLang].lesson_GLASS_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
+  } else { // User has given up and wants to continue anyhow
+    parent.savedProgress[studiedLang].lesson_GLASS_IsCompleted=false; // WATCH THE NAME OF THE LESSON!!!
+  }
   parent.saveJSON = JSON.stringify(parent.savedProgress); // Convert
   localStorage.setItem("memoryCard", parent.saveJSON); // Save
-}
+
+  /* GET READY TO EXIT THIS LESSON */
+  let endTime;
+  switch (parent.speedAdjustmentSetting) { case "slow": endTime = 5000; break;    case "fast": endTime = 3000; break;    default: endTime = 4000; }
+  new SuperTimeout(function() { showGlobyPreloaderBeforeExit(); },endTime-1500); // See js_for_all_iframed_lesson_htmls AND See css_for_preloader_and_orbiting_circles
+  // REMEMBER: iframe.src change makes window.onbeforeunload fire in js_for_all_iframed_lesson_htmls.js which then calls unloadTheSoundsOfThisLesson();
+  parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost = "/lessons_in_iframes/level_1/unit_2/lesson_2/index.html"; // See js_for_online_and_offline_modes
+  // --- HANDLE ONLINE and OFFLINE cases
+  if (parent.internetConnectivityIsNiceAndUsable) { // See js_for_online_and_offline_modes.js
+    new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; },endTime); // See js_for_all_iframed_lesson_htmls » onbeforeunload
+  } else { parent.console.warn("THE DEVICE IS OFFLINE (detected at the end of lesson");
+    const isCached = checkIfNextLessonIsCachedAndRedirectIfNot(122); // See js_for_all_iframed_lesson_htmls
+    if (isCached) { console.warn("WILL TRY TO CONTINUE OFFLINE");
+      new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; },endTime); // See js_for_all_iframed_lesson_htmls » onbeforeunload
+    }
+  }
+  // ---
+} // END OF stopListeningAndProceedToNext

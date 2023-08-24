@@ -1,2 +1,2 @@
 ﻿?
-Can that do speech recognition?
+Let's see if your browser supports speech recognition...

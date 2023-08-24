@@ -20,12 +20,12 @@ body{
   touch-action: none;/* https://stackoverflow.com/questions/37808180/disable-viewport-zooming-ios-10-safari    user:Pedro*/
   /*Set touch-action to auto if a div must be pinch zoomed and|or panned*/
   overflow:hidden;  /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
-  max-width:100vw;  /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
-  max-height:100vh; /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
+  max-width:100vw; max-width:100dvw;  /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
+  max-height:100vh; max-height:100dvh; /*This is necessary for information/index.html to be viewed properly on mobiles. (Used to be inline style)*/
 }
 main{
   position: fixed;
-  top:0; left:0; width:100vw; height: 100%; /* height used to be 100vh | Note: In the parent, the "left" value is to be changed via script to hide this div. See js_reusables/js_for_app_initialization_in_parent.js*/
+  top:0; left:0; width:100vw; width:100dvw; height: 100%; height: 100dvh; /* height used to be 100vh | Note: In the parent, the "left" value is to be changed via script to hide this div. See js_reusables/js_for_the_parent_all_browsers_all_devices.js*/
   overflow: hidden;
   /*For background colors, see css_for_the_container_parent_html AND css_for_photos_and_videos_teach_a_new_word AND css_for_lessons_with_interactables*/
 }
@@ -48,9 +48,9 @@ p{
 /*main:hover{ cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto; }*/ /*CANNOT MAKE THE CURSOR HIDEABLE WITH THIS*/
 /*So add defaultCursor class to all MAIN elements (parent&frame) manually via js_for_every_single_html*/
 .defaultCursor:hover{ cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto; }
-.noCursor{ cursor: none; } .noCursor:hover{ cursor: none; } .noCursor:active{ cursor: none; } /*Can't be too safe can you?*/
+.noCursor{ cursor: none; } .noCursor:hover{ cursor: none; } .noCursor:active{ cursor: none; } /*Can't be too safe can we?*/
 
-/*Note that buttons are different at parent level and iframe level. See js_for_app_initialization_in_parent AND js_for_all_iframed_lesson_htmls*/
+/*Note that buttons are different at parent level and iframe level. See js_for_the_parent_all_browsers_all_devices AND js_for_all_iframed_lesson_htmls*/
 button:hover{
   cursor: url("/user_interface/images/cursor/button_cursor.png") 16 4,auto;
 }
@@ -115,4 +115,13 @@ address{
     transform: scale(0.1);
     visibility: hidden; /*Not sure if we need display none instead of visibility hidden. Looks like it's working anyway.*/
   }
+}
+/*_____animation-duration to be set dynamically______*/
+.simplyMakeItDisappear{  animation-name: fadeToZeroOpacityAndDispNone; animation-timing-function: ease; animation-fill-mode: forwards;  }
+@keyframes fadeToZeroOpacityAndDispNone {
+  0%{ opacity: 1; }  100%{ opacity: 0; } /* display:none; does not work here */
+}
+.simplyMakeItAppear{  animation-name: dispBlockAndFadeToFullOpacity; animation-timing-function: ease; animation-fill-mode: forwards;  }
+@keyframes dispBlockAndFadeToFullOpacity {
+  0%{ opacity: 0; }  100%{ opacity: 1; } /* display: block; does not work here */
 }

@@ -69,7 +69,7 @@
 .orbitingCirclesTopContainer{
   position: fixed; z-index: 1049;
   display: flex; justify-content: center; align-items: center;
-  top:0px; left: 0px; width: 100vw; height: 100%; /*height used to be 100vh*/
+  top:0px; left: 0px; width: 100vw; width: 100dvw; height: 100%; height: 100dvh; /*height used to be 100vh*/
   background-color: black;
 }
 .loadingio-spinner-interwind-f4cl6mjzf0h {

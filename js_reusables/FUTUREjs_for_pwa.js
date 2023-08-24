@@ -21,7 +21,7 @@ function handleDesktopTabletPhoneETC() {
     containerFooter.classList.remove("footerDesktop"); containerFooter.classList.add("footerTabletAndPhone");
   }
 
-  if (detectedOS.name == "iOS") { // As of 2021 iOS is the only platform that has neither notification nor installation
+  if (detectedOS_name == "ios") { // As of 2021 iOS is the only platform that has neither notification nor installation
     containerFooter.parentNode.removeChild(containerFooter);
   }
 

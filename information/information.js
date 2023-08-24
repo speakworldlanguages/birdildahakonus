@@ -1,8 +1,8 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
-let clickSound;
+let clickTouchendSound; let hoverTouchstartSound;
 let theTextThatWillBePutInTheButton;
 let filePathForMonthlyFinanceBaseUsd; // Dynamic
 let filePathForMonthlyFinanceBaseEur; // Dynamic
@@ -13,8 +13,14 @@ const today = d.getDate();
 const turn = today%5;
 if (turn>=3) {useTheOtherExchangeService = true;}
 let isAlreadyMovingTheBigSlideThatIs = false;
-
+/*
 window.addEventListener('DOMContentLoaded', function(){
+ // DOMContentLoaded is (or can be) too early for deviceDetector
+}, { once: true });
+*/
+// REMEMBER: Wait for “userInterfaceLanguage” variable to be ready. See js_for_every_single_html.js
+window.addEventListener('load', function(){
+  // ---
 
   if (needLatinFonts) {
     /*GET FONTS*/
@@ -40,20 +46,21 @@ window.addEventListener('DOMContentLoaded', function(){
   }
   // MOVED: needHitoicJapaneseFonts into window load because the font file is almost 5MB
 
-  clickSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_click.webm"]  }); // 1.3s is the climax and 2.6 is end of excitement
+  clickTouchendSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_click.webm"]  }); // 1.3s is the climax and 2.6 is end of excitement
+  hoverTouchstartSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_hover.webm"]  });
   // ------- Fill the divs with text depending on the user interface language --------
   const filePathForLicense = "/LICENSE";
   fetch(filePathForLicense,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ const keepTheNiceLineBreaks = contentOfTheTxtFile.replace(/\n\s*/g, "<br>"); document.getElementById('putTheLicenseIntoThisP').innerHTML = keepTheNiceLineBreaks; });
 
-  const filePathForTitle = "/user_interface/text/"+userInterfaceLanguage+"/info_index_html_title.txt";
-  const filePathForNameOfAuthor = "/user_interface/text/"+userInterfaceLanguage+"/info_name_of_author.txt";
-  const filePathForNameOfLicense = "/user_interface/text/"+userInterfaceLanguage+"/info_name_of_license.txt";
-  const filePathForViewLicenseButton = "/user_interface/text/"+userInterfaceLanguage+"/info_view_license_button.txt";
-  const filePathForGoBackButton = "/user_interface/text/"+userInterfaceLanguage+"/info_go_back_button.txt";
-  filePathForMonthlyFinanceBaseUsd = "/user_interface/text/"+userInterfaceLanguage+"/info_monthly_option_base_usd.txt";
-  filePathForMonthlyFinanceBaseEur = "/user_interface/text/"+userInterfaceLanguage+"/info_monthly_option_base_eur.txt";
-  const filePathForGoodbyeText = "/user_interface/text/"+userInterfaceLanguage+"/0-before_leaving_the_app_to_donate.txt";
-  const filePathForViewSourceCode = "/user_interface/text/"+userInterfaceLanguage+"/info_about_resources.txt";
+  const filePathForTitle = "/user_interface/text/"+userInterfaceLanguage+"/info-index_html_title.txt";
+  const filePathForNameOfAuthor = "/user_interface/text/"+userInterfaceLanguage+"/info-name_of_author.txt";
+  const filePathForNameOfLicense = "/user_interface/text/"+userInterfaceLanguage+"/info-name_of_license.txt";
+  const filePathForViewLicenseButton = "/user_interface/text/"+userInterfaceLanguage+"/info-view_license_button.txt";
+  const filePathForGoBackButton = "/user_interface/text/"+userInterfaceLanguage+"/info-go_back_button.txt";
+  filePathForMonthlyFinanceBaseUsd = "/user_interface/text/"+userInterfaceLanguage+"/info-monthly_option_base_usd.txt";
+  filePathForMonthlyFinanceBaseEur = "/user_interface/text/"+userInterfaceLanguage+"/info-monthly_option_base_eur.txt";
+  const filePathForGoodbyeText = "/user_interface/text/"+userInterfaceLanguage+"/info-before_leaving_the_app_to_donate.txt";
+  const filePathForViewSourceCode = "/user_interface/text/"+userInterfaceLanguage+"/info-about_resources.txt";
   /* TRICK: Although it is wrong to use the same ID for 3 elements (desktop,tablet,phone) this works because two of them are removed with removeChild() before this runs*/
   fetch(filePathForTitle,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.title = document.title +" "+ contentOfTheTxtFile; }); // Keep the default and add the text next to it.
   fetch(filePathForNameOfAuthor,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.getElementById('authorsNameP').innerHTML = contentOfTheTxtFile; });
@@ -69,15 +76,16 @@ window.addEventListener('DOMContentLoaded', function(){
   } else {
     fetch(filePathForViewSourceCode,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.getElementById('aboutResourcesP').innerHTML = contentOfTheTxtFile; });
   }
-}, { once: true });
-// REMEMBER: Wait for “userInterfaceLanguage” variable to be ready. See js_for_every_single_html.js
-window.addEventListener('load', function(){
+
+  // ---
 
   const monthlyOpt = document.getElementById('idOfMonthlySupportOptionDiv'); // The 2 other duplicates will have been removed by the time this gets executed.
   // GOOD PRACTICE: It would be good if we could “SILENTLY” get the location of the user via IP detection (without device GPS because that pops another “allow-block” prompt).
   switch (browserLanguage) { // CAUTION: Not userInterfaceLanguage but browserLanguage. WHY: Because EURO users speak many different languages  // See js_for_every_single_html -> two letter code is ready
     case "ja": // JPY
     fetch(filePathForMonthlyFinanceBaseUsd,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+      document.getElementById('idOfMonthlyOptionP').innerHTML = contentOfTheTxtFile;
+      /*
       theTextThatWillBePutInTheButton = contentOfTheTxtFile;
       if (useTheOtherExchangeService) {
         fetch("https://openexchangerates.org/api/latest.json?app_id=00d60b05bdf64fe7acd41c8378f40877").then(function(response){return response.json();}).then(function(jsonObject){
@@ -88,6 +96,7 @@ window.addEventListener('load', function(){
           document.getElementById('idOfMonthlyOptionP').innerHTML = theTextThatWillBePutInTheButton.split("?")[0]+Math.round(jsonObject.conversion_rate)+theTextThatWillBePutInTheButton.split("?")[1];
         });
       }
+      */
     });
       break;
     case "tr": // TRY
@@ -100,7 +109,7 @@ window.addEventListener('load', function(){
     });
       break;
     case "it": case "es": case "de": case "fr": case "pt": case "fi": case "el": case "et": case "ga": case "lv": case "lt": case "nl": case "mt": case "sk": case "sl": // EUR
-    fetch(filePathForMonthlyFinanceBaseEur,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.getElementById('idOfMonthlyOptionP').innerHTML = contentOfTheTxtFile; });
+    fetch(filePathForMonthlyFinanceBaseUsd,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.getElementById('idOfMonthlyOptionP').innerHTML = contentOfTheTxtFile; });
       break;
     default: // USD
     fetch(filePathForMonthlyFinanceBaseUsd,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ document.getElementById('idOfMonthlyOptionP').innerHTML = contentOfTheTxtFile; });
@@ -117,7 +126,8 @@ window.addEventListener('load', function(){
   if (deviceDetector.isMobile) { // PHONE & TABLET - PHONE & TABLET - PHONE & TABLET
     let clearThisIntervalIfNeedBe;
     // Use event.stopPropagation(); INLINE to prevent touch conflict
-    monthlyOpt.addEventListener("touchend", function(){  clickSound.play();  handleNavigationToPatreon();  clearInterval(clearThisIntervalIfNeedBe);  }, { once: true });
+    monthlyOpt.addEventListener("touchstart", function(e){ e.preventDefault(); e.stopPropagation(); hoverTouchstartSound.play();  clearInterval(clearThisIntervalIfNeedBe);  }, { once:true });
+    monthlyOpt.addEventListener("touchend", function(e){ e.preventDefault(); e.stopPropagation(); clickTouchendSound.play();  handleNavigationToPatreon();  clearInterval(clearThisIntervalIfNeedBe);  }, { once:true });
     clearThisIntervalIfNeedBe = setInterval(function () {
               monthlyOpt.classList.add("blinkByAddingRemovingThis");
               setTimeout(function () { monthlyOpt.classList.remove("blinkByAddingRemovingThis"); },600);
@@ -126,9 +136,9 @@ window.addEventListener('load', function(){
   } else { // DESKTOP - DESKTOP - DESKTOP
     const whiteFullnessDIV0 = document.createElement("DIV"); whiteFullnessDIV0.classList.add("whiteFullness0");
     document.body.appendChild(whiteFullnessDIV0);
-    monthlyOpt.addEventListener("mouseenter", function(){    whiteFullnessDIV0.style.opacity = "0.15";  });
-    monthlyOpt.addEventListener("mouseleave", function(){    whiteFullnessDIV0.style.opacity = "0";  });
-    monthlyOpt.addEventListener("mouseup", function(){    clickSound.play();    handleNavigationToPatreon();  }, { once: true });
+    monthlyOpt.addEventListener("mouseenter", function(){  whiteFullnessDIV0.style.opacity = "0.15"; hoverTouchstartSound.play();  });
+    monthlyOpt.addEventListener("mouseleave", function(){  whiteFullnessDIV0.style.opacity = "0";  });
+    monthlyOpt.addEventListener("mouseup", function(){    clickTouchendSound.play();    handleNavigationToPatreon();  }, { once: true });
   }
   //--- Latin fonts are loaded with DOMContentLoaded but this one better start loading after window-load because it's almost 5MB
   if (needHitoicJapaneseFonts) {
@@ -142,6 +152,7 @@ window.addEventListener('load', function(){
 
 }, { once: true });
 // END OF FIRINGS WITH LOAD EVENT
+
 function handleNavigationToPatreon() {
   const whiteFullnessDIV1 = document.createElement("DIV"); whiteFullnessDIV1.classList.add("whiteFadeIn"); whiteFullnessDIV1.classList.add("whiteFullness1");
   document.body.appendChild(whiteFullnessDIV1); // 4800 ms to 100% light beige color
@@ -166,6 +177,8 @@ function handleNavigationToPatreon() {
     secondLine.classList.add("textAlignJustifyLTR"); // See css_for_every_single_html
   }
 
+  // EXIT FULLSCREEN IF WAS FULLSCREEN
+  //setTimeout(function () {     },10000);
   //setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },12000);
 }
 

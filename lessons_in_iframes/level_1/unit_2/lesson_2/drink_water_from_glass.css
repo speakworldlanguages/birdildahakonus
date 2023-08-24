@@ -1,0 +1,80 @@
+:root {
+  --hOffset: 0px;
+  --vOffset: calc(7vmin + 7vmax);
+}
+div img{pointer-events: none;}
+.pictogramDrinkingWaterPose{
+  position:fixed; bottom: 0px; transform-origin: bottom;
+  transition-property: transform, margin-bottom;
+  transition-timing-function: cubic-bezier(.55,0,.45,1);
+}
+.pictogramGoesAway{}
+.glassComesToTheCenter{}
+
+.tiltTheGlassGulpGulpGulp{
+  position:fixed; left: 50%; top: 50%; transform: translate(-50%,-50%);
+  transition-property: margin-left, margin-top;
+  transition-timing-function: cubic-bezier(.55,0,.45,1);
+}
+.alreadyAtTheCenter{position:fixed; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(1);}
+.firstZoomWithKeyframes{animation-name: zoom122a; animation-duration: 4s; animation-fill-mode: forwards; animation-timing-function: ease;}
+@keyframes zoom122a {
+  from {transform: translate(-50%,-50%) scale(100%);}
+  to {transform: translate(-50%,-50%) scale(162%);}
+}
+.alreadyZoomedAtTheCenter{position:fixed; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(1.62);}
+.lastZoomWithKeyframes{animation-name: zoom122b; animation-delay: 0s; animation-duration: 8s; animation-fill-mode: forwards; animation-timing-function: ease;}
+@keyframes zoom122b {
+  from {transform: translate(-50%,-50%) scale(162%);}
+  to {transform: translate(-50%,-50%) scale(180%);}
+}
+
+@media (orientation:landscape) {
+ .pictogramDrinkingWaterPose{ right: 50%; transform: translateX(50%); margin-right: calc(9vmax + 13vmin); }
+ .tiltTheGlassGulpGulpGulp{ margin-left: calc(13vmin + 9vmax); }
+ .alreadyAtTheCenter{ margin-left: var(--hOffset); }
+ .alreadyZoomedAtTheCenter{ margin-left: var(--hOffset); }
+ .pictogramGoesAway{ transform: translateX(-50%); }
+ .glassComesToTheCenter{ margin-left: var(--hOffset); margin-top: 0px; }
+ .instruction{left:calc(75vw + 5vh); top:50%; transform: translate(-50%,-50%);}
+ @media (max-aspect-ratio: 3/2) {
+    .instruction{ transform: translate(-50%,-50%) scale(0.8); }
+  }
+}
+@media (orientation:portrait) {
+ .pictogramDrinkingWaterPose{ left: 0px; }
+ .tiltTheGlassGulpGulpGulp{ margin-top: calc(-15vh + -10vw) ;}
+ .alreadyAtTheCenter{ margin-top: var(--vOffset); }
+ .alreadyZoomedAtTheCenter{ margin-top: var(--vOffset); }
+ .pictogramGoesAway{ margin-bottom: -12vmin; }
+ .glassComesToTheCenter{ margin-left: 0px; margin-top: var(--vOffset); }
+ .instruction{left:50%; top:calc(30vh - 5vw); transform: translate(-50%,-50%);}
+ @media (min-aspect-ratio: 2/3) {
+    .pictogramDrinkingWaterPose{ transform: scale(0.8); }
+  }
+}
+
+svg{opacity: 0;}
+path:hover{cursor: url("/user_interface/images/cursor/dark_cursor.png") 16 4,auto;}
+.mouseIsHovering{filter: brightness(1.05);}
+.mouseIsNotHovering{filter: brightness(1);}
+
+.pictogramDisappears{ animation-name: nicelyDisappear; animation-fill-mode: forwards; animation-timing-function: cubic-bezier(.55,0,.45,1);}
+@keyframes nicelyDisappear {
+  0% {    opacity: 1; }
+  50% {   opacity: 1; }
+  95% {   opacity: 0; }
+  100% {  opacity: 0; }
+}
+
+.glassFlashesBriefly{ animation-name: briefFlash; animation-duration: 3s; animation-fill-mode: forwards; animation-timing-function: cubic-bezier(0,1,0,1);}
+@keyframes briefFlash {
+  from {filter: brightness(125%);}
+  to{filter: brightness(100%);}
+}
+
+.instruction{position: fixed; pointer-events: none; filter: drop-shadow(0 0 6vmin rgba(235, 249, 255, 0.5));}
+.appearQuickly{animation-name: appear; animation-duration: 1.5s; animation-fill-mode: forwards;}
+@keyframes appear {  from {  opacity: 0; }  to {    opacity: 1; }  }
+.disappearSlowly{animation-name: disappear; animation-duration: 3s; animation-fill-mode: forwards;}
+@keyframes disappear {  from {  opacity: 1; }  to {    opacity: 0; }  }

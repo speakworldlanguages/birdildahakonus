@@ -9,15 +9,14 @@
 
     <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
     <link rel="stylesheet" href="/css_reusables/css_for_the_container_parent_html.css"> <!-- Not using css_for_all_iframed_lesson_htmls.css -->
-    <link rel="stylesheet" href="information.css">
+    <link rel="stylesheet" href="/information/information.css">
 
     <script defer src="/js_reusables/js_for_every_single_html.js">/*Memory card, userInterfaceLanguage, fetch headers, fonts*/</script>
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
-    <!-- MOVED DEVICEDETECTOR TO js_for_every_single_html.js <script defer src="/third_party_js/devicedetector-min.js"></script> -->
-    <script defer src="information.js">/*What to do here*/</script>
+    <script defer src="/information/information.js">/*What to do here*/</script>
 
     <!-- Uncomment the following to be able to use the browser console on mobile devices -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/2.5.0/eruda.min.js"></script> -->
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
     <style>    .startWithNearZeroOpacity{opacity:0.01;}  .displayNone{display: none;} </style>
@@ -26,10 +25,10 @@
   <body>
     <main style="z-index:0; background-image: linear-gradient(#becbd5, #dbe2e8);"></main> <!-- Provides background gradient. See css_for_the_container_parent_html.css -->
 
-    <!-- FOR DESKTOPS -->
+    <!-- FOR DESKTOPS : NOTE_THAT vw vh function correctly on desktops. So dvw and dvh are not necessary -->
     <div id="thisDivContainsEverythingThatWillBeDisplayedOnDesktops" class="displayNone" style="transform: translateX(0px); position: relative; /*z-index:2;*/"> <!-- Use remove() or removeChild() on tablets and phones -->
 
-      <!-- MAIN on desktops -->
+      <!-- MAIN on desktops : NOTE_THAT vw vh function correctly on desktops. So dvw and dvh are not necessary -->
       <div id="moveAllOfThisToLeftID">
         <!-- Elegant shadow at top using 0px div height and 0.1px border -->
         <div class="" style="position:fixed; left:-100vw; top:0px; width: 300vw; box-shadow: 0px 0px 5px #6d7b88; border: .1px solid rgba(0,0,0,0);">
@@ -37,7 +36,7 @@
         <!-- Photo of the author -->
         <div class="photoContainerOnDesktops startWithNearZeroOpacity niceFadeInFast" style="background-color: white; border-radius:10px; box-shadow: 0 0 15px #55778e;">
           <div style="-webkit-clip-path: inset(9px 9px 9px 9px round 8px); clip-path: inset(9px 9px 9px 9px round 8px);">
-            <img class="photoWebpOnDesktops animateZoomPhoto" src="topraksoy_earthman_tsuchimoto.webp" style="pointer-events:none;">
+            <img class="photoWebpOnDesktops animateZoomPhoto" src="/information/topraksoy_earthman_tsuchimoto.webp" style="pointer-events:none;">
           </div>
           <p id="authorsNameP" class="authorsNameOnDesktops" style="text-shadow:none;">&#9751;</p>
         </div>
@@ -49,16 +48,16 @@
         </div>
         <!-- Big navigation arrow -->
         <div onmousedown="bigSlideTowardsLeft();" class="movePositionWhenNarrowOnDesktops startWithNearZeroOpacity niceFadeInSlow2" style="position:fixed; left:50vw; transform: translate(-50%,0%); top:64.0vh; cursor: e-resize;">
-          <img src="long_arrow.png" alt="" style="width:35vh; pointer-events:none;">
+          <img src="/information/long_arrow.png" alt="" style="width:35vh; pointer-events:none;">
           <p id="clickToViewP" style="white-space: nowrap; display: block; position: absolute; top:50%; left:50%; transform: translate(-50%,-54%); width: 34vh; font-size: 2.2vh; font-weight: bold; text-shadow: none; min-width:10vw;">» » »</p>
         </div>
         <!-- Buttons of finance -->
         <div id="" class="blinkAnimationThreePhased movePositionWhenNarrowOnDesktops" style="position:fixed; left:50vw; top:77.5vh; transform: translate(-50%,-50%); outline:none;">
           <div id="idOfMonthlySupportOptionDiv" class="hoverableAndClickableChoice startWithNearZeroOpacity niceFadeInSlow3" style="min-width:52vw; min-height:3vh; max-width:90vw; margin:0px; outline:none;">
-            <p id="idOfMonthlyOptionP" style="color:inherit; text-shadow: none; font-size:2.3vh; outline:none;"> 1$ </p>
+            <p id="idOfMonthlyOptionP" style="color:inherit; text-shadow: none; font-size:2.3vh; outline:none;">?</p>
           </div>
           <!--<div id="idOfOneTimeDonationOptionDiv" class="hoverableAndClickableChoice startWithNearZeroOpacity niceFadeInSlow1" style="position:fixed; left:50vw; transform: translateX(-50%); top:81vh; min-width:52vw; min-height:3vh; max-width:90vw; margin:0px;">
-            <p id="idOfOneTimeOptionP" style="color:inherit; text-shadow: none; font-size:2.3vh; white-space: nowrap;"> ... </p>
+            <p id="idOfOneTimeOptionP" style="color:inherit; text-shadow: none; font-size:2.3vh; white-space: nowrap;">...</p>
           </div>-->
         </div>
 
@@ -89,7 +88,7 @@
         </div>
         <!-- Big navigation arrow 180 -->
         <div onmousedown="returnWithBigSlideTowardsRight();" class="" style="position:fixed; left:50vw; transform: translateX(-50%); top:85vh; cursor: w-resize; ">
-          <img src="long_arrow.png" alt="" style="width:35vh; transform: rotate(180deg); pointer-events:none;">
+          <img src="/information/long_arrow.png" alt="" style="width:35vh; transform: rotate(180deg); pointer-events:none;">
           <p id="clickToGoBackP" style="display: block; position: absolute; top:50%; left:50%; transform: translate(-50%,-50%); width: 34vh; font-size: 2.2vh; font-weight: bold; text-shadow: none; min-width:10vw;">« « «</p>
         </div>
       </div>
@@ -106,26 +105,26 @@
         <!-- Photo of the author on tablets -->
         <div class="photoContainerOnTablets startWithNearZeroOpacity niceFadeInFast" style="background-color: white; border-radius:10px; box-shadow: 0 0 15px #55778e;">
           <div style="-webkit-clip-path: inset(9px 9px 9px 9px round 8px); clip-path: inset(9px 9px 9px 9px round 8px);">
-            <img class="photoWebpOnTablets animateZoomPhoto" src="topraksoy_earthman_tsuchimoto.webp" style="pointer-events:none;">
+            <img class="photoWebpOnTablets animateZoomPhoto" src="/information/topraksoy_earthman_tsuchimoto.webp" style="pointer-events:none;">
           </div>
           <p id="authorsNameP" class="authorsNameOnTablets" style="text-shadow:none;">&#9751;</p>
         </div>
         <!-- Buttons of finance on tablets -->
         <div id="" class="monthlyButtonOnTablets startWithNearZeroOpacity niceFadeInSlow1" style="outline:none;">
           <div id="idOfMonthlySupportOptionDiv" class="hoverableAndClickableChoice flexCentering buttonSizeOnTablets" style="white-space: pre-wrap; outline:none;" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
-            <p id="idOfMonthlyOptionP" class="financeFontSizeOnTablets" style="color:inherit; text-shadow: none; outline:none;" > 1$ </p>
+            <p id="idOfMonthlyOptionP" class="financeFontSizeOnTablets" style="color:inherit; text-shadow: none; outline:none;" >?</p>
           </div>
           <!--<div id="idOfOneTimeDonationOptionDiv" class="hoverableAndClickableChoice onetimeButtonOnTablets" style="white-space: pre-wrap;">
-            <p id="idOfOneTimeOptionP" class="financeFontSizeOnTablets" style="color:inherit; text-shadow: none;" > ... </p>
+            <p id="idOfOneTimeOptionP" class="financeFontSizeOnTablets" style="color:inherit; text-shadow: none;" >...</p>
           </div>-->
         </div>
         <!-- License info on tablets -->
         <div class="infoAboutNameOfLicenseOnTablets startWithNearZeroOpacity niceFadeInSlow1" style="">
-          <p id="aboutLicenseP" class="" style="color: white; letter-spacing: -0.5px; font-size: 20px; white-space: pre-wrap;"> ... </p>
+          <p id="aboutLicenseP" class="" style="color: white; letter-spacing: -0.5px; font-size: 20px; white-space: pre-wrap;">...</p>
         </div>
         <!-- Big navigation arrow on tablets -->
         <div ontouchstart="bigSlideTowardsLeft();" class="bigNavigationArrowToViewLicenseOnTabletsPosition startWithNearZeroOpacity niceFadeInSlow1" style="">
-          <img src="long_arrow.png" alt="" class="bigNavigationArrowToViewLicenseOnTabletsSize" style="pointer-events:none;">
+          <img src="/information/long_arrow.png" alt="" class="bigNavigationArrowToViewLicenseOnTabletsSize" style="pointer-events:none;">
           <p id="clickToViewP" class="bigNavigationArrowToViewLicenseOnTabletsFontSize" style="white-space: nowrap; display: block; position: absolute; top:50%; left:50%; transform: translate(-50%,-54%); font-weight: bold; text-shadow: none; min-width:10vw;">» » »</p>
         </div>
         <!-- About the app button -->
@@ -137,7 +136,7 @@
       </div>
       <!-- END OF MAIN on tablets -->
 
-      <!-- GOOD PEOPLE'S LICENSE on tablets -->
+      <!-- GOOD PEOPLE'S LICENSE on tablets _ The transform will PROBABLY work fine without 100dvw -->
       <div id="bringAllOfThisFromRightID" style="transform: translateX(100vw);">
         <!-- License itself on tablets -->
         <div class="licenseItselfOnTablets" style="overflow-y: auto; background-color: rgb(158,173,185); border:3px solid rgb(118,136,152); border-radius:10px; mix-blend-mode:normal;">
@@ -145,7 +144,7 @@
         </div>
         <!-- Big navigation arrow 180 on tablets -->
         <div ontouchstart="returnWithBigSlideTowardsRight();" class="bigNavigationReturnArrowOnTablets" style="">
-          <img src="long_arrow.png" alt="" class="bigNavigationArrowToViewLicenseOnTabletsSize" style="/*width:35vh;*/ transform: rotate(180deg); pointer-events:none;">
+          <img src="/information/long_arrow.png" alt="" class="bigNavigationArrowToViewLicenseOnTabletsSize" style="/*width:35vh;*/ transform: rotate(180deg); pointer-events:none;">
           <p id="clickToGoBackP" class="bigNavigationArrowToViewLicenseOnTabletsFontSize" style="display: block; position: absolute; top:50%; left:50%; transform: translate(-50%,-50%); font-weight: bold; text-shadow: none; min-width:10vw;">« « «</p>
         </div>
       </div>
@@ -164,17 +163,17 @@
         <!-- Photo of the author on phones -->
         <div class="photoContainerOnPhones startWithNearZeroOpacity niceFadeInFast" style="background-color: white; border-radius:8px; box-shadow: 0 0 13px #55778e;">
           <div style="-webkit-clip-path: inset(7px 7px 7px 7px round 6px); clip-path: inset(7px 7px 7px 7px round 6px);">
-            <img class="photoWebpOnPhones animateZoomPhoto" src="topraksoy_earthman_tsuchimoto.webp" style="pointer-events:none;">
+            <img class="photoWebpOnPhones animateZoomPhoto" src="/information/topraksoy_earthman_tsuchimoto.webp" style="pointer-events:none;">
           </div>
           <p id="authorsNameP" class="authorsNameOnPhones" style="text-shadow:none;">&#9751;</p>
         </div>
         <!-- Buttons of finance on phones -->
         <div id="" class="monthlyButtonOnPhones startWithNearZeroOpacity niceFadeInSlow1" style="outline:none;">
           <div id="idOfMonthlySupportOptionDiv" class="hoverableAndClickableChoice flexCentering buttonSizeOnPhones" style="white-space: pre-wrap; outline:none;" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
-            <p id="idOfMonthlyOptionP" class="financeFontSizeOnPhones" style="color:inherit; text-shadow: none; outline:none;">1$</p>
+            <p id="idOfMonthlyOptionP" class="financeFontSizeOnPhones" style="color:inherit; text-shadow: none; outline:none;">?</p>
           </div>
           <!--<div id="idOfOneTimeDonationOptionDiv" class="hoverableAndClickableChoice onetimeButtonOnPhones" style="white-space: pre-wrap;">
-            <p id="idOfOneTimeOptionP" class="financeFontSizeOnPhones" style="color:inherit; text-shadow: none;" > ... </p>
+            <p id="idOfOneTimeOptionP" class="financeFontSizeOnPhones" style="color:inherit; text-shadow: none;" >...</p>
           </div>-->
         </div>
         <!-- License info on phones -->
@@ -183,7 +182,7 @@
         </div>
         <!-- Big navigation arrow on phones -->
         <div ontouchstart="bigSlideTowardsLeft();" class="bigNavigationArrowToViewLicenseOnPhonesPosition startWithNearZeroOpacity niceFadeInSlow1" style="">
-          <img src="long_arrow.png" alt="" class="bigNavigationArrowToViewLicenseOnTabletsSize" style="pointer-events:none;">
+          <img src="/information/long_arrow.png" alt="" class="bigNavigationArrowToViewLicenseOnTabletsSize" style="pointer-events:none;">
           <p id="clickToViewP" class="bigNavigationArrowToViewLicenseOnTabletsFontSize" style="white-space: nowrap; display: block; position: absolute; top:50%; left:50%; transform: translate(-50%,-54%); font-weight: bold; text-shadow: none; min-width:10vw;">» » »</p>
         </div>
         <!-- About the app button -->
@@ -195,7 +194,7 @@
       </div>
       <!-- END OF MAIN on phones -->
 
-      <!-- GOOD PEOPLE'S LICENSE on phones -->
+      <!-- GOOD PEOPLE'S LICENSE on phones _ The transform will PROBABLY work fine without 100dvw -->
       <div id="bringAllOfThisFromRightID" style="transform: translateX(100vw);">
         <!-- License itself on phones -->
         <div class="licenseItselfOnPhones" style="overflow-y: auto; background-color: rgb(158,173,185); border:3px solid rgb(118,136,152); border-radius:10px; mix-blend-mode:normal;">
@@ -203,7 +202,7 @@
         </div>
         <!-- Big navigation arrow 180 on phones -->
         <div ontouchstart="returnWithBigSlideTowardsRight();" class="bigNavigationReturnArrowOnPhones" style="">
-          <img src="long_arrow.png" alt="" class="bigNavigationArrowToViewLicenseOnTabletsSize" style="/*width:35vh;*/ transform: rotate(180deg); pointer-events:none;">
+          <img src="/information/long_arrow.png" alt="" class="bigNavigationArrowToViewLicenseOnTabletsSize" style="/*width:35vh;*/ transform: rotate(180deg); pointer-events:none;">
           <p id="clickToGoBackP" class="bigNavigationArrowToViewLicenseOnTabletsFontSize" style="display: block; position: absolute; top:50%; left:50%; transform: translate(-50%,-50%); font-weight: bold; text-shadow: none; min-width:10vw;">« « «</p>
         </div>
       </div>
@@ -221,7 +220,12 @@
       const desktopDisplay = document.getElementById('thisDivContainsEverythingThatWillBeDisplayedOnDesktops');
       const tabletDisplay = document.getElementById('thisDivContainsEverythingThatWillBeDisplayedOnTablets');
       const phoneDisplay = document.getElementById('thisDivContainsEverythingThatWillBeDisplayedOnPhones');
+      /*
       window.addEventListener('DOMContentLoaded', function(){
+        // DOMContentLoaded is (or can be) too early for deviceDetector
+      }, { once: true });
+      */
+      window.addEventListener('load', function(){
         if (deviceDetector.device == "tablet") {
             desktopDisplay.parentNode.removeChild(desktopDisplay);
             phoneDisplay.parentNode.removeChild(phoneDisplay);
@@ -232,8 +236,7 @@
             tabletDisplay.parentNode.removeChild(tabletDisplay);
             phoneDisplay.parentNode.removeChild(phoneDisplay);
         }
-      }, { once: true });
-      window.addEventListener('load', function(){
+        // ---
         if (deviceDetector.device == "tablet") {
           tabletDisplay.style.display = "initial";
         } else if(deviceDetector.device == "phone") {

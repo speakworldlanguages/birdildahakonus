@@ -5,22 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, minimum-scale=1.0"> <!-- For mobile devices -->
     <link rel="icon" type="image/png" href="/user_interface/html_icon/animated_globe_icon_39.png" id="icon" sizes="32x32">
 
-    <title>💻 👷</title> <!-- Symbol &#128187; &#128119; -->
+    <title>💎</title> <!-- Symbol &#128187; &#128119; 💻 👷 -->
 
     <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
     <link rel="stylesheet" href="/css_reusables/css_for_the_container_parent_html.css">
-    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="/about/about.css">
     <link rel="stylesheet" href="/information/information.css">
 
     <script defer src="/js_reusables/js_for_every_single_html.js">/*Memory card, userInterfaceLanguage, fetch headers, fonts*/</script>
-    <!-- ISSUE: js_for_all_iframed_lesson_htmls CHECKS IF thisIsTheParentWhichContainsAllIFramedLessons IN PARENT is "yes" -->
-    <!-- BUT HERE WE try to avoid js_for_all_iframed_lesson_htmls so direct linking to /about/index.html without the parent will be possible but that's not a big deal -->
-    <!-- IN CASE: js_for_all_iframed_lesson_htmls is enabled here, then REMEMBER THAT it will report whereAreWe..... = "lesson"; unless a new condition for about page is added -->
-    <script defer src="about.js">/*What to do here*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
+    <script defer src="/about/about.js">/*What to do here*/</script>
     <!-- THE SLIDING NAV MENU IS HIDDEN with window load here and it is unhidden with window.onload in js_for_all_iframed_lesson_htmls -->
 
     <!-- Uncomment the following to be able to use the browser console on mobile devices -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/2.5.0/eruda.min.js"></script> -->
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
     <style>    .startWithNearZeroOpacity{opacity:0.05;}    </style>
@@ -58,19 +56,27 @@
     <script>
       const desktopDisplay = document.getElementById('desktopOnly');
       const mobileDisplay = document.getElementById('mobileOnly');
+
+      /*
       window.addEventListener('DOMContentLoaded', function(){
+        // DOMContentLoaded is (or can be) too early for deviceDetector
+      }, { once: true });
+      */
+
+      window.addEventListener('load', function(){
         if (deviceDetector.isMobile) {
           desktopDisplay.parentNode.removeChild(desktopDisplay);
         } else {
           mobileDisplay.parentNode.removeChild(mobileDisplay);
         }
+        // ---
+        setTimeout(function () {
+          parent.topContainerDivOfTheSlidingNavMenuForMobiles.style.visibility = "hidden"; // visibility hidden allows interaction with underlying elements while opacity 0 does not
+        }, 100);
+
+        // See » js_for_all_iframed_lesson_htmls window onload
       }, { once: true });
-      window.addEventListener('load', function(){
-        parent.topContainerDivOfTheSlidingNavMenuForMobiles.style.visibility = "hidden"; // visibility hidden allows interaction with underlying elements while opacity 0 does not
-      }, { once: true });
-      //// function bringTheNavMenuBack() {
-      ////   parent.topContainerDivOfTheSlidingNavMenuForMobiles.style.visibility = "visible"; // Move this into js_for_all_iframed_lesson_htmls window onload
-      //// }
+
     </script>
 
 
@@ -85,10 +91,22 @@
         <div class="linksContainer" style="">
           <a href="https://github.com/TalAter/annyang" target="_blank"> &lsaquo; annyang &rsaquo; by Tal Ater</a> <br>
           <a href="https://github.com/faisalman/ua-parser-js" target="_blank"> &lsaquo; UAParser &rsaquo; by Faisal Salman</a> <br>
-          <a href="https://github.com/PoeHaH/devicedetector" target="_blank"> &lsaquo; devicedetector &rsaquo; by Maarten Belmans</a> <br>
+          <!-- <a href="https://github.com/PoeHaH/devicedetector" target="_blank"> &lsaquo; devicedetector &rsaquo; by Maarten Belmans</a> <br> -->
           <a href="https://github.com/goldfire/howler.js" target="_blank"> &lsaquo; howler &rsaquo; by James Simpson</a> <br>
           <a href="https://github.com/katspaugh/wavesurfer.js" target="_blank"> &lsaquo; wavesurfer &rsaquo; by katspaugh</a> <br>
+          <a href="https://github.com/mrdoob/three.js" target="_blank"> &lsaquo; three &rsaquo; by mrdoob</a> <br>
+          <a href="https://github.com/kripken/ammo.js" target="_blank"> &lsaquo; ammo &rsaquo; by kripken</a> <br>
           <a href="https://github.com/liriliri/eruda" target="_blank"> &lsaquo; eruda &rsaquo; by liriliri</a> <br>
+        </div>
+
+        <!-- THANKS TO THESE HELPFUL SITES -->
+        <p class="explainer" style="">
+          <span style="white-space:nowrap;">Sites</span> <span style="white-space:nowrap;">that have been helpful</span>
+        </p>
+        <div class="linksContainer" style="">
+          <!-- Let's skip caniuse -->
+          <a href="https://flexbox.help/" target="_blank"> &lsaquo; flexbox.help &rsaquo; by Tayler Summs</a> <br>
+          <a href="https://cubic-bezier.com/" target="_blank"> &lsaquo; cubic-bezier.com &rsaquo; by Lea Verou</a> <br>
         </div>
 
         <!-- VECTOR ART CREDITS -->
@@ -123,7 +141,7 @@
 
         <!-- VIDEO CREDITS -->
         <p class="explainer" style="">
-          Videos that have been sourced from the following sites and/or people were edited before being used in the app
+          Videos that have been sourced from the following sites and/or people were edited and color-mastered before being used in the app
         </p>
         <div class="linksContainer" style="line-height:135%; letter-spacing:1.7px;">
 
@@ -149,9 +167,34 @@
 
         <!-- AUDIO CREDITS -->
         <p class="explainer" style="">
-          <span style="white-space:nowrap;">Special thanks</span> <span style="white-space:nowrap;">to these freesound.org users</span> <span style="white-space:nowrap;">who provided their audio recordings</span> <span style="white-space:nowrap;">to global public benefit</span>
+          <span style="white-space:nowrap;">Special thanks</span> <span style="white-space:nowrap;">to zapsplat.com</span> <span style="white-space:nowrap;">and the following freesound.org users</span> <span style="white-space:nowrap;">who provided their audio recordings</span> <span style="white-space:nowrap;">to global public benefit</span>
         </p>
         <div class="linksContainer" style="line-height:115%; letter-spacing:1px;">
+
+          <!-- 322897 & 342758 & 320655 & 320657 & 353206 -->
+          <a target="_blank" href="https://freesound.org/people/rhodesmas/"> &lsaquo;Andy Rhode&rsaquo; </a>
+
+          <!-- 343764 & 271336 & 416710 & 398808 -->
+          <a target="_blank" href="https://freesound.org/people/InspectorJ/"> &lsaquo;Jonathan Shaw&rsaquo; </a>
+
+          <!-- zapsplat:78837 & 78081 & 78080 & 92985 + freesound:110393 -->
+          <a target="_blank" href="https://zapsplat.com"> &lsaquo;soundscalpel.com&rsaquo; </a>
+          <!-- soundscalpel.com = zapsplat.com -->
+
+          <!-- 412525 & 17_Botijo_Agua & 444958 & 09AguaRio -->
+          <a target="_blank" href="https://freesound.org/people/byronabadia/"> &lsaquo;Byron Abadia&rsaquo; </a>
+
+          <!-- 651746 & 651745 & 651742 & 651744 -->
+          <a target="_blank" href="https://freesound.org/people/Department64/"> &lsaquo;Department64&rsaquo; </a>
+
+          <!-- 504790 & 504859 -->
+          <a target="_blank" href="https://freesound.org/people/Joao_Janz/"> &lsaquo;Joao Janz&rsaquo; </a>
+
+          <!-- 330046 & 330055 -->
+          <a target="_blank" href="https://freesound.org/people/PaulMorek/"> &lsaquo;Paul Morek&rsaquo; </a>
+
+          <!-- 171670 & 171671 -->
+          <a target="_blank" href="https://freesound.org/people/Leszek_Szary/"> &lsaquo;Leszek Szary&rsaquo; </a>
 
           <!-- 582905 -->
           <a target="_blank" href="https://freesound.org/people/ironcross32/"> &lsaquo;ironcross32&rsaquo; </a>
@@ -162,15 +205,6 @@
           <!-- 339343 CC Attribution -->
           <a target="_blank" href="https://freesound.org/people/newagesoup/"> &lsaquo;newagesoup&rsaquo; </a>
 
-          <!-- 322897 & 342758 & 320655 & 320657 -->
-          <a target="_blank" href="https://freesound.org/people/rhodesmas/"> &lsaquo;Andy Rhode&rsaquo; </a>
-
-          <!-- 504790 & 504859 -->
-          <a target="_blank" href="https://freesound.org/people/Joao_Janz/"> &lsaquo;Joao Janz&rsaquo; </a>
-
-          <!-- 330046 & 330055 -->
-          <a target="_blank" href="https://freesound.org/people/PaulMorek/"> &lsaquo;Paul Morek&rsaquo; </a>
-
           <!-- 387218 CC0 freesound username: SpiceProgram SKIP DUE TO GenderIdentityDisorder -->
 
           <!-- 256112 -->
@@ -178,14 +212,6 @@
 
           <!-- 171697 -->
           <a target="_blank" href="https://freesound.org/people/NenadSimic/"> &lsaquo;NenadSimic&rsaquo; </a>
-
-          <!-- 171670 171671 -->
-          <a target="_blank" href="https://freesound.org/people/Leszek_Szary/"> &lsaquo;Leszek Szary&rsaquo; </a>
-
-          <!-- 487612 -->
-          <a target="_blank" href="https://freesound.org/people/Bpianoholic/"> &lsaquo;Bpianoholic&rsaquo; </a>
-
-          <!-- 156295 CC0 freesound username: dayvonjersen SKIP DUE TO vulgar language -->
 
           <!-- 184297 -->
           <a target="_blank" href="https://freesound.org/people/Suz_Soundcreations/"> &lsaquo;Suzanne&rsaquo; </a>
@@ -196,14 +222,8 @@
           <!-- 145719 -->
           <a target="_blank" href="https://freesound.org/people/Zabuhailo/"> &lsaquo;Zabuhailo&rsaquo; </a>
 
-          <!-- 343764 & 271336 & 416710 & 398808 -->
-          <a target="_blank" href="https://freesound.org/people/InspectorJ/"> &lsaquo;Jonathan Shaw&rsaquo; </a>
-
           <!-- 571568 -->
           <a target="_blank" href="https://freesound.org/people/iainmccurdy/"> &lsaquo;iainmccurdy&rsaquo; </a>
-
-          <!-- 412525 -->
-          <a target="_blank" href="https://freesound.org/people/byronabadia/"> &lsaquo;Byron Abadia&rsaquo; </a>
 
           <!-- 221488 -->
           <a target="_blank" href="https://freesound.org/people/LloydEvans09/"> &lsaquo;LloydEvans09&rsaquo; </a>
@@ -238,47 +258,85 @@
           <!-- 270404 -->
           <a target="_blank" href="https://freesound.org/people/LittleRobotSoundFactory/"> &lsaquo;Morten&rsaquo; </a>
 
-          <!-- 397353 CC0 Real name: Unknown ,,, freesound username: plasterbrain SKIP DUE TO GenderIdentityDisorder -->
+          <!-- 397353 & 396195 & 242855 CC0 Real name: Unknown ,,, freesound username: plasterbrain SKIP DUE TO GenderIdentityDisorder -->
 
           <!-- 35631 -->
           <a target="_blank" href="https://freesound.org/people/reinsamba/"> &lsaquo;reinsamba&rsaquo; </a>
 
+          <!-- 135629 -->
+          <a target="_blank" href="https://freesound.org/people/PrimeJunt/"> &lsaquo;PrimeJunt&rsaquo; </a>
 
+          <!-- 104945 -->
+          <a target="_blank" href="https://freesound.org/people/Glaneur%20de%20sons/"> &lsaquo;Damien Devaux&rsaquo; </a>
 
+          <!-- 235264 -->
+          <a target="_blank" href="https://freesound.org/people/Godowan/"> &lsaquo;Godowan&rsaquo; </a>
 
+          <!-- 194808 -->
+          <a target="_blank" href="https://freesound.org/people/odditonic/"> &lsaquo;odditonic&rsaquo; </a>
 
+          <!-- 79146 -->
+          <a target="_blank" href="https://freesound.org/people/Razzvio/"> &lsaquo;Razzvio&rsaquo; </a>
 
+          <!-- 56270 -->
+          <a target="_blank" href="https://freesound.org/people/Q.K./"> &lsaquo;Q.K.&rsaquo; </a>
 
+          <!-- 212739 -->
+          <a target="_blank" href="http://taira-komori.jpn.org/freesounden.html"> &lsaquo;Taira Komori&rsaquo; </a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-          <!-- <a target="_blank" href="https://freesound.org/people/14Douderova_Adela/"> &lsaquo;14Douderova_Adela&rsaquo; </a> -->
           <!-- 420000 -->
+          <a target="_blank" href="https://freesound.org/people/14Douderova_Adela/"> &lsaquo;14Douderova_Adela&rsaquo; </a>
 
-          <!-- <a target="_blank" href="https://freesound.org/people/Aiwha/"> &lsaquo;Aiwha&rsaquo; </a> -->
-          <!-- 417452 189183 -->
+          <!-- 417452 -->
+          <!-- SKIP BECAUSE GID OR RELATED TO GID <a target="_blank" href="https://freesound.org/people/Aiwha/"> &lsaquo;Aiwha&rsaquo; </a> -->
+
+          <!-- 345137 -->
+          <a target="_blank" href="https://freesound.org/people/KuoShu/"> &lsaquo;KuoShu&rsaquo; </a>
+
+          <!-- 435847 backlink via comment OK -->
+          <a target="_blank" href="https://freesound.org/people/dersuperanton/"> &lsaquo;Anton Porsche&rsaquo; </a>
+
+          <!-- 50702 -->
+          <!-- SKIP DUE TO UNHEALTHY WORLD VIEW <a target="_blank" href="https://freesound.org/people/RutgerMuller/"> &lsaquo;Rutger Muller&rsaquo; </a> -->
+
+          <!-- 387209 -->
+          <a target="_blank" href="https://freesound.org/people/BeeProductive/"> &lsaquo;BeeProductive&rsaquo; </a>
+
+          <!-- 67884 -->
+          <a target="_blank" href="https://freesound.org/people/Benboncan/"> &lsaquo;Benboncan&rsaquo; </a>
+
+          <!-- 170012 -->
+          <a target="_blank" href="https://freesound.org/people/wescwave/"> &lsaquo;wescwave&rsaquo; </a>
+
+          <!-- 196699 -->
+          <!-- SUSPICIOUS SYMBOLS ON PROFILE PAGE <a target="_blank" href="https://freesound.org/people/vonfleisch/"> &lsaquo;vonfleisch&rsaquo; </a> -->
+
+          <!-- 393819 -->
+          <!-- SOMEWHAT CRAZY <a target="_blank" href="https://freesound.org/people/Kinoton/"> &lsaquo;Kinoton&rsaquo; </a> -->
+
+          <!-- 275585 -->
+          <a target="_blank" href="https://freesound.org/people/hinzebeat/"> &lsaquo;Michael M. Hinze&rsaquo; </a>
+
+          <!-- 154633 -->
+          <a target="_blank" href="https://freesound.org/people/crcavol/"> &lsaquo;crcavol&rsaquo; </a>
+
+
+
+
+
+
+
+
+
+
+
+
 
           <!-- <a target="_blank" href="https://freesound.org/people/angelkunev/"> &lsaquo;angelkunev&rsaquo; </a> -->
           <!-- 519065 -->
 
           <!-- <a target="_blank" href="https://freesound.org/people/Anton/"> &lsaquo;Anton Woldhek&rsaquo; </a> -->
           <!-- 7972 -->
-
-          <!-- <a target="_blank" href="https://freesound.org/people/BeeProductive/"> &lsaquo;BeeProductive&rsaquo; </a> -->
-          <!-- 387209 -->
-
-          <!-- <a target="_blank" href="https://freesound.org/people/Benboncan/"> &lsaquo;Benboncan&rsaquo; </a> -->
-          <!-- 67884 -->
 
           <!-- <a target="_blank" href="https://freesound.org/people/BenjaminNelan/"> &lsaquo;BenjaminNelan&rsaquo; </a> -->
           <!-- 321082 -->
@@ -289,22 +347,16 @@
           <!-- <a target="_blank" href="https://freesound.org/people/bwg2020/"> &lsaquo;bwg2020&rsaquo; </a> -->
           <!-- 456161 -->
 
-
-
           <!-- <a target="_blank" href="https://freesound.org/people/Caitlin_100/"> &lsaquo;Caitlin_100&rsaquo; </a> -->
           <!-- 365552 -->
 
-          <!-- <a target="_blank" href="https://freesound.org/people/crcavol/"> &lsaquo;crcavol&rsaquo; </a> -->
-          <!-- 154633 -->
+
 
           <!-- <a target="_blank" href="https://freesound.org/people/csmag/"> &lsaquo;csmag&rsaquo; </a> -->
           <!-- 203604 -->
 
           <!-- <a target="_blank" href="https://freesound.org/people/derjuli/"> &lsaquo;derjuli&rsaquo; </a> -->
           <!-- 274376 -->
-
-          <!-- <a target="_blank" href="https://freesound.org/people/dersuperanton/"> &lsaquo;dersuperanton&rsaquo; </a> -->
-          <!-- 435847 -->
 
           <!-- <a target="_blank" href="https://freesound.org/people/debsound/"> &lsaquo;debsound&rsaquo; </a> -->
           <!-- 320549 -->
@@ -333,20 +385,11 @@
           <!-- <a target="_blank" href="https://freesound.org/people/FunWithSound/"> &lsaquo;FunWithSound&rsaquo; </a> -->
           <!-- 456965 -->
 
-          <!-- <a target="_blank" href="https://freesound.org/people/Glaneur%20de%20sons/"> &lsaquo;Glaneur de sons&rsaquo; </a> -->
-          <!-- 104945 -->
-
-          <!-- <a target="_blank" href="https://freesound.org/people/Godowan/"> &lsaquo;Godowan&rsaquo; </a> -->
-          <!-- 235264 -->
-
           <!-- <a target="_blank" href="https://freesound.org/people/hawabaz/"> &lsaquo;hawabaz&rsaquo; </a> -->
           <!-- 91358 -->
 
           <!-- <a target="_blank" href="https://freesound.org/people/HighPeakEmma/"> &lsaquo;HighPeakEmma&rsaquo; </a> -->
           <!-- 520772 -->
-
-          <!-- <a target="_blank" href="https://freesound.org/people/hinzebeat/"> &lsaquo;hinzebeat&rsaquo; </a> -->
-          <!-- 275585 -->
 
           <!-- <a target="_blank" href="https://freesound.org/people/Huggy13ear/"> &lsaquo;Huggy13ear&rsaquo; </a> -->
           <!-- 138979 -->
@@ -369,9 +412,6 @@
           <!-- <a target="_blank" href="https://freesound.org/people/klankbeeld/"> &lsaquo;klankbeeld&rsaquo; </a> -->
           <!-- 131032 -->
 
-          <!-- <a target="_blank" href="https://freesound.org/people/KuoShu/"> &lsaquo;KuoShu&rsaquo; </a> -->
-          <!-- 345137 345173 345179 -->
-
           <!-- <a target="_blank" href="https://freesound.org/people/Leoctiurs/"> &lsaquo;Leoctiurs&rsaquo; </a> -->
           <!-- 428185 -->
 
@@ -387,9 +427,6 @@
           <!-- <a target="_blank" href="https://freesound.org/people/Nox_Sound/"> &lsaquo;Nox_Sound&rsaquo; </a> -->
           <!-- 550338 -->
 
-          <!-- <a target="_blank" href="https://freesound.org/people/odditonic/"> &lsaquo;odditonic&rsaquo; </a> -->
-          <!-- 194808 -->
-
           <!-- <a target="_blank" href="https://freesound.org/people/omgbong/"> &lsaquo;omgbong&rsaquo; </a> -->
           <!-- 411596 -->
 
@@ -399,28 +436,14 @@
           <!-- <a target="_blank" href="https://freesound.org/people/pinkinblue/"> &lsaquo;pinkinblue&rsaquo; </a> -->
           <!-- 425971 -->
 
-          <!-- <a target="_blank" href="https://freesound.org/people/PrimeJunt/"> &lsaquo;PrimeJunt&rsaquo; </a> -->
-          <!-- 135629 -->
-
           <!-- <a target="_blank" href="https://freesound.org/people/promete/"> &lsaquo;promete&rsaquo; </a> -->
           <!-- 60143 -->
-
-          <!-- <a target="_blank" href="https://freesound.org/people/Q.K./"> &lsaquo;Q.K.&rsaquo; </a> -->
-          <!-- 56270 -->
-
-          <!-- <a target="_blank" href="https://freesound.org/people/Razzvio/"> &lsaquo;Razzvio&rsaquo; </a> -->
-          <!-- 79146 -->
 
           <!-- <a target="_blank" href="https://freesound.org/people/Refrain/"> &lsaquo;Refrain&rsaquo; </a> -->
           <!-- 265538 -->
 
-
-
           <!-- <a target="_blank" href="https://freesound.org/people/rivernile7/"> &lsaquo;rivernile7&rsaquo; </a> -->
           <!-- 234244 249573 -->
-
-          <!-- <a target="_blank" href="https://freesound.org/people/RutgerMuller/"> &lsaquo;RutgerMuller&rsaquo; </a> -->
-          <!-- 50702 50912 -->
 
           <!-- <a target="_blank" href="https://freesound.org/people/Sandermotions/"> &lsaquo;Sandermotions&rsaquo; </a> -->
           <!-- 277021 -->
@@ -434,10 +457,6 @@
           <!-- <a target="_blank" href="https://freesound.org/people/Slave2theLight/"> &lsaquo;Slave2theLight&rsaquo; </a> -->
           <!-- 157121 -->
 
-          <!-- <a target="_blank" href="https://freesound.org/people/soundscalpel.com/"> &lsaquo;soundscalpel.com&rsaquo; </a> -->
-          <!-- 110393 -->
-
-
           <!-- <a target="_blank" href="https://freesound.org/people/steinhyrningur/"> &lsaquo;steinhyrningur&rsaquo; </a> -->
           <!-- 466864 -->
 
@@ -449,9 +468,6 @@
 
           <!-- <a target="_blank" href="https://freesound.org/people/StrangeAcoustics/"> &lsaquo;StrangeAcoustics&rsaquo; </a> -->
           <!-- 346106 -->
-
-          <!-- <a target="_blank" href="http://taira-komori.jpn.org/freesounden.html"> &lsaquo;Taira Komori&rsaquo; </a> -->
-          <!-- 212739 -->
 
           <!-- <a target="_blank" href="https://freesound.org/people/Tetrisrocker/"> &lsaquo;Tetrisrocker&rsaquo; </a> -->
           <!-- 458627 -->
@@ -467,9 +483,6 @@
 
           <!-- <a target="_blank" href="https://freesound.org/people/Traveler/"> &lsaquo;Traveler&rsaquo; </a> -->
           <!-- 16064 -->
-
-          <!-- <a target="_blank" href="https://freesound.org/people/vonfleisch/"> &lsaquo;vonfleisch&rsaquo; </a> -->
-          <!-- 196699 -->
 
           <!-- <a target="_blank" href="https://freesound.org/people/WeeJee_vdH/"> &lsaquo;WeeJee_vdH&rsaquo; </a> -->
           <!-- 267711 -->

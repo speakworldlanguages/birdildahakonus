@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 /*-----*/
 // TYPE1: Generic info box » Watch how 1 of 2 possible texts is injected into the button
@@ -15,7 +15,7 @@ const okButtonToCloseTheNotification2 = document.createElement("DIV");
 let okTexts = "&#10004;|&#10004;"; // Default content of the OK box is a "tick ✔" mark to be shown in case fetch fails
 okButtonToCloseTheNotification1.innerHTML = okTexts.split("|")[0];
 okButtonToCloseTheNotification2.innerHTML = okTexts.split("|")[1];
-const pathOfOkCloseTheBox = "/user_interface/text/"+userInterfaceLanguage+"/0-ok_i_understand.txt";
+const pathOfOkCloseTheBox = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-ok_i_understand.txt";
 fetch(pathOfOkCloseTheBox,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ okTexts=contentOfTheTxtFile; assignOKButtonText(); });
 function assignOKButtonText() {
   if(Math.random()<0.5) { // Heads or tails
@@ -110,28 +110,33 @@ function createAndHandleInfoBoxType1AmidLesson() {
 // TYPE3 WAVESURFER.
 // Function that creates a div box for pronunciation (wavesurfer) NOTIFICATIONS
 /* VARIABLES AND CONSTANTS*/
-const putVocabularyTxtIntoThisP1 = document.createElement("P");
-const putVocabularyTxtIntoThisP2 = document.createElement("P");
-let txtStringForP1 = "...";
-let txtStringForP2 = "...";
+const putVocabularyTxtIntoThisP1 = document.createElement("P"); const putVocabularyTxtIntoThisP1OUTRO = document.createElement("P");
+const putVocabularyTxtIntoThisP2 = document.createElement("P"); const putVocabularyTxtIntoThisP2OUTRO = document.createElement("P");
+let txtStringForP1 = null; let txtStringForP1OUTRO = null;
+let txtStringForP2 = null; let txtStringForP2OUTRO = null;
 function handleP1P2ActualText(receivedTxt) { // Called when fetch gets the file » See the lesson's own js
   txtStringForP1=receivedTxt.split("|")[0]; putVocabularyTxtIntoThisP1.innerHTML= txtStringForP1;
   txtStringForP2=receivedTxt.split("|")[1]; putVocabularyTxtIntoThisP2.innerHTML= txtStringForP2;
 }
+function handleP1P2ActualTextOUTRO(receivedTxt) { // Called when fetch gets the file » See the lesson's own js
+  txtStringForP1OUTRO=receivedTxt.split("|")[0]; putVocabularyTxtIntoThisP1OUTRO.innerHTML= txtStringForP1OUTRO;
+  txtStringForP2OUTRO=receivedTxt.split("|")[1]; putVocabularyTxtIntoThisP2OUTRO.innerHTML= txtStringForP2OUTRO;
+}
 const listenButtonOfTheVocabulary = document.createElement("DIV");
 const startButtonToCloseTheVocabulary = document.createElement("DIV");
-let listenButtonTxt, listenAgainButtonTxt, startButtonTxt;
-const wavesurferButton1Button2Path = "/user_interface/text/"+userInterfaceLanguage+"/0-vocabulary_button1_button2.txt";
+let listenButtonTxt, listenAgainButtonTxt, startButtonTxt, nextButtonTxt; // [Next] button replaces [Start] button if outro is enabled by the second parameter
+const wavesurferButton1Button2Path = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-vocabulary_button1_button2.txt";
 fetch(wavesurferButton1Button2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
   listenButtonTxt = contentOfTheTxtFile.split("|")[0];
   listenAgainButtonTxt = contentOfTheTxtFile.split("|")[1];
   startButtonTxt = contentOfTheTxtFile.split("|")[2];
+  nextButtonTxt = contentOfTheTxtFile.split("|")[3];
 });
 const popUpVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_appear.webm"]  });
 const dismissVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_close.webm"]  });
 
 /*FUNCTION DECLARATION*/
-function createAndHandleListenManyTimesBox(filePathOfTheAudio) {
+function createAndHandleListenManyTimesBox(filePathOfTheAudio,isLessonOutro) {
   popUpVocabularySound.play();
   const vocabularyBoxContainer = document.createElement("DIV"); // Maybe a dark theme will look nice
   vocabularyBoxContainer.classList.add("vocabularyBG"); // See css_for_info_boxes_in_lessons
@@ -142,11 +147,15 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio) {
     vocabularyBoxItself.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
     putVocabularyTxtIntoThisP1.classList.add("latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
     putVocabularyTxtIntoThisP2.classList.add("latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
+    putVocabularyTxtIntoThisP1OUTRO.classList.add("latinLineHeightAndLetterSpacing");
+    putVocabularyTxtIntoThisP2OUTRO.classList.add("latinLineHeightAndLetterSpacing");
   }
   if (needHitoicJapaneseFonts) {
     vocabularyBoxItself.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
     putVocabularyTxtIntoThisP1.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
     putVocabularyTxtIntoThisP2.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
+    putVocabularyTxtIntoThisP1OUTRO.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing");
+    putVocabularyTxtIntoThisP2OUTRO.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing");
   }
   vocabularyBoxContainer.appendChild(vocabularyBoxItself);
   //
@@ -154,20 +163,34 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio) {
     putVocabularyTxtIntoThisP1.innerHTML="📄"; //📄
     putVocabularyTxtIntoThisP2.innerHTML="⏳"; //⏳
   }
+  if (!txtStringForP1OUTRO) { // If download has failed or not finished yet
+    putVocabularyTxtIntoThisP1OUTRO.innerHTML="📄"; //📄
+    putVocabularyTxtIntoThisP2OUTRO.innerHTML="⏳"; //⏳
+  }
 
   // APPEND txt1
-  vocabularyBoxItself.appendChild(putVocabularyTxtIntoThisP1);
+  if (!isLessonOutro) {    vocabularyBoxItself.appendChild(putVocabularyTxtIntoThisP1);  }
+  else {    vocabularyBoxItself.appendChild(putVocabularyTxtIntoThisP1OUTRO);  }
 
   // Wavesurfer
   const wavesurferContainer = document.createElement("DIV");
   wavesurferContainer.id = "waveform";
   wavesurferContainer.classList.add("vocabularyWavesurfer");
   vocabularyBoxItself.appendChild(wavesurferContainer);
-  const wavesurfer = WaveSurfer.create({ container: '#waveform', waveColor: 'black', progressColor: '#daecfa', barWidth:3, height:60, barMinHeight:2, barGap:2, responsive:true, cursorWidth:0, hideScrollbar:true   });
-  wavesurfer.load(filePathOfTheAudio); // See give_me_water.js for example
+  // -
+  let wavesurferIntro,wavesurferOutro;
+  if (!isLessonOutro) {
+    wavesurferIntro = WaveSurfer.create({ container: '#waveform', waveColor: 'black', progressColor: '#daecfa', barWidth:3, height:60, barMinHeight:2, barGap:2, responsive:true, cursorWidth:0, hideScrollbar:true   });
+    wavesurferIntro.load(filePathOfTheAudio);
+  } else {
+    wavesurferOutro = WaveSurfer.create({ container: '#waveform', waveColor: 'black', progressColor: '#daecfa', barWidth:3, height:60, barMinHeight:2, barGap:2, responsive:true, cursorWidth:0, hideScrollbar:true   });
+    wavesurferOutro.load(filePathOfTheAudio);
+  }
+
 
   // APPEND txt2
-  vocabularyBoxItself.appendChild(putVocabularyTxtIntoThisP2);
+  if (!isLessonOutro) {    vocabularyBoxItself.appendChild(putVocabularyTxtIntoThisP2);  }
+  else {    vocabularyBoxItself.appendChild(putVocabularyTxtIntoThisP2OUTRO);  }
   // Try to fix Safari and Firefox as they ignore text align justify although the container div has it in its class
   // putVocabularyTxtIntoThisP1.style.textAlign = "justify"; putVocabularyTxtIntoThisP2.style.textAlign = "justify"; // DIDN'T WORK!
 
@@ -176,12 +199,14 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio) {
   startButtonToCloseTheVocabulary.classList.add("buttonsUnderWavesurfer");  startButtonToCloseTheVocabulary.innerHTML = "&#127918;"; // Default content is a "gamepad 🎮" mark
   if (listenButtonTxt) { // If fetch has already finished downloading the txt file
     listenButtonOfTheVocabulary.innerHTML = listenButtonTxt;
-    startButtonToCloseTheVocabulary.innerHTML = startButtonTxt;
+    if (!isLessonOutro) { startButtonToCloseTheVocabulary.innerHTML = startButtonTxt; }
+    else { startButtonToCloseTheVocabulary.innerHTML = nextButtonTxt; }
   } else { // Restart fetch but this time update buttonTxts as soon as the file is ready
     fetch(wavesurferButton1Button2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
       listenButtonTxt = contentOfTheTxtFile.split("|")[0]; listenButtonOfTheVocabulary.innerHTML = listenButtonTxt;
       listenAgainButtonTxt = contentOfTheTxtFile.split("|")[1];
-      startButtonTxt = contentOfTheTxtFile.split("|")[2]; startButtonToCloseTheVocabulary.innerHTML = startButtonTxt;
+      if (!isLessonOutro) { startButtonTxt = contentOfTheTxtFile.split("|")[2]; startButtonToCloseTheVocabulary.innerHTML = startButtonTxt; }
+      else { nextButtonTxt = contentOfTheTxtFile.split("|")[3]; startButtonToCloseTheVocabulary.innerHTML = nextButtonTxt; }
     });
   }
   const twoButtonsContainer = document.createElement("DIV"); twoButtonsContainer.classList.add("vocabularyButtonsContainer");
@@ -189,11 +214,16 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio) {
   vocabularyBoxItself.appendChild(twoButtonsContainer);
   // Listen button
   if (deviceDetector.isMobile) {   listenButtonOfTheVocabulary.addEventListener("touchstart",playButtonF);   }
-  else {   listenButtonOfTheVocabulary.addEventListener("mousedown",playButtonF);   }
+  else {   listenButtonOfTheVocabulary.addEventListener("mousedown",playButtonF);
+    parent.window.addEventListener("keydown",checkIfSpaceKeyWasPressed); window.addEventListener("keydown",checkIfSpaceKeyWasPressed);
+    parent.window.addEventListener("keyup",checkIfSpaceKeyWasReleased);  window.addEventListener("keyup",checkIfSpaceKeyWasReleased);
+  }
   let clickOrTouchCount=1;
   function playButtonF(event) { event.preventDefault(); event.stopPropagation();
     // Use stopPropagation instead of parent.preventTouchConflictWithTheSlidingNavMenu(listenButtonOfTheVocabulary); // Exists in js_for_the_sliding_navigation_menu
-    wavesurfer.setVolume(parent.Howler.volume()); wavesurfer.play();
+    if (!isLessonOutro) {  wavesurferIntro.setVolume(parent.Howler.volume()); wavesurferIntro.play();  }
+    else {  wavesurferOutro.setVolume(parent.Howler.volume()); wavesurferOutro.play();  }
+    // -
     if (clickOrTouchCount==1) {
       if (listenAgainButtonTxt) { listenButtonOfTheVocabulary.innerHTML = listenAgainButtonTxt; } // Change button innerHTML from [Listen] to [Listen again]
     }
@@ -201,6 +231,32 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio) {
       startButtonToCloseTheVocabulary.classList.add("startButtonUnderWavesurfer"); twoButtonsContainer.appendChild(startButtonToCloseTheVocabulary); // Reveal the [Start] button
     }
     clickOrTouchCount++;
+  }
+  let spaceKeyIsBeingHeldDown = false;
+  function checkIfSpaceKeyWasPressed(event) { event.preventDefault(); // Can't be too safe
+    if (!spaceKeyIsBeingHeldDown) {
+      if (event.key == " " || event.code == "Space") {
+        spaceKeyIsBeingHeldDown = true;
+        // -
+        if (!isLessonOutro) {  wavesurferIntro.setVolume(parent.Howler.volume()); wavesurferIntro.play();  }
+        else {  wavesurferOutro.setVolume(parent.Howler.volume()); wavesurferOutro.play();  }
+        // -
+        if (clickOrTouchCount==1) {
+          if (listenAgainButtonTxt) { listenButtonOfTheVocabulary.innerHTML = listenAgainButtonTxt; } // Change button innerHTML from [Listen] to [Listen again]
+        }
+        if (clickOrTouchCount==2) {
+          startButtonToCloseTheVocabulary.classList.add("startButtonUnderWavesurfer"); twoButtonsContainer.appendChild(startButtonToCloseTheVocabulary); // Reveal the [Start] button
+        }
+        clickOrTouchCount++;
+      }
+    }
+  }
+  function checkIfSpaceKeyWasReleased(event) { event.preventDefault(); // Can't be too safe
+    if (spaceKeyIsBeingHeldDown) {
+      if (event.key == " " || event.code == "Space") {
+        spaceKeyIsBeingHeldDown = false;
+      }
+    }
   }
   // Start button
   if (deviceDetector.isMobile) {   startButtonToCloseTheVocabulary.addEventListener("touchstart",startButtonF);   }
@@ -211,7 +267,19 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio) {
     dismissVocabularySound.play();
     vocabularyBoxItself.style.animationName = "vocabularyWavesurferDisappears";
     vocabularyBoxContainer.style.animationName = "vocabularyWavesurferDisappearsBG";
-    setTimeout(function(){  document.body.removeChild(vocabularyBoxContainer);  },501);
+    setTimeout(function(){
+      // DEPRECATED document.body.removeChild(vocabularyBoxContainer);
+      startButtonToCloseTheVocabulary.remove();
+      listenButtonOfTheVocabulary.remove();
+      twoButtonsContainer.remove();
+      if (vocabularyBoxItself.contains(putVocabularyTxtIntoThisP2)) { putVocabularyTxtIntoThisP2.remove(); }
+      if (vocabularyBoxItself.contains(putVocabularyTxtIntoThisP2OUTRO)) { putVocabularyTxtIntoThisP2OUTRO.remove(); }
+      wavesurferContainer.remove();
+      if (vocabularyBoxItself.contains(putVocabularyTxtIntoThisP1)) { putVocabularyTxtIntoThisP1.remove(); }
+      if (vocabularyBoxItself.contains(putVocabularyTxtIntoThisP1OUTRO)) { putVocabularyTxtIntoThisP1OUTRO.remove(); }
+      vocabularyBoxItself.remove();
+      vocabularyBoxContainer.remove();
+    },501);
 
     if (deviceDetector.device == "desktop") {
       lastPointerX = event.clientX;
@@ -220,11 +288,24 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio) {
       lastPointerX = event.touches[0].clientX;
       lastPointerY = event.touches[0].clientY;
     }
+    // ---
+    if (!isLessonOutro) { // CASE: Lesson intro
+      if (typeof vocabularyBoxIsClosed === "function") {
+        setTimeout(function () {     vocabularyBoxIsClosed(lastPointerX,lastPointerY);     }, 500);
+      } else { console.error("Error: vocabularyBoxIsClosed() function doesn't exist???"); }
+    } else { // CASE: Lesson outro
+      if (typeof vocabularyBoxIsClosed_LESSON_OUTRO === "function") {
+        setTimeout(function () {     vocabularyBoxIsClosed_LESSON_OUTRO(lastPointerX,lastPointerY);     }, 500);
+      } else { console.error("Error: vocabularyBoxIsClosed_LESSON_OUTRO() function doesn't exist???"); }
+    }
 
-    if (typeof vocabluaryBoxIsClosed === "function") {
-      setTimeout(function () {     vocabluaryBoxIsClosed(lastPointerX,lastPointerY);     }, 500);
-    } else { console.error("Error: vocabluaryBoxIsClosed() function doesn't exist???"); }
-
-  }
+    // -
+    listenButtonOfTheVocabulary.removeEventListener("touchstart",playButtonF);
+    listenButtonOfTheVocabulary.removeEventListener("mousedown",playButtonF);
+    startButtonToCloseTheVocabulary.removeEventListener("touchstart",startButtonF);
+    startButtonToCloseTheVocabulary.removeEventListener("mousedown",startButtonF);
+    parent.window.removeEventListener("keydown",checkIfSpaceKeyWasPressed); window.removeEventListener("keydown",checkIfSpaceKeyWasPressed);
+    parent.window.removeEventListener("keyup",checkIfSpaceKeyWasReleased);  window.removeEventListener("keyup",checkIfSpaceKeyWasReleased);
+  } // END OF startButtonF
 }
 // END OF createAndHandleListenManyTimesBox DEFINITION

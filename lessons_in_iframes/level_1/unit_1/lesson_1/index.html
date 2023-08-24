@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- THE VERY FIRST LESSON -->
-    <title>1-1-1 🍞</title>
+    <!-- WATER -->
+    <title>1-1-1 💧</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex" />
     <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
@@ -12,26 +12,37 @@
     <link rel="stylesheet" href="/css_reusables/css_for_the_glassy_give_up_button.css"> <!-- Using ASIDE as a button with glassmorphism -->
     <link rel="stylesheet" href="/css_reusables/css_for_wavesurfer_microphone_divs.css">
     <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css">
-
-    <script defer src="/js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, deviceDetector, fonts, fetch headers, onePixelTransparentGif...*/</script>
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <!-- Empty line 1 -->
+    <!-- Empty line 2 -->
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*LET userInterfaceLanguage DEPEND ON DOMAIN NAME, fetch headers, fonts, resetWebp, canVibrate, defaultCursor*/</script>
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
     <script defer src="/js_reusables/js_for_handling_speech_give_up.js">/*White listed browsers: wait for speech ,,, others: don't wait*/</script>
     <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
     <script defer src="/third_party_js/wavesurfer.microphone.min.js">/*Audio visualization. Github: katspaugh*/</script>
     <script defer src="/js_reusables/js_for_microphone_input_visualization.js">/*Start, Stop wavesurfer microphone*/</script>
     <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
-    <script defer src="bread.js">/*Progress handling for this lesson*/</script>
-
-    <!-- Uncomment to use the console on mobiles -->
-    <!-- <script src="/third_party_js/eruda.min.js"></script> -->
+    <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <script defer src="/lessons_in_iframes/level_1/unit_1/lesson_1/water.js">/*Progress handling for this lesson*/</script>
+    <!-- Empty line 1 -->
+    <!-- Uncomment to use the console on mobiles | Consider using of parent.console.log instead of console.log -->
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
-    <script>
-      window.addEventListener("load",startDownloadingTheNextLesson,{once:true});
-      function startDownloadingTheNextLesson() {
-        if (!localStorage.loadFiles112WasSuccessful) {
-          setTimeout(function () { const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_reusables/caching_functions_for_each_lesson/112.js"; document.body.appendChild(delayedScript); },6000);
-        } // Why wait for a few seconds? Is it totally meaningless? We want to prioritize howler sounds of this lesson to be loaded before the files of the next lesson, but will it have any effect?
+    <script> /*CACHE THE NEXT LESSON and make it offline ready*/
+      window.addEventListener("load",startDownloadingFilesForTheNextLessonIfNecessary,{once:true});
+      function startDownloadingFilesForTheNextLessonIfNecessary() { // Wait for a short while and get the files if device is still online, otherwise wait for internet connectivity.
+        setTimeout(afterSomeSeconds,7001); // After being offline, attempt downloading if two consecutive firings of updateOnlineStatus both report ONLINE // See js_for_online_and_offline_modes
+        function afterSomeSeconds() { // As of August 2023 parent.internetConnectivityIsNiceAndUsable is updated every 7000ms
+          if (parent.internetConnectivityIsNiceAndUsable) { // Start getting the files for the next lesson
+            const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_for_cache_handling/112.js"; document.body.appendChild(delayedScript);
+          } else { // Check & Retry
+            let connectivityCheckInterval = setInterval(function () { // Analyse the recursion logic
+              if (parent.internetConnectivityIsNiceAndUsable) { clearInterval(connectivityCheckInterval); startDownloadingFilesForTheNextLessonIfNecessary(); }
+            }, 2000);
+          }
+        }
       }
     </script>
   </head>
@@ -42,14 +53,14 @@
       <!-- Photo pairs -->
       <div id="doublesDivID" class="fullViewportFlexPortraitColumnLandscapeRow"> <!-- See css_for_photos_and_videos_teach_a_new_word.css -->
         <div class="oneOfTheTwoDivsThatContainSquarePictures">
-          <img src="1_c1.webp" id="imageA">
-          <img src="3.webp" style="display:none; top:-100%;" id="imageC">
-          <img src="5.webp" style="display:none; top:-200%;" id="imageE">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/1a.avif" id="imageA">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/2a.avif" style="display:none; top:-100%;" id="imageC">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/3a.avif" style="display:none; top:-200%;" id="imageE">
         </div>
         <div class="oneOfTheTwoDivsThatContainSquarePictures">
-          <img src="2.webp" id="imageB">
-          <img src="4.webp" style="display:none; top:-100%;" id="imageD">
-          <img src="6.webp" style="display:none; top:-200%;" id="imageF">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/1b.avif" id="imageB">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/2b.avif" style="display:none; top:-100%;" id="imageD">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/3b.avif" style="display:none; top:-200%;" id="imageF">
         </div>
       </div>
       <!-- End of photo pairs -->
@@ -58,14 +69,14 @@
 
     <!-- Videos -->
     <div id="containerOfVideosDivID" style="display:none;">
-      <video src="v1_vp9.webm" id="video1" playsinline muted style="height: 62vh;"></video>
-      <video src="v2_vp9.webm" id="video2" playsinline muted style="height: 62vh; display:none;"></video>
+      <video src="/lessons_in_iframes/level_1/unit_1/lesson_1/v1_vp9.webm" id="video1" playsinline muted style="height: 91vh;"></video>
+      <video src="/lessons_in_iframes/level_1/unit_1/lesson_1/v2_vp9.webm" id="video2" playsinline muted style="height: 62vh; display:none;"></video>
       <script>
         window.addEventListener("DOMContentLoaded",function(){
-          if (window.parent.isApple || window.parent.detectedBrowser.name == "Firefox") { // Override webm,,, force mp4
-            const v1 = document.getElementById('video1'); v1.src = "v1_h264.mp4"; // Cannot rely on <source>
-            const v2 = document.getElementById('video2'); v2.src = "v2_h264.mp4"; // Cannot rely on <source>
-          } // UNCERTAIN: Probably cannot save load time by using else to set the src to webm files and start the video with an empty src, no?
+          if (isApple || isFirefox) { // See js_for_all_iframed_lesson_htmls and js_for_different_browsers_and_devices
+            const v1 = document.getElementById('video1'); v1.src = "/lessons_in_iframes/level_1/unit_1/lesson_1/v1_h264.mp4";
+            const v2 = document.getElementById('video2'); v2.src = "/lessons_in_iframes/level_1/unit_1/lesson_1/v2_h264.mp4";
+          }
         },{ once: true });
       </script>
     </div>
@@ -75,26 +86,71 @@
 
     <!-- Single photos looping -->
     <div id="singlesDivID" class="" style="display:none;">
-        <img src="1_c1.webp" class="positionAbsoluteImg">
-        <img src="c2.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c3.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c4.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c5.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c6.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c7.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c8.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c9.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img src="c10.webp"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/c1.avif"   class="positionAbsoluteImg">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/c2.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/3a.avif"   class="positionAbsoluteImg" style="visibility:hidden;" id="putWaterfall1OrRemove">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/c3.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/c4.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/3b.avif"   class="positionAbsoluteImg" style="visibility:hidden;" id="putWaterfall2OrRemove">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/c5.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/c6.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/c7.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/c8.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/c9.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_1/c10.avif"  class="positionAbsoluteImg" style="visibility:hidden;">
     </div>
+    <!-- SPECIAL CASE FOR HANDLING BIGGER FILES: Load or skip and reorder -->
+    <script>
+      window.addEventListener('DOMContentLoaded', function(){
+        // Check for AVIF support » MAINLY FOR EDGE USERS with version 115 or older
+        function isAVIFSupported() { const img = new Image();   return img.decode ? true : false; }
+        if (!isAVIFSupported()) { // Display alert if AVIF is not supported
+          alert("AVIF?");
+          setTimeout(function () { parent.tellTheUserToChangeOrUpdateTheBrowser(); }, 4000);
+        } else { console.log("AVIF images are supported."); }
+
+        /* waterfall webps are 4,68MB in total,,, and a bit hard on CPU ,,, Use https://downloadtimecalculator.com */
+        function getConnectionForWater() {return navigator.connection || navigator.mozConnection || navigator.webkitConnection || navigator.msConnection;}
+        var internetForWater = getConnectionForWater();
+        if (deviceDetector.isMobile) { console.log("Checking if the internet speed is readable on this mobile device..."); // PHONE & TABLET
+          if(internetForWater){ console.log("Internet speed is readable."); // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
+            if(internetForWater.downlink>=1.5){ console.log("Speed is fast enough: "+internetForWater.downlink); /*Fast enough: Let it load and display*/ // Get waterfalls and show
+              switchToAnimatedWebpWaterfallsMOBILE();
+            } else { preventRepetitionOf3aAnd3b(); console.log("Speed is NOT fast enough: "+internetForWater.downlink); } // Too slow: Loading of waterfalls won't make it in time
+          } else { switchToAnimatedWebpWaterfallsMOBILE(); console.log("Internet speed is NOT readable."); } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
+        } else { console.log("Checking if the internet speed is readable on this desktop device..."); // DESKTOP
+          if(internetForWater){ console.log("Internet speed is readable."); // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
+            if(internetForWater.downlink>=1.5){ console.log("Speed is fast enough: "+internetForWater.downlink); /*Fast enough: Let it load and display*/ // Get waterfalls and show
+              switchToAnimatedWebpWaterfallsDESKTOP();
+            } else { preventRepetitionOf3aAnd3b(); console.log("Speed is NOT fast enough: "+internetForWater.downlink); } // Too slow: Loading of waterfalls won't make it in time
+          } else { switchToAnimatedWebpWaterfallsDESKTOP(); console.log("Internet speed is NOT readable."); } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
+        }
+      }, { once: true });
+      function switchToAnimatedWebpWaterfallsDESKTOP() {
+        const turnIntoAWaterfall1 = document.getElementById('imageE'); turnIntoAWaterfall1.src = "/lessons_in_iframes/level_1/unit_1/lesson_1/waterfall1.webp";
+        const turnIntoAWaterfall2 = document.getElementById('imageF'); turnIntoAWaterfall2.src = "/lessons_in_iframes/level_1/unit_1/lesson_1/waterfall2.webp";
+      }
+      function switchToAnimatedWebpWaterfallsMOBILE() {
+        const turnIntoAWaterfall1 = document.getElementById('putWaterfall1OrRemove'); turnIntoAWaterfall1.src = "/lessons_in_iframes/level_1/unit_1/lesson_1/waterfall1.webp";
+        const turnIntoAWaterfall2 = document.getElementById('putWaterfall2OrRemove'); turnIntoAWaterfall2.src = "/lessons_in_iframes/level_1/unit_1/lesson_1/waterfall2.webp";
+      }
+      function preventRepetitionOf3aAnd3b() { // No waterfalls
+        const becomesUnnecessary1 = document.getElementById('putWaterfall1OrRemove'); becomesUnnecessary1.parentNode.removeChild(becomesUnnecessary1);
+        const becomesUnnecessary2 = document.getElementById('putWaterfall2OrRemove'); becomesUnnecessary2.parentNode.removeChild(becomesUnnecessary2);
+      }
+    </script>
 
     <!-- “Now it’s your turn” animation 5100ms -->
-    <img id="nowYouSayItIMG" src="/user_interface/images/now_you_say_it_to_speech_recognition.webp" style="display:none;">
+    <div class="nowYouSayItImgContainer" style="display:none;">
+      <img draggable="false" id="nowYouSayItImgID" src="/user_interface/images/now_you_say_it_to_speech_recognition.webp">
+    </div>
     <script>
-    window.addEventListener("DOMContentLoaded",function(){
-      if (window.parent.isApple) { // Override webp,,, force gif,,, until Safari's webp bug is hopefully fixed by someone in Apple
-        const nowYouSayIt = document.getElementById('nowYouSayItIMG'); nowYouSayIt.src = "/user_interface/images/now_you_say_it_to_speech_recognition.gif"; // Both iOS and MacOS Safari have the bug as of October 2022 Safari16.0
-      } // Looks like gif animation does not start playing before display is changed from none to block, which is what we want.
-    },{ once: true });
+    window.addEventListener("DOMContentLoaded",function(){ // Wait for js_for_all_iframed_lesson_htmls to get isApple from parser in parent
+      if (isApple) {
+        // Safari animated webp bugfix: Both iOS and MacOS Safari have the bug as of October 2022 Safari16.0
+        const nowYouSayItImg = document.getElementById('nowYouSayItImgID'); nowYouSayItImg.src = "/user_interface/images/now_you_say_it_to_speech_recognition.avif";
+      }
+    },{once:true});
     </script>
 
     <!-- GIVE UP\PROCEED TO NEXT -->

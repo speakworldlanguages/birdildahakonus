@@ -15,7 +15,7 @@ main{
   z-index: 999; /* Preloader is 9999 */
   background-image: linear-gradient(0deg, #d6f8fd 0%, #a9f1f9 28%, #84dff5 55%, #43bbf1 100%);
   line-height: 2rem; /*Is set to zero at body level. See css_for_every_single_html*/
-  transition: filter 0.4s;
+  transition: filter 0.15s;
 }
 /*See inline script in parent index.html*/
 .mainDesktop{justify-content: space-between;}
@@ -31,10 +31,10 @@ main{
 
 iframe{
   border: none;
-  width: 100%; /*  100vw is OK  */
-  height: 100%; /*  100vh is NOT OK because on mobiles 100vh means all screen height with the adress bar so it works only when the view is in fullscreen  */
   position: fixed;
   top: 0;        left: 0;        /*bottom:0;        right:0;*/
+  width: 100vw; width: 100dvw;
+  height: 100%; height: 100dvh; /*  100vh is NOT OK because on mobiles 100vh means all screen height with the adress bar so it works only when the view is in fullscreen  */
 }
 
 p{
@@ -105,12 +105,12 @@ header{
 /*article contains the language buttons [like Hito language(Japanese)] and the scroll managing rotatable-globe inside canvas*/
 article{
   display: flex; justify-content: center; align-items: center;
-  width: 100vw;
+  width: 100vw; width: 100dvw;
   /* border: 1px dotted grey; */
   overflow: hidden;
 }
 .articleDesktop{
-  height: calc(100vh - 300px);
+  height: calc(100vh - 300px); /*No need for dvh because it's desktop-only and desktops are already correct with vw & vh*/
 }
 .layerA2_desktop{
   display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
@@ -156,7 +156,7 @@ footer{
   font-size: 0.8rem;
 }
 .footerPhoneOrTablet{
-  width: 100vw; /*This way we can get away without using left 50% translateX -50% when moved to sliding-nav-menu on Android with appendChild*/
+  width: 100vw; width: 100dvw; /*This way we can get away without using left 50% translateX -50% when it is relocated into sliding-nav-menu on Android with appendChild*/
   height: 48px;
   font-size: 0.9rem;
 }
@@ -213,7 +213,7 @@ footer{
   }
 }
 
-/**/
+/*No need for dvw and dvh units on desktops*/
 .allowMicDesktopBackground{ /*Don't need this on Android as it is done automatically*/
   position: fixed; top:0; left:0; width:100vw; height:100vh; /*Note THAT height:100vh causes a centering problem on mobiles, but IN THIS CASE it's desktop only so it's OK*/
   background-color: rgba(44, 139, 199, 0.5);
@@ -244,8 +244,10 @@ footer{
 .letYouMustAllowMicrophoneDialogDisappear{margin-top:-222px;}
 @keyframes flashBlink {  0%{ filter: contrast(1); } 45%{ filter: contrast(1); } 55%{ filter: contrast(1.25); } 100%{ filter: contrast(1.25); }  }
 
-/* _Glassmorphist background blur used for PLEASE DISCLOSE YOUR GENDER_ */
-.darkenTheWholeViewportClass{ /*Used by letTheIFrameTeachArabic() in js_for_app_initialization_in_parent*/
+/* Darken the background » used for PLEASE DISCLOSE YOUR GENDER_ */
+/* Used by letTheIFrameTeachArabic() in js_for_the_parent_all_browsers_all_devices */
+/* Also used by [THE APP IS PAUSED - CONTINUE] box */
+.darkenTheWholeViewportClass{
   position: fixed;
   z-index: 4000; /*Sliding navigation menu's z-index is 1100~1111*/
   left: 0px;
@@ -254,12 +256,16 @@ footer{
   bottom: 0px;
   background-color: rgba(66, 91, 110, 0.7);
   mix-blend-mode: multiply;
-  animation-name: fadeInAndBeClickable;
-  animation-duration: .5s;
+  animation-name: fadeInAndCoverEverything;
+  animation-duration: .25s;
   animation-fill-mode: forwards;
-  backdrop-filter: blur( 8px );                 /*------ Not supported by Firefox in 2021*/
-  -webkit-backdrop-filter: blur( 8px );         /*------ Not supported by Firefox in 2021*/
+  /*DEPRECATED: Instead of using backdrop-filter it's better if we apply a regular blur to the underlying element*/
+  /*backdrop-filter: blur( 8px );*/                 /*------ Not supported by Firefox in 2021*/
+  /*-webkit-backdrop-filter: blur( 8px );*/         /*------ Not supported by Firefox in 2021*/
+  cursor: url("/user_interface/images/cursor/vibrant_cursor.png") 16 4,auto;
 }
+@keyframes fadeInAndCoverEverything {  0%{ opacity:0; } 100%{ opacity:1; }  }
+
 .gentlemenAndLadiesButtonClass{
   box-shadow: 0px 0px 8px 0px white, 0px 0px 3px 0px white;
   position: fixed;
@@ -273,6 +279,7 @@ footer{
   left: 50%;
   transition: all .3s;
   z-index: 9990;
+  cursor: url("/user_interface/images/cursor/button_cursor.png") 16 4,auto;
 }
 .gentlemenButtonClass{
   transform: translate(-50%,-109%) scale(1);

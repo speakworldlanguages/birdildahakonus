@@ -1,0 +1,62 @@
+.upperDarkness{
+  position: fixed; left:0px; top:0px; width:100vw; width:100dvw; background-color: black;
+  display: flex; justify-content: space-evenly; align-items: center;
+  z-index: 50;
+}
+.lowerDarkness{
+  position: fixed; left:0px; bottom:0px; width:100vw; width:100dvw; background-color: black;
+}
+.cinematicViewport{
+  position: fixed; left:0px; width:100vw; width:100dvw;
+  background-image: linear-gradient(#a6bac8,#d2dde6);
+  display: flex;
+}
+.leftOrLowerDivision{display: flex; justify-content: flex-end;	align-items: center; flex-direction: column;}
+.rightOrUpperDivision{display: flex; justify-content: space-evenly; /*gap: 2vh;*/	align-items: center; flex-direction: column;}
+#arrow_under_speech_bubble {width:6vh; height:6vh; position: relative;}
+.speechBubble{position: absolute; min-height: 15vh; background-color: white; border-radius: 11px; padding: 2.2vh 3.7vh 2.2vh 3.7vh; color: #4b6273;}
+.leftOrLowerDivision img {filter: drop-shadow(0px 0px 15px rgba(255,255,255,0.9));}
+
+@media (orientation: landscape) {
+  .upperDarkness{ animation: upperDarknessHeightAnimationLandScape 3s forwards; }
+  .cinematicViewport{bottom:calc(20vh - 5vw); height: calc(60vh + 10vw); flex-direction: row; justify-content: center; gap:1vw; align-items: stretch;}
+  .lowerDarkness{ animation: lowerDarknessHeightAnimationLandScape 3s forwards; }
+  .rightOrUpperDivision section{display: block;}
+  .landscapeBread{display: block; width:56vmin; height: 56vmin; position: relative; top: 4.6vh; opacity:0; animation: breadMovesUpwardsToMakeSpaceForButton 6s forwards; animation-delay: 5s;}
+  .portraitBread{display: none;}
+  .upperDarkness section{display:none;}
+  .speechBubble{width:72vmin; bottom: 58vmin; font-size: calc(1.77vh + 0.47vw);}
+  #arrow_under_speech_bubble {top:9.5vh;}
+  .leftOrLowerDivision img {width:62vmin; margin-left: 5vmin; margin-right: 5vmin;}
+  #antigoof{width:62vmin; height:62vmin; margin-left: 5vmin; margin-right: 5vmin;}
+  @media (max-aspect-ratio:165/100) {
+    .speechBubble{bottom: 56vmin;}
+  }
+}
+@media (orientation: portrait) {
+  .upperDarkness{ animation: upperDarknessHeightAnimationPortrait 3s forwards; }
+  .cinematicViewport{bottom:3vh; height: 65vh; flex-direction: column-reverse; justify-content: space-between; gap:0px; align-items: center;}
+  .lowerDarkness{ animation: lowerDarknessHeightAnimationPortrait 3s forwards; }
+  .rightOrUpperDivision section{display: none;}
+  .upperDarkness section{display:block;}
+  .portraitBread{display: block; width: 27vh; height: 27vh; position: relative; left: 17vw; opacity:0; animation: breadMovesTowardsLeftToMakeSpaceForButton 7s forwards; animation-delay: 4s;}
+  .landscapeBread{display: none;}
+  .speechBubble{width:90vmin; bottom: 45.4vh; font-size: calc(1.3vh + 1.5vw);}
+  #arrow_under_speech_bubble {top:7.3vh;}
+  .leftOrLowerDivision img {width:48vh;}
+  #antigoof{width:48vh;height:48vh;}
+  section{ padding: 20px;}
+}
+@keyframes breadMovesTowardsLeftToMakeSpaceForButton {  0%{ left: 17vw; opacity: 0;} 33%{ opacity: 1; } 100%{ left: 0vw; opacity: 1; } }
+@keyframes breadMovesUpwardsToMakeSpaceForButton {  0%{ top: 4.6vh; opacity: 0;} 33%{ opacity: 1; } 100%{ top: 0vh; opacity: 1; } }
+@keyframes upperDarknessHeightAnimationLandScape {  0%{ height:50vh; }  100%{ height: calc(20vh - 5vw); }  }
+@keyframes lowerDarknessHeightAnimationLandScape {  0%{ height:50vh; }  100%{ height: calc(20vh - 5vw); }  }
+@keyframes upperDarknessHeightAnimationPortrait {  0%{ height:50vh; }  100%{ height: 32vh; }  }
+@keyframes lowerDarknessHeightAnimationPortrait {  0%{ height:50vh; }  100%{ height: 5vh; }  }
+
+.speechBubble{ opacity:0; animation: fadeInElementsOnNoticeScreen 2s forwards; animation-delay: 2s; }
+#arrow_under_speech_bubble { opacity:0; animation: fadeInElementsOnNoticeScreen 2s forwards; animation-delay: 2s; }
+@keyframes fadeInElementsOnNoticeScreen { 0%{ opacity: 0; visibility: visible; }  100%{ opacity: 1; visibility: visible; } }
+
+.startHidden{visibility: hidden;}
+.revealButton{animation: fadeInElementsOnNoticeScreen 1.5s forwards;}

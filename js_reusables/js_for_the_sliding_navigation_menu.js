@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 // NOTE: Do not use “const” for things that need to be accessible from elsewhere. Only use “var” for such variables.
 // The buttons have 4 (webp img) states : A, B, C and D. If we use one variable and only change the src it works but it is very glitchy.
@@ -8,7 +8,9 @@
 // ---
 // For sake of GUI simplicity the Speed Adjustment Slider is available on desktops only.
 // The Global Volume Slider is also "desktops-only". Mobile volume is to be adjusted natively via device volume buttons.
-
+// ---
+// NOTE: DOMContentLoaded is or can be too early for deviceDetector at parent level
+// ---
 var containerDivOfTheNavigationMenu = document.createElement("NAV");
 
 var clickToGoToPreviousDiv = document.createElement("DIV");
@@ -213,10 +215,7 @@ function removeExtraHeightFromNavMenuEtc() { // Triggered by exiting fullscreen 
 /*---*/
 let mouseIsOnMenuTriggerArea = false;
 /*---*/
-let continueAfterPauseByNavMenuPauseButton = "Paused?"; // Get the actual text from txt file and use it instead of this default.
-const filePathForResumeAfterPausedByButton = "/user_interface/text/"+userInterfaceLanguage+"/0-paused_by_the_pause_button.txt";
-// See js_for_every_single_html.js for the headers thingy.
-fetch(filePathForResumeAfterPausedByButton,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ continueAfterPauseByNavMenuPauseButton = contentOfTheTxtFile; });
+
 /* NOTE: Looks like the function declarations could have been tidier */
 
 // Sliding navigation menu button UI sounds
@@ -231,7 +230,7 @@ window.addEventListener("load",function() {
   navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover.webm"]  });
   navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click.webm"]  });
   // What to do on MOBILE DEVICES
-  // Use ayFreym from js_for_app_initialization_in_parent
+  // Use ayFreym from js_for_the_parent_all_browsers_all_devices
   // What to do on MOBILES
   if (deviceDetector.isMobile){
     // If something blocks the clickablity of any other element use pointerEvents = "none";
@@ -247,7 +246,7 @@ window.addEventListener("load",function() {
     /* LET'S: Always show the swipe menu on the welcome screen (Choose the language you want to learn) */
     function getY1(event) { event.preventDefault(); event.stopPropagation(); // Is it meaningless to stop propagation (bubbling) here??? Note that window object of iframe is contained by the parent html and it already doesn't bubble up to the parent by default, yes or no???
       // console.log("getY1 fired");
-      touchStartY = Math.round(event.changedTouches[0].screenY);
+      touchStartY = Math.round(event.targetTouches[0].screenY); // https://patrickhlauke.github.io/touch/touchlist-objects/
       newYCoord = touchStartY;
       // Introduce a tiny delay here before checking if swipeNavMenuIsLocked to make sure things fire in correct order
       theTimeoutThatMustBeStopped = setTimeout(waitJustThisMuch,65);
@@ -272,8 +271,8 @@ window.addEventListener("load",function() {
 
     function asTheFingerMovesUp(event) { event.preventDefault(); event.stopPropagation(); // Even though there isn't a container that the frame window can propagate up to
       // console.log("touchmove fired asTheFingerMovesUp");
-      swipeDifferenceY = newYCoord - Math.round(event.changedTouches[0].screenY) ; // UP swipe yields positive value, DOWN swipe yields negative value.
-      newYCoord = Math.round(event.changedTouches[0].screenY);
+      swipeDifferenceY = newYCoord - Math.round(event.targetTouches[0].screenY) ; // UP swipe yields positive value, DOWN swipe yields negative value.
+      newYCoord = Math.round(event.targetTouches[0].screenY); // https://patrickhlauke.github.io/touch/touchlist-objects/
       swipeDifferenceY = swipeDifferenceY*100/screen.height;
       newMarginBottom += swipeDifferenceY;
       if (newMarginBottom<-22) { newMarginBottom = -22; } // Limit
@@ -286,8 +285,10 @@ window.addEventListener("load",function() {
     }
     function asTheFingerMovesDown(event) { event.preventDefault(); event.stopPropagation(); // Even though there isn't a container that the frame window can propagate up to
       // console.log("touchmove fired asTheFingerMovesDown");
-      swipeDifferenceY = newYCoord - Math.round(event.changedTouches[0].screenY) ; // UP swipe yields positive value, DOWN swipe yields negative value.
-      newYCoord = Math.round(event.changedTouches[0].screenY);
+      // https://patrickhlauke.github.io/touch/touchlist-objects/
+      // In this case touches[] and targetTouches[] are expected to be same because the target is the whole viewport
+      swipeDifferenceY = newYCoord - Math.round(event.targetTouches[0].screenY) ; // UP swipe yields positive value, DOWN swipe yields negative value.
+      newYCoord = Math.round(event.targetTouches[0].screenY);
       swipeDifferenceY = swipeDifferenceY*100/screen.height;
       newMarginBottom += swipeDifferenceY;
       if (newMarginBottom>0) { newMarginBottom = 0; } // Limit
@@ -446,7 +447,7 @@ window.addEventListener("load",function() {
     setTimeout(function () {  clickToGoToPreviousImgD.src = resetByUsingSrcD;  },3);
   }
   function goToPreviousEnterHoverFunction() {
-    if(firstUserGestureHasUnleashedAudio){navMenuHoverSound.play();} // See js_for_app_initialization_in_parent
+    if(firstUserGestureHasUnleashedAudio){navMenuHoverSound.play();} // See js_for_the_parent_all_browsers_all_devices
     // Start the movement by switching from A to B ,,, actually it could have been at C or D too
     clickToGoToPreviousImgA.style.display = "none";
     clickToGoToPreviousImgB.style.display = "block"; // B contains 8 frames with 30ms each -> 240ms
@@ -479,7 +480,7 @@ window.addEventListener("load",function() {
     setTimeout(function () {  clickToGoToMainMenuImgD.src = resetByUsingSrcD;  },3);
   }
   function goToMainMenuEnterHoverFunction() {
-    if(firstUserGestureHasUnleashedAudio){navMenuHoverSound.play();} // See js_for_app_initialization_in_parent
+    if(firstUserGestureHasUnleashedAudio){navMenuHoverSound.play();} // See js_for_the_parent_all_browsers_all_devices
     // Start the movement by switching from A to B ,,, actually it could have been at C or D too
     clickToGoToMainMenuImgA.style.display = "none";
     clickToGoToMainMenuImgB.style.display = "block"; // B contains 8 frames with 30ms each -> 240ms
@@ -512,7 +513,7 @@ window.addEventListener("load",function() {
     setTimeout(function () {  clickToPauseTheAppImgD.src = resetByUsingSrcD;  },3);
   }
   function clickToPauseTheAppEnterHoverFunction() {
-    if(firstUserGestureHasUnleashedAudio){navMenuHoverSound.play();} // See js_for_app_initialization_in_parent
+    if(firstUserGestureHasUnleashedAudio){navMenuHoverSound.play();} // See js_for_the_parent_all_browsers_all_devices
     // Start the movement by switching from A to B ,,, actually it could have been at C or D too
     clickToPauseTheAppImgA.style.display = "none";
     clickToPauseTheAppImgB.style.display = "block"; // B contains 8 frames with 30ms each -> 240ms
@@ -545,7 +546,7 @@ window.addEventListener("load",function() {
     setTimeout(function () {  clickToFinanceImgD.src = resetByUsingSrcD;  },3);
   }
   function clickToFinanceEnterHoverFunction() {
-    if(firstUserGestureHasUnleashedAudio){navMenuHoverSound.play();} // See js_for_app_initialization_in_parent
+    if(firstUserGestureHasUnleashedAudio){navMenuHoverSound.play();} // See js_for_the_parent_all_browsers_all_devices
     // Start the movement by switching from A to B ,,, actually it could have been at C or D too
     clickToFinanceImgA.style.display = "none";
     clickToFinanceImgB.style.display = "block"; // B contains 8 frames with 30ms each -> 240ms
@@ -650,15 +651,16 @@ window.addEventListener("load",function() {
   // REMEMBER: The task of unloading sounds and stopping annyang has been moved to js_for_all_iframed_lesson_htmls.js to be handled with window onbeforeunload
 
   function goToPreviousFunction() { // The button only appears if user views information screen before starting lessons
-
+    // In this case there is no need to check if the device is online or not as the MAIN in parent is already loaded and ready » We are only unhiding it
+    // ---
     // Remove itself (the go to previous button) and return to [Choose the language you want to learn] screen
     setTimeout(removeGoBackToPreviousButtonFromTheNavigationMenu,300); //
     setTimeout(addClickToFinanceButtonToTheNavigationMenu,300);
     document.getElementsByTagName('MAIN')[0].style.left = "0px";
     itIsCertainlyNotTheNativeGoBackButtonThatIsNavigating = true; // See blank.html & js_for_the_bilingual_return_button
-
+    // ---
     ayFreym.src = "/user_interface/blank.html";
-    stopSlidingNavMenuCountdownToDisappearance(); // Don't let makeTheNavMenuGoDownOnMobiles fire
+    stopSlidingNavMenuCountdownToDisappearance(); // Don't let makeTheNavMenuGoDownOnMobiles fire » On welcome screen it becomes fixed and unswipable
 
   }
 
@@ -666,7 +668,17 @@ window.addEventListener("load",function() {
 
     let searchAndDetectLocation = ayFreym.src;
     let result = searchAndDetectLocation.search("progress_chart");
-    if (result < 0) { // iFrame was showing a lesson or the goodbye screen; it was not showing the progress_chart
+    if (result < 0) { // iFrame was showing a lesson or the goodbye screen, etc » it was not showing the progress_chart
+      if (!internetConnectivityIsNiceAndUsable) { console.warn("Navigation attempt to PROGRESS CHART despite being OFFLINE"); // No internet
+        if (localStorage.getItem("progressChartShouldBeOfflineCompatibleNow") && localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) {
+          console.warn("Files for progress chart are cached and READY!"); //No internet but the cache is ready, so let service-worker do its offline magic
+        } else {
+          console.warn("But files for progress chart are NOT CACHED!"); // And no cached files available
+          pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost = "/progress_chart/index.html"; // See js_for_online_and_offline_modes
+          ayFreym.src = "/user_interface/screens/"+userInterfaceLanguage+"/you_are_offline.html";
+          return; // Quit without executing the normal navigation code below
+        }
+      }
       // fade
       ayFreym.classList.add("everyThingFadesToBlack"); // Should take 700ms // Exists in css_for_preloader_and_orbiting_circles
       const orbitingCircles = document.getElementById('orbitingCirclesDivID');
@@ -689,35 +701,10 @@ window.addEventListener("load",function() {
     // NOTE THAT: Navigation can be done in two ways; 1- ayFreymWindow.document.location.href="http://myLink.com"; // or 2- ayFreym.src = "folder/index.html";
     // REMEMBER: If we navigate via location.href the browser WILL NOT update ayFreym.src and it will be false and stale
     // CAUTION! Changing the location with href will trigger window.onbeforeunload
-  }
 
-  function pauseTheAppFunction() {
+  } // END OF goToMainMenuFunction
 
-    // Pause the app
-    setTimeout(function () {
-      let wasListeningWhenUserPaused = false;
-      if (annyang) {
-        wasListeningWhenUserPaused = annyang.isListening();
-        annyang.abort(); // OR should we???// if (!isApple) {   annyang.abort();  } // without this annyang.start() won't function. // No problem if abort() fires when annyang wasn't listening.
-      }
-      /**/
-      // Setting the volume to 0 and then back to 1 causes a weird muting-unmuting behavior on iOS
-      let howlerVolumeWas = Howler.volume();
-      if (detectedOS.name != "iOS") {      Howler.volume(0);      } // Let it work except on iOS
-      /**/
-      alert(continueAfterPauseByNavMenuPauseButton);
-      /**/
-      setTimeout(function() {
-        /*Return to normal*/
-        if (detectedOS.name != "iOS") {    Howler.volume(howlerVolumeWas);   } // Let it work except on iOS
-
-        /*Continue receiving speech if it was interrupted*/
-        if (wasListeningWhenUserPaused) {
-          setTimeout(function() {         if (annyang){ annyang.start(); }         },1001);
-        }
-      },30); // 30ms is not a superstition, it's a guesstimated safety measure.
-    },250);
-  }
+  /*pauseTheAppFunction used to be here before August 2023 - Was moved to global scope in order to enable access by js_for_navigation_handling » visibilitychange*/
 
   function openFinancialMethodsPageFunction() {
 
@@ -732,8 +719,119 @@ window.addEventListener("load",function() {
       addGoBackToPreviousButtonToTheNavigationMenu();
       // In this case, see how HOME button is prevented from being added to the nav menu in js_for_all_iframed_lesson_htmls.js
     }
+    if (!internetConnectivityIsNiceAndUsable) { // No internet
+      // The following condition is commented out » POLICY: User will not be able to view the information screen without proper internet connection
+      //if (!localStorage.getItem("informationShouldBeOfflineCompatibleNow")) { // And no cached files available
+        pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost = "/information/index.html"; // See js_for_online_and_offline_modes
+        ayFreym.src = "/user_interface/screens/"+userInterfaceLanguage+"/you_are_offline.html";
+        return; // Quit without executing the normal navigation code
+      //} else { /*No internet but the cache is ready, so let service-worker do its offline magic*/ }
+    }
+    // --- Internet is ON
     ayFreym.src = "/information/index.html";
-  }
+
+  } // END OF openFinancialMethodsPageFunction
   /*____________END OF touch and mouse events_____________*/
 },{ once: true });
 // END OF "window load" event
+
+var theAppIsPaused = false;
+function pauseTheAppFunction() {
+
+    // Pause the app
+    theAppIsPaused = true;
+    // GET A FRESH REFERENCE TO THE IFRAME TO ACCESS ITS CURRENT VARIABLES AND FUNCTIONS
+    const iFrameInPauseTheAppFunction = document.getElementsByTagName('IFRAME')[0]; // Used to be getElementById('theIdOfTheIframe'); // Access to ayFreym from » progress.js, js_for_different_browsers_and_devices, js_for_the_sliding_navigation_menu
+    const iFrameWindowInPauseTheAppFunction = iFrameInPauseTheAppFunction.contentWindow;
+    const iFrameDocumentInPauseTheAppFunction = iFrameInPauseTheAppFunction.contentDocument;
+
+    // SpeechRecognition STOPS LISTENING
+    let annyangWasListeningWhenUserPaused = false;
+    if (annyang) {
+      annyangWasListeningWhenUserPaused = annyang.isListening();
+      if (annyangWasListeningWhenUserPaused) {
+        if (isApple) { annyang.pause(); }
+        else { annyang.abort(); }
+      }
+      // Note that: No problem if abort() fires when annyang wasn't listening.
+    }
+
+    // STOP WAVESURFER
+    let wavesurferWasListeningWhenUserPaused = false;
+    // See js_for_microphone_input_visualization
+    if (iFrameWindowInPauseTheAppFunction.wavesurferIsListening) { iFrameWindowInPauseTheAppFunction.stopAudioInputVisualization(); wavesurferWasListeningWhenUserPaused = true; }
+    else {
+      // DO NOTHING CASE 1: wavesurfer mic does not exist because it's not used in this lesson
+      // DO NOTHING CASE 2: wavesurfer mic exists but it was not started yet
+    }
+
+    // PAUSE ALL TIMERS
+    if (iFrameWindowInPauseTheAppFunction.listOfAllTickingSuperTimers) { iFrameWindowInPauseTheAppFunction.pauseAllSuperTimers(); }
+    else { console.warn("listOfAllTickingSuperTimers doesn't exist???"); }
+    // PAUSE ALL VIDEOS
+    const allVideoElements = iFrameDocumentInPauseTheAppFunction.getElementsByTagName('VIDEO');
+    const vidsThatMustBeUnpaused = [];
+    for (let i = 0; i < allVideoElements.length; i++) {
+        const vid = allVideoElements[i];
+        if (!vid.paused) { // Check if the video is playing (not paused)
+            vid.pause(); // Pause the video if it's playing
+            vidsThatMustBeUnpaused.push(vid);
+        }
+    }
+    // PAUSE ALL SOUNDS
+    const sndsThatMustBeUnpaused = [];
+    if (iFrameWindowInPauseTheAppFunction.listOfAllSoundsInThisLesson) {
+      const allSounds = iFrameWindowInPauseTheAppFunction.listOfAllSoundsInThisLesson;
+      for (let i = 0; i < allSounds.length; i++) {
+        const snd = allSounds[i];
+        if (snd.playing()) {
+          snd.pause();
+          sndsThatMustBeUnpaused.push(snd);
+        }
+      }
+    }
+    else {  console.warn("listOfAllSoundsInThisLesson doesn't exist???");   }
+    // SHOULD WE ALSO TURN OFF WAVESURFER MIC???
+
+    // ---
+    if (typeof iFrameWindowInPauseTheAppFunction.pauseCSSAnimations === "function") { // If there exists such a function » example 1-3-2 [there is a fish]
+      iFrameWindowInPauseTheAppFunction.pauseCSSAnimations();
+    }
+    // ---
+    // See js_for_info_boxes_in_parent
+    createAndHandleTheAppIsPausedBox().then(unpauseAndContinueFunction);
+
+    function unpauseAndContinueFunction() {
+
+      // ---
+      if (typeof iFrameWindowInPauseTheAppFunction.unpauseCSSAnimations === "function") { // If there exists such a function » example 1-3-2 [there is a fish]
+        iFrameWindowInPauseTheAppFunction.unpauseCSSAnimations();
+      }
+      // ___ NO NEED TO MUTE HOWLER IF ALL PLAYING SOUNDS CAN BE PAUSED // Howler.volume(howlerVolumeWas);
+      for (let i = 0; i < sndsThatMustBeUnpaused.length; i++) {
+          const snd = sndsThatMustBeUnpaused[i];
+          snd.play();
+      }
+      // ---
+      for (let i = 0; i < vidsThatMustBeUnpaused.length; i++) {
+          const vid = vidsThatMustBeUnpaused[i];
+          vid.play();
+      }
+      // ---
+      if (iFrameWindowInPauseTheAppFunction.listOfAllTickingSuperTimers) { iFrameWindowInPauseTheAppFunction.unpauseAllSuperTimers(); }
+
+      // Continue receiving speech if it was interrupted
+      if (annyangWasListeningWhenUserPaused) {
+        setTimeout(function() {         if (annyang){ annyang.resume(); }         },50); // annyang.resume() works both with .abort() and .pause()
+      }
+      if (wavesurferWasListeningWhenUserPaused) {
+        setTimeout(function () { iFrameWindowInPauseTheAppFunction.startAudioInputVisualization(); }, 100);
+      }
+
+      // ---
+      theAppIsPaused = false;
+
+    } // END OF unpauseAndContinueFunction
+
+
+} // END OF pauseTheAppFunction

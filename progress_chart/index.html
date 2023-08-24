@@ -6,16 +6,16 @@
     <meta charset="utf-8">
     <meta name="robots" content="noindex" />
 
-    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"><!-- Size of MAIN 100dvw 100dvh -->
     <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css">
-    <link rel="stylesheet" href="/css_reusables/css_for_photos_and_videos_teach_a_new_word.css">
-    <link rel="stylesheet" href="progress.css">
-    <link rel="stylesheet" href="bilinguals.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_photos_and_videos_teach_a_new_word.css"><!-- Gradient of MAIN -->
+    <link rel="stylesheet" href="/progress_chart/progress.css">
+    <link rel="stylesheet" href="/progress_chart/bilinguals.css">
 
     <script defer src="/js_reusables/js_for_every_single_html.js">/*memoryCard, userInterfaceLanguage, fonts, fetch headers, onePixelTransparentGif...*/</script>
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js"></script>
-    <script defer src="progress.js">/*Handle things*/</script>
-    <script defer src="js_for_the_bilingual_return_button.js">/*Handle things*/</script>
+    <script defer src="/progress_chart/progress.js">/*Handle things*/</script>
+    <script defer src="/progress_chart/js_for_the_bilingual_return_button.js">/*Handle things*/</script>
   </head>
   <body>
     <!-- MOMENTARY COVER UNTIL WINDOW LOAD HAPPENS (in case of extremely slow internet connection) -->
@@ -23,24 +23,96 @@
       <img src="/user_interface/images/preload_globe_100x150_frame0.webp" alt="...">
     </div>
     <!-- MAIN -->
-    <main style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
-      <div class="allUnitsInALevelContainer">
-        <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
-          <nav class="oneParticularLesson" id="1_1_1"><img alt="1-1-1" src="images/bread.webp" class="eachWebp"></nav>
-          <nav class="oneParticularLesson" id="1_1_2"><img alt="1-1-2" src="images/water.webp" class="eachWebp"></nav>
-          <nav class="oneParticularLesson" id="1_1_3"><img alt="1-1-3" src="images/givemewater1.webp" class="eachWebp"></nav>
-          <nav class="oneParticularLesson" id="1_1_4"><img alt="1-1-4" src="images/takebread1.webp" class="eachWebp"></nav>
-          <!-- webps must be 120x120 -->
+    <main>
+
+      <!-- !!! webps must be 120x120 !!! -->
+      <div class="allLevelsInTheAppContainer">
+
+
+        <div class="allUnitsInALevelContainer" id="level_1_ID">
+
+          <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
+            <nav class="oneParticularLesson" id="1_1_1"><img alt="1-1-1" src="/progress_chart/images/1_1_1_water.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="1_1_2"><img alt="1-1-2" src="/progress_chart/images/1_1_2_givemewater.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="1_1_3"><img alt="1-1-3" src="/progress_chart/images/1_1_3_bread.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="1_1_4"><img alt="1-1-4" src="/progress_chart/images/1_1_4_takebread.webp" class="eachWebp"></nav>
+          </div>
+          <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
+            <nav class="oneParticularLesson" id="1_2_1"><img alt="1-2-1" src="/progress_chart/images/1_2_1_glass.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="1_2_2"><img alt="1-2-2" src="/progress_chart/images/1_2_2_drinkwaterfromglass.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="1_2_3"><img alt="1-2-3" src="/progress_chart/images/1_2_3_spoon.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="1_2_4"><img alt="1-2-4" src="/progress_chart/images/1_2_4_eatwithspoon.webp" class="eachWebp"></nav>
+          </div>
+          <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
+            <nav class="oneParticularLesson" id="1_3_1"><img alt="1-3-1" src="/progress_chart/images/1_3_1_fish.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="1_3_2"><img alt="1-3-2" src="/progress_chart/images/1_3_2_thereexists.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="1_3_3"><img alt="1-3-3" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="1_3_4"><img alt="1-3-4" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+          </div>
+
         </div>
-        <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
-          <nav class="oneParticularLesson" id="1_2_1"><img alt="1-2-1" src="images/glass.webp" class="eachWebp"></nav>
-          <!-- <nav class="oneParticularLesson" id="1_1_2"><img alt="1-1-2" src="images/water.webp" class="eachWebp"></nav> -->
-          <!-- <nav class="oneParticularLesson" id="1_1_3"><img alt="1-1-3" src="images/givemewater1.webp" class="eachWebp"></nav> -->
-          <!-- <nav class="oneParticularLesson" id="1_1_4"><img alt="1-1-4" src="images/takebread1.webp" class="eachWebp"></nav> -->
+
+<!-- LEVEL 2
+        <div class="allUnitsInALevelContainer" id="level_2_ID">
+
+          <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
+            <nav class="oneParticularLesson" id="2_1_1"><img alt="2-1-1" src="/progress_chart/images/1_3_2_thereexists.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="2_1_2"><img alt="2-1-2" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="2_1_3"><img alt="2-1-3" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="2_1_4"><img alt="2-1-4" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+          </div>
+          <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
+            <nav class="oneParticularLesson" id="2_2_1"><img alt="2-2-1" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="2_2_2"><img alt="2-2-2" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="2_2_3"><img alt="2-2-3" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="2_2_4"><img alt="2-2-4" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+          </div>
+          <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
+            <nav class="oneParticularLesson" id="2_3_1"><img alt="2-3-1" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="2_3_2"><img alt="2-3-2" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="2_3_3"><img alt="2-3-3" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="2_3_4"><img alt="2-3-4" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+          </div>
+
         </div>
+-->
+
+<!-- LEVEL 3
+        <div class="allUnitsInALevelContainer" id="level_3_ID">
+
+          <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
+            <nav class="oneParticularLesson" id="3_1_1"><img alt="3-1-1" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="3_1_2"><img alt="3-1-2" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="3_1_3"><img alt="3-1-3" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="3_1_4"><img alt="3-1-4" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+          </div>
+          <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
+            <nav class="oneParticularLesson" id="3_2_1"><img alt="3-2-1" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="3_2_2"><img alt="3-2-2" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="3_2_3"><img alt="3-2-3" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="3_2_4"><img alt="3-2-4" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+          </div>
+          <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
+            <nav class="oneParticularLesson" id="3_3_1"><img alt="3-3-1" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="3_3_2"><img alt="3-3-2" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="3_3_3"><img alt="3-3-3" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="3_3_4"><img alt="3-3-4" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+          </div>
+
+        </div>
+-->
+
+        <!-- add the level 4 screen here -->
+
+
       </div>
+
     </main>
     <!-- END OF MAIN -->
+
+    <!-- display:block WHEN IT IS TIME -->
+    <div class="" id="toTheRightButtonID" style="display:none; position:fixed; top:50%; transform: translateY(-50%); right:0px; width:75px; height:75px; background-color:white;"></div>
+    <div class="" id="toTheLeftButtonID" style="display:none; position:fixed; top:50%; transform: translateY(-50%); left:0px; width:75px; height:75px; background-color:white;"></div>
 
     <!-- Change studied language button -->
     <div class="" id="containerID" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();"> <!-- So that window element won't sense the touch and mistrigger sliding nav menu -->
@@ -53,28 +125,162 @@
     </div>
 
     <script>
+    // ACTUALLY: onbeforeunload in js_for_all_iframed_lesson_htmls already has the code to stop annyang but there seems to be a problem when it is called the second time
+    // So should we FORCE turn OFF annyang if it was ON
+    // ISSUE THAT NEEDS SERIOUS CARE: Safari doesn't allow mic permanently; it allows for only 1 listening session and prompts for permission everytime mic restarts
+
+    if (parent.annyang) { // DO NOT OMIT! Firefox and other no-speech browsers need this "if (parent.annyang)" to let the app work without Web Speech API.
+      if (parent.annyang.isListening()) { // DANGER! It looks like this doesn't always fire correctly. Will try to remedy by adding it to progress/index.html
+        console.warn("__ Annyang was force stopped by script in progress_chart/index.html __");
+        parent.annyang.removeCallback();
+        if (isApple) { parent.annyang.pause(); }
+        else { parent.annyang.abort(); }
+      }
+    }
+
+    // PROBABLY: No need to call stopAudioInputVisualization which exists in js_for_microphone_input_visualization
+    // _________
     window.addEventListener("DOMContentLoaded",function() {
+      // ---
       const containerOfBackToWelcomeScreenButtons = document.getElementById('containerID');
       if (deviceDetector.isMobile) {
         containerOfBackToWelcomeScreenButtons.classList.add("containerOfBilingualLongButtonMOBILE");
       } else {
         containerOfBackToWelcomeScreenButtons.classList.add("containerOfBilingualLongButtonDESKTOP");
       }
+      // ---
+      const allLevelsContainer = document.querySelector('.allLevelsInTheAppContainer');
+      if (deviceDetector.isMobile) {
+
+      } else {
+        allLevelsContainer.classList.add("allLevelsInTheAppContainerDESKTOP");
+      }
+      // ---
+      const arrayOfEvery_allLessonsInAUnitContainer = document.querySelectorAll('.allLessonsInAUnitContainer');
+      if (parent.targetLanguageReadsLeftToRightOrRightToLeft == "rtl") {
+        allLevelsContainer.classList.add("flexDirectionForRTL"); // Working nicely
+        for (let i = 0; i < arrayOfEvery_allLessonsInAUnitContainer.length; i++) {
+          arrayOfEvery_allLessonsInAUnitContainer[i].classList.add("flexDirectionForRTL"); // Working nicely
+        }
+      } else { // ltr
+        allLevelsContainer.classList.add("flexDirectionForLTR"); // Working nicely
+        for (let i = 0; i < arrayOfEvery_allLessonsInAUnitContainer.length; i++) {
+          arrayOfEvery_allLessonsInAUnitContainer[i].classList.add("flexDirectionForLTR"); // Working nicely
+        }
+      }
+      // ---
     }, { once: true });
+    // ________
     window.addEventListener("load",function() {
       const momentaryCover = document.getElementById('idOfTheMomentaryCoverDiv');
       momentaryCover.parentNode.removeChild(momentaryCover);
-      adjustTheHeightOfTheChart = document.querySelector('.allUnitsInALevelContainer');
-      if (deviceDetector.isMobile) {
-        adjustTheHeightOfTheChart.classList.add("allUnitsInALevelContainerMOBILE");
-      } else {
-        adjustTheHeightOfTheChart.classList.add("allUnitsInALevelContainerDESKTOP");
+
+      const moveEverythingLeftOrRight = document.querySelectorAll('.allUnitsInALevelContainer');
+      const toTheRightButton = document.getElementById('toTheRightButtonID');
+      const toTheLeftButton = document.getElementById('toTheLeftButtonID');
+      // Using once true, we let buttons be disabled during transform animation to prevent glitchy behavior
+      function addEventListenersToTheButtons() {
+        if (deviceDetector.isMobile) {
+          toTheRightButton.addEventListener("touchstart",revealThatWhichWasHiddenOnTheRight,{once:true}); // TESTED: WORKS OK
+          toTheLeftButton.addEventListener("touchstart",revealThatWhichWasHiddenOnTheLeft,{once:true}); // TESTED: WORKS OK
+        } else {
+          toTheRightButton.addEventListener("mousedown",revealThatWhichWasHiddenOnTheRight,{once:true}); // TESTED: WORKS OK
+          toTheLeftButton.addEventListener("mousedown",revealThatWhichWasHiddenOnTheLeft,{once:true}); // TESTED: WORKS OK
+        }
       }
-    }, { once: true });
+      addEventListenersToTheButtons();
+      // ---
+      let currentlyViewing = 0; // 0 is the first dozen lessons in level_1
+      // IN THE FUTURE: GET THE LAST SCREEN FROM localStorage here
+      // --- START WITHOUT BEING ABLE TO GO IN THE WRONG DIRECTION WHEN THE SCREEN IS SHOWING THE FIRST DOZEN LESSONS
+      if (parent.targetLanguageReadsLeftToRightOrRightToLeft == "rtl") {
+        if (currentlyViewing == 0) {
+          toTheRightButton.style.visibility = "hidden";
+        } else if (false) { // User is viewing the last screen
+          toTheLeftButton.style.visibility = "hidden";
+        }
+      } else { // ltr
+        if (currentlyViewing == 0) {
+          toTheLeftButton.style.visibility = "hidden";
+        } else if (false) { // User is viewing the last screen
+          toTheRightButton.style.visibility = "hidden";
+        }
+      }
+      // !!!!
+      // NOTETHAT: IN THE FUTURE we must save users last screen to local storage and display that screen when user returns
+      // !!!!
+      // ---
+
+      function revealThatWhichWasHiddenOnTheRight(event) { event.preventDefault(); event.stopPropagation();
+        currentlyViewing -= 1;
+        // Extra task 1: Slide everything to the left to reveal that which was hidden on the right UNLESS
+        // A - target language reads RTL and we are already viewing the first level
+        // B - target language reads LTR and we have already reached the last level
+        if (parent.targetLanguageReadsLeftToRightOrRightToLeft == "rtl") {
+          if (currentlyViewing == 0) {
+            toTheRightButton.style.visibility = "hidden";
+          }
+        } else { // ltr
+          if (Math.abs(currentlyViewing)>=(moveEverythingLeftOrRight.length-1)) {
+            toTheRightButton.style.visibility = "hidden";
+          }
+        }
+        // Extra task 2: Unhide both buttons if we are neither at the first nor at the last level
+        checkCurrentScreenAndUnhideBothButtonsIfIsNeitherFirstNorLast();
+        moveEverythingToItsNewPosition();
+        // --
+        setTimeout(function () { addEventListenersToTheButtons(); }, 1100); // Let buttons be disabled during transform animation
+      }
+
+      function revealThatWhichWasHiddenOnTheLeft(event) { event.preventDefault(); event.stopPropagation();
+        currentlyViewing += 1;
+        // Extra task 1: Slide everything to the right to reveal that which was hidden on the left UNLESS
+        // A - target language reads RTL and we have already reached the last level
+        // B - target language reads LTR and we are already viewing the first level
+        if (parent.targetLanguageReadsLeftToRightOrRightToLeft == "rtl") {
+          if (Math.abs(currentlyViewing)>=(moveEverythingLeftOrRight.length-1)) {
+            toTheLeftButton.style.visibility = "hidden";
+          }
+        } else { // ltr
+          if (currentlyViewing == 0) {
+            toTheLeftButton.style.visibility = "hidden";
+          }
+        }
+        // Extra task 2: Unhide both buttons if we are neither at the first nor at the last level
+        checkCurrentScreenAndUnhideBothButtonsIfIsNeitherFirstNorLast();
+        moveEverythingToItsNewPosition();
+        // --
+        setTimeout(function () { addEventListenersToTheButtons(); }, 1100); // Let buttons be disabled during transform animation
+      }
+
+      function checkCurrentScreenAndUnhideBothButtonsIfIsNeitherFirstNorLast() {
+        if (currentlyViewing != 0) {
+          if (Math.abs(currentlyViewing)<(moveEverythingLeftOrRight.length-1)) {
+            setTimeout(function () {
+              toTheRightButton.style.visibility = "visible";
+              toTheLeftButton.style.visibility = "visible";
+            }, 1000); // See the transiton duration of transform in .allUnitsInALevelContainer in progress.css
+          }
+        }
+      }
+
+      function moveEverythingToItsNewPosition() {
+        for (let i = 0; i < moveEverythingLeftOrRight.length; i++) {
+          // --
+          if (dynamicViewportUnitsAreSupported) { // See js_for_every_single_html
+            moveEverythingLeftOrRight[i].style.transform = "translateX("+String(currentlyViewing*100)+"dvw)";
+          } else {
+            moveEverythingLeftOrRight[i].style.transform = "translateX("+String(currentlyViewing*100)+"vw)";
+          }
+          // --
+        }
+      }
+
+    }, { once: true }); // END OF window load
     </script>
 
-    <!-- FEATURE FOR THE FUTURE: Save progress as json (everything in localStorage) to computer -->
-    <div class="" style=""> <!-- This will be hidden under main unless position:fixed; z-index:2; -->
+    <!-- FEATURE FOR THE FUTURE: Save progress as json (i.e. everything in localStorage) and download to computer -->
+    <div class="" style="display:none;"> <!-- This will be hidden under main unless position:fixed; z-index:2; -->
       <!-- <button>Save my progress to file?</button> -->
       <!-- memoryCard -->
       <!-- theLanguageUserWasLearningLastTimeToSetFilePaths -->

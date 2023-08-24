@@ -2,7 +2,7 @@
 <html>
   <head>
     <!-- This will be parented by a container HTML -->
-    <title>🏁</title> <!-- Symbol &#127937;  🏆 👨‍🍳 -->
+    <title>🚧</title> <!-- Symbol &#127937;  🏆 👨‍🍳 🏁 -->
     <meta charset="utf-8">
     <meta name="robots" content="noindex" />
 
@@ -13,10 +13,9 @@
     <script defer src="/js_reusables/js_for_every_single_html.js">/*Get fonts except kanit*/</script>
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
     <script defer src="/js_reusables/js_for_proceed_buttons.js">/*Set hover|touchstart sounds*/</script>
-    <!--MOVED HEADERS INTO js_for_every_single_html.js <script defer src="../../js_reusables/js_for_fetch_api_character_encoding.js">/*Display non-english characters correctly*/</script> -->
 
     <!-- Uncomment to use the console on mobiles -->
-    <!-- <script src="/third_party_js/eruda.min.js"></script> -->
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
     <style>
@@ -102,11 +101,11 @@
     <main> <!-- See what css file is giving style to main,,, As of August 2022 it is set to css_for_the_container_parent_html -->
     </main>
     <!-- thisContainsEverything » height used to be 100vh -->
-    <div id="thisContainsEverything" class="" style="position:fixed; left:0; top:0; width:100vw; height:100%; overflow:hidden; display:flex; flex-direction: column; align-items: center; justify-content: center; z-index:1111;">
+    <div id="thisContainsEverything" class="" style="position:fixed; left:0; top:0; width:100vw; width:100dvw; height:100%; height:100dvh; overflow:hidden; display:flex; flex-direction: column; align-items: center; justify-content: center; z-index:1111;">
       <div id="particularZoomOnPhonesA">
         <p id="messageAfterTheLastLessonP" class="" style="color:#476175; font-size:170%; letter-spacing: -0.1vmin; white-space: pre;">...</p>
       </div>
-      <img id="particularZoomOnPhonesB" src="we_are_working.webp" alt="" style="height:38vh; pointer-events:none;" draggable="false">
+      <img id="particularZoomOnPhonesB" src="/lessons_in_iframes/we_are_working_for_new_levels/we_are_working.webp" alt="" style="height:38vh; pointer-events:none;" draggable="false">
       <address id="goToInfoPageButton" style="" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">...</address>
     </div>
 

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- THEREISAFISHINTHEWATER -->
+    <title>1-3-2 🐟</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex" />
+    <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Disable long-touch on video -->
+    <link rel="stylesheet" href="/css_reusables/css_for_lessons_with_interactables.css"> <!-- Fill MAIN with the right color -->
+    <link rel="stylesheet" href="/css_reusables/css_for_displaying_translation_help.css"> <!-- MOBILES: Draggable man | DESKTOPS: movie subtitle style -->
+    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css"> <!-- Wavesurfer teacher box visual style -->
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <link rel="stylesheet" href="/lessons_in_iframes/level_1/unit_3/lesson_2/there_is_a_fish.css">
+    <!-- Empty line 1 -->
+    <!-- Empty line 2 -->
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*LET userInterfaceLanguage DEPEND ON DOMAIN NAME, fetch headers, fonts, resetWebp, canVibrate, defaultCursor*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
+    <script defer src="/js_reusables/js_for_displaying_translation_help.js">/*Desktops: Like movie subtitles, Mobiles: Drag the figure down*/</script>
+    <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
+    <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
+    <!-- We do not need the microphone plugin in this case -->
+    <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <script defer src="/lessons_in_iframes/level_1/unit_3/lesson_2/there_is_a_fish.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
+    <!-- Empty line 1 -->
+    <!-- Empty line 2 -->
+    <!-- Uncomment to use the console on mobiles -->
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
+
+    <script> /*CACHE THE NEXT LESSON and make it offline ready*/
+      window.addEventListener("load",startDownloadingFilesForTheNextLessonIfNecessary,{once:true});
+      function startDownloadingFilesForTheNextLessonIfNecessary() { // Wait for a short while and get the files if device is still online, otherwise wait for internet connectivity.
+        setTimeout(afterSomeSeconds,7001); // After being offline, attempt downloading if two consecutive firings of updateOnlineStatus both report ONLINE // See js_for_online_and_offline_modes
+        function afterSomeSeconds() { // As of August 2023 parent.internetConnectivityIsNiceAndUsable is updated every 7000ms
+          if (parent.internetConnectivityIsNiceAndUsable) { // Start getting the files for the next lesson
+            const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_for_cache_handling/133.js"; document.body.appendChild(delayedScript);
+          } else { // Check & Retry
+            let connectivityCheckInterval = setInterval(function () { // Analyse the recursion logic
+              if (parent.internetConnectivityIsNiceAndUsable) { clearInterval(connectivityCheckInterval); startDownloadingFilesForTheNextLessonIfNecessary(); }
+            }, 2000);
+          }
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- MAIN :: Start blurred 8px -->
+    <main style="filter: blur(8px); transition-property: filter; transition-timing-function: ease;"> <!-- See css_for_lessons_with_interactables -->
+
+      <!-- ENDLESS BACKGROUND GRADIENT -->
+      <div class="putThingsAtBottomCenter underTheBackground"></div> <!-- Filled with img repeat-x via css background -->
+
+      <!-- THE SCENE -->
+      <div class="putThingsAtBottomCenter">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/background.avif" style="height:100vmin;">
+      </div>
+
+      <!-- THE WATERFALL -->
+      <div class="putThingsAtBottomCenter">
+        <div class="box1200pxTo100vmin">
+          <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/waterfall_minified.webp" style="position: absolute; left:53%; top:69%; width:16%; height:8%;">
+        </div>
+      </div>
+
+      <!-- THE CLOUDS -->
+      <div class="putThingsAtBottomCenter">
+        <img id="cloud2ID" class="moveCloud1WithoutRAF" draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/cloud2.webp" style="height:100vmin;"> <!-- Let the smaller cloud be under the larger cloud -->
+        <img id="cloud1ID" class="moveCloud2WithoutRAF" draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/cloud1.webp" style="height:100vmin; position:relative; top:100vmin;"><!-- top:100vmin is because flex-direction is column-reverse -->
+      </div>
+
+      <!-- THE FISH -->
+      <div class="putThingsAtBottomCenter" id="swimmingFishContainerID">
+        <div class="box1200pxTo100vmin">
+          <img id="swimmingFishID" draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/fish_swimming_in_water_minified.webp" style="position: absolute; left:47%; top:81%; width:8%; height:11%;">
+          <img id="jumpingFishID" draggable="false"  src="/lessons_in_iframes/level_1/unit_3/lesson_2/fish_jumps_minified.webp"    style="position: absolute; left:47%; top:81%; width:8%; height:11%; display:none;">
+        </div>
+      </div>
+
+      <!-- RIPPLES -->
+      <div class="putThingsAtBottomCenter" id="rippleWavesContainer0ID" style="visibility:hidden;">
+        <div class="box1200pxTo100vmin riverMasked">
+          <div class="spriteContainer" style="position: absolute; left:43vmin; top:82vmin; width:15vmin; height:6vmin;">
+            <img id="rippleWavesImg0ID" draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/ripple_sprite_minified.png" style="width:1900%; height:100%;">
+          </div>
+          <!-- https://codeshack.io/images-sprite-sheet-generator/ -->
+        </div>
+      </div>
+      <div class="putThingsAtBottomCenter" id="rippleWavesContainer1ID" style="visibility:hidden;">
+        <div class="box1200pxTo100vmin riverMasked">
+          <div class="spriteContainer" style="position: absolute; left:43vmin; top:82vmin; width:15vmin; height:6vmin;">
+            <img id="rippleWavesImg1ID" draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/ripple_sprite_minified.png" style="width:1900%; height:100%;">
+          </div>
+        </div>
+      </div>
+      <div class="putThingsAtBottomCenter" id="rippleWavesContainer2ID" style="visibility:hidden;">
+        <div class="box1200pxTo100vmin riverMasked">
+          <div class="spriteContainer" style="position: absolute; left:43vmin; top:82vmin; width:15vmin; height:6vmin;">
+            <img id="rippleWavesImg2ID" draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/ripple_sprite_minified.png" style="width:1900%; height:100%;">
+          </div>
+        </div>
+      </div>
+
+      <!-- PICTOGRAMS -->
+      <div class="putThingsAtBottomCenter" id="pictogramStatesID">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_a.webp" style="height:100vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_b.webp" style="height:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_between_b_c.webp" style="height:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_c.webp" style="height:100vmin; display:none;" id="changeToRTL">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_c_finish.webp" style="height:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_d.webp" style="height:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_d_finish.webp" style="height:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_e.webp" style="height:100vmin; display:none;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_f.webp" style="height:100vmin; display:none;">
+      </div>
+      <div class="putThingsAtBottomCenter ezMuv" id="fourEyesID">
+        <img id="elderEyesID" draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/elder_pictogram_eyes_blinking_naturally.webp" style="height:100vmin;">
+        <img id="youngerEyesID" draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/younger_pictogram_eyes_blinking_naturally.webp" style="height:100vmin; position:relative; top:100vmin;"><!-- top:100vmin is because flex-direction is column-reverse -->
+      </div>
+
+    </main>
+    <!-- END OF MAIN -->
+
+    <!-- TOUCHSCREEN FISH CONTROLS -->
+    <!-- touchscreen_button_arrow_idle.avif ,,, 360 px by 360 px at source -->
+    <!-- touchscreen_button_arrow_pressed.avif ,,, 360 px by 360 px at source -->
+    <!-- touchscreen_exact_amount_of_space.png ,,, WIDTH 56px ,,, HEIGHT 360px -->
+    <div class="howToInteractInstruction flexCenterColumn" id="touchscreenFishControlsID" style="opacity:0;">
+    <!-- Override drop shadow filter that exists in howToInteractInstruction with filter:none; -->
+      <!-- upperHalf -->
+      <div class="flexCenterRow">
+        <div id="fishJumpButtonID" style="visibility:hidden;">
+          <img draggable="false" class="touchControlsLineHeight" src="" style="pointer-events: none;">
+          <img draggable="false" class="touchControlsLineHeight" src="" style="pointer-events: none; display:none;">
+        </div>
+      </div>
+
+      <!-- lowerHalf -->
+      <div class="flexCenterRow">
+        <div id="swimLeftButtonID">
+          <img draggable="false" class="touchControlsLineHeight" src="" style="pointer-events: none;">
+          <img draggable="false" class="touchControlsLineHeight" src="" style="pointer-events: none; display:none;">
+        </div>
+        <img draggable="false" class="touchControlsLineHeight" id="buttonSpacingID" src="" style="pointer-events: none;">
+        <div id="swimRightButtonID">
+          <img draggable="false" class="touchControlsLineHeight" src="" style="pointer-events: none;">
+          <img draggable="false" class="touchControlsLineHeight" src="" style="pointer-events: none; display:none;">
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+      var keyboardInstructionPart1 = document.createElement("IMG");
+      var keyboardInstructionPart2 = document.createElement("IMG");
+      var keyboardInstructionPart3 = document.createElement("IMG");
+      // -
+      var touchscreenControls = document.getElementById('touchscreenFishControlsID');
+      var fishJumpButton = document.getElementById('fishJumpButtonID');
+      var swimLeftButton = document.getElementById('swimLeftButtonID');
+      var buttonSpacingImg = document.getElementById('buttonSpacingID');
+      var swimRightButton = document.getElementById('swimRightButtonID');
+
+      window.addEventListener('DOMContentLoaded', whatMustBeDoneAtFirstOnThisDevice, { once: true });
+      function whatMustBeDoneAtFirstOnThisDevice() {
+        // change to RTL image if target language is Arabic or any other right-to-left reading language
+        const toRTL = document.getElementById('changeToRTL');
+        if (parent.targetLanguageReadsLeftToRightOrRightToLeft == "rtl") { toRTL.src = "/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_c_rtl.webp"; }
+        // ---
+        if (deviceDetector.isMobile) {
+          // TABLETS AND PHONES
+          fishJumpButton.children[0].src = "/lessons_in_iframes/level_1/unit_3/lesson_2/touchscreen_button_arrow_idle.avif";
+          fishJumpButton.children[1].src = "/lessons_in_iframes/level_1/unit_3/lesson_2/touchscreen_button_arrow_pressed.avif";
+          swimLeftButton.children[0].src = "/lessons_in_iframes/level_1/unit_3/lesson_2/touchscreen_button_arrow_idle.avif";
+          swimLeftButton.children[1].src = "/lessons_in_iframes/level_1/unit_3/lesson_2/touchscreen_button_arrow_pressed.avif";
+          buttonSpacingImg.src = "/lessons_in_iframes/level_1/unit_3/lesson_2/touchscreen_exact_amount_of_space.png";
+          swimRightButton.children[0].src = "/lessons_in_iframes/level_1/unit_3/lesson_2/touchscreen_button_arrow_idle.avif";
+          swimRightButton.children[1].src = "/lessons_in_iframes/level_1/unit_3/lesson_2/touchscreen_button_arrow_pressed.avif";
+        } else {
+          touchscreenControls.remove();
+          // DESKTOPS - DESKTOPS - DESKTOPS
+          keyboardInstructionPart1.src = "/lessons_in_iframes/level_1/unit_3/lesson_2/keyboard_whole.webp"; // Fade in included in webp
+          keyboardInstructionPart1.classList.add("howToInteractInstruction"); //// keyboardInstructionPart1.style.opacity = "0.01";
+          keyboardInstructionPart1.classList.add("extraSettingsForInstructionDESKTOP");
+          keyboardInstructionPart2.src = "/lessons_in_iframes/level_1/unit_3/lesson_2/keyboard_left_right_arrow.webp";
+          keyboardInstructionPart2.classList.add("howToInteractInstruction");  // Try to get away with applying class for mobile
+          keyboardInstructionPart2.classList.add("extraSettingsForInstructionDESKTOP");
+          keyboardInstructionPart3.src = "/lessons_in_iframes/level_1/unit_3/lesson_2/keyboard_up_arrow.webp";
+          keyboardInstructionPart3.classList.add("howToInteractInstruction");
+          keyboardInstructionPart3.classList.add("extraSettingsForInstructionDESKTOP");
+          keyboardInstructionPart1.style.width = "55vmin"; // Override value in css ... Looks good enough
+          keyboardInstructionPart2.style.width = "55vmin"; // Default css value is greater
+          keyboardInstructionPart3.style.width = "55vmin"; // Default value will be applied on mobiles
+        }
+      } // END OF whatMustBeDoneAtFirstOnThisDevice()
+    </script>
+
+  </body>
+</html>

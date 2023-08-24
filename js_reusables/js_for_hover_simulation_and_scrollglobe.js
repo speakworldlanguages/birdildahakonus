@@ -1,8 +1,8 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
-let ctx;
+let canvasContext;
 let initialX=0,differenceX=0;
 const buttonsInLinkedJS = document.getElementsByTagName('BUTTON');
 const theCanvas = document.getElementsByTagName('CANVAS')[0];
@@ -10,10 +10,7 @@ const leftArea = document.getElementById("layerA2_ID");
 const rightArea = document.getElementById("layerB2_ID");
 const changeBrightnessMain = document.getElementsByTagName('MAIN')[0];
 
-window.addEventListener('load', function(){
-  checkIfThereIsOverflow();
-  window.addEventListener("resize",function () { checkIfThereIsOverflow(); });
-}, { once: true });
+
 function checkIfThereIsOverflow() {
   if (leftArea.scrollHeight > leftArea.clientHeight) {
     rightArea.children[0].style.opacity = "1"; rightArea.children[2].style.opacity = "1"; // Show the rotate left-right arrows
@@ -21,52 +18,66 @@ function checkIfThereIsOverflow() {
     rightArea.children[0].style.opacity = "0"; rightArea.children[2].style.opacity = "0"; // Hide the rotate left-right arrows
   }
 }
+// --
+window.addEventListener('load', function(){
 
-let elementFromPoint;
-if (deviceDetector.isMobile) { // PHONES AND TABLETS
-  // Left side - or listed languages
-  leftArea.addEventListener("touchstart", function(event){  event.preventDefault(); /* CAN THIS: Disable context menu via long touch?*/
-    if (event.target.tagName.toLowerCase() == "button") {
-      event.target.classList.add("simulatedHover");
-    }
-    changeBrightnessMain.classList.add("mainChangeBrightness"); // css_for_the_container_parent_html
-  });
-  leftArea.addEventListener("touchmove", function(event){  event.preventDefault(); /* Disables finger scrolling */
-    let touch = event.touches[0];
-    elementFromPoint = document.elementFromPoint(touch.clientX, touch.clientY); // DON'T NEED: touch.pageX - window.pageXOffset, touch.pageY - window.pageYOffset // because there is no scrolling in window or body
-    if(elementFromPoint.tagName.toLowerCase() == "button" ) {
-      elementFromPoint.className="simulatedHover";
-    }
-    else { // Try to detect finger-leave when it is in-between buttons > TEST RESULT: Nice enough
+  // --
+  checkIfThereIsOverflow();
+  window.addEventListener("resize",checkAgainAfterResize);
+  function checkAgainAfterResize() { setTimeout(function () { checkIfThereIsOverflow(); }, 150); }
+  // --
+  // NOTE: DOMContentLoaded is or can be too early for deviceDetector at parent level
+  let elementFromPoint;
+  if (deviceDetector.isMobile) { // PHONES AND TABLETS
+    // Left side - or listed languages
+    leftArea.addEventListener("touchstart", function(event){  event.preventDefault(); /* CAN THIS: Disable context menu via long touch?*/
+      if (event.target.tagName.toLowerCase() == "button") {
+        event.target.classList.add("simulatedHover");
+      }
+      changeBrightnessMain.classList.add("mainChangeBrightness"); // css_for_the_container_parent_html
+    });
+    leftArea.addEventListener("touchmove", function(event){  event.preventDefault(); /* Disables finger scrolling */
+      let touch = event.touches[0];
+      elementFromPoint = document.elementFromPoint(touch.clientX, touch.clientY); // DON'T NEED: touch.pageX - window.pageXOffset, touch.pageY - window.pageYOffset // because there is no scrolling in window or body
+      if(elementFromPoint.tagName.toLowerCase() == "button" ) {
+        elementFromPoint.className="simulatedHover";
+      }
+      else { // Try to detect finger-leave when it is in-between buttons > TEST RESULT: Nice enough
+        let i; for (i = 0; i < buttonsInLinkedJS.length; i++) { buttonsInLinkedJS[i].classList.remove("simulatedHover"); }
+      }
+    });
+
+    leftArea.addEventListener("touchend", function(event){  event.preventDefault(); /* Just to be safe */
       let i; for (i = 0; i < buttonsInLinkedJS.length; i++) { buttonsInLinkedJS[i].classList.remove("simulatedHover"); }
-    }
-  });
+      changeBrightnessMain.classList.remove("mainChangeBrightness"); // css_for_the_container_parent_html
+    });
+    // Right side - or the scrollyglobe
+    rightArea.addEventListener("touchstart", function(event){ event.preventDefault();
+      initialX = Math.round(event.touches[0].clientX);
+      rightArea.addEventListener("touchmove",rotateTheGlobeMobile);
+      changeBrightnessMain.classList.add("mainChangeBrightness"); // css_for_the_container_parent_html
+    });
+    rightArea.addEventListener("touchend",cancelRotationMobile);
+    // NO NEED: For a custom touchleave. It is better without touchleave.
+    // BY THE WAY: pointerleave DOES NOT replace mouseleave for touchscreens because it doesn't fire until finger is lifted.
+  } else { // DESKTOPS
+    // Left side
+    leftArea.addEventListener("wheel", function(event){  event.preventDefault(); }); /* Disables mouse wheel scrolling */
+    // Right side
+    rightArea.addEventListener("mousedown", function(event){
+      theCanvas.classList.add("zoomGlobeDesktop");
+      initialX = event.clientX;
+      rightArea.addEventListener("mousemove",rotateTheGlobeDesktop);
+    });
+    rightArea.addEventListener("mouseup",cancelRotationDesktop);
+    rightArea.addEventListener("mouseleave",cancelRotationDesktop);
+  } // END OF deviceDetector ...
 
-  leftArea.addEventListener("touchend", function(event){  event.preventDefault(); /* Just to be safe */
-    let i; for (i = 0; i < buttonsInLinkedJS.length; i++) { buttonsInLinkedJS[i].classList.remove("simulatedHover"); }
-    changeBrightnessMain.classList.remove("mainChangeBrightness"); // css_for_the_container_parent_html
-  });
-  // Right side - or the scrollyglobe
-  rightArea.addEventListener("touchstart", function(event){ event.preventDefault();
-    initialX = Math.round(event.touches[0].clientX);
-    rightArea.addEventListener("touchmove",rotateTheGlobeMobile);
-    changeBrightnessMain.classList.add("mainChangeBrightness"); // css_for_the_container_parent_html
-  });
-  rightArea.addEventListener("touchend",cancelRotationMobile);
-  // NO NEED: For a custom touchleave. It is better without touchleave.
-  // BY THE WAY: pointerleave DOES NOT replace mouseleave for touchscreens because it doesn't fire until finger is lifted.
-} else { // DESKTOPS
-  // Left side
-  leftArea.addEventListener("wheel", function(event){  event.preventDefault(); }); /* Disables mouse wheel scrolling */
-  // Right side
-  rightArea.addEventListener("mousedown", function(event){
-    theCanvas.classList.add("zoomGlobeDesktop");
-    initialX = event.clientX;
-    rightArea.addEventListener("mousemove",rotateTheGlobeDesktop);
-  });
-  rightArea.addEventListener("mouseup",cancelRotationDesktop);
-  rightArea.addEventListener("mouseleave",cancelRotationDesktop);
-}
+
+}, { once: true });
+
+
+
 
 let frameCounter=8000;
 let mod80 = 0;
@@ -75,8 +86,8 @@ function rotateTheGlobeDesktop(event) {
   initialX = event.clientX;
   frameCounter += differenceX;
   mod80 = Math.abs(frameCounter%80);
-  ctx.clearRect(0, 0, 250, 250);
-  ctx.drawImage(frames[mod80], 0, 0);
+  canvasContext.clearRect(0, 0, 250, 250);
+  canvasContext.drawImage(frames[mod80], 0, 0);
   // scrolling
   leftArea.scrollTop += differenceX;
 }
@@ -90,8 +101,8 @@ function rotateTheGlobeMobile(event) {
   initialX = Math.round(event.touches[0].clientX);
   frameCounter += differenceX;
   mod80 = Math.abs(frameCounter%80);
-  ctx.clearRect(0, 0, 250, 250);
-  ctx.drawImage(frames[mod80], 0, 0);
+  canvasContext.clearRect(0, 0, 250, 250);
+  canvasContext.drawImage(frames[mod80], 0, 0);
   // scrolling
   leftArea.scrollTop += differenceX;
   // vibration is extremely expensive in terms of battery usage
@@ -101,12 +112,12 @@ function cancelRotationMobile() {
   initialX=0; differenceX=0;
   changeBrightnessMain.classList.remove("mainChangeBrightness"); // css_for_the_container_parent_html
 }
-// Get all the images and draw with ctx.drawImage(img, 0, 0);
+// Get all the images and draw with canvasContext.drawImage(img, 0, 0);
 let loadedFrames = 0;
 function increaseCounter() {
   loadedFrames++;
   if (loadedFrames==79) {
-    ctx.drawImage(frame60, 0, 0);
+    canvasContext.drawImage(frame60, 0, 0);
   }
 }
 
@@ -192,7 +203,7 @@ const frame78 = new Image(); frame78.onload = increaseCounter;
 const frame79 = new Image(); frame79.onload = increaseCounter;
 
 window.addEventListener('DOMContentLoaded', function(){
-  ctx = theCanvas.getContext("2d");
+  canvasContext = theCanvas.getContext("2d");
   //---
   frame00.src = '/user_interface/images/scrolly_globe_frames/250px_white_globe_00.webp';
   frame01.src = '/user_interface/images/scrolly_globe_frames/250px_white_globe_01.webp';

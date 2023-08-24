@@ -1,0 +1,73 @@
+.containerOfThePlate{
+  position: fixed; left: 50%; top:50%; transform: translate(-50%,-50%);
+}
+.containerOfThePlate img { transition: opacity 1.5s; transition-delay: .2s; pointer-events: none; }
+
+.squareContainerOfTheLongSpoonContainer{
+  overflow: visible;
+  position: fixed; left: 50%; top:50%; transform: translate(-50%,-50%);
+  width:100vmin; height: 100vmin;
+  margin-left: 0px; margin-top: 0px;
+  /*On desktops the spoon will move via margin-left and margin-top according to mouse coordinates WITH A DELAY*/
+  /*DO NOT DO transition: margin-left 0.2s, margin-top 0.2s; RESULT IS NOT GOOD ON DESKTOPS*/
+  perspective: 300px;
+}
+
+.theLongSpoonContainer{
+  position: absolute;
+  left: 73.2vmin; top: 28.4vmin;
+  width:8.5vmin;
+  margin-left: 0px; margin-top: 0px;
+  /*On desktops margin-left and margin-top of this inner DIV will change only once with the very first click » See eat_with_spoon_desktop.js*/
+  /*transform is for rotation on mobiles only*/
+  /*scale and translate are for touch-radius on mobiles only*/
+}
+.theLongSpoonContainerTransitionSettingsOnMobiles{
+  transition: transform 1.33s ease-out, scale 0.15s, translate 0.15s, margin-left 1.33s ease-out, margin-top 1.33s ease-out;
+  /* touchstart executes style.transform = "rotate(-90deg) translate(100%,-50%)" */
+  /* touchend   executes style.transform = "rotate(-0deg) translate(0%,0%)" */
+  /* devicemotion »»» style.transform = "rotate(-90deg) translateY(-50%) translateZ(150px)" */
+  /* unpinch »»» style.transform = "rotate(-90deg) translateY(-50%) translateZ("+movement*2+"px)" */
+}
+.theLongSpoonContainerInitialRotationOnDesktops{
+  transition: margin-left 1.25s ease, margin-top 1.25s ease;
+  /*For this DIV margin-left and margin-top will change only once with the very first click. See calculateClickCorrection()*/
+  rotate: -90deg;
+  transform: rotate(90deg);
+}
+.theLongSpoonContainer img { transition: opacity 1.7s; pointer-events: none; }
+
+.instantHighlightToTheSpoon{ filter: contrast(108%); }
+.bringTheSpoonAnimation{ animation-name: bringIt; animation-duration: 4.2s; animation-fill-mode: forwards; animation-timing-function: ease; }
+@keyframes bringIt {
+  0%   {translate: 0 0 0px;}
+  33% {translate: 0 0 100px;}
+  75% {translate: 0 0 100px;}
+  100%   {translate: 0 0 0px;}
+}
+.brightenTheSpoon{ animation-name: brightenIt; animation-duration: 1.25s; animation-fill-mode: forwards; animation-timing-function: ease; }
+@keyframes brightenIt {
+  0%    {filter: brightness(100%) contrast(100%);}
+  100%  {filter: brightness(95%) contrast(115%);}
+}
+.unbrightenTheSpoon{ animation-name: unbrightenIt; animation-duration: 1.25s; animation-fill-mode: forwards; animation-timing-function: ease; }
+@keyframes unbrightenIt {
+  0%    {filter: brightness(95%) contrast(115%);}
+  100%  {filter: brightness(100%) contrast(100%);}
+}
+
+/*Copied from drink_water_from_glass.css*/
+@media (orientation:landscape) {
+ .instruction{left:calc(75vw + 5vh); top:50%; transform: translate(-50%,-50%);}
+ @media (max-aspect-ratio: 3/2) {
+    .instruction{ transform: translate(-50%,-50%) scale(0.8); }
+  }
+}
+@media (orientation:portrait) {
+ .instruction{left:50%; top:calc(30vh - 5vw); transform: translate(-50%,-50%);}
+}
+.instruction{position: fixed; pointer-events: none; filter: drop-shadow(0 0 6vmin rgba(235, 249, 255, 0.5));}
+.appearQuickly{animation-name: appear; animation-duration: 1.5s; animation-fill-mode: forwards;}
+@keyframes appear {  from {  opacity: 0; }  to {    opacity: 1; }  }
+.disappearSlowly{animation-name: disappear; animation-duration: 3s; animation-fill-mode: forwards;}
+@keyframes disappear {  from {  opacity: 1; }  to {    opacity: 0; }  }

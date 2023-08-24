@@ -1,3 +1,2 @@
 When new files are added or deprecated files are removed,
-find, check and update:
-js_reusables\js_for_cache_handling_with_initial_load.js
+find, check and update the caches!

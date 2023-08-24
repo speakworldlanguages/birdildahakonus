@@ -1,24 +1,27 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without obtaining permission
 
-/* This js file must be DEFERRED to be able to declare consts for elements without DOMContentLoaded */
 
 /* __ SAVE PROGRESS TO LOCAL STORAGE __ */
-// See js_for_app_initialization_in_parent to find how savedProgress.ja savedProgress.zh savedProgress.tr savedProgress.ar savedProgress.en are created
-const studiedLang = parent.langCodeForTeachingFilePaths;
+// See js_for_the_parent_all_browsers_all_devices to find how savedProgress.ja savedProgress.zh savedProgress.tr savedProgress.ar savedProgress.en are created
+const studiedLang = parent.langCodeForTeachingFilePaths.substr(0,2); // en_east en_west will use the same save-slot
 // !!! VERY CAREFUL: Watch the lesson name!!!
 parent.savedProgress[studiedLang].lesson_TAKEBREAD_IsViewed=true; // Create and add... or overwrite the same thing
 parent.saveJSON = JSON.stringify(parent.savedProgress); // Convert
 localStorage.setItem("memoryCard", parent.saveJSON); // Save
 
-/* __ TEXT TO BE INJECTED INTO EXPLANATION BOX __ */
+/* __ TEXT TO BE INJECTED INTO EXPLANATION/TRANSLATION SUBTITLE/BOX __ */
 const explanationPathA = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4a.txt"; // The translation of what is being said, to be put into the helpbox/subtitles.
 const explanationPathB = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4b.txt"; // The translation of what is being said, to be put into the helpbox/subtitles.
 let explanationA = "…"; // Warning: Without an initial value it returns UNDEFINED before fetch() actually gets the file.
 let explanationB = "…"; // Warning: Without an initial value it returns UNDEFINED before fetch() actually gets the file.
 fetch(explanationPathA,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ explanationA = contentOfTheTxtFile; });
 fetch(explanationPathB,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ explanationB = contentOfTheTxtFile; });
+/* __ TEXT TO BE INJECTED INTO NOTIFICATION BOX AT THE END __ */
+const noteAtTheEndOfLessonPath = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_end_of_lesson.txt"; // Could you figure out how to say eat
+let couldYouFigureOutHowToSayEat = " ";
+fetch(noteAtTheEndOfLessonPath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ couldYouFigureOutHowToSayEat = contentOfTheTxtFile; });
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
 let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_1_normal.webm";
@@ -30,7 +33,7 @@ let say6Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths
 let say7Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_slow.webm";
 let say8Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_bread_slow.webm";
 
-if (parent.mustUseFemaleConjugationForCommandVerbs) { // See js_for_app_initialization_in_parent
+if (parent.userIsFemaleSoUseFemaleConjugation) { // See js_for_the_parent_all_browsers_all_devices
   say1Path = say1Path.split(".")[0] + "_tofemale.webm";
   say2Path = say2Path.split(".")[0] + "_tofemale.webm";
   say3Path = say3Path.split(".")[0] + "_tofemale.webm";
@@ -40,7 +43,7 @@ if (parent.mustUseFemaleConjugationForCommandVerbs) { // See js_for_app_initiali
   say7Path = say7Path.split(".")[0] + "_tofemale.webm";
   say8Path = say8Path.split(".")[0] + "_tofemale.webm";
 }
-let saySecondSet = false; // First set is say1 + say2,,, second set is say3 + say4
+let isNowSayingTheSecondSet = false; // First set is say1 + say2,,, second set is say3 + say4
 const say1 = new parent.Howl({  src: [say1Path]  });
 const say2 = new parent.Howl({  src: [say2Path]  });
 const say3 = new parent.Howl({  src: [say3Path]  });
@@ -58,18 +61,24 @@ const bitingSound2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_
 const bitingSound3 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/bite_3.webm"]  });
 const winSound1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/user_takes_the_bread.webm"]  });
 const finalSuccessSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/user_has_eaten_bread.webm"]  });
-
-/* Sound init code is linked on the parent but the consts exist in frame. SEE js_for_all_iframed_lesson_htmls » FIND onbeforeunload. */
+/* Sound initialization happens on the parent but the consts exist in frame. SEE js_for_all_iframed_lesson_htmls » FIND onbeforeunload. */
+// listOfAllSoundsInThisLesson is also used by pauseTheAppFunction in js_for_the_sliding_navigation_menu
+var listOfAllSoundsInThisLesson = [
+  // finalSuccessSound, // EXCEPTION: See unloadThatLastSoundWhichCannotBeUnloadedNormally
+  winSound1,
+  bitingSound3,
+  bitingSound2,
+  bitingSound1,
+  bitingSound0,
+  startDraggingBreadSound,
+  touchClickBreadSound,
+  say8, say7, say6, say5, say4, say3, say2, say1
+];
 function unloadTheSoundsOfThisLesson() {
-  finalSuccessSound.unload();
-  winSound1.unload();
-  bitingSound3.unload();
-  bitingSound2.unload();
-  bitingSound1.unload();
-  bitingSound0.unload();
-  startDraggingBreadSound.unload();
-  touchClickBreadSound.unload();
-  say8.unload(); say7.unload(); say6.unload(); say5.unload(); say4.unload(); say3.unload(); say2.unload(); say1.unload();
+  for (let i = 0; i < listOfAllSoundsInThisLesson.length; i++) {
+      const snd = listOfAllSoundsInThisLesson[i]; snd.unload();
+  }
+  parent.unloadThatLastSoundWhichCannotBeUnloadedNormally(finalSuccessSound); // Exists in js_for_navigation_handling,,, unloads the sound after 5s
 }
 
 /* Declare js variables to manipulate the elements */
@@ -79,79 +88,23 @@ const movingEyesDiv = document.getElementById("movingEyesDivID");
 const breadsFarAndNearDiv = document.getElementById("breadsFarAndNearID");
 let skip_b_and_c = false;
 //---
-const handCursor = document.createElement("IMG");
 const antigoofingDiv = document.getElementById("antigoofingID");
-const aBetterClickArea = document.querySelector(".clickArea");
-const aGreaterTouchMoveArea = document.querySelector(".touchMoveArea");
-const aGreaterTouchStartArea = document.querySelector(".touchStartArea");
-const thePinchArea = document.querySelector(".pinchArea");
 const dimmer = document.querySelector(".dimmer");
-const upperTeeth = document.querySelector(".upperTeethContainer");
-const lowerTeeth = document.querySelector(".lowerTeethContainer");
-//---
-const swipeInstructionPart1 = document.createElement("IMG");
-const swipeInstructionPart2 = document.createElement("IMG");
-const keyboardInstructionPart1 = document.createElement("IMG");
-const keyboardInstructionPart2 = document.createElement("IMG");
-const pinchInstruction = document.createElement("IMG");
+// ---
+let isParentBlurred = true; // Clicking on iframe blurs the parent,,, so start blurred
+let isFrameBlurred = false; //
+// ---
+// See index.html for aGreaterTouchStartArea aBetterClickArea swipeInstructionPart1 swipeInstructionPart2 pinchInstruction aGreaterTouchMoveArea thePinchArea handCursor upperTeeth lowerTeeth keyboardInstructionPart1 keyboardInstructionPart2
 
-////window.addEventListener('DOMContentLoaded', whatMustBeDoneAtFirstOnThisDevice, { once: true });
-document.addEventListener('readystatechange', (event) => {
-  if (event.target.readyState === 'complete') {    whatMustBeDoneAtFirstOnThisDevice();  }
-});
-function whatMustBeDoneAtFirstOnThisDevice() {
-  if (deviceDetector.device == "tablet") { //swipeInstructionPosition
-    // TABLETS - TABLETS - TABLETS
-    aBetterClickArea.parentNode.removeChild(aBetterClickArea);
-    upperTeeth.children[1].classList.add("teethSizeMobile");
-    lowerTeeth.children[1].classList.add("teethSizeMobile");
-    swipeInstructionPart1.src = "tablet_swipe_a.webp"; // Fade in included in webp
-    swipeInstructionPart1.classList.add("swipeInstructionPosition"); //// swipeInstructionPart1.style.opacity = "0.01";
-    swipeInstructionPart2.src = "tablet_swipe_b.webp";
-    swipeInstructionPart2.classList.add("swipeInstructionPosition");
-    pinchInstruction.src = "tablet_pinch.webp";
-    pinchInstruction.classList.add("swipeInstructionPosition");
-  } else if (deviceDetector.device == "phone") {
-    // PHONES - PHONES - PHONES
-    aBetterClickArea.parentNode.removeChild(aBetterClickArea);
-    upperTeeth.children[1].classList.add("teethSizeMobile");
-    lowerTeeth.children[1].classList.add("teethSizeMobile");
-    swipeInstructionPart1.src = "phone_swipe_a.webp"; // Fade in included in webp
-    swipeInstructionPart1.classList.add("swipeInstructionPosition");   //// swipeInstructionPart1.style.opacity = "0.01";
-    swipeInstructionPart2.src = "phone_swipe_b.webp";
-    swipeInstructionPart2.classList.add("swipeInstructionPosition");
-    pinchInstruction.src = "phone_pinch.webp";
-    pinchInstruction.classList.add("swipeInstructionPosition");
-  } else {
-    // DESKTOPS - DESKTOPS - DESKTOPS
-    aGreaterTouchMoveArea.parentNode.removeChild(aGreaterTouchMoveArea); //aGreaterTouchStartArea will also be removed since it is contained by aGreaterTouchMoveArea
-    thePinchArea.parentNode.removeChild(thePinchArea); // Even though it's set to display none and will never turn to block on desktops
-    handCursor.src = "/user_interface/images/cursor/hand_cursor.webp";
-    handCursor.classList.add("handCursorSize");
-    upperTeeth.children[1].classList.add("teethSizeDesktop");
-    lowerTeeth.children[1].classList.add("teethSizeDesktop");
-    keyboardInstructionPart1.src = "keyboard_whole.webp"; // Fade in included in webp
-    keyboardInstructionPart1.classList.add("swipeInstructionPosition"); //// keyboardInstructionPart1.style.opacity = "0.01";
-    keyboardInstructionPart2.src = "keyboard_down_arrow.webp";
-    keyboardInstructionPart2.classList.add("swipeInstructionPosition");  // Try to get away with applying class for mobile
-    keyboardInstructionPart1.style.width = "55vmin";  keyboardInstructionPart2.style.width = "55vmin"; // Override value in css // Looks good enough
-  }
-}
-
-let lastRecordedWidth = window.innerWidth; let lastRecordedHeight = window.innerHeight;
-window.addEventListener('resize', updateWindowProperties);
-function updateWindowProperties() {
-  lastRecordedWidth = window.innerWidth; lastRecordedHeight = window.innerHeight; // Update the values
-  setTimeout(function () { lastRecordedWidth = window.innerWidth; lastRecordedHeight = window.innerHeight; },100); // Double check
-}
+// See js_for_the_parent_all_browsers_all_devices for lastRecordedWindowWidth lastRecordedWindowHeight
 
 /* SET OFF */
 window.addEventListener('load', loadingIsCompleteFunction, { once: true });
 function loadingIsCompleteFunction() {
-  if (parent.langCodeForTeachingFilePaths == "zh") { // Display note about the importance of intonation in RENMEN.
-    const pathOfNotificationAboutIntonation = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_special_case_for_zh.txt";
+  if (studiedLang == "zh") { // Display note about the importance of intonation in RENMEN.
+    const pathOfNotificationAboutIntonation = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_ren_attention_to_intonation.txt";
     fetch(pathOfNotificationAboutIntonation,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
-      setTimeout(function(){ createAndHandleInfoBoxType1BeforeLessonStarts(); putNotificationTxtIntoThisP1.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
+      new SuperTimeout(function(){ createAndHandleInfoBoxType1BeforeLessonStarts(); putNotificationTxtIntoThisP1.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
       // createAndHandleInfoBoxType1BeforeLessonStarts will fire startTheLesson 1.5 seconds after its OK button is clicked/touched
     });
   }
@@ -162,26 +115,28 @@ function loadingIsCompleteFunction() {
 
 function startTheLesson() {
   // User must listen to wavesurfer vocabulary box no matter what language he/she is studying
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take.webm";  // In case of "ar" wavesurfer box will play the verb root in male conjugation even if the user is female
+  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox.webm";  // In case of "ar" wavesurfer box will play the verb root in male conjugation even if the user is female
   const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
   fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
   // See js_for_info_boxes_in_lessons » iframe-lesson level
-  setTimeout(function(){    createAndHandleListenManyTimesBox(filePathOfTheAudioFile);    },501); // Wait for preloader to disappear or give a brief break after notification
+  new SuperTimeout(function(){    createAndHandleListenManyTimesBox(filePathOfTheAudioFile);    },501); // Wait for preloader to disappear or give a brief break after notification
 }
 
-let isParentBlurred = true; // Clicking on iframe blurs the parent,,, so start blurred
-let isFrameBlurred = false; //
-function vocabluaryBoxIsClosed(x,y) { // Will fire from within createAndHandleListenManyTimesBox
-  //---
-  let unblurTime;  switch (parent.speedAdjustmentSetting) {  case "slow": unblurTime = 2.0; break;  case "fast": unblurTime = 0.5; break;  default: unblurTime = 1.0;  }
+function vocabularyBoxIsClosed(x,y) { // Will fire from within createAndHandleListenManyTimesBox with touch/click coordinate values passed » vocabularyBoxIsClosed(lastPointerX,lastPointerY)
+  // --
+  isParentBlurred = true; // Clicking on iframe blurs the parent,,, so start blurred
+  isFrameBlurred = false; //
+  // --
+  let unblurTime;  switch (parent.speedAdjustmentSetting) {  case "slow": unblurTime = 2.0; break;  case "fast": unblurTime = 0.5; break;  default: unblurTime = 0.9;  }
   main.style.transitionDuration = String(unblurTime)+"s";
   main.style.filter = "blur(0px)";
-  setTimeout(function () { playPictogramLoop(); }, unblurTime*550);
+  new SuperTimeout(function () { playPictogramLoop(); }, unblurTime*550);
+  new SuperTimeout(function () { main.style.filter = "none"; }, unblurTime*1100);
   //---
   waitForFirstTouchOrClickOnBread(); // Start waiting for a click or touch without waiting for unblur to complete
   //--- BIG HAND IMG AS CUSTOM CURSOR
   if (deviceDetector.device == "desktop") {
-    main.classList.remove("defaultCursor"); main.classList.add("noCursor");
+    main.classList.remove("defaultCursor"); main.classList.add("noCursor"); // Unconditionally hide the custom arrow cursor
     handCursor.style.left = x +"px"; // x and y come from createAndHandleListenManyTimesBox in js_for_info_boxes_in_lessons
     handCursor.style.top = y +"px"; // x and y come from createAndHandleListenManyTimesBox in js_for_info_boxes_in_lessons
     document.body.appendChild(handCursor);
@@ -204,10 +159,10 @@ function vocabluaryBoxIsClosed(x,y) { // Will fire from within createAndHandleLi
       handCursor.style.top = event.clientY +"px";
       /*Left-Right limits*/
       if (event.clientX<10) { handCursor.style.visibility = "hidden"; }
-      else if (event.clientX >= 10 && event.clientX <= (lastRecordedWidth-10)) {        handCursor.style.visibility = "visible";      }
+      else if (event.clientX >= 10 && event.clientX <= (parent.lastRecordedWindowWidth-10)) {        handCursor.style.visibility = "visible";      }
       else {        handCursor.style.visibility = "hidden";      }
       /*top limit handled by mouseenter on sliding nav menu*/
-      if (event.clientY>(lastRecordedHeight-10)) { handCursor.style.display = "none"; }
+      if (event.clientY>(parent.lastRecordedWindowHeight-10)) { handCursor.style.display = "none"; }
       else {
         if (!mouseIsOnNavMenu) { handCursor.style.display = "block"; } // Works
       }
@@ -223,24 +178,24 @@ let to1,ticker1,ticker2,to2,to3,to4,to5,to6,to7,toDisplayHowToSwipe,to8,to9,to10
 let loopCounter=1; let waitTime = 0;
 function playPictogramLoop() { // Fires when blur has 55% cleared towards focus to open the scene
   let changeTime;  switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 2700; break;  case "fast": changeTime = 1200; break;  default: changeTime = 1900;  }
-  to1 = setTimeout(function(){
+  to1 = new SuperTimeout(function(){
     movingEyesDiv.style.left = "3.0%"; movingEyesDiv.style.top = "0.5%"; // Moving the eyes looks like rotating the head
     // NOTE: Element.children includes only element nodes (i.e. skips comments).
-    to2 = setTimeout(function(){
+    to2 = new SuperTimeout(function(){
       if (!skip_b_and_c) {
         pictogramDiv.children[0].style.display = "none"; // a- Natural standing
         pictogramDiv.children[1].style.display = "block"; // b- Pointing hand 1
         pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
         let pointCounter = 1;
-        ticker1 = setInterval(function () {
+        ticker1 = new SuperInterval(function () {
           if (pointCounter%3 != 0) {
             pictogramDiv.children[0].style.display = "none"; // a- Natural standing
             pictogramDiv.children[1].style.display = "block"; // b- Pointing hand 1
             pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
           }
         }, changeTime/5);
-        ticker2 = setInterval(function () {
-          to3 = setTimeout(function () {
+        ticker2 = new SuperInterval(function () {
+          to3 = new SuperTimeout(function () {
             if (pointCounter%4 != 0) {
               pictogramDiv.children[0].style.display = "none"; // a- Natural standing
               pictogramDiv.children[1].style.display = "none"; // b- Pointing hand 1
@@ -249,23 +204,23 @@ function playPictogramLoop() { // Fires when blur has 55% cleared towards focus 
           }, changeTime/12);
           pointCounter++;
         }, changeTime/5);
-        setTimeout(function () {
-          if (ticker1) { clearInterval(ticker1); }
-          if (ticker2) { clearInterval(ticker2); }
+        new SuperTimeout(function () {
+          if (ticker1) { ticker1.clear(); } // clearInterval(ticker1);
+          if (ticker2) { ticker2.clear(); } // clearInterval(ticker2);
         }, changeTime*1.6);
       } else {
         pictogramDiv.children[0].style.display = "block"; // a- Natural standing
         pictogramDiv.children[1].style.display = "none"; // b- Pointing hand 1
         pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
       }
-      to4 = setTimeout(function(){
+      to4 = new SuperTimeout(function(){
         movingEyesDiv.style.left = "0%"; movingEyesDiv.style.top = "0%"; // Look at the camera again
-        to5 = setTimeout(function(){
-          pictogramDiv.children[3].classList.add("fadeIn"); to6 = setTimeout(function(){ pictogramDiv.children[3].classList.remove("fadeIn"); },601); // Speech bubble 1 appears
+        to5 = new SuperTimeout(function(){
+          pictogramDiv.children[3].classList.add("fadeIn"); to6 = new SuperTimeout(function(){ pictogramDiv.children[3].classList.remove("fadeIn"); },601); // Speech bubble 1 appears
           pictogramDiv.children[3].style.display = "block"; // speech bubble with bread+hand
           injectTextIntoTheHelpBoxP.innerHTML = explanationA;
-          to7 = setTimeout(talk1,1000);
-          function talk1() { if (saySecondSet) {  say3.play();  } else {  say1.play();  } }
+          to7 = new SuperTimeout(talk1,1000);
+          function talk1() { if (isNowSayingTheSecondSet) {  say3.play();  } else {  say1.play();  } }
 
           // Show how to do SWIPE-DOWN gesture to mobile user » Only once in a session!
           if (deviceDetector.isMobile) {
@@ -274,15 +229,15 @@ function playPictogramLoop() { // Fires when blur has 55% cleared towards focus 
             if (sessionStorage.level114SwipeInstructionHasBeenDisplayedThreeTimes) { waitTime = 0; } // No instructions and no waiting » 4th lap and on
             else { // First three laps
               if (!userAlreadyKnowsHowToSwipe) { // Sets to true as soon as ~=75px swipe is accomplished
-                toDisplayHowToSwipe = setTimeout(displaySwipeInstruction, 4500); // After first say ,,, timeout clears if win1 happens
+                toDisplayHowToSwipe = new SuperTimeout(displaySwipeInstruction, 4500); // After first say ,,, timeout clears if win1 happens
                 function displaySwipeInstruction() {
                   document.body.appendChild(swipeInstructionPart1); // 9x50ms + 1x900ms + 4x350 + 1x99999 = 2750 + 99999
-                  setTimeout(function () {
+                  new SuperTimeout(function () {
                     document.body.removeChild(swipeInstructionPart1); resetWebp(swipeInstructionPart1); // resetWebp() is in js_for_every_single_html
                     document.body.appendChild(swipeInstructionPart2); //50ms x 14 frames = 700ms
-                    setTimeout(function () {
+                    new SuperTimeout(function () {
                       swipeInstructionPart2.classList.add("itDisappears"); //1500 ms
-                      setTimeout(function () { document.body.removeChild(swipeInstructionPart2); swipeInstructionPart2.classList.remove("itDisappears"); resetWebp(swipeInstructionPart2); }, 1501); // resetWebp() is in js_for_every_single_html
+                      new SuperTimeout(function () { document.body.removeChild(swipeInstructionPart2); swipeInstructionPart2.classList.remove("itDisappears"); resetWebp(swipeInstructionPart2); }, 1501); // resetWebp() is in js_for_every_single_html
                     }, changeTime+550);
                   }, changeTime+1600); // Just in case we decide that speedAdjustmentSetting should be available in mobile too (in the future) Until then it's 1900+1600=3500 fixed,,, 3500-2750=750ms stay time
                 }
@@ -294,24 +249,25 @@ function playPictogramLoop() { // Fires when blur has 55% cleared towards focus 
             } // END OF what to do on first three laps
           } else { waitTime = 0; } // Desktops show no drag instructions
 
-          to8 = setTimeout(function(){
+          to8 = new SuperTimeout(function(){
             pictogramDiv.children[3].style.display = "none"; // speech bubble with bread+hand
+            resetWebp(pictogramDiv.children[3]); // js_for_every_single_html
             pictogramDiv.children[4].style.display = "block"; // speech bubble with bread+[pull]arrow
 
-            to9 = setTimeout(talk2,1250);
-            function talk2() {   if (saySecondSet) {  say4.play();  } else {  say2.play();  }   }
+            to9 = new SuperTimeout(talk2,1250);
+            function talk2() {   if (isNowSayingTheSecondSet) {  say4.play();  } else {  say2.play();  }   }
 
-            to10 = setTimeout(function(){
+            to10 = new SuperTimeout(function(){
               pictogramDiv.children[4].classList.add("fadeOut"); // speech bubble disappears
-              to11 = setTimeout(function(){ pictogramDiv.children[4].classList.remove("fadeOut"); pictogramDiv.children[4].style.display = "none"; },601);
+              to11 = new SuperTimeout(function(){ pictogramDiv.children[4].classList.remove("fadeOut"); pictogramDiv.children[4].style.display = "none"; resetWebp(pictogramDiv.children[4]); },601);
               //---
-              to12 = setTimeout(function(){
+              to12 = new SuperTimeout(function(){
                 pictogramDiv.children[0].style.display = "block"; // a- Natural standing
                 pictogramDiv.children[1].style.display = "none"; // b- Pointing hand 1
                 pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
                 injectTextIntoTheHelpBoxP.innerHTML = "…";
-                to13 = setTimeout(function(){
-                  saySecondSet = !saySecondSet; // Toggle between first set of says and second set of says
+                to13 = new SuperTimeout(function(){
+                  isNowSayingTheSecondSet = !isNowSayingTheSecondSet; // Toggle between first set of says and second set of says
                   if (loopCounter<4) { playPictogramLoop(); } // Repeat limit: 4 times max
                   loopCounter++;
                 },(changeTime-400)); // back to start
@@ -367,14 +323,16 @@ function startTheGameA(event) { event.preventDefault(); event.stopPropagation();
   touchClickBreadSound.play(); // Crunch crisp
   if (canVibrate) { navigator.vibrate(10); } // Is there a desktop computer in the world that can vibrate?
   breadsFarAndNearDiv.classList.add("breadGlow");
-  setTimeout(function () { breadsFarAndNearDiv.classList.remove("breadGlow"); }, 3000);
+  new SuperTimeout(function () { breadsFarAndNearDiv.classList.remove("breadGlow"); }, 3000);
   // In case pictogram man was pointing to the bread when user clicked/touched
-  if (ticker1) { clearInterval(ticker1); } if (ticker2) { clearInterval(ticker2); } clearTimeout(to2); clearTimeout(to3);
+  if (ticker1) { ticker1.clear(); } if (ticker2) { ticker2.clear(); } /*clearInterval(ticker1);*/ /*clearInterval(ticker2);*/
+  if (to2) { to2.clear(); } // clearTimeout(to2);
+  if (to3) { to3.clear(); } // clearTimeout(to3);
   pictogramDiv.children[0].style.display = "block"; // a- Natural standing
   pictogramDiv.children[1].style.display = "none"; // b- Pointing hand 1
   pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
   skip_b_and_c = true; // Prevent pointing pose
-  timeoutHearSinewave = setTimeout(function () {
+  timeoutHearSinewave = new SuperTimeout(function () {
     gainNode.gain.value = parent.Howler.volume()/10; // Sine wave oscillator glitch-cracking gets worse with step by step fading
     sineWaveIsAudibleNow = true;
   }, 1300); // crunch:1280 + porcelain:1464
@@ -383,7 +341,7 @@ function startTheGameA(event) { event.preventDefault(); event.stopPropagation();
   if (deviceDetector.isMobile) {
     breadsFarAndNearDiv.style.transform = "translateY(-7.5vmin)";
     // Porcelain sound is heard without waiting for first little drag movement (unlike desktop)
-    setTimeout(function () { startDraggingBreadSound.play(); }, 250); // Note: user_contacts_bread is 1280ms long
+    new SuperTimeout(function () { startDraggingBreadSound.play(); }, 250); // Note: user_contacts_bread is 1280ms long
     // With stopPropagation we DON'T NEED parent.preventTouchConflictWithTheSlidingNavMenu(main); // Exists in js_for_the_sliding_navigation_menu
     lastY = event.touches[0].clientY;
     aGreaterTouchMoveArea.addEventListener("touchmove",updateTheBreadTaking);
@@ -395,7 +353,7 @@ function startTheGameA(event) { event.preventDefault(); event.stopPropagation();
     window.addEventListener("mousemove",updateTheBreadTaking);
     window.addEventListener("mouseup",handleLettingGoBeforeSuccess);
   }
-  timeoutCursorHide = setTimeout(function () { handCursor.style.marginTop = "-100vh"; },300); // NECESSARY: Must guarantee invisibility» even though it already disappears with opacity transition via event listeners added in vocabluaryBoxIsClosed()
+  timeoutCursorHide = new SuperTimeout(function () { handCursor.style.marginTop = "-100vh"; },300); // NECESSARY: Must guarantee invisibility» even though it already disappears with opacity transition via event listeners added in vocabularyBoxIsClosed()
 }
 let goodNumberInVhOrVmins=0;
 function updateTheBreadTaking(event) { // No need to stopPropagation of touchmove because sliding nav menu first requires touchstart on window (which is blocked by stopPropagation in startTheGameA)
@@ -404,14 +362,14 @@ function updateTheBreadTaking(event) { // No need to stopPropagation of touchmov
     deltaY = event.touches[0].clientY - lastY; // Downward movement yields positive values
 
     if (waitingForBreadDrag) {
-      setTimeout(function () {  if (canVibrate) { navigator.vibrate([12,110,7]); }  },100);
+      new SuperTimeout(function () {  if (canVibrate) { navigator.vibrate([12,110,7]); }  },100);
       waitingForBreadDrag = false;
     }
   } else {
     deltaY = event.clientY - lastY; // Downward movement yields positive values
     if (waitingForBreadDrag) {
       // Porcelain sound is heard after waiting for the first little drag movement (unlike mobile)
-      setTimeout(function () { startDraggingBreadSound.play(); }, 750); // Note: user_contacts_bread is 1280ms long
+      new SuperTimeout(function () { startDraggingBreadSound.play(); }, 750); // Note: user_contacts_bread is 1280ms long
       waitingForBreadDrag = false;
     }
   }
@@ -431,7 +389,7 @@ function updateTheBreadTaking(event) { // No need to stopPropagation of touchmov
     nearBreadOpacity = 1;
   }
 
-  goodNumberInVhOrVmins = Number((goodNumberInPixels*100/lastRecordedHeight).toFixed(2));
+  goodNumberInVhOrVmins = Number((goodNumberInPixels*100/parent.lastRecordedWindowHeight).toFixed(2));
 
   goodNumberInVhOrVmins = goodNumberInVhOrVmins/2;
   breadsFarAndNearDiv.children[0].style.marginTop = goodNumberInVhOrVmins + "vmin"; // children[1] is position relative so its marginTop will follow children[0] // Try vmin instead of vh
@@ -455,20 +413,24 @@ function updateTheBreadTaking(event) { // No need to stopPropagation of touchmov
       handCursor.parentNode.removeChild(handCursor); // Even though it was hidden with marginTop -100vh
     }
     say1.stop(); say2.stop(); say3.stop(); say4.stop();
-    clearTimeout(to1); clearTimeout(to2); clearTimeout(to3); clearTimeout(to4); clearTimeout(to5); clearTimeout(to6); clearTimeout(to7); clearTimeout(toDisplayHowToSwipe);
-    clearTimeout(to8); clearTimeout(to9); clearTimeout(to10); clearTimeout(to11); clearTimeout(to12); clearTimeout(to13);
-    if (ticker1) { clearInterval(ticker1); }
-    if (ticker2) { clearInterval(ticker2); }
+    /*clearTimeout(to1); clearTimeout(to2); clearTimeout(to3); clearTimeout(to4); clearTimeout(to5); clearTimeout(to6); clearTimeout(to7); clearTimeout(toDisplayHowToSwipe);
+    clearTimeout(to8); clearTimeout(to9); clearTimeout(to10); clearTimeout(to11); clearTimeout(to12); clearTimeout(to13);*/
+    if (to1) { to1.clear(); } if (to2) { to2.clear(); } if (to3) { to3.clear(); } if (to4) { to4.clear(); } if (to5) { to5.clear(); }
+    if (to6) { to6.clear(); } if (to7) { to7.clear(); } if (to8) { to8.clear(); } if (to9) { to9.clear(); } if (to10) { to10.clear(); }
+    if (to11) { to11.clear(); } if (to12) { to12.clear(); }  if (to13) { to13.clear(); }
+    if (toDisplayHowToSwipe) { toDisplayHowToSwipe.clear(); }
+    if (ticker1) { ticker1.clear(); } // clearInterval(ticker1);
+    if (ticker2) { ticker2.clear(); } // clearInterval(ticker2);
     injectTextIntoTheHelpBoxP.innerHTML = "…";
     whatToDoWhenBreadIsTaken();
   }
 }
 function handleLettingGoBeforeSuccess() { // Allow propagation in this case so that window touchend can lock screen orientation » See waitForFirstTouchOrClickOnBread()
-  setTimeout(function () {  if (canVibrate) { navigator.vibrate([13,90,10,110,7,130,5]); }  },30);
+  new SuperTimeout(function () {  if (canVibrate) { navigator.vibrate([13,90,10,110,7,130,5]); }  },30);
   waitingForBreadDrag = true;
   skip_b_and_c = false;
-  clearTimeout(timeoutCursorHide); // No need for if(timeoutCursorHide)
-  clearTimeout(timeoutHearSinewave);
+  timeoutCursorHide.clear(); // clearTimeout(timeoutCursorHide);
+  timeoutHearSinewave.clear(); // clearTimeout(timeoutHearSinewave);
   handCursor.style.marginTop = "0vh";
   //---
   if (deviceDetector.isMobile) {
@@ -484,12 +446,12 @@ function handleLettingGoBeforeSuccess() { // Allow propagation in this case so t
   breadsFarAndNearDiv.children[0].style.transform = "scale(100%)";
   breadsFarAndNearDiv.children[1].style.transform = "scale(33%)";
   breadsFarAndNearDiv.children[0].style.opacity = "1";
-  setTimeout(function () { breadsFarAndNearDiv.children[1].style.opacity = "0"; },500);
+  new SuperTimeout(function () { breadsFarAndNearDiv.children[1].style.opacity = "0"; },500);
   dimmer.style.opacity = "0";
   const lastFrequency = oscillator.frequency.value;
   let i=0;
   let newValue;
-  const subtractiveProcess = setInterval(function () {
+  const subtractiveProcess = new SuperInterval(function () {
     if (sineWaveIsAudibleNow) {
       newValue = lastFrequency-i*1.7;
       if (newValue<startingFrequency) { newValue = startingFrequency; } // limit
@@ -497,7 +459,7 @@ function handleLettingGoBeforeSuccess() { // Allow propagation in this case so t
       i++;
     }
   },10); // Fire 100 times within 1s
-  setTimeout(function () { clearInterval(subtractiveProcess); gainNode.gain.value = 0; sineWaveIsAudibleNow = false; oscillator.frequency.value = startingFrequency; waitForFirstTouchOrClickOnBread(); },1000);
+  new SuperTimeout(function () { subtractiveProcess.clear(); /*clearInterval(subtractiveProcess);*/ gainNode.gain.value = 0; sineWaveIsAudibleNow = false; oscillator.frequency.value = startingFrequency; waitForFirstTouchOrClickOnBread(); },1000);
   // Sine wave oscillator glitch-cracking gets worse with fade
 }
 
@@ -508,28 +470,32 @@ function whatToDoWhenBreadIsTaken() {
   // brightness-bread-flash-blink
   breadsFarAndNearDiv.children[1].classList.add("flashBlinkingBread");
   // Play grabbing the bread webp
-  setTimeout(function () {
+  new SuperTimeout(function () {
     breadsFarAndNearDiv.children[0].style.visibility = "hidden"; // Don't use display none because position relative needs the occupied space
     breadsFarAndNearDiv.children[1].style.visibility = "hidden"; // Don't use display none because position relative needs the occupied space
     breadsFarAndNearDiv.children[2].style.display = "block";
     breadsFarAndNearDiv.children[2].classList.add("getExtraLarge"); // getExtraLarge
   },1250);
   // Sounds
-  setTimeout(function () {  if (canVibrate) { navigator.vibrate([15,150,50]); }  },350);
-  setTimeout(function () { winSound1.play(); },500);
-  setTimeout(function () { gainNode.disconnect(audioCtx.destination); sineWaveIsAudibleNow = false; },2010);
+  new SuperTimeout(function () {  if (canVibrate) { navigator.vibrate([15,150,50]); }  },350);
+  new SuperTimeout(function () { winSound1.play(); },500);
+  new SuperTimeout(function () { gainNode.disconnect(audioCtx.destination); sineWaveIsAudibleNow = false; },2010);
   // Separate foreground from background with a drop-shadow
-  setTimeout(function () {
+  new SuperTimeout(function () {
     breadsFarAndNearDiv.classList.add("breadHeldInHandsDropShadow");
   }, 600);
-  // Cursor
-  if (deviceDetector.device == "desktop") {
-    setTimeout(function () { main.classList.remove("noCursor"); main.classList.add("defaultCursor"); },1500); // Bring cursor back,,, make it visible again
-  } else {
 
-  }
+  // Cursor
+
+  if (deviceDetector.device == "desktop") {
+    new SuperTimeout(function () {
+      // UNNECESSARY WITH THE NEW METHOD main.classList.remove("noCursor"); main.classList.add("defaultCursor");
+      hideTheCursorAndHandleAutoUnhideAutoHide(); // js_for_all_iframed_lesson_htmls
+    },1500); // Bring cursor back,,, make it visible again
+  } else {  }
+
   // Pictogram happy eyes
-  setTimeout(function () {
+  new SuperTimeout(function () {
     pictogramDiv.children[1].style.display = "none"; // state b
     pictogramDiv.children[2].style.display = "none"; // state c
     pictogramDiv.children[3].style.display = "none"; // speech bubble (hand + bread)
@@ -537,49 +503,49 @@ function whatToDoWhenBreadIsTaken() {
     pictogramDiv.children[0].style.display = "block"; // state a
     // Either reset "eyes" if were looking away
     movingEyesDiv.style.left = "0%"; movingEyesDiv.style.top = "0%"; // Look at the camera
-    setTimeout(function () {
+    new SuperTimeout(function () {
       movingEyesDiv.children[0].style.display = "none"; movingEyesDiv.children[1].style.display = "block"; // big happy eyes
     }, 200);
   },100);
 
   let changeTime;  switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 6000; break;  case "fast": changeTime = 3000; break;  default: changeTime = 4500;  }
   // Pictogram normal eyes
-  setTimeout(function () {
+  new SuperTimeout(function () {
     movingEyesDiv.children[1].style.display = "none";
     movingEyesDiv.children[0].style.display = "block"; // back to natural blinking eyes
   },changeTime+500);
 
   // Show pacman
-  setTimeout(function () {
-    pictogramDiv.children[5].classList.add("fadeIn"); to14 = setTimeout(function(){ pictogramDiv.children[5].classList.remove("fadeIn"); },601); // Speech bubble 3 appears
+  new SuperTimeout(function () {
+    pictogramDiv.children[5].classList.add("fadeIn"); to14 = new SuperTimeout(function(){ pictogramDiv.children[5].classList.remove("fadeIn"); },601); // Speech bubble 3 appears
     pictogramDiv.children[5].style.display = "block"; // speech bubble PACMAN eating
     startTalkingAgain();
     startTheGameB();
     injectTextIntoTheHelpBoxP.innerHTML = explanationB;
   },1500+changeTime);
 
-  // setInterval doesn't work for updating changeTime because timeouts get set only once when startTalkingAgain() fires
+  // set-Interval doesn't work for updating changeTime because timeouts get set only once when startTalkingAgain() fires
   let lapNumberOfLoop = 1;
   function startTalkingAgain() {
     if (lapNumberOfLoop>3) {    return;   } // Stop talking after 3 laps
     switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 6000; break;  case "fast": changeTime = 3000; break;  default: changeTime = 4500;  } // In case desktop user moves the slider to adjust speed setting
-    to15 = setTimeout(function () { say5.play(); },1000); // Eat
-    to16 = setTimeout(function () { say6.play(); },1000+changeTime); // Eat bread
+    to15 = new SuperTimeout(function () { say5.play(); },1000); // Eat
+    to16 = new SuperTimeout(function () { say6.play(); },1000+changeTime); // Eat bread
     if (lapNumberOfLoop == 1) { // First lap
-      to19 = setTimeout(function () { showHowToBite(); },1500+changeTime*1.5); // Show how to play BITE game » About 9s
-      to17 = setTimeout(function () { say7.play(); },6000+changeTime*2); // Eat (slow)
-      to18 = setTimeout(function () { say8.play(); },6000+changeTime*3); // Eat bread (slow)
-      to20 = setTimeout(function () { startTalkingAgain(); },6000+changeTime*4); // and restart
+      to19 = new SuperTimeout(function () { showHowToBite(); },1500+changeTime*1.5); // Show how to play BITE game » About 9s
+      to17 = new SuperTimeout(function () { say7.play(); },6000+changeTime*2); // Eat (slow)
+      to18 = new SuperTimeout(function () { say8.play(); },6000+changeTime*3); // Eat bread (slow)
+      to20 = new SuperTimeout(function () { startTalkingAgain(); },6000+changeTime*4); // and restart
     } else if(lapNumberOfLoop == 2) { // Second lap
-      to19 = setTimeout(function () { showHowToBite(); },1000+changeTime*1.5); // Show how to play BITE game » About 9s
-      to17 = setTimeout(function () { say7.play(); },1000+changeTime*2); // Eat (slow)
-      to18 = setTimeout(function () { say8.play(); },1000+changeTime*3); // Eat bread (slow)
-      to20 = setTimeout(function () { startTalkingAgain(); },1000+changeTime*4); // Restart
+      to19 = new SuperTimeout(function () { showHowToBite(); },1000+changeTime*1.5); // Show how to play BITE game » About 9s
+      to17 = new SuperTimeout(function () { say7.play(); },1000+changeTime*2); // Eat (slow)
+      to18 = new SuperTimeout(function () { say8.play(); },1000+changeTime*3); // Eat bread (slow)
+      to20 = new SuperTimeout(function () { startTalkingAgain(); },1000+changeTime*4); // Restart
     } else { // Third (final) lap
-      to19 = setTimeout(function () { showHowToBite(); },1000+changeTime*1.5); // Show how to play BITE game » About 9s
-      to17 = setTimeout(function () { say7.play(); },1000+changeTime*2); // Eat (slow)
-      to18 = setTimeout(function () { say8.play(); },1000+changeTime*3); // Eat bread (slow)
-      to20 = setTimeout(function () { startTalkingAgain(); },1000+changeTime*4); // Restart
+      to19 = new SuperTimeout(function () { showHowToBite(); },1000+changeTime*1.5); // Show how to play BITE game » About 9s
+      to17 = new SuperTimeout(function () { say7.play(); },1000+changeTime*2); // Eat (slow)
+      to18 = new SuperTimeout(function () { say8.play(); },1000+changeTime*3); // Eat bread (slow)
+      to20 = new SuperTimeout(function () { startTalkingAgain(); },1000+changeTime*4); // Restart
     }
     lapNumberOfLoop++;
   }
@@ -591,29 +557,31 @@ function whatToDoWhenBreadIsTaken() {
     if (deviceDetector.isMobile) { // MOBILE - MOBILE - MOBILE
       if (noBiteAttemptHasHappenedSoFar) {
           document.body.appendChild(pinchInstruction); //10x70ms + 1x500ms + 13x70ms + 99999 = 2180ms + 99999
-          setTimeout(function () {
+          new SuperTimeout(function () {
             pinchInstruction.classList.add("itDisappears"); //1500 ms
-            setTimeout(function () { document.body.removeChild(pinchInstruction); pinchInstruction.classList.remove("itDisappears"); resetWebp(pinchInstruction); }, 1501);
+            new SuperTimeout(function () { document.body.removeChild(pinchInstruction); pinchInstruction.classList.remove("itDisappears"); resetWebp(pinchInstruction); }, 1501);
           }, showTime+2400); // Just in case we decide that speedAdjustmentSetting should be available in mobile too (wrt possibility in the future)
       }
     } else { // DESKTOP - DESKTOP - DESKTOP
       if (noBiteAttemptHasHappenedSoFar) {
         document.body.appendChild(keyboardInstructionPart1); // 10x50ms = 500ms fade in
-        clearIfInstructionShouldNotBeSeen = setTimeout(function () {
+        clearIfInstructionShouldNotBeSeen = new SuperTimeout(function () {
           if (document.body.contains(keyboardInstructionPart1)) {
             document.body.removeChild(keyboardInstructionPart1); resetWebp(keyboardInstructionPart1);
             document.body.appendChild(keyboardInstructionPart2); // 400+400+400+400+ 8*250 + 999999 = 3600(animation) + stay + fade(1500)
           }
-          setTimeout(function () {
+          new SuperTimeout(function () {
             if (document.body.contains(keyboardInstructionPart2)) {
               keyboardInstructionPart2.classList.add("itDisappears"); //1500 ms
-              setTimeout(function () { document.body.removeChild(keyboardInstructionPart2); keyboardInstructionPart2.classList.remove("itDisappears"); resetWebp(keyboardInstructionPart2); }, 1501);
+              // FOR SOME REASON the following line throws an error which says »»» DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+              //// INSTEAD OF THIS TRY THE FOLLOWING set-Timeout(function () { document.body.removeChild(keyboardInstructionPart2); keyboardInstructionPart2.classList.remove("itDisappears"); resetWebp(keyboardInstructionPart2); }, 1501);
+              new SuperTimeout(function () { keyboardInstructionPart2.classList.remove("itDisappears"); resetWebp(keyboardInstructionPart2); keyboardInstructionPart2.remove(); }, 1501);
             }
           }, showTime+4000); // ARROW KEYS WEBP starts fading to nothingness in 1800+4000 = 5800,,, 5800-3600 = 2200 last frame stay time at normal speed
         }, showTime); // From whole keyboard webp to ARROW KEYS WEBP
       }
     }
-  }
+  } // End of showHowToBite
 
   function startTheGameB() {
     upperTeeth.style.visibility = "visible";
@@ -633,10 +601,8 @@ let downArrowIsAlreadyPressed = false;
 let countDownToValidifyTheBite;
 let win2HasHappened = false;
 let howManyBitesNow = 0;
-////let isKeyboardGameRunning = false;
 function activateInteractionDESKTOP() {
   // Get ready to detect if keyboard is active(usable) or not
-  ////isKeyboardGameRunning = true;
   window.addEventListener("blur",frameIsBlurred);
   window.addEventListener("focus",frameIsFocused);
   parent.window.addEventListener("blur",parentIsBlurred);
@@ -646,28 +612,25 @@ function activateInteractionDESKTOP() {
   window.addEventListener("keydown",aKeyWasPressed);
   parent.window.addEventListener("keyup",aKeyWasReleased);
   window.addEventListener("keyup",aKeyWasReleased);
-  let countDownUntilCursorReappear;
-  function aKeyWasPressed(event) { // event.key respects OS keyboard type settings ,,, event.code ignores OS and returns QWERTY
-    if (!downArrowIsAlreadyPressed) {
+  // DEPRECATE let countDownUntilCursorReappear;
+  function aKeyWasPressed(event) { event.preventDefault(); // We need this to prevent volume range slider movement
+    // event.key respects OS keyboard type settings ,,, event.code ignores OS and returns QWERTY
+    if (!downArrowIsAlreadyPressed && !parent.theAppIsPaused) { // See js_for_the_sliding_navigation_menu
       if (event.key == "ArrowDown" || event.code == "ArrowDown") {
-
-        main.classList.remove("defaultCursor"); main.classList.add("noCursor"); // Hide the cursor
-        if (countDownUntilCursorReappear) { clearTimeout(countDownUntilCursorReappear); } // Reset timer
-        countDownUntilCursorReappear = setTimeout(function () { main.classList.remove("noCursor");  main.classList.add("defaultCursor"); }, 4000);
+        main.classList.remove("defaultCursor"); main.classList.add("noCursor"); // Immediately hide cursor in case it was visible due to hideTheCursorAndHandleAutoUnhideAutoHide
+        /* DEPRECATE
+        if (countDownUntilCursorReappear) { countDownUntilCursorReappear.clear(); } // Reset timer // clearTimeout(countDownUntilCursorReappear);
+        countDownUntilCursorReappear = new SuperTimeout(function () { main.classList.remove("noCursor");  main.classList.add("defaultCursor"); }, 4000);
+        */
         noBiteAttemptHasHappenedSoFar = false;
-
-        ////if (noBiteAttemptHasHappenedSoFar) {
-        ////  desktopUserAlreadyKnowsHowToBite = true; console.log("cancel keyboard instruction");
-        ////   // So that this if block will execute only once
-        ////}
-
-        if (clearIfInstructionShouldNotBeSeen) { clearTimeout(clearIfInstructionShouldNotBeSeen); }
+        // --
+        if (clearIfInstructionShouldNotBeSeen) { clearIfInstructionShouldNotBeSeen.clear(); } // clearTimeout(clearIfInstructionShouldNotBeSeen);
         if (document.body.contains(keyboardInstructionPart1)) { document.body.removeChild(keyboardInstructionPart1); }
         if (document.body.contains(keyboardInstructionPart2)) { document.body.removeChild(keyboardInstructionPart2); }
-
+        // --
         bitingSound0.play();
         downArrowIsAlreadyPressed = true;
-        countDownToValidifyTheBite = setTimeout(function () {
+        countDownToValidifyTheBite = new SuperTimeout(function () {
           countBitesAndMakeProgress();
         }, 111); // It takes 0.1s to complete teethContainer transition top in css
         letTheTeethSinkIntoBread();
@@ -675,17 +638,17 @@ function activateInteractionDESKTOP() {
       }
     }
   }
-  function aKeyWasReleased(event) {
-    if (downArrowIsAlreadyPressed) {
+  function aKeyWasReleased(event) { event.preventDefault(); // We need this to prevent volume range slider movement
+    if (downArrowIsAlreadyPressed && !parent.theAppIsPaused) { // See js_for_the_sliding_navigation_menu
       if (event.key == "ArrowDown" || event.code == "ArrowDown") {
         downArrowIsAlreadyPressed = false;
-        clearTimeout(countDownToValidifyTheBite);
+        countDownToValidifyTheBite.clear(); // clearTimeout(countDownToValidifyTheBite);
         reopenTheMouth();
         if (win2HasHappened) {
           removeKeyboardListeners();
           // Remove teeth against the possibility of window resize firing (which makes them show)
-          setTimeout(function () { upperTeeth.parentNode.removeChild(upperTeeth); lowerTeeth.parentNode.removeChild(lowerTeeth); }, 1000);
-          setTimeout(function () { finalSuccessSound.play(); finalEyeBlink(); }, 800); // See fastBiteSlowBiteToggle 750ms
+          new SuperTimeout(function () { upperTeeth.parentNode.removeChild(upperTeeth); lowerTeeth.parentNode.removeChild(lowerTeeth); }, 1000);
+          new SuperTimeout(function () { finalSuccessSound.play(); finalEyeBlink(); }, 800); // See fastBiteSlowBiteToggle 750ms
         }
       }
     }
@@ -703,19 +666,14 @@ function activateInteractionDESKTOP() {
   function parentIsFocused() {  isParentBlurred = false; checkBothBlurs();  }
   function checkBothBlurs() {
     if (!win2HasHappened) {
-      setTimeout(function () {
+      new SuperTimeout(function () {
         if (isParentBlurred && isFrameBlurred) { // grey out if both are blurred
           main.classList.remove("colorBack"); main.classList.add("grayAway"); // css_for_every_single_html
           parent.containerDivOfTheNavigationMenu.classList.remove("colorBack"); parent.containerDivOfTheNavigationMenu.classList.add("grayAway");
-          main.classList.remove("noCursor");  main.classList.add("defaultCursor");
+          // UNNECESSARY WITH THE NEW METHOD main.classList.remove("noCursor");  main.classList.add("defaultCursor");
         } else { // color back in all other cases
           main.classList.remove("grayAway");  main.classList.add("colorBack"); // css_for_every_single_html
           parent.containerDivOfTheNavigationMenu.classList.remove("grayAway"); parent.containerDivOfTheNavigationMenu.classList.add("colorBack");
-          ////if (noBiteAttemptHasHappenedSoFar) {
-          ////  // Don't hide the cursor
-          ////} else { // Wait! we must let it be visible until keyboard is used again
-          ////  setTimeout(function () { main.classList.remove("defaultCursor"); main.classList.add("noCursor"); }, 500);
-          ////}
         }
       }, 30);
     }
@@ -728,11 +686,14 @@ function activateInteractionDESKTOP() {
 let initialDistance = 0; let newDistance = 0; let movement = 0;
 let biteThresholdIsPassed = false;
 function activateInteractionMOBILE() {
-  /* Use stopPropagation to block touchlistener on window element which triggers the sliding nav menu
-  document.body.addEventListener("touchstart",preventTouchConflict); // Would it better to listen on parent.window???
-  function preventTouchConflict() { // Works 90% of the time  »  WHY?
-    //parent.preventTouchConflictWithTheSlidingNavMenu(document.body); // Exists in js_for_the_sliding_navigation_menu
-  }*/
+  // EVEN THOUGH: We are using stopPropagation to block touchlistener on window element which triggers the sliding nav menu
+  // GET EXTRA-SAFE: by preventing all accidental swipe menu triggerings
+  if (parent.topContainerDivOfTheSlidingNavMenuForMobiles) { // Check if it exists like this or use deviceDetector.isMobile
+    parent.topContainerDivOfTheSlidingNavMenuForMobiles.style.visibility = "hidden";
+    // It will be set to visible either when win2 happens below
+    // or via js_for_all_iframed_lesson_htmls if user leaves the lesson before win2 happens
+  }
+  // ---
   thePinchArea.style.display = "block";
   thePinchArea.addEventListener("touchstart",handlePinchStartPinchEnd);
   thePinchArea.addEventListener("touchend",handlePinchStartPinchEnd);
@@ -768,19 +729,19 @@ function activateInteractionMOBILE() {
       biteThresholdIsPassed = true;
       removeTouchListeners();
       if (document.body.contains(pinchInstruction)) {
-        pinchInstruction.style.display = "none"; // Don't use removeChild here because there is a removeChild inside setTimeout already and it will fire shortly
+        pinchInstruction.style.display = "none"; // Don't use removeChild here because there is a removeChild inside set-Timeout already and it will fire shortly
       }
       // To full bite
       letTheTeethSinkIntoBread();
-      setTimeout(function () {
+      new SuperTimeout(function () {
         // play completeBite1 completeBite2 completeBite3
         // console.log("WELL BIT");
         countBitesAndMakeProgress();
       }, 111); // It takes 0.1s to complete teethContainer transition top in css
 
-      setTimeout(function () {
+      new SuperTimeout(function () {
         reopenTheMouth(); // 2-After 500ms or so, slowly open the mouth » takes 0.75s in css
-        setTimeout(function () {
+        new SuperTimeout(function () {
           if (!win2HasHappened) {
             thePinchArea.addEventListener("touchstart",handlePinchStartPinchEnd);
             thePinchArea.addEventListener("touchend",handlePinchStartPinchEnd);
@@ -802,25 +763,26 @@ function countBitesAndMakeProgress() {
   if (howManyBitesNow == 0) {
     breadsFarAndNearDiv.children[2].style.visibility = "hidden";
     breadsFarAndNearDiv.children[3].style.display = "block";
-    setTimeout(function () { bitingSound1.play(); }, 30); // Fine-tune the timing
+    new SuperTimeout(function () { bitingSound1.play(); }, 30); // Fine-tune the timing
     if (canVibrate) { navigator.vibrate([10,50,40,100,20,150,12,200,8]); }
     // stop all audio inside startTalkingAgain
-    clearTimeout(to15); clearTimeout(to16); clearTimeout(to17); clearTimeout(to18); clearTimeout(to19); clearTimeout(to20);
+    /*clearTimeout(to15); clearTimeout(to16); clearTimeout(to17); clearTimeout(to18); clearTimeout(to19); clearTimeout(to20);*/
+    to15.clear();  to16.clear();  to17.clear();  to18.clear();  to19.clear();  to20.clear();
     injectTextIntoTheHelpBoxP.innerHTML = "…"; // Remove text from translation helpbox|subtitles
   } else if (howManyBitesNow == 1) {
     breadsFarAndNearDiv.children[3].style.visibility = "hidden";
     breadsFarAndNearDiv.children[4].style.display = "block";
-    setTimeout(function () { bitingSound2.play(); }, 30); // Fine-tune the timing
+    new SuperTimeout(function () { bitingSound2.play(); }, 30); // Fine-tune the timing
     if (canVibrate) { navigator.vibrate([10,50,40,100,20,150,12,200,8]); }
   } else if (howManyBitesNow == 2) {
     breadsFarAndNearDiv.children[4].style.visibility = "hidden";
     breadsFarAndNearDiv.children[5].style.display = "block"; // Three bite marks on bread
-    setTimeout(function () { bitingSound3.play(); }, 30); // Fine-tune the timing
+    new SuperTimeout(function () { bitingSound3.play(); }, 30); // Fine-tune the timing
     if (canVibrate) { navigator.vibrate([10,50,40,100,20,150,13,200,11,250,9,300,7]); }
     // WIN
     win2HasHappened = true; // So that we can remove keyboard listeners via aKeyWasReleased
     if (deviceDetector.isMobile) {
-      setTimeout(function () { upperTeeth.parentNode.removeChild(upperTeeth); lowerTeeth.parentNode.removeChild(lowerTeeth); }, 1500);
+      new SuperTimeout(function () { upperTeeth.parentNode.removeChild(upperTeeth); lowerTeeth.parentNode.removeChild(lowerTeeth); }, 1500);
     } else {
       // On desktop it must wait until keyup » See aKeyWasReleased()
     }
@@ -838,13 +800,13 @@ function resetMouthWithoutBite() {
 
 function letTheTeethSinkIntoBread() {
 
-  if (lastRecordedWidth >= lastRecordedHeight) { // LANDSCAPE - Use calc to get as accurate and nice as possible
-    ////const moveThisMuch = (lastRecordedWidth - lastRecordedHeight)*2/lastRecordedHeight;
+  if (parent.lastRecordedWindowWidth >= parent.lastRecordedWindowHeight) { // LANDSCAPE - Use calc to get as accurate and nice as possible
+    ////const moveThisMuch = (parent.lastRecordedWindowWidth - parent.lastRecordedWindowHeight)*2/parent.lastRecordedWindowHeight;
     //console.log(goodNumberInVhOrVmins);
     upperTeeth.style.top = "calc(0vh - "+(37-goodNumberInVhOrVmins/4).toFixed(1)+"vmin)";
     lowerTeeth.style.top = "calc(100vh - "+(37-goodNumberInVhOrVmins/4).toFixed(1)+"vmin)";
   } else { // PORTRAIT - Use calc to try and get a bit more accurate
-    ////const moveThisMuch = 0;//(lastRecordedHeight - lastRecordedWidth)/lastRecordedWidth;
+    ////const moveThisMuch = 0;//(parent.lastRecordedWindowHeight - parent.lastRecordedWindowWidth)/parent.lastRecordedWindowWidth;
     //console.log(goodNumberInVhOrVmins);
     upperTeeth.style.top = "calc(0vh - "+(35+8.6+goodNumberInVhOrVmins/4).toFixed(1)+"vmin)";
     lowerTeeth.style.top = "calc(100vh - "+(35+8.6+goodNumberInVhOrVmins/4).toFixed(1)+"vmin)";
@@ -855,11 +817,11 @@ function letTheTeethSinkIntoBread() {
     bitingSound0.play(); // On desktops it plays as soon as down arrow is pressed on keyboard
     upperTeeth.style.transform = "translateY(-8vmin)";
     lowerTeeth.style.transform = "translateY(-8vmin)";
-    setTimeout(function () {
+    new SuperTimeout(function () {
       upperTeeth.style.transform = "translateY(-7vmin)";
       lowerTeeth.style.transform = "translateY(-7vmin)";
     }, 200);
-    setTimeout(function () {
+    new SuperTimeout(function () {
       upperTeeth.style.transform = "translateY(-7.5vmin)";
       lowerTeeth.style.transform = "translateY(-7.5vmin)";
     }, 400);
@@ -881,42 +843,78 @@ function finalEyeBlink() {
     movingEyesDiv.children[0].style.display = "none"; // To asian smiling eyes
     movingEyesDiv.children[1].style.display = "none"; // To asian smiling eyes
     movingEyesDiv.children[2].style.display = "block"; // To asian smiling eyes
-    setTimeout(function () {
+    new SuperTimeout(function () {
       movingEyesDiv.children[2].style.display = "none"; movingEyesDiv.children[1].style.display = "block"; // To big happy eyes
-      setTimeout(function () {
+      new SuperTimeout(function () {
         movingEyesDiv.children[1].style.display = "none"; movingEyesDiv.children[2].style.display = "block"; // To asian smiling eyes
-        setTimeout(function () {
+        new SuperTimeout(function () {
           movingEyesDiv.children[2].style.display = "none"; movingEyesDiv.children[1].style.display = "block"; // To big happy eyes
         }, 250); // Stay closed
       }, 600); // Stay open
     }, 1700); // Stay closed before open
 }
-
+// ---
+// ---
 function whenWin2happens() {
-
   if (deviceDetector.isMobile) {
-    setTimeout(function () { finalSuccessSound.play(); finalEyeBlink(); }, 1500); // Sync with vibration
+    new SuperTimeout(function () {    finalSuccessSound.play(); finalEyeBlink();    }, 1500); // Sync with vibration
+    setTimeout(function () { // Unblock swipe menu
+      if (parent.topContainerDivOfTheSlidingNavMenuForMobiles) { // Check if it exists like this or use deviceDetector.isMobile
+        parent.topContainerDivOfTheSlidingNavMenuForMobiles.style.visibility = "visible"; // As it was hidden by activateInteractionMOBILE
+      }
+    },3500);
   } else {
     // On desktops we must wait for keyup before playing finalSuccessSound » See aKeyWasReleased
-    setTimeout(function () { main.classList.remove("noCursor"); main.classList.add("defaultCursor"); },3000); // Unhide cursor once again
+    // --
+    // Unhide cursor as it was in auto-hide mode due to hideTheCursorAndHandleAutoUnhideAutoHide
+    new SuperTimeout(function () { main.classList.remove("noCursor"); main.classList.add("defaultCursor"); },4000);
   }
-
+  // --
   pictogramDiv.children[5].classList.add("fadeOut"); // speech bubble disappears
-  setTimeout(function(){ pictogramDiv.children[5].style.display = "none"; },601);
-
-  let endTime;
-  switch (parent.speedAdjustmentSetting) { case "slow": endTime = 9500; break;    case "fast": endTime = 4500; break;    default: endTime = 7000; }
-  setTimeout(function () {
-    showPreloaderBeforeExit(); // 1500ms » See js_for_all_iframed_lesson_htmls AND See css_for_preloader_and_orbiting_circles
-    if (localStorage.breadBakedByAuthorNoticeHasBeenDisplayedAlready) {
-      setTimeout(function () {   parent.ayFreym.src = "/lessons_in_iframes/level_1/unit_2/lesson_1/index.html";   }, 1500);
+  new SuperTimeout(function(){ pictogramDiv.children[5].style.display = "none"; },601);
+  // --
+  let proceedTime;
+  switch (parent.speedAdjustmentSetting) { case "slow": proceedTime = 8500; break;    case "fast": proceedTime = 5500; break;    default: proceedTime = 7000; }
+  new SuperTimeout(function () {
+    if (couldYouFigureOutHowToSayEat.length > 2) { // This means fetch successfully got the text
+      createAndHandleInfoBoxType1AmidLesson(); putNotificationTxtIntoThisP2.innerHTML = couldYouFigureOutHowToSayEat;
+      // continueLesson() will be fired from within createAndHandleInfoBoxType1AmidLesson()
     } else {
-      setTimeout(function () {   parent.ayFreym.src = "/lessons_in_iframes/level_1/unit_1/notice_0/index.html";   }, 1500);
+      continueLesson();
     }
-  }, endTime);
+  }, proceedTime);
+}
+
+function continueLesson() {
+
   /* Save progress */
   parent.savedProgress[studiedLang].lesson_TAKEBREAD_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
   parent.saveJSON = JSON.stringify(parent.savedProgress); // Convert
   localStorage.setItem("memoryCard", parent.saveJSON); // Save
+  // ---
+  let endTime;
+  switch (parent.speedAdjustmentSetting) { case "slow": endTime = 2500; break;    case "fast": endTime = 500; break;    default: endTime = 1500; }
+  new SuperTimeout(function () {
+    // ---
+    showGlobyPreloaderBeforeExit(); // 1500ms » See js_for_all_iframed_lesson_htmls AND See css_for_preloader_and_orbiting_circles
+    // REMEMBER: iframe.src change makes window.onbeforeunload fire in js_for_all_iframed_lesson_htmls.js which then calls unloadTheSoundsOfThisLesson();
+    // Display author's notice1 if this was user's first time finishing this lesson (1-1-4)
+    // Otherwise go to lesson 1-2-1
+    if (localStorage.breadBakedByAuthorNoticeHasBeenDisplayedAlready) { // See notice_1/index.html
+      parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost = "/lessons_in_iframes/level_1/unit_2/lesson_1/index.html"; // See js_for_online_and_offline_modes
+    } else {
+      parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost = "/lessons_in_iframes/level_1/unit_1/notice_1/index.html"; // See js_for_online_and_offline_modes
+    }
+    // ---
+    if (parent.internetConnectivityIsNiceAndUsable) { // See js_for_online_and_offline_modes.js
+      new SuperTimeout(function () { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
+    } else { parent.console.warn("THE DEVICE IS OFFLINE (detected at the end of lesson");
+      const isCached = checkIfNextLessonIsCachedAndRedirectIfNot(121); // See js_for_all_iframed_lesson_htmls
+      if (isCached) { console.warn("WILL TRY TO CONTINUE OFFLINE");
+        new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
+      }
+    }
+    // ---
+  }, endTime); // If there was a final dialog box then better let it disappear completely before preloader starts appearing
 
-}
+} // END OF continueLesson

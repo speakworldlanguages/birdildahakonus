@@ -22,8 +22,11 @@ self.addEventListener("activate", event => {
 // Maybe we should introduce a delay or a condition so that dynamic caching will start only after static caching is done and ready
 
 // Intervene normal fetch and see if a needed file already exists in the cache
-// In what case does the browser not do this automatically?
-// Is this only to try and keep things going even if the device is offline
+// The browser actually does this automatically
+// Which means if all files for a lesson (or the progress_chart) are cached,
+// then the browser (or at least Chrome) successfully displays everything even if the device is offline
+// and even if a service worker is not registered
+// Still, we make the service worker intervene in case some weird browser won't do it automatically » As of 2023 cannot afford to test every single browser
 self.addEventListener("fetch", event => {
   event.respondWith( caches.match(event.request).then( cachedResponse => {   return cachedResponse || fetch(event.request);   } )  );
 });

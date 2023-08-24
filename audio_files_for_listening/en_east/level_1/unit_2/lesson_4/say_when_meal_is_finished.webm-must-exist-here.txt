@@ -1,0 +1,2 @@
+say_when_meal_is_finished.webm must exist in this folder even though there is no such culture in the given language.
+In that case just provide a an audio file with pure silence.

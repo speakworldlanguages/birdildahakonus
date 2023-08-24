@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 /*
 function preventIconAndTitleAnimation() { // Usable in case it becomes necessary
@@ -9,6 +9,10 @@ function preventIconAndTitleAnimation() { // Usable in case it becomes necessary
 }
 */
 
+// NOTE: DOMContentLoaded is or can be too early for deviceDetector at parent level
+var iFrameInTitleAnimation = document.getElementsByTagName('IFRAME')[0]; // Used to be getElementById('theIdOfTheIframe'); // Access to ayFreym from » progress.js, js_for_different_browsers_and_devices, js_for_the_sliding_navigation_menu
+var iFrameDocumentInTitleAnimation = iFrameInTitleAnimation.contentDocument;
+
 // Dynamic titles are cool!
 window.addEventListener("load",dynamicTitleF,{once:true});
 let theTickerThatChangesTheTitle;
@@ -16,10 +20,8 @@ const theParentHtmlTitle = document.title;
 function dynamicTitleF() {
   theTickerThatChangesTheTitle = setInterval( function ()
   {
-    if (ayFreym.contentWindow.document.title) {
-      document.title = ayFreym.contentWindow.document.title;
-    }
-    setTimeout( function ()  {   document.title = theParentHtmlTitle;   },3000);
+    if (iFrameDocumentInTitleAnimation.title) {  document.title = iFrameDocumentInTitleAnimation.title;  }
+    setTimeout( function () {  document.title = theParentHtmlTitle;  },3000);
   } , 6000);
 }
 

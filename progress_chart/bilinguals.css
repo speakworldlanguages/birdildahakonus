@@ -2,7 +2,9 @@
 
 .containerOfBilingualLongButtonMOBILE{
   position:fixed; z-index:2; left: 50%; transform: translateX(-50%) translateY(50%); /*translateY is needed to center its collapsing origin*/
-  bottom: calc(33px + 5vmin); /*The height of the thing depends on 3satır*fontsize(18) + 2*padding(5) + 2*border(1) = 66px*/
+  /*The height of the thing depends on 3satır*fontsize(18) + 2*padding(5) + 2*border(1) = 66px*/
+  /*Because 33px is half of 66px*/
+  /*LET IT DEPEND ON ORIENTATION: bottom: calc(33px + 5vmin);*/
   display: flex; justify-content: center; align-items: stretch;
 }
 .containerOfBilingualLongButtonDESKTOP{
@@ -21,16 +23,27 @@
 }
 
 @media (orientation:portrait) {
-  .containerOfBilingualLongButtonMOBILE{width: 90vw;}
+
+  .containerOfBilingualLongButtonMOBILE{width: 90vw; bottom: calc(33px + 5vmin);}
+
   .containerOfBilingualLongButtonDESKTOP{width: 90vw;}
+
 @media (max-width: 799px) { .bilingualLongButton{font-size: 17px;} }
 @media (max-width: 599px) { .bilingualLongButton{font-size: 15px;} }
+
 }
 @media (orientation:landscape) {
-  .containerOfBilingualLongButtonMOBILE{width: 70vw;}
+
+  .containerOfBilingualLongButtonMOBILE{width: 70vw; bottom: calc(33px + 1vmin);} /*Any landscape that is less than 300px tall*/
+  @media (min-height: 300px) { .containerOfBilingualLongButtonMOBILE{width: 70vw; bottom: calc(33px + 2vmin);} } /*Between 300px and 400px*/
+  @media (min-height: 400px) { .containerOfBilingualLongButtonMOBILE{width: 70vw; bottom: calc(33px + 3vmin);} } /*Between 400px and 500px*/
+  @media (min-height: 500px) { .containerOfBilingualLongButtonMOBILE{width: 70vw; bottom: calc(33px + 4vmin);} } /*Taller than 500px*/
+
   .containerOfBilingualLongButtonDESKTOP{width: 70vw;}
+
 @media (max-height: 799px) { .bilingualLongButton{font-size: 17px;} }
 @media (max-height: 599px) { .bilingualLongButton{font-size: 15px;} }
+
 }
 
 .leftHalf{

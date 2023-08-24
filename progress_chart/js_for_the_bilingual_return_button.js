@@ -1,18 +1,18 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 const leftText1 = document.getElementById('leftText1pID'); const rightText1 = document.getElementById('rightText1pID');
 
 let leftTextWithoutInteraction;
-const filePathForLeftTextWithoutInteraction = "/user_interface/text/"+userInterfaceLanguage+"/0-you_are_learning_"+parent.langCodeForTeachingFilePaths+".txt";
+const filePathForLeftTextWithoutInteraction = "/user_interface/text/"+userInterfaceLanguage+"/0-you_are_learning_"+parent.langCodeForTeachingFilePaths.substr(0,2)+".txt";
 fetch(filePathForLeftTextWithoutInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
   leftTextWithoutInteraction = contentOfTheTxtFile;
   leftText1.innerHTML = leftTextWithoutInteraction;
 });// See js_for_every_single_html.js for the headers thingy.
 
 let rightTextWithoutInteraction;
-const filePathForRightTextWithoutInteraction = "/user_interface/text/"+parent.langCodeForTeachingFilePaths+"/0-you_are_learning_"+parent.langCodeForTeachingFilePaths+".txt";
+const filePathForRightTextWithoutInteraction = "/user_interface/text/"+parent.langCodeForTeachingFilePaths.substr(0,2)+"/0-you_are_learning_"+parent.langCodeForTeachingFilePaths.substr(0,2)+".txt";
 fetch(filePathForRightTextWithoutInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
   rightTextWithoutInteraction = contentOfTheTxtFile;
   rightText1.innerHTML = rightTextWithoutInteraction;
@@ -23,12 +23,12 @@ const filePathForLeftTextUponInteraction = "/user_interface/text/"+userInterface
 fetch(filePathForLeftTextUponInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ leftTextUponInteraction = contentOfTheTxtFile; });
 
 let rightTextUponInteraction;
-const filePathForRightTextUponInteraction = "/user_interface/text/"+parent.langCodeForTeachingFilePaths+"/0-learn_another_language.txt";
+const filePathForRightTextUponInteraction = "/user_interface/text/"+parent.langCodeForTeachingFilePaths.substr(0,2)+"/0-learn_another_language.txt";
 fetch(filePathForRightTextUponInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ rightTextUponInteraction = contentOfTheTxtFile; });
 
 let sleepAdviceA, sleepAdviceB;
 const filePathForsleepAdviceA = "/user_interface/text/"+userInterfaceLanguage+"/0-author_gives_sleep_advice.txt";
-const filePathForsleepAdviceB = "/user_interface/text/"+parent.langCodeForTeachingFilePaths+"/0-author_gives_sleep_advice.txt";
+const filePathForsleepAdviceB = "/user_interface/text/"+parent.langCodeForTeachingFilePaths.substr(0,2)+"/0-author_gives_sleep_advice.txt";
 fetch(filePathForsleepAdviceA,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ sleepAdviceA = contentOfTheTxtFile; });
 fetch(filePathForsleepAdviceB,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ sleepAdviceB = contentOfTheTxtFile; });
 
@@ -68,7 +68,7 @@ if (deviceDetector.isMobile) {
 
 // 700ms "everyThingFadesToBlack" css class must exist at parent level » NOT in this document's css
 // So it exists in css_for_preloader_and_orbiting_circles
-// ALSO SEE handleFadingAndNavigation in progress.js and js_for_app_initialization_in_parent
+// ALSO SEE handleFadingAndNavigation in progress.js and js_for_the_parent_all_browsers_all_devices
 function goBackToWelcomeScreenLanguageSelection() {
   /* Remove THE HOME ceramic nav button */
   if (parent.containerDivOfTheNavigationMenu.contains(parent.clickToGoToMainMenuDiv)) { // Guarantee that the app won't break

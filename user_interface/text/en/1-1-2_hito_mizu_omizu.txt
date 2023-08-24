@@ -1,1 +1,0 @@
-﻿In Hito language (aka Japanese) names of things that are associated with human survival or public well being can take the honorific prefix [o-]. In such cases, speech recognition (i.e. talking to your device microphone) will accept both; you may say it either with or without [o-].
