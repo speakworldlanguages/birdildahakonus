@@ -25,17 +25,17 @@ var needHitoicJapaneseFonts = false; // Kosugi Motoya font is for Hitoic only - 
 // Set user interface and fonts
 if (full_URL_ofTheClone.search("hanaserutoii") >= 0 || full_URL_ofTheClone.search("syabererutoii") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
   // JA - hanaserutoiidesuyone or ...github.io
-  userInterfaceLanguage = "ja";
+  userInterfaceLanguage = "ja"; console.log("Set user-interface-language to JA");
   userReadsLeftToRightOrRightToLeft = "ltr";
   needHitoicJapaneseFonts = true;
 } else if (full_URL_ofTheClone.search("birdildahakon") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
   // TR - dilogrenherkeslekonus or ...github.io
-  userInterfaceLanguage = "tr";
+  userInterfaceLanguage = "tr"; console.log("Set user-interface-language to TR");
   userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullanmak yerine txt dosyalarını dönüştürücü ile ters çevirmek daha mantıklı mı?
   needLatinFonts = true;
 } else {
-  // EN
-  userInterfaceLanguage = "en"; // Unlike teaching-files' paths we can go without implementing the american vs british difference and display a united user interface or can we?
+  // EN // Unlike teaching-files' paths we can go without implementing the american vs british difference and display a united user interface or can we?
+  userInterfaceLanguage = "en"; console.log("Set user-interface-language to EN");
   userReadsLeftToRightOrRightToLeft = "ltr";
   needLatinFonts = true;
 }
@@ -162,7 +162,7 @@ if (needHitoicJapaneseFonts) {
     //let allAsides = document.getElementsByTagName("ASIDE");
     //let j;
     //for (j = 0; j < allAsides.length; j++) {  allAsides[j].style.fontFamily = '"Kosugi Maru", sans-serif';  }
-    
+
 }
 
 
