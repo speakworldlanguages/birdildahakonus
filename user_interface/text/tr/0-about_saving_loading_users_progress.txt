@@ -1,1 +1,1 @@
-﻿İlerlemen (tarayıcı geçmişi silinmedikçe) bu cihazda kayıtlı olacak|Kaldığın yerden devam edebilirsin
+﻿İlerlemen bu cihazda, şu anki kullanıcı için otomatik olarak kaydedilecek (tarayıcı geçmişini silmemelisin)|Kaldığın yerden devam edebilirsin

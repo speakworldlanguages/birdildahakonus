@@ -12,7 +12,7 @@ const canVibrate = window.navigator.vibrate;
 // Until that time, UI language will automatically take the browser's language.
 // POSSIBLE PRACTICE: Check if browser language and IP-geolocation match. Ask the user which language he/she wants for the GUI if the location and language is different.
 var browserLanguage = navigator.language.substring(0,2).toLowerCase(); // Is used for 1- js_for_redirection_to_the_proper_domain » Comparing domains and UI languages 2- information.js » Set currency(Euro) according to user's (estimated) country
-var full_URL_ofTheClone = window.location.href.toLowerCase(); // Should work for both parent and frame
+var full_URL_ofTheClone = null;
 
 // These variables will exist both in parent html and in frame html separately at the same time.
 var userInterfaceLanguage = null;
@@ -20,23 +20,34 @@ var userReadsLeftToRightOrRightToLeft = "ltr"; /*Default is ltr » Use this to f
 var needLatinFonts = false;
 var needHitoicJapaneseFonts = false; // Kosugi Motoya font is for Hitoic only - It doesn't have simplified chinese or hangul characters
 
-// Set user interface and fonts
-if (full_URL_ofTheClone.search("hanaserutoii") >= 0 || full_URL_ofTheClone.search("syabererutoii") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
-  // JA - hanaserutoiidesuyone or ...github.io
-  userInterfaceLanguage = "ja"; console.log("Set user-interface-language to JA due to url");
-  userReadsLeftToRightOrRightToLeft = "ltr";
-  needHitoicJapaneseFonts = true;
-} else if (full_URL_ofTheClone.search("birdildahakon") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
-  // TR - dilogrenherkeslekonus or ...github.io
-  userInterfaceLanguage = "tr"; console.log("Set user-interface-language to TR due to url");
-  userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullanmak yerine txt dosyalarını dönüştürücü ile ters çevirmek daha mantıklı mı?
-  needLatinFonts = true;
-} else {
-  // EN // Unlike teaching-files' paths we can go without implementing the american vs british difference and display a united user interface or can we?
-  userInterfaceLanguage = "en"; console.log("Set user-interface-language to EN due to url");
-  userReadsLeftToRightOrRightToLeft = "ltr";
-  needLatinFonts = true;
+function setUserInterfaceLanguage() {
+  // Set user interface and fonts
+  if (full_URL_ofTheClone.search("hanaserutoii") >= 0 || full_URL_ofTheClone.search("syabererutoii") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
+    // JA - hanaserutoiidesuyone or ...github.io
+    userInterfaceLanguage = "ja"; console.log("Set user-interface-language to JA due to URL: " + full_URL_ofTheClone);
+    userReadsLeftToRightOrRightToLeft = "ltr";
+    needHitoicJapaneseFonts = true;
+  } else if (full_URL_ofTheClone.search("birdildahakon") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
+    // TR - dilogrenherkeslekonus or ...github.io
+    userInterfaceLanguage = "tr"; console.log("Set user-interface-language to TR due to URL: " + full_URL_ofTheClone);
+    userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullanmak yerine txt dosyalarını dönüştürücü ile ters çevirmek daha mantıklı mı?
+    needLatinFonts = true;
+  } else {
+    // EN // Unlike teaching-files' paths we can go without implementing the american vs british difference and display a united user interface or can we?
+    userInterfaceLanguage = "en"; console.log("Set user-interface-language to EN due to URL: " + full_URL_ofTheClone);
+    userReadsLeftToRightOrRightToLeft = "ltr";
+    needLatinFonts = true;
+  }
 }
+
+if (self == top) { // parent level
+  full_URL_ofTheClone = window.location.href.toLowerCase();
+  setUserInterfaceLanguage();
+} else { // iframe level
+  full_URL_ofTheClone = parent.location.href.toLowerCase();
+  setUserInterfaceLanguage();
+}
+
 
 /*______HEADERS to make fetch work with txt files with non-english characters properly______*/
 var myHeaders = new Headers(); // Apache server default ayarları yüzünden böyle buna gerek var.
