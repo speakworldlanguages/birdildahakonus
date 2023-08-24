@@ -3,6 +3,15 @@
 // This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 // NOTE THAT: THERE ARE 2 EXCEPTIONS where js_for_all_iframed_lesson_htmls is not used: blank.html & user_interface/screens/??/you_are_offline.html
+
+if (parent.langCodeForTeachingFilePaths) { // Safety overkill?
+  if (parent.langCodeForTeachingFilePaths.substring(0,2)=="tr") { // See js_for_the_parent_all_browsers_all_devices
+    myHeaders.append('Content-Type','text/plain; charset=iso-8859-9'); // See js_for_every_single_html
+    // NOT CERTAIN IF NECESSARY: By using set() rather than append() we could make sure that previous values get overwritten instead of creating a duplicate
+    // ALSO NOT CERTAIN IF that would overwrite some default Content-Type which then would break something
+  }
+}
+
 // ___
 if (window.location.href == parent.ayFreym.src) {
   //console.log("EXPECTED NORMAL NAVIGATION");

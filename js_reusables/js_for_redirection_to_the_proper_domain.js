@@ -60,7 +60,7 @@ function whatIfUserInterfaceLangAndBrowserLangAreDifferent() {
 
 /*______*/
 const firstSevenCharactersOfTheAddress = window.location.hostname.substring(0,7);
-/*___LIST OF ALLOWED DOMAINS___*/
+/*___LIST OF AUTHORIZED DOMAINS___*/
 switch (window.location.hostname) {
   case "speakworldlanguages.github.io": // ALLOW
   case "speakworldlanguages.app": // ALLOW

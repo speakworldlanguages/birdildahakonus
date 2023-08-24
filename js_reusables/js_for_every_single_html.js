@@ -5,14 +5,12 @@
 // IMPORTANT! Everything below will run in PARALLEL both on PARENT and iFRAME.
 // CAUTION: Mind the duplication!
 
-
 /*_____CAN VIBRATE???: https://stackoverflow.com/questions/56926591/navigator-vibrate-break-the-code-on-ios-browsers/66134699*/
 const canVibrate = window.navigator.vibrate;
 
-
-// Must give the user the option to change the user interface language and allow him/her to choose any available language other than the browser's language if necessary.
+// See how we give the user the option to change the user interface language » js_for_redirection_to_the_proper_domain
 // Until that time, UI language will automatically take the browser's language.
-// POSSIBLE GOOD PRACTICE: Check if browser language and IP-geolocation match. Ask the user which language he/she wants for the GUI if the location and language is different.
+// POSSIBLE PRACTICE: Check if browser language and IP-geolocation match. Ask the user which language he/she wants for the GUI if the location and language is different.
 var browserLanguage = navigator.language.substring(0,2).toLowerCase(); // Is used for 1- js_for_redirection_to_the_proper_domain » Comparing domains and UI languages 2- information.js » Set currency(Euro) according to user's (estimated) country
 var full_URL_ofTheClone = window.location.href.toLowerCase(); // Should work for both parent and frame
 
@@ -25,45 +23,56 @@ var needHitoicJapaneseFonts = false; // Kosugi Motoya font is for Hitoic only - 
 // Set user interface and fonts
 if (full_URL_ofTheClone.search("hanaserutoii") >= 0 || full_URL_ofTheClone.search("syabererutoii") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
   // JA - hanaserutoiidesuyone or ...github.io
-  userInterfaceLanguage = "ja"; console.log("Set user-interface-language to JA");
+  userInterfaceLanguage = "ja"; console.log("Set user-interface-language to JA due to url");
   userReadsLeftToRightOrRightToLeft = "ltr";
   needHitoicJapaneseFonts = true;
 } else if (full_URL_ofTheClone.search("birdildahakon") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
   // TR - dilogrenherkeslekonus or ...github.io
-  userInterfaceLanguage = "tr"; console.log("Set user-interface-language to TR");
+  userInterfaceLanguage = "tr"; console.log("Set user-interface-language to TR due to url");
   userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullanmak yerine txt dosyalarını dönüştürücü ile ters çevirmek daha mantıklı mı?
   needLatinFonts = true;
 } else {
   // EN // Unlike teaching-files' paths we can go without implementing the american vs british difference and display a united user interface or can we?
-  userInterfaceLanguage = "en"; console.log("Set user-interface-language to EN");
+  userInterfaceLanguage = "en"; console.log("Set user-interface-language to EN due to url");
   userReadsLeftToRightOrRightToLeft = "ltr";
   needLatinFonts = true;
 }
 
-/*_____HEADERS to make fetch work with txt files with non-english characters properly________*/
+/*______HEADERS to make fetch work with txt files with non-english characters properly______*/
 var myHeaders = new Headers(); // Apache server default ayarları yüzünden böyle buna gerek var.
-// Çağrılan txt dosyasındaki ÇĞİÖŞÜçğıöşü'nın ��������� yerine doğru görünmesi için charset=iso-8859-9 gerek; charset=utf-8 ile olmuyor.
-// Dikkat! Bunun doğru çalışması için çağrılan txt dosyasının UTF-8 ile kaydedilmiş olması gerek.
-
-// ASLINDA: langCodeForTeachingFilePaths değişkeninin tr_istanbul olma olasılığı var ki hattã userInterfaceLanguage tr olmasa bile.
+// Çağrılan txt dosyasındaki ÇĞİÖŞÜçğıöşü'nın ��������� yerine doğru görünmesi için charset=iso-8859-9 gerek; charset=utf-8 ile olmuyor. (Apache serverda durum buydu, diğerlerini denemedik)
+// DİKKAT: Bunun (en azından Apache serverda durum bu) doğru çalışması için çağrılan txt dosyasının UTF-8 ile kaydedilmiş olması gerek.
+// UNUTMA: langCodeForTeachingFilePaths değişkeninin tr_istanbul olma olasılığı var ki hattã userInterfaceLanguage tr olmasa bile.
 // AMA ŞU HER NASILSA DOĞRU ÇALIŞIYOR:
-/* // Ş ğ are somehow displayed correctly even though the text file is called without charset=iso-8859-9 from js_for_the_bilingual_return_button
-if (userInterfaceLanguage=="tr") { // PLACE IT RIGHT AFTER userInterfaceLanguage ASSIGNMENTS
+// Ş ğ are somehow displayed correctly even though the text file is called without charset=iso-8859-9 from js_for_the_bilingual_return_button
+if (userInterfaceLanguage=="tr") { // DECLARATION of userInterfaceLanguage exists in this js file so it's OK access it without waiting for window»load
+  myHeaders.append('Content-Type','text/plain; charset=iso-8859-9'); // Handles both parent level and iframe level in terms of userInterfaceLanguage
+  // It is also necessary to handle langCodeForTeachingFilePaths == "tr" for both parent level and iframe level
+  // See below code
+}
+
+// ÖNCELİKLE: langCodeForTeachingFilePaths KULLANICI İLK DİL SEÇİMİNİ YAPANA KADAR undefined OLDUĞUNA GÖRE
+// langCodeForTeachingFilePaths İLE İLGİLİ parent window SEVİYESİNİ BURADAN YÖNERTMEK OLANAKSIZ
+// ZATEN window»load olmadan HENÜZ İLAN EDİLMEMİŞ deyip köstekleyici hatã veriyor
+// parent window SEVİYESİNDE langCodeForTeachingFilePaths TXT DOSYASI fetch ETMEK İÇİN KULLANILIYOR MU? EVET: js_for_info_boxes_in_parent » createAndHandleTheAppIsPausedBox
+/* DOLAYISIYLA BURADA ŞUNU YAPAMADIĞIMIZ İÇİN js_for_info_boxes_in_parent İÇİNDE GEREKEN AYARI YAPIYORUZ
+if (langCodeForTeachingFilePaths.substring(0,2)=="tr") {
   myHeaders.append('Content-Type','text/plain; charset=iso-8859-9');
 }
 */
-// YİNE DE GARANTİ OLSUN DİYE BİZ ŞÖYLE YAPALIM:
-if (langCodeForTeachingFilePaths) { // parent window level
-  if (userInterfaceLanguage=="tr" || langCodeForTeachingFilePaths.substring(0,2)=="tr") {
-    myHeaders.append('Content-Type','text/plain; charset=iso-8859-9');
-  }
-}
-if (parent.langCodeForTeachingFilePaths) { // iframe window level
-  if (userInterfaceLanguage=="tr" || parent.langCodeForTeachingFilePaths.substring(0,2)=="tr") {
-    myHeaders.append('Content-Type','text/plain; charset=iso-8859-9');
-  }
-}
 
+// setLangCodeForFilePathsAndCacheTheFirstTeachingAssets FONKSIYONUNU js_for_the_parent_all_browsers_all_devices İÇİNDE ARA BUL
+// Could also use thisIsTheParentWhichContainsAllIFramedLessons which exists in parent index.html
+/* RELOCATED THE FRAME LEVEL HANDLING OF langCodeForTeachingFilePaths TO: js_for_all_iframed_lesson_htmls
+if (self != top) { // probably iframe window level
+  if (parent.langCodeForTeachingFilePaths) { // definitely iframe window level
+    if (parent.langCodeForTeachingFilePaths.substring(0,2)=="tr") {
+      myHeaders.set('Content-Type','text/plain; charset=iso-8859-9'); // With set() we make sure that we overwrite instead of creating a duplicate
+    }
+  }
+}
+*/
+// set ile append farkı için: https://developer.mozilla.org/en-US/docs/Web/API/Headers/append
 
 
 /*___________________________________*/

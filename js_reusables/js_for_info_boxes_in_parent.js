@@ -304,7 +304,9 @@ function loadWasSuccessfulDespiteTakingTooLong() { // Called by stopTheTimerToSe
 function createAndHandleTheAppIsPausedBox() {
   return new Promise(resolve => {
     // See js_for_every_single_html.js for the fetch headers thingy.
+    // As of August 2023 this is the only case in which langCodeForTeachingFilePaths is used for fetching txt at parent level
     const taughtLanguage = langCodeForTeachingFilePaths.substr(0,2); // en_east en_west will use the same user interface text folder
+    if (taughtLanguage=="tr") {    myHeaders.set('Content-Type','text/plain; charset=iso-8859-9');    } // See js_for_every_single_html
     let theAppIsPausedDialogBoxTextsInTaughtLanguage = "⋮⋮|▶️";
     const filePathForAppIsPausedBoxWithResumeButtonInTaughtLanguage = "/user_interface/text/"+taughtLanguage+"/0lesson-is_paused_message_and_unpause_button.txt";
     fetch(filePathForAppIsPausedBoxWithResumeButtonInTaughtLanguage,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ theAppIsPausedDialogBoxTextsInTaughtLanguage = contentOfTheTxtFile; updateTheBox(); });
