@@ -52,7 +52,7 @@
     <!--  -->
     <!-- SOLVED: THERE USED TO BE A CONFLICT between eruda and the canvas element, probably because they both used "ctx" as the variable name -->
     <!-- Uncomment the following to be able to use the browser console on mobile devices -->
-    <script src="third_party_js/eruda.js"></script>
+    <script src="/third_party_js/eruda.js"></script>
     <script>eruda.init();</script>
 
 
@@ -76,7 +76,7 @@
     <meta name="apple-mobile-web-app-title" content="Bir Dil Daha Konuş">
     <meta name="apple-mobile-web-app-status-bar-style" content="#4d606f">
     <link rel="apple-touch-icon" href="/user_interface/homescreen_icon/icon_for_pwa_tr.png">
-    <link rel="manifest" href="/manifest_tr.json">
+    <link rel="manifest" href="manifest_tr.json">
     <script>
       if ("serviceWorker" in navigator) {  window.addEventListener("DOMContentLoaded",()=>{  navigator.serviceWorker.register("service-worker.js");  });  } // Takes too long compared to window load (almost a second)
     </script>
