@@ -24,17 +24,17 @@ function setUserInterfaceLanguage() {
   // Set user interface and fonts
   if (full_URL_ofTheClone.search("hanaserutoii") >= 0 || full_URL_ofTheClone.search("syabererutoii") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
     // JA - hanaserutoiidesuyone or ...github.io
-    userInterfaceLanguage = "ja"; console.log("Set user-interface-language to JA due to URL: " + full_URL_ofTheClone);
+    userInterfaceLanguage = "ja"; //console.log("Set user-interface-language to JA due to URL: " + full_URL_ofTheClone);
     userReadsLeftToRightOrRightToLeft = "ltr";
     needHitoicJapaneseFonts = true;
   } else if (full_URL_ofTheClone.search("birdildahakon") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
     // TR - dilogrenherkeslekonus or ...github.io
-    userInterfaceLanguage = "tr"; console.log("Set user-interface-language to TR due to URL: " + full_URL_ofTheClone);
+    userInterfaceLanguage = "tr"; //console.log("Set user-interface-language to TR due to URL: " + full_URL_ofTheClone);
     userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullanmak yerine txt dosyalarını dönüştürücü ile ters çevirmek daha mantıklı mı?
     needLatinFonts = true;
   } else {
     // EN // Unlike teaching-files' paths we can go without implementing the american vs british difference and display a united user interface or can we?
-    userInterfaceLanguage = "en"; console.log("Set user-interface-language to EN due to URL: " + full_URL_ofTheClone);
+    userInterfaceLanguage = "en"; //console.log("Set user-interface-language to EN due to URL: " + full_URL_ofTheClone);
     userReadsLeftToRightOrRightToLeft = "ltr";
     needLatinFonts = true;
   }
