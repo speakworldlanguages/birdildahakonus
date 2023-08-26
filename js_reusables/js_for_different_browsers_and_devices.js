@@ -271,7 +271,26 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
               // Here is what chat-g-p-t suggested for trying to dynamically check if the change event is supported
               if (typeof result2.addEventListener === 'function') {
                 result2.addEventListener('change', proceedAccordingToUsersChoiceAboutMicPermission);
-                // NEEDS TESTING: What if Safari 16.0 ~ 16.3 returns true about adding event-listeners and still not recognize the change event?
+                // UPDATE: Safari 16.6 did not respond to the change!!!
+
+                // Function to get all event names for a given object
+                function getAllEventNames(obj) {
+                  const eventNames = [];
+
+                  for (const prop in obj) {
+                    if (prop.startsWith('on') && typeof obj[prop] === 'function') {
+                      eventNames.push(prop.substring(2));
+                    }
+                  }
+
+                  return eventNames;
+                }
+
+                // Get all event names for the given element
+                const eventNames = getAllEventNames(result2);
+
+                console.log(eventNames);
+                /*
                 if (isSafari) {
                   console.warn("If this is Safari 16.0 ~ 16.3 and you are still seeing this msg then the app needs version bugfix");
                   // The problem can be solved by uncommenting
@@ -280,7 +299,8 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
                     tellTheUserToChangeOrUpdateTheBrowser();
                   }
                 }
-              } else { // Hopefully Safari 16.0 ~ 16.3 will fall here
+                */
+              } else { // Older browsers, that don't feature adding event listeners to permission queries at all, will fall here
                 tellTheUserToChangeOrUpdateTheBrowser();
                 // Note that Safari 15.x and earlier cannot fall here because this is inside an if ("permissions" in navigator) block
                 console.warn('Change event not supported for PermissionStatus object as there is no addEventListener function in it.');
