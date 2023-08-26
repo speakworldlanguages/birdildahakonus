@@ -16,6 +16,7 @@ function startRecording() { //event.preventDefault(); event.stopPropagation();
   recordedChunks = []; // Start anew with emptiness every time
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then(function (stream) {
+
       mediaRecorder = new MediaRecorder(stream);
 
       // Collect chunks of recorded data
@@ -29,11 +30,10 @@ function startRecording() { //event.preventDefault(); event.stopPropagation();
       mediaRecorder.addEventListener('stop', function () {
         const recordedBlob = new Blob(recordedChunks);
         audioElement.src = URL.createObjectURL(recordedBlob);
-      });
+      },{once:true});
 
       mediaRecorder.start();
-      recordButton.disabled = true;
-      playButton.disabled = true;
+
     })
     .catch(function (error) {
       console.error('Error accessing microphone:', error);
@@ -48,36 +48,35 @@ function stopRecordingViaCommand() {
   stopRecording();
 }
 function stopRecording() { console.log("STOP recording function fired");
-
   // ---
-  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-    mediaRecorder.stop(); console.log("mediaRecorder should be stopped now!");
-    recordButton.disabled = false;
-    playButton.disabled = false;
+  if (parent.annyang) { // Skip parent.annyang.isListening() as it is certain that annyang was listening
+    parent.annyang.removeCallback(); // Removes all callbacks
+    if (isApple) { parent.annyang.pause(); console.log("annyang paused (apple devices only)"); }
+    else { parent.annyang.abort();  console.log("annyang aborted"); }
   }
-  // SpeechRecognition STOPS LISTENING
+  // ---
+  setTimeout(function () {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') { console.log("mediaRecorder will be stopped now!");
+      mediaRecorder.stop();
 
-  setTimeout(function () { // It is certain that annyang was listening
-    //let annyangWasListeningWhenRecordingStopped = false;
-    if (parent.annyang) {
-      parent.annyang.removeCallback(); // Removes all callbacks
-      //annyangWasListeningWhenRecordingStopped = parent.annyang.isListening();
-      //if (annyangWasListeningWhenRecordingStopped) {
-        if (isApple) { parent.annyang.pause(); console.log("annyang paused on apple"); }
-        else { parent.annyang.abort();  console.log("annyang aborted"); }
 
-      //}
-      // Note that: No problem if abort() fires when annyang wasn't listening.
+      // Stop the MediaStream tracks
+      const stream = mediaRecorder.stream;
+      const tracks = stream.getTracks();
+      tracks.forEach(track => track.stop());
     }
   }, 250);
-
+  // ---
+  setTimeout(function () {
+    recordButton.disabled = false;
+    playButton.disabled = false;
+  }, 500);
+  // ---
 }
 
 // Function to play recorded audio
 function playRecording(event) { event.preventDefault(); event.stopPropagation();
-  if (audioElement.src) {
-    audioElement.play();
-  }
+  if (audioElement.src) {  audioElement.play();  }
 }
 
 window.addEventListener('DOMContentLoaded', function(){
@@ -99,20 +98,23 @@ window.addEventListener('DOMContentLoaded', function(){
 
 function startRecordingAndListening(event) { event.preventDefault(); event.stopPropagation();
   console.log("startRecordingAndListening() fired!");
+  recordButton.disabled = true;
+  playButton.disabled = true;
   startRecording();
-  startSpeechRecognition();
+  setTimeout(function () {    startSpeechRecognition();  }, 250);
 }
 
 let aMatchWasFound = false;
-function startSpeechRecognition() {
+function startSpeechRecognition() { console.log("let annyang start listening");
 
   if (parent.annyang) {
 
     parent.annyang.setLanguage("tr");
-    new SuperTimeout(function() {  parent.annyang.start();  },100);
+    //new SuperTimeout(function() {  parent.annyang.start();  },100);
     parent.annyang.addCallback('result', compareAndSeeIfTheKeywordWasSaid);
+    parent.annyang.start(); console.warn("annyang is now listening");
     function compareAndSeeIfTheKeywordWasSaid(phrasesArray) {
-      parent.console.log('Speech recognized. Possibly said: '+phrasesArray);
+      //parent.console.log('Speech recognized. Possibly said: '+phrasesArray);
       console.log('Speech recognized. Possibly said: '+phrasesArray);
 
       let k;
