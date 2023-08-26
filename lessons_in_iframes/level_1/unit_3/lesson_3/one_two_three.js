@@ -61,10 +61,22 @@ function playRecording(event) { event.preventDefault(); event.stopPropagation();
   }
 }
 
-// Attach event listeners to the buttons
-recordButton.addEventListener('touchstart', startRecordingAndListening);
-stopButton.addEventListener('touchstart', stopRecordingViaButton);
-playButton.addEventListener('touchstart', playRecording);
+window.addEventListener('DOMContentLoaded', function(){
+
+  // Attach event listeners to the buttons
+  if (deviceDetector.isMobile) {
+    recordButton.addEventListener('touchstart', startRecordingAndListening);
+    stopButton.addEventListener('touchstart', stopRecordingViaButton);
+    playButton.addEventListener('touchstart', playRecording);
+  } else { // desktop
+    recordButton.addEventListener('mousedown', startRecordingAndListening);
+    stopButton.addEventListener('mousedown', stopRecordingViaButton);
+    playButton.addEventListener('mousedown', playRecording);
+  }
+
+}, { once: true }); // END OF DOMContentLoaded
+
+
 
 function startRecordingAndListening(event) { event.preventDefault(); event.stopPropagation();
   startRecording();
