@@ -108,7 +108,7 @@ let lessonCodes = [
 let lessonsAndTheirReadinessForOffline = {
   111:false, 112:false, 113:false, 114:false,
   121:false, 122:false, 123:false, 124:false,
-  131:false, 132:false, 133:false, 134:false//,
+  131:false, 132:false, 133:true, 134:false//, //Set 133 back to false after tests
   // 211:false, 212:false, 213:false, 214:false,
   // 221:false, 222:false, 223:false, 224:false,
   // 231:false, 232:false, 233:false, 234:false

@@ -301,7 +301,7 @@ function loadWasSuccessfulDespiteTakingTooLong() { // Called by stopTheTimerToSe
 
 // DIALOG BOX to be shown when the app is paused
 // _________ See js_for_the_sliding_navigation_menu » pauseTheAppFunction
-function createAndHandleTheAppIsPausedBox() {
+function createAndHandleTheAppIsPausedBox() { // THIS LOOKS OK WITHOUT someElement.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
   return new Promise(resolve => {
     // See js_for_every_single_html.js for the fetch headers thingy.
     // As of August 2023 this is the only case in which langCodeForTeachingFilePaths is used for fetching txt at parent level
@@ -333,10 +333,10 @@ function createAndHandleTheAppIsPausedBox() {
     unpauseButton.classList.add("buttonsUnderSaveLoadInfo"); // See css_for_info_boxes_in_parent
     unpauseButton.innerHTML = " " + theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[1] + " <wbr> (" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[1] + ") ";
     theAppIsPausedBox.appendChild(unpauseButton);
-    function updateTheBox() {
+    function updateTheBox() { // USE IF NECESSARY: <span style='white-space: nowrap;'></span>
       theAppIsPausedMessage1.innerHTML = theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[0];
       theAppIsPausedMessage2.innerHTML = "(" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[0] + ")";
-      unpauseButton.innerHTML = " " + theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[1] + " <wbr> (" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[1] + ") ";
+      unpauseButton.innerHTML = " " + theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[1] + " " + "<span style='white-space: nowrap;'>(" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[1] + ")</span>";
     }
 
     // When user clicks|touches [UNPAUSE] button to continue

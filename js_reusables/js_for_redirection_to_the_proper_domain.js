@@ -64,13 +64,9 @@ const firstSevenCharactersOfTheAddress = window.location.hostname.substring(0,7)
 switch (window.location.hostname) {
   case "speakworldlanguages.github.io": // ALLOW
   case "speakworldlanguages.app": // ALLOW
-
   case "birdildahakonus.com": // ALLOW
-
   case "hanaserutoiiyone.com": // ALLOW
-
   case "tingdongshijiederenmen.com": // ALLOW
-
   case "localhost": // ALLOW
     break;
 
@@ -83,7 +79,7 @@ switch (window.location.hostname) {
         alert(window.location.hostname + " is UNAUTHORIZED!\n1 - DO NOT modify the source code!\n2 - DELETE this fork from your repositories!");
       }, 2000);
     }
-}
+} // End of switch-case
 
 /*______*/
 // Do not allow embedding of this app (no re-serving through an alien iframe)

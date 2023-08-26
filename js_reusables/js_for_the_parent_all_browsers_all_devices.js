@@ -496,11 +496,11 @@ function openFirstLesson(freshNewOrReturning) {
       pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost = "/lessons_in_iframes/level_1/unit_1/lesson_1/index.html"; // See js_for_online_and_offline_modes
       if (internetConnectivityIsNiceAndUsable) {
         ayFreym.src = pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; // Load immediately; don't wait for [Ok, that's good] being touched/clicked in the dialog/info-box
-      } else { console.warn("The device seems to be OFFLINE (detected by openFirstLesson)");
+      } else { console.warn("Navigation attempt to LESSON111 despite being OFFLINE (detected by openFirstLesson)");
         if (localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) { // See js_for_cache_handling/0_parent_initial_load_and_111
           if (localStorage.getItem("lesson111CommonFilesCachedSuccessfully")) { // See js_for_cache_handling/0_parent_initial_load_and_111
             if (localStorage.getItem("lesson111FilesFor-"+langCodeForTeachingFilePaths+"-CachedSuccessfully")) { // See js_for_cache_handling/0_parent_initial_load_and_111
-               console.warn("But all assets for lesson 111 are cached, so will try to proceed");
+               console.warn("All assets for lesson 111 are cached and READY! Therefore, will try to proceed");
               ayFreym.src = pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; // Try the service-worker offline magic
             } else { goToSorryPage(); }
           } else { goToSorryPage(); }

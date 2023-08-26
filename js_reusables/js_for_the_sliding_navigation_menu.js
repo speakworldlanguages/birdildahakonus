@@ -671,7 +671,7 @@ window.addEventListener("load",function() {
     if (result < 0) { // iFrame was showing a lesson or the goodbye screen, etc » it was not showing the progress_chart
       if (!internetConnectivityIsNiceAndUsable) { console.warn("Navigation attempt to PROGRESS CHART despite being OFFLINE"); // No internet
         if (localStorage.getItem("progressChartShouldBeOfflineCompatibleNow") && localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) {
-          console.warn("Files for progress chart are cached and READY!"); //No internet but the cache is ready, so let service-worker do its offline magic
+          console.warn("All assets for progress chart are cached and READY! Therefore, will try to proceed"); //No internet but the cache is ready, so let service-worker do its offline magic
         } else {
           console.warn("But files for progress chart are NOT CACHED!"); // And no cached files available
           pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost = "/progress_chart/index.html"; // See js_for_online_and_offline_modes
