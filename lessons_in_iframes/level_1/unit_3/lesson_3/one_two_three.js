@@ -47,11 +47,24 @@ function stopRecordingViaCommand() {
   stopRecording();
 }
 function stopRecording() {
+  // SpeechRecognition STOPS LISTENING
+  parent.annyang.removeCallback(); // Removes all callbacks
+  let annyangWasListeningWhenRecordingStopped = false;
+  if (parent.annyang) {
+    annyangWasListeningWhenRecordingStopped = parent.annyang.isListening();
+    if (annyangWasListeningWhenRecordingStopped) {
+      if (isApple) { parent.annyang.pause(); }
+      else { parent.annyang.abort(); }
+    }
+    // Note that: No problem if abort() fires when annyang wasn't listening.
+  }
+  // ---
   if (mediaRecorder && mediaRecorder.state !== 'inactive') {
     mediaRecorder.stop();
     recordButton.disabled = false;
     playButton.disabled = false;
   }
+
 }
 
 // Function to play recorded audio
