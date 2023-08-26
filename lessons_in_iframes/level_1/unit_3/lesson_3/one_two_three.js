@@ -53,6 +53,7 @@ function stopRecording() { console.log("STOP recording function fired");
     parent.annyang.removeCallback(); // Removes all callbacks
     if (isApple) { parent.annyang.pause(); console.log("annyang paused (apple devices only)"); }
     else { parent.annyang.abort();  console.log("annyang aborted"); }
+    aMatchWasFound = false; // reset back to initial value
   }
   // ---
   setTimeout(function () {
