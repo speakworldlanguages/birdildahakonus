@@ -51,22 +51,25 @@ function stopRecording() { console.log("STOP recording function fired");
 
   // ---
   if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-    mediaRecorder.stop();
+    mediaRecorder.stop(); console.log("mediaRecorder should be stopped now!");
     recordButton.disabled = false;
     playButton.disabled = false;
   }
   // SpeechRecognition STOPS LISTENING
 
-  let annyangWasListeningWhenRecordingStopped = false;
-  if (parent.annyang) {
-    parent.annyang.removeCallback(); // Removes all callbacks
-    annyangWasListeningWhenRecordingStopped = parent.annyang.isListening();
-    if (annyangWasListeningWhenRecordingStopped) {
-      if (isApple) { parent.annyang.pause(); }
-      else { parent.annyang.abort(); }
+  setTimeout(function () { // It is certain that annyang was listening
+    //let annyangWasListeningWhenRecordingStopped = false;
+    if (parent.annyang) {
+      parent.annyang.removeCallback(); // Removes all callbacks
+      //annyangWasListeningWhenRecordingStopped = parent.annyang.isListening();
+      //if (annyangWasListeningWhenRecordingStopped) {
+        if (isApple) { parent.annyang.pause(); console.log("annyang paused on apple"); }
+        else { parent.annyang.abort();  console.log("annyang aborted"); }
+
+      //}
+      // Note that: No problem if abort() fires when annyang wasn't listening.
     }
-    // Note that: No problem if abort() fires when annyang wasn't listening.
-  }
+  }, 250);
 
 }
 
@@ -95,6 +98,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
 function startRecordingAndListening(event) { event.preventDefault(); event.stopPropagation();
+  console.log("startRecordingAndListening() fired!");
   startRecording();
   startSpeechRecognition();
 }
