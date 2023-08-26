@@ -11,7 +11,8 @@ const stopButton = document.getElementById('stopButtonID');
 const playButton = document.getElementById('playButtonID');
 
 // Function to start recording
-function startRecording(event) { //event.preventDefault(); event.stopPropagation();
+function startRecording() { //event.preventDefault(); event.stopPropagation();
+  console.log("START recording function fired");
   recordedChunks = []; // Start anew with emptiness every time
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then(function (stream) {
@@ -46,23 +47,25 @@ function stopRecordingViaButton(event) { event.preventDefault(); event.stopPropa
 function stopRecordingViaCommand() {
   stopRecording();
 }
-function stopRecording() {
+function stopRecording() { console.log("STOP recording function fired");
+
+  // ---
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+    recordButton.disabled = false;
+    playButton.disabled = false;
+  }
   // SpeechRecognition STOPS LISTENING
-  parent.annyang.removeCallback(); // Removes all callbacks
+
   let annyangWasListeningWhenRecordingStopped = false;
   if (parent.annyang) {
+    parent.annyang.removeCallback(); // Removes all callbacks
     annyangWasListeningWhenRecordingStopped = parent.annyang.isListening();
     if (annyangWasListeningWhenRecordingStopped) {
       if (isApple) { parent.annyang.pause(); }
       else { parent.annyang.abort(); }
     }
     // Note that: No problem if abort() fires when annyang wasn't listening.
-  }
-  // ---
-  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-    mediaRecorder.stop();
-    recordButton.disabled = false;
-    playButton.disabled = false;
   }
 
 }
@@ -102,7 +105,7 @@ function startSpeechRecognition() {
   if (parent.annyang) {
 
     parent.annyang.setLanguage("tr");
-    new SuperTimeout(function() {  parent.annyang.start();  },500);
+    new SuperTimeout(function() {  parent.annyang.start();  },100);
     parent.annyang.addCallback('result', compareAndSeeIfTheKeywordWasSaid);
     function compareAndSeeIfTheKeywordWasSaid(phrasesArray) {
       parent.console.log('Speech recognized. Possibly said: '+phrasesArray);
@@ -116,12 +119,12 @@ function startSpeechRecognition() {
         for (z = 0; z < fromPhraseToSingleWords.length; z++) {
 
           let searchResult = false;
-          if (fromPhraseToSingleWords[z].toLowerCase() == "üç" || fromPhraseToSingleWords[z].toLowerCase() == "dur") { searchResult = true; }
+          if (fromPhraseToSingleWords[z].toLowerCase() == "3" || fromPhraseToSingleWords[z].toLowerCase() == "dur") { searchResult = true; }
           if (!aMatchWasFound && searchResult) {
             aMatchWasFound = true; // Using this, we make sure that stopListeningAndProceedToNext fires only and only once
-            if (parent.annyang.getSpeechRecognizer().interimResults) { console.log("Keyword detected with interimResults enabled");
+            if (parent.annyang.getSpeechRecognizer().interimResults) { console.warn("!!! Keyword detected with interimResults enabled");
               setTimeout(function () { stopRecordingViaCommand(); }, 250); // Interim results is or can be too quick (especially on Windows)
-            } else { console.log("Keyword detected without interimResults");
+            } else { console.warn("!!! Keyword detected without interimResults");
               stopRecordingViaCommand();
             }
           } else {
