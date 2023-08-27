@@ -56,7 +56,7 @@
 
       <!-- THE SCENE -->
       <div class="putThingsAtBottomCenter">
-        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/background.avif" style="height:100vmin;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/background.avif" style="height:100vmin;" id="fixSafariBackgroundID">
       </div>
 
       <!-- THE WATERFALL -->
@@ -195,6 +195,13 @@
           keyboardInstructionPart2.style.width = "55vmin"; // Default css value is greater
           keyboardInstructionPart3.style.width = "55vmin"; // Default value will be applied on mobiles
         }
+
+        // ---
+        /* UNCOMMENT AND REPLACE AVIF WITH WEBP in case Safari frequently fails to display background.avif
+        if (isApple) {
+          const buggyBackground = document.getElementById('fixSafariBackgroundID');
+        }
+        */
       } // END OF whatMustBeDoneAtFirstOnThisDevice()
     </script>
 

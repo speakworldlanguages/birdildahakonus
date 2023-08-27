@@ -280,10 +280,9 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
                     changeEventIsSupported = false; // Thankfully We can still react to user's choice
                   }
                 } else {
-                  console.log("onchange is not supported");
+                  console.warn("onchange is not supported for PermissionStatus object");
                   tellTheUserToChangeOrUpdateTheBrowser();
                   // Note that Safari 15.x and earlier cannot fall here because this is inside an if ("permissions" in navigator) block
-                  console.warn('addEventListener function is not supported for PermissionStatus object.');
                   // Handle the case where the change event is not supported
                   changeEventIsSupported = false; // So that, when user has made a choice, we can use the setInterval to detect it
                 }
