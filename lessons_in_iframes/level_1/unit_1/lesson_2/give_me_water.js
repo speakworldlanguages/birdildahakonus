@@ -466,7 +466,7 @@ function whatToDoWhenWinHappens() {
   },100); // Wait 100ms to allow visibility = "hidden" on glass to take effect in case CPU is weak or was busy
 
   // Say thank_you
-  let proceedTime;  switch (parent.speedAdjustmentSetting) {  case "slow": proceedTime = 5000; break;  case "fast": proceedTime = 2000; break;  default: proceedTime = 3500;  }
+  let proceedTime;  switch (parent.speedAdjustmentSetting) {  case "slow": proceedTime = 4000; break;  case "fast": proceedTime = 2000; break;  default: proceedTime = 3000;  }
   new SuperTimeout(expressGratitude,proceedTime);
   function expressGratitude() {
     pictogramDiv1.children[5].style.display = "none";
@@ -476,8 +476,8 @@ function whatToDoWhenWinHappens() {
     makeTranslationHelpBlink();
   }
 
-  new SuperTimeout(function () {  main.classList.remove("noCursor");  main.classList.add("defaultCursor");  }, proceedTime*1.6+1600);  // Back to normal cursor
-  new SuperTimeout(displayNoteAtTheEndOfLesson,proceedTime*1.8+3500);
+  new SuperTimeout(function () {  main.classList.remove("noCursor");  main.classList.add("defaultCursor");  }, proceedTime+1500);  // Back to normal cursor
+  new SuperTimeout(displayNoteAtTheEndOfLesson,proceedTime*1.5+5000);
   function displayNoteAtTheEndOfLesson() { // All languages
       putNotificationTxtIntoThisP2.innerHTML = goodByeMessage;
 

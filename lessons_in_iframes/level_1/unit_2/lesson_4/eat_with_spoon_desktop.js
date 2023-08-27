@@ -139,7 +139,7 @@ function loadTheSpoonIfIsEmptyAndIsOverThePlate() {
 }
 function eatIfCan(event) {
   event.preventDefault();
-  if (spoonIsLoaded && event.deltaY>0 && !isSwallowing) { // Doesn't matter if is away from the plate
+  if (spoonIsLoaded && event.deltaY!=0 && !isSwallowing) { // Doesn't matter if is away from the plate
     isSwallowing = true; // Prevent multiple firing with boolean instead of once:true
     switch(yumNumber) {
       case 1:        loadFoodSound1.play();        break;

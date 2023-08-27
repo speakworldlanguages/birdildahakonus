@@ -9,7 +9,7 @@ let sipSoundHasBeenHeard = false;
 
 function updateGlassTiltDesktopUntilFirstGulp(event) { // fires with every mousewheel movement » event is listened on MAIN (whole viewport)
   event.preventDefault();
-  // -----
+  // ----- Unfortunately we cannot handle the MacOS two fingered reverse scroll gesture. Because we cannot detect if user has a mouse or is using the touchpad
   if (event.deltaY > 0) { console.log("down"); frameNumber++; directionIsDown = true; }
   else { console.log("up"); frameNumber--; directionIsDown = false; }
   // Limits
@@ -24,8 +24,10 @@ function updateGlassTiltDesktopUntilFirstGulp(event) { // fires with every mouse
   else {    glassContainerDuringGameGulp0.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
   glassContainerDuringGameGulp0.children[frameNumber].style.display = "block";
-  if (frameNumber == 16) {  insistence++;  }
-  if (insistence == 2) {
+  if (frameNumber == 16) {
+    if (isApple) { insistence += 0.2; } else { insistence++; }
+  }
+  if (insistence >= 2) {
     main.removeEventListener("wheel",updateGlassTiltDesktopUntilFirstGulp);
     main.addEventListener("wheel",updateGlassTiltDesktopUntilSecondGulp);
     insistence = 0;
@@ -45,8 +47,10 @@ function updateGlassTiltDesktopUntilSecondGulp(event) { event.preventDefault();
   else {    glassContainerDuringGameGulp1.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
   glassContainerDuringGameGulp1.children[frameNumber].style.display = "block";
-  if (frameNumber == 28) {  insistence++;  }
-  if (insistence == 2) {
+  if (frameNumber == 28) {
+    if (isApple) { insistence += 0.2; } else { insistence++; }
+  }
+  if (insistence >= 2) {
     main.removeEventListener("wheel",updateGlassTiltDesktopUntilSecondGulp);
     main.addEventListener("wheel",updateGlassTiltDesktopUntilThirdGulp);
     insistence = 0;
@@ -67,8 +71,10 @@ function updateGlassTiltDesktopUntilThirdGulp(event) { event.preventDefault();
   else {    glassContainerDuringGameGulp2.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
   glassContainerDuringGameGulp2.children[frameNumber].style.display = "block";
-  if (frameNumber == 40) {  insistence++;  }
-  if (insistence == 2) {
+  if (frameNumber == 40) {
+    if (isApple) { insistence += 0.2; } else { insistence++; }
+  }
+  if (insistence >= 2) {
     main.removeEventListener("wheel",updateGlassTiltDesktopUntilThirdGulp);
     main.addEventListener("wheel",updateGlassTiltDesktopUntilFourthGulp);
     insistence = 0;
@@ -89,8 +95,10 @@ function updateGlassTiltDesktopUntilFourthGulp(event) { event.preventDefault();
   else {    glassContainerDuringGameGulp3.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
   glassContainerDuringGameGulp3.children[frameNumber].style.display = "block";
-  if (frameNumber == 51) {  insistence++;  }
-  if (insistence == 2) {
+  if (frameNumber == 51) {
+    if (isApple) { insistence += 0.2; } else { insistence++; }
+  }
+  if (insistence >= 2) {
     main.removeEventListener("wheel",updateGlassTiltDesktopUntilFourthGulp);
     main.addEventListener("wheel",updateGlassTiltDesktopNowIsEmpty);
     insistence = 0;
