@@ -382,6 +382,12 @@ function speakToTheMic() {
       // Check if there is a match
       let j;
       for(j=0;j<eachWordArray.length;j++) {
+
+        // NOTE THAT: There is also the option of using includes() like,
+        /*
+        if (array.includes(searchString)) {            console.log(`${searchString} exists in the array.`);
+        } else {            console.log(`${searchString} does not exist in the array.`);        }
+        */
         let k;
         for (k = 0; k < phrasesArray.length; k++) {
           // Which method is better?
@@ -401,7 +407,14 @@ function speakToTheMic() {
           for (z = 0; z < fromPhraseToSingleWords.length; z++) {
             // Now we can reject 'underwater' and accept 'under water' // NOTE: With interimResults enabled it’s probably impossible to reject 'watermelon'
             let searchResult = false;
-            if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; }
+            if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; } // For some reason this fails for Arabic in Safari
+            else if (isApple) {
+              if (parent.annyang.getSpeechRecognizer().lang == "ar") { console.warn("Listening for Arabic on Safari/Apple");
+                // Use string search with the phrase and not individual words
+                if (phrasesArray[k].toLowerCase().search(eachWordArray[j].toLowerCase()) >= 0) { searchResult = true; }
+              }
+            }
+            // -
             if (!aMatchWasFound && searchResult) {
               aMatchWasFound = true; // Using this, we make sure that stopListeningAndProceedToNext fires only and only once
               if (parent.annyang.getSpeechRecognizer().interimResults) { console.log("Correct answer detected with interimResults enabled");
@@ -414,6 +427,8 @@ function speakToTheMic() {
             }
           } // End of for z
         } // End of for k
+
+
       } // End of for j
     } // END OF compareAndSeeIfTheAnswerIsCorrect
   }
