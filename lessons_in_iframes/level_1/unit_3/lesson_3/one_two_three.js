@@ -28,7 +28,7 @@ function startRecording() { //event.preventDefault(); event.stopPropagation();
 
       // Stop recording and create audio element source when recording is complete
       mediaRecorder.addEventListener('stop', function () {
-        const recordedBlob = new Blob(recordedChunks);
+        const recordedBlob = new Blob(recordedChunks, { type: 'audio/wav' });
         audioElement.src = URL.createObjectURL(recordedBlob);
       },{once:true});
 

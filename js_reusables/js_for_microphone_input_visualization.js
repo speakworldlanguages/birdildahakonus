@@ -13,11 +13,11 @@ waveformContainerDiv.classList.add("wavesurferMicrophoneDiv");
 var wavesurfer;
 
 // Make sure js_for_all_iframed_lesson_htmls is listed before(above) this js file. Otherwise access deviceDetector after window load.
-if (deviceDetector.device=="desktop") {
-  document.body.appendChild(waveformContainerDiv);
-  wavesurfer = WaveSurfer.create({container:'#waveform',waveColor:'white',barWidth:'3',barGap:'3',barHeight:'3',interact:false,cursorWidth:0,height:'100', plugins:[WaveSurfer.microphone.create()]});
+if (deviceDetector.device=="desktop" && !isApple) { // Too slow to run on Mac
+    document.body.appendChild(waveformContainerDiv);
+    wavesurfer = WaveSurfer.create({container:'#waveform',waveColor:'white',barWidth:'3',barGap:'3',barHeight:'3',interact:false,cursorWidth:0,height:'100', plugins:[WaveSurfer.microphone.create()]});
 } else {
-  // The MediaRecorder API and the Speech Recognition API cannot use the same microphone at the same time in most browsers
+  // The MediaRecorder API and the Speech Recognition API cannot use the same microphone at the same time in every browser
   // wavesurfer uses getUserMedia to read microphone which seems to be creating a conflict with SpeechRecognition
 }
 
@@ -27,7 +27,7 @@ var wavesurferIsListening = false;
 /* ______ Functions to start-stop ______ */
 // These will be called from the particular js files of the particular lessons.
 function startAudioInputVisualization() {
-  if (deviceDetector.device=="desktop") { // Test if this works on iOS,,, if it does then add || detectedOS_name == "ios"
+  if (deviceDetector.device=="desktop" && !isApple) { // Test if this works on iOS,,, if it does then add || detectedOS_name == "ios"
     // Get information about CPU. Make things look better on faster machines and optimize for performance on slower machines.
     if (window.navigator.hardwareConcurrency>3) {
       wavesurfer.microphone.bufferSize = 2048; // This makes it look smoother. Default is 4096.
@@ -53,7 +53,7 @@ function startAudioInputVisualization() {
 
 function stopAudioInputVisualization() {
   // ISSUE THAT NEEDS SERIOUS CARE: Safari doesn't allow mic permanently; it allows for only 1 listening session and prompts for permission everytime mic restarts
-  if (deviceDetector.device=="desktop") {
+  if (deviceDetector.device=="desktop" && !isApple) {
     wavesurfer.microphone.stop(); wavesurferIsListening = false;
     waveformContainerDiv.classList.remove("addThisToMakeItFadeIn"); // Immediate disappearance is OK » See css_for_wavesurfer_microphone_divs.css
   } else {
