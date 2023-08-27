@@ -344,11 +344,18 @@ function speakToTheMic() {
       for(j=0;j<eachWordArray.length;j++) {
         let k;
         for (k = 0; k < phrasesArray.length; k++) {
-          const fromPhraseToSingleWords = phrasesArray[k].split(" ");
+          const fromPhraseToSingleWords = phrasesArray[k].split(" "); // Note that in "spaceless" languages like Renmen-Hito phrases will not be split into words
           let z;
           for (z = 0; z < fromPhraseToSingleWords.length; z++) {
             let searchResult = false;
-            if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; }
+            if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; } // For some reason this fails for Arabic in Safari >>> Works without any problems in Chrome though
+            else if (isApple) {
+              if (parent.annyang.getSpeechRecognizer().lang == "ar") { console.warn("Listening for Arabic on Safari/Apple");
+                // Use string search to try and find it within the phrase and not individual words
+                if (phrasesArray[k].search(eachWordArray[j]) >= 0) { searchResult = true; }
+              }
+            }
+            // -
             if (!aMatchWasFound && searchResult) {
               aMatchWasFound = true; // Using this, we make sure that stopListeningAndProceedToNext fires only and only once
               if (parent.annyang.getSpeechRecognizer().interimResults) { console.log("Correct answer detected with interimResults enabled");

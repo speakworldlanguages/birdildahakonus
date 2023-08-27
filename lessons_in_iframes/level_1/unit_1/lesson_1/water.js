@@ -383,7 +383,8 @@ function speakToTheMic() {
       let j;
       for(j=0;j<eachWordArray.length;j++) {
 
-        // NOTE THAT: There is also the option of using includes() like,
+        // NOTE THAT: There is also the option of using includes() to perform phrase to phrase comparison
+        // BUT we want to split phrases into words and perform word to word comparison
         /*
         if (array.includes(searchString)) {            console.log(`${searchString} exists in the array.`);
         } else {            console.log(`${searchString} does not exist in the array.`);        }
@@ -405,9 +406,10 @@ function speakToTheMic() {
           const fromPhraseToSingleWords = phrasesArray[k].split(" "); // Note that in "spaceless" languages like Renmen-Hito phrases will not be split into words
           let z;
           for (z = 0; z < fromPhraseToSingleWords.length; z++) {
+
             // Now we can reject 'underwater' and accept 'under water' // NOTE: With interimResults enabled it’s probably impossible to reject 'watermelon'
             let searchResult = false;
-            if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; } // For some reason this fails for Arabic in Safari >>> No problems in Chrome though
+            if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; } // For some reason this fails for Arabic in Safari >>> Works without any problems in Chrome though
             else if (isApple) {
               if (parent.annyang.getSpeechRecognizer().lang == "ar") { console.warn("Listening for Arabic on Safari/Apple");
                 // Use string search to try and find it within the phrase and not individual words
@@ -431,7 +433,7 @@ function speakToTheMic() {
 
       } // End of for j
     } // END OF compareAndSeeIfTheAnswerIsCorrect
-  }
+  } // END OF if parent.annyang
 
 } /* END OF speakToTheMic */
 
