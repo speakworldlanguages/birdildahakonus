@@ -56,7 +56,7 @@
 
       <!-- THE SCENE -->
       <div class="putThingsAtBottomCenter">
-        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_2/background.avif" style="height:100vmin;" id="fixSafariBackgroundID">
+        <img draggable="false" src="" style="height:100vmin;" id="useAvifOrWebpBackgroundID">
       </div>
 
       <!-- THE WATERFALL -->
@@ -197,11 +197,14 @@
         }
 
         // ---
-        /* UNCOMMENT AND REPLACE AVIF WITH WEBP in case Safari frequently fails to display background.avif
+        // Safari frequently fails to display background.avif
+        const debuggedBackground = document.getElementById('useAvifOrWebpBackgroundID');
         if (isApple) {
-          const buggyBackground = document.getElementById('fixSafariBackgroundID');
+          debuggedBackground.src = "/lessons_in_iframes/level_1/unit_3/lesson_2/background.webp";
+        } else {
+          debuggedBackground.src = "/lessons_in_iframes/level_1/unit_3/lesson_2/background.avif";
         }
-        */
+
       } // END OF whatMustBeDoneAtFirstOnThisDevice()
     </script>
 

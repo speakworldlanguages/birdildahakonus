@@ -11,7 +11,7 @@ async function cacheLesson132CommonAssetsForAllLanguages() {
   const cacheForAllLanguages_1_3_2 = await caches.open('1-3-2-assets-for-all-languages-August2023');
   // ---
   let listOfFilesForAllLanguages_1_3_2 = [
-    "/lessons_in_iframes/level_1/unit_3/lesson_2/background.avif",
+    // "/lessons_in_iframes/level_1/unit_3/lesson_2/background.avif", // Use condition
     "/lessons_in_iframes/level_1/unit_3/lesson_2/bgrepeatx.avif",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/cloud1.webp",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/cloud2.webp",
@@ -56,6 +56,16 @@ async function cacheLesson132CommonAssetsForAllLanguages() {
       "/lessons_in_iframes/level_1/unit_3/lesson_2/keyboard_left_right_arrow.webp",
       "/lessons_in_iframes/level_1/unit_3/lesson_2/keyboard_up_arrow.webp",
       "/lessons_in_iframes/level_1/unit_3/lesson_2/keyboard_whole.webp"
+    );
+  }
+  // -
+  if (isApple) {
+    listOfFilesForAllLanguages_1_3_2.push(
+      "/lessons_in_iframes/level_1/unit_3/lesson_2/background.webp"
+    );
+  } else {
+    listOfFilesForAllLanguages_1_3_2.push(
+      "/lessons_in_iframes/level_1/unit_3/lesson_2/background.avif"
     );
   }
   // ---
