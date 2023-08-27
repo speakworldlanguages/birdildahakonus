@@ -63,8 +63,12 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 
   if (detectedOS_name == "macos") {
-    console.warn("Will use HTML5 Audio instead of Web Audio on desktop Safari");
-    Howler.usingWebAudio = false; // force html5 // Otherwise every alert mutes and unmutes all the sounds and it keeps toggling like that
+    console.warn("Will use HTML5 Audio instead of Web Audio on Mac OS");
+    try {
+      Howler.usingWebAudio = false; // force html5 // Otherwise every alert mutes and unmutes all the sounds and it keeps toggling like that
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   if (detectedBrowserName.search("safari") >= 0) {

@@ -38,13 +38,20 @@ if (localStorage.memoryCard) {  // https://www.w3schools.com/jsref/tryit.asp?fil
 // REMEMBER: Sliding menu buttons also need this. Handle separately.
 // ALSO REMEMBER: mousedown DOESN'T UNLOCK SOUND --- mouseup DOES
 var firstUserGestureHasUnleashedAudio = false; // Used in js_for_the_sliding_navigation_menu.js
-window.addEventListener("mouseup",function () {  firstUserGestureHasUnleashedAudio = true;  }, {once:true}); // Prevent sound flooding (otherwise hover sounds that accumulate may explode with the first user gesture).
+
 
 // NOTE: Chrome does not count an alert box click as a user gesture. Only the first element click or touch will unlock sound. Must be silent until then.
 // _________________
 
-let dismissNotificationSound1, clickSound; //BETTER WITHOUT: hoverSound
+let dismissNotificationSound1;
+let clickSound; //BETTER WITHOUT: hoverSound
 window.addEventListener("load",function () {
+
+  if (deviceDetector.isMobile) {
+    window.addEventListener("touchend",function () {  firstUserGestureHasUnleashedAudio = true;  }, {once:true}); // Prevent sound flooding (otherwise hover sounds that accumulate may explode with the first user gesture).
+  } else {
+    window.addEventListener("mouseup",function () {  firstUserGestureHasUnleashedAudio = true;  }, {once:true}); // Prevent sound flooding (otherwise hover sounds that accumulate may explode with the first user gesture).
+  }
 
 
   // ALL BUTTONS - Kishi Language, Hito Lanuage, Renmen Language etc.
