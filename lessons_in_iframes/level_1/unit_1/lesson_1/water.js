@@ -373,7 +373,7 @@ function speakToTheMic() {
         notificationDingTone.play(); // Android has its native DING tone. So let this DING tone play on desktops and iOS devices.
     }
     // Start listening.
-    new SuperTimeout(function() {  parent.annyang.start();  },500);
+    new SuperTimeout(function() {  parent.annyang.start();  },500); // NOTE: annyang.resume() equals annyang.start()
     new SuperTimeout(function() {  startAudioInputVisualization();  },600); // Will work everywhere except on Android. See js_for_microphone_input_visualization.js
     // New method of detecting matches
     parent.annyang.addCallback('result', compareAndSeeIfTheAnswerIsCorrect);
@@ -407,11 +407,11 @@ function speakToTheMic() {
           for (z = 0; z < fromPhraseToSingleWords.length; z++) {
             // Now we can reject 'underwater' and accept 'under water' // NOTE: With interimResults enabled it’s probably impossible to reject 'watermelon'
             let searchResult = false;
-            if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; } // For some reason this fails for Arabic in Safari
+            if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; } // For some reason this fails for Arabic in Safari >>> No problems in Chrome though
             else if (isApple) {
               if (parent.annyang.getSpeechRecognizer().lang == "ar") { console.warn("Listening for Arabic on Safari/Apple");
-                // Use string search with the phrase and not individual words
-                if (phrasesArray[k].toLowerCase().search(eachWordArray[j].toLowerCase()) >= 0) { searchResult = true; }
+                // Use string search to try and find it within the phrase and not individual words
+                if (phrasesArray[k].search(eachWordArray[j]) >= 0) { searchResult = true; }
               }
             }
             // -

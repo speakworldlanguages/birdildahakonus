@@ -75,6 +75,13 @@ window.addEventListener("load",function () {
     // CANCELLED targetLanguageIsWrittenWithoutSpaces = localStorage.theLanguageUserWasLearningIsWrittenWithoutSpaces;
     if (annyang) {
         annyang.setLanguage(langCodeForAnnyang); // Firefox v60's and v70's won't let buttons function unless this is wrapped in an if (annyang){} like this.
+        // SAFARI BUG: Safari does not update the recognition.lang before returning at least one wrong result >>> Keeps listening for the last language that was set before being changed with setLanguage()
+        if (isApple) {
+          annyang.abort();
+          setTimeout(function () { annyang.start(); }, 150); // NOTE: annyang.resume() equals annyang.start()
+          setTimeout(function () { annyang.setLanguage(langCodeForAnnyang); }, 300);
+          setTimeout(function () { annyang.abort();  }, 450); //Try to force update
+        }
     }
     if (localStorage.genderOfTheUserSavedToLocalStorage) { // Retrieve
         genderOfTheUser = localStorage.genderOfTheUserSavedToLocalStorage;
@@ -481,6 +488,13 @@ function openFirstLesson(freshNewOrReturning) {
   // Set language
   if (annyang) {
     annyang.setLanguage(langCodeForAnnyang); // Firefox v60's and v70's won't let buttons function unless this is wrapped in an if (annyang){} like this.
+    // SAFARI BUG: Safari does not update the recognition.lang before returning at least one wrong result >>> Keeps listening for the last language that was set before being changed with setLanguage()
+    if (isApple) {
+      annyang.abort();
+      setTimeout(function () { annyang.start(); }, 150); // NOTE: annyang.resume() equals annyang.start()
+      setTimeout(function () { annyang.setLanguage(langCodeForAnnyang); }, 300);
+      setTimeout(function () { annyang.abort();  }, 450); //Try to force update
+    }
   }
 
   setTimeout(function() {

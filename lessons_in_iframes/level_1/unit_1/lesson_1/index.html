@@ -117,13 +117,17 @@
             if(internetForWater.downlink>=1.5){ console.log("Speed is fast enough: "+internetForWater.downlink); /*Fast enough: Let it load and display*/ // Get waterfalls and show
               switchToAnimatedWebpWaterfallsMOBILE();
             } else { preventRepetitionOf3aAnd3b(); console.log("Speed is NOT fast enough: "+internetForWater.downlink); } // Too slow: Loading of waterfalls won't make it in time
-          } else { switchToAnimatedWebpWaterfallsMOBILE(); console.log("Internet speed is NOT readable."); } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
+          } else { console.warn("Internet speed is NOT readable.");
+            if (isApple) { /*Too CPU intensive for Apple*/ } else { /*switchToAnimatedWebpWaterfallsMOBILE();*/ } // Should we let Firefox try???
+          } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
         } else { console.log("Checking if the internet speed is readable on this desktop device..."); // DESKTOP
           if(internetForWater){ console.log("Internet speed is readable."); // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
             if(internetForWater.downlink>=1.5){ console.log("Speed is fast enough: "+internetForWater.downlink); /*Fast enough: Let it load and display*/ // Get waterfalls and show
               switchToAnimatedWebpWaterfallsDESKTOP();
             } else { preventRepetitionOf3aAnd3b(); console.log("Speed is NOT fast enough: "+internetForWater.downlink); } // Too slow: Loading of waterfalls won't make it in time
-          } else { switchToAnimatedWebpWaterfallsDESKTOP(); console.log("Internet speed is NOT readable."); } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
+          } else { console.warn("Internet speed is NOT readable.");
+            if (isApple) { /*Too CPU intensive for Apple*/ } else { /*switchToAnimatedWebpWaterfallsDESKTOP(); */ } // Should we let Firefox try???
+          } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
         }
       }, { once: true });
       function switchToAnimatedWebpWaterfallsDESKTOP() {
