@@ -258,7 +258,7 @@ function stopLoopingAndGetToNewPosition() {
     new SuperTimeout(function () {
       pictogramContainer.style.display = "none";
       glassContainerBeforeGame.style.display = "none";
-      glassContainerDuringGameGulp0.style.display = "block";
+      //glassContainerDuringGameGulp0.style.display = "block";
       glassContainerDuringGameGulp0.style.visibility = "visible";
     }, newPositionTime*1000+100);
   }, 100);

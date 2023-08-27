@@ -20,10 +20,10 @@ function updateGlassTiltDesktopUntilFirstGulp(event) { // fires with every mouse
     sipSound.play(); sipSoundHasBeenHeard = true;
   }
   // ------
-  if (directionIsDown) {    glassContainerDuringGameGulp0.children[frameNumber-1].style.visibility = "hidden";  }
-  else {    glassContainerDuringGameGulp0.children[frameNumber+1].style.visibility = "hidden";  }
+  if (directionIsDown) {    glassContainerDuringGameGulp0.children[frameNumber-1].style.display = "none";  }
+  else {    glassContainerDuringGameGulp0.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
-  glassContainerDuringGameGulp0.children[frameNumber].style.visibility = "visible";
+  glassContainerDuringGameGulp0.children[frameNumber].style.display = "block";
   if (frameNumber == 16) {
     if (isApple) { insistence += 0.1; } else { insistence++; }
   }
@@ -43,10 +43,10 @@ function updateGlassTiltDesktopUntilSecondGulp(event) { event.preventDefault();
   if (frameNumber<0) { frameNumber = 0; }
   else if (frameNumber>28) { frameNumber = 28; }
   // ------
-  if (directionIsDown) {    glassContainerDuringGameGulp1.children[frameNumber-1].style.visibility = "hidden";  }
-  else {    glassContainerDuringGameGulp1.children[frameNumber+1].style.visibility = "hidden";  }
+  if (directionIsDown) {    glassContainerDuringGameGulp1.children[frameNumber-1].style.display = "none";  }
+  else {    glassContainerDuringGameGulp1.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
-  glassContainerDuringGameGulp1.children[frameNumber].style.visibility = "visible";
+  glassContainerDuringGameGulp1.children[frameNumber].style.display = "block";
   if (frameNumber == 28) {
     if (isApple) { insistence += 0.1; } else { insistence++; }
   }
@@ -67,10 +67,10 @@ function updateGlassTiltDesktopUntilThirdGulp(event) { event.preventDefault();
   if (frameNumber<0) { frameNumber = 0; }
   else if (frameNumber>40) { frameNumber = 40; }
   // ------
-  if (directionIsDown) {    glassContainerDuringGameGulp2.children[frameNumber-1].style.visibility = "hidden";  }
-  else {    glassContainerDuringGameGulp2.children[frameNumber+1].style.visibility = "hidden";  }
+  if (directionIsDown) {    glassContainerDuringGameGulp2.children[frameNumber-1].style.display = "none";  }
+  else {    glassContainerDuringGameGulp2.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
-  glassContainerDuringGameGulp2.children[frameNumber].style.visibility = "visible";
+  glassContainerDuringGameGulp2.children[frameNumber].style.display = "block";
   if (frameNumber == 40) {
     if (isApple) { insistence += 0.1; } else { insistence++; }
   }
@@ -91,10 +91,10 @@ function updateGlassTiltDesktopUntilFourthGulp(event) { event.preventDefault();
   if (frameNumber<0) { frameNumber = 0; }
   else if (frameNumber>51) { frameNumber = 51; }
   // ------
-  if (directionIsDown) {    glassContainerDuringGameGulp3.children[frameNumber-1].style.visibility = "hidden";  }
-  else {    glassContainerDuringGameGulp3.children[frameNumber+1].style.visibility = "hidden";  }
+  if (directionIsDown) {    glassContainerDuringGameGulp3.children[frameNumber-1].style.display = "none";  }
+  else {    glassContainerDuringGameGulp3.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
-  glassContainerDuringGameGulp3.children[frameNumber].style.visibility = "visible";
+  glassContainerDuringGameGulp3.children[frameNumber].style.display = "block";
   if (frameNumber == 51) {
     if (isApple) { insistence += 0.1; } else { insistence++; }
   }
@@ -120,10 +120,10 @@ function updateGlassTiltDesktopNowIsEmpty(event) { event.preventDefault();
   if (frameNumber<0) { frameNumber = 0; }
   else if (frameNumber>59) { frameNumber = 59; }
   // ------
-  if (directionIsDown) {    glassContainerDuringGameGulp4.children[frameNumber-1].style.visibility = "hidden";  }
-  else {    glassContainerDuringGameGulp4.children[frameNumber+1].style.visibility = "hidden";  }
+  if (directionIsDown) {    glassContainerDuringGameGulp4.children[frameNumber-1].style.display = "none";  }
+  else {    glassContainerDuringGameGulp4.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
-  glassContainerDuringGameGulp4.children[frameNumber].style.visibility = "visible";
+  glassContainerDuringGameGulp4.children[frameNumber].style.display = "block";
 }
 
 // ------------- WITHOUT MOUSEWHEEL ---------------
@@ -154,14 +154,14 @@ function updateGlassTiltWithoutWheelUntilFirstGulp(event) {
   }
   // With extra safety measures
   if (directionIsDown) {
-    if (frameNumber > 0) {    glassContainerDuringGameGulp0.children[frameNumber-1].style.visibility = "hidden";  }
+    if (frameNumber > 0) {    glassContainerDuringGameGulp0.children[frameNumber-1].style.display = "none";  }
   }
   else {
-    if (frameNumber < 16) {   glassContainerDuringGameGulp0.children[frameNumber+1].style.visibility = "hidden";  }
+    if (frameNumber < 16) {   glassContainerDuringGameGulp0.children[frameNumber+1].style.display = "none";  }
   }
   // Regardless of direction
   // console.log("current fr: "+frameNumber);
-  glassContainerDuringGameGulp0.children[frameNumber].style.visibility = "visible";
+  glassContainerDuringGameGulp0.children[frameNumber].style.display = "block";
 
   if (frameNumber == 16) {  insistence++;  }
   if (insistence == 5) {
@@ -191,13 +191,13 @@ function updateGlassTiltWithoutWheelUntilSecondGulp() {
   // Movement and threshold points
   // With extra safety measures
   if (directionIsDown) {
-    if (frameNumber > 0) {    glassContainerDuringGameGulp1.children[frameNumber-1].style.visibility = "hidden";  }
+    if (frameNumber > 0) {    glassContainerDuringGameGulp1.children[frameNumber-1].style.display = "none";  }
   }
   else {
-    if (frameNumber < 28) {   glassContainerDuringGameGulp1.children[frameNumber+1].style.visibility = "hidden";  }
+    if (frameNumber < 28) {   glassContainerDuringGameGulp1.children[frameNumber+1].style.display = "none";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp1.children[frameNumber].style.visibility = "visible";
+  glassContainerDuringGameGulp1.children[frameNumber].style.display = "block";
 
   if (frameNumber == 28) {  insistence++;  }
   if (insistence == 4) {
@@ -226,13 +226,13 @@ function updateGlassTiltWithoutWheelUntilThirdGulp() {
   // Movement and threshold points
   // With extra safety measures
   if (directionIsDown) {
-    if (frameNumber > 0) {    glassContainerDuringGameGulp2.children[frameNumber-1].style.visibility = "hidden";  }
+    if (frameNumber > 0) {    glassContainerDuringGameGulp2.children[frameNumber-1].style.display = "none";  }
   }
   else {
-    if (frameNumber < 40) {   glassContainerDuringGameGulp2.children[frameNumber+1].style.visibility = "hidden";  }
+    if (frameNumber < 40) {   glassContainerDuringGameGulp2.children[frameNumber+1].style.display = "none";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp2.children[frameNumber].style.visibility = "visible";
+  glassContainerDuringGameGulp2.children[frameNumber].style.display = "block";
 
   if (frameNumber == 40) {  insistence++;  }
   if (insistence == 3) {
@@ -261,13 +261,13 @@ function updateGlassTiltWithoutWheelUntilFourthGulp() {
   // Movement and threshold points
   // With extra safety measures
   if (directionIsDown) {
-    if (frameNumber > 0) {    glassContainerDuringGameGulp3.children[frameNumber-1].style.visibility = "hidden";  }
+    if (frameNumber > 0) {    glassContainerDuringGameGulp3.children[frameNumber-1].style.display = "none";  }
   }
   else {
-    if (frameNumber < 51) {   glassContainerDuringGameGulp3.children[frameNumber+1].style.visibility = "hidden";  }
+    if (frameNumber < 51) {   glassContainerDuringGameGulp3.children[frameNumber+1].style.display = "none";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp3.children[frameNumber].style.visibility = "visible";
+  glassContainerDuringGameGulp3.children[frameNumber].style.display = "block";
 
   if (frameNumber == 51) {  insistence++;  }
   if (insistence == 3) {
@@ -301,13 +301,13 @@ function updateGlassTiltWithoutWheelThatNowIsEmpty() {
   // Movement and threshold points
   // With extra safety measures
   if (directionIsDown) {
-    if (frameNumber > 0) {    glassContainerDuringGameGulp4.children[frameNumber-1].style.visibility = "hidden";  }
+    if (frameNumber > 0) {    glassContainerDuringGameGulp4.children[frameNumber-1].style.display = "none";  }
   }
   else {
-    if (frameNumber < 59) {   glassContainerDuringGameGulp4.children[frameNumber+1].style.visibility = "hidden";  }
+    if (frameNumber < 59) {   glassContainerDuringGameGulp4.children[frameNumber+1].style.display = "none";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp4.children[frameNumber].style.visibility = "visible";
+  glassContainerDuringGameGulp4.children[frameNumber].style.display = "block";
 }
 
 function winHappenedOnDesktop() {

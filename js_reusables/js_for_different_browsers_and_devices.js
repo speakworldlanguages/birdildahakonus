@@ -54,7 +54,10 @@ window.addEventListener('DOMContentLoaded', function(){
   // NOTE THAT: window.oncontextmenu IS NO GOOD - BECAUSE IT TRIGGERS AN ANNOYING VIBRATION everytime a long touch happens USE-pointer events none carefully or prevent default for touchstart
   // HERE WE DON'T NEED TO WAIT FOR window.load to correctly access deviceDetector
   if (deviceDetector.isMobile) { // Let's allow bubbling by omitting event.stopPropagation();
-    window.ontouchstart = function(event) {     event.preventDefault();     return false;    }; // It looks like this is working...
+
+    // iosta ipadte ses prevent default yüzünden mi çalışmadı ???????????? ??????? ???????????
+
+    //window.ontouchstart = function(event) {     event.preventDefault();     return false;    }; // It looks like this is working...
   } else { } // We need the right click menu on desktops » it opens the [start-fullscreen-mode] box
 
   /* DESPITE: Being sick of writing special code for Apple */

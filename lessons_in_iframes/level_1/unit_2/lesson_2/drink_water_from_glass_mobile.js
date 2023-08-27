@@ -145,9 +145,9 @@ function updateGlassTiltMobileUntilFirstGulp(event) {
   // ---
   function update(onlyThisMustShow) {
     for (let i = 0; i < glassContainerDuringGameGulp0.children.length; i++) {
-      glassContainerDuringGameGulp0.children[i].style.visibility = "hidden";
+      glassContainerDuringGameGulp0.children[i].style.display = "none";
     }
-    glassContainerDuringGameGulp0.children[onlyThisMustShow].style.visibility = "visible";
+    glassContainerDuringGameGulp0.children[onlyThisMustShow].style.display = "block";
   }
 }
 
@@ -195,9 +195,9 @@ function updateGlassTiltMobileUntilSecondGulp() {
   // ---
   function update(onlyThisMustShow) {
     for (let i = 0; i < glassContainerDuringGameGulp1.children.length; i++) {
-      glassContainerDuringGameGulp1.children[i].style.visibility = "hidden";
+      glassContainerDuringGameGulp1.children[i].style.display = "none";
     }
-    glassContainerDuringGameGulp1.children[onlyThisMustShow].style.visibility = "visible";
+    glassContainerDuringGameGulp1.children[onlyThisMustShow].style.display = "block";
   }
 }
 
@@ -245,9 +245,9 @@ function updateGlassTiltMobileUntilThirdGulp() {
   // ---
   function update(onlyThisMustShow) {
     for (let i = 0; i < glassContainerDuringGameGulp2.children.length; i++) {
-      glassContainerDuringGameGulp2.children[i].style.visibility = "hidden";
+      glassContainerDuringGameGulp2.children[i].style.display = "none";
     }
-    glassContainerDuringGameGulp2.children[onlyThisMustShow].style.visibility = "visible";
+    glassContainerDuringGameGulp2.children[onlyThisMustShow].style.display = "block";
   }
 }
 
@@ -300,9 +300,9 @@ function updateGlassTiltMobileUntilFourthGulp() {
   // ---
   function update(onlyThisMustShow) {
     for (let i = 0; i < glassContainerDuringGameGulp3.children.length; i++) {
-      glassContainerDuringGameGulp3.children[i].style.visibility = "hidden";
+      glassContainerDuringGameGulp3.children[i].style.display = "none";
     }
-    glassContainerDuringGameGulp3.children[onlyThisMustShow].style.visibility = "visible";
+    glassContainerDuringGameGulp3.children[onlyThisMustShow].style.display = "block";
   }
 }
 
@@ -341,9 +341,9 @@ function updateGlassTiltMobileWhichIsNowEmpty() {
   // ---
   function update(onlyThisMustShow) {
     for (let i = 0; i < glassContainerDuringGameGulp4.children.length; i++) {
-      glassContainerDuringGameGulp4.children[i].style.visibility = "hidden";
+      glassContainerDuringGameGulp4.children[i].style.display = "none";
     }
-    glassContainerDuringGameGulp4.children[onlyThisMustShow].style.visibility = "visible";
+    glassContainerDuringGameGulp4.children[onlyThisMustShow].style.display = "block";
   }
 }
 
@@ -378,14 +378,14 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp(event) { ev
   }
   // With extra safety measures
   if (isMovingDownwards) {
-    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp0.children[frameToBeDisplayed-1].style.visibility = "hidden";  }
+    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp0.children[frameToBeDisplayed-1].style.display = "none";  }
   }
   else {
-    if (frameToBeDisplayed < 16) {   glassContainerDuringGameGulp0.children[frameToBeDisplayed+1].style.visibility = "hidden";  }
+    if (frameToBeDisplayed < 16) {   glassContainerDuringGameGulp0.children[frameToBeDisplayed+1].style.display = "none";  }
   }
   // Regardless of direction
   // console.log("current fr: "+frameToBeDisplayed);
-  glassContainerDuringGameGulp0.children[frameToBeDisplayed].style.visibility = "visible";
+  glassContainerDuringGameGulp0.children[frameToBeDisplayed].style.display = "block";
 
   if (frameToBeDisplayed == 16) {  counterForPointOfNoReturn++;  }
   if (counterForPointOfNoReturn == 4) {
@@ -417,13 +417,13 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp(event) { e
   else if (frameToBeDisplayed>28) { frameToBeDisplayed = 28; beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; }
   // With extra safety measures
   if (isMovingDownwards) {
-    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp1.children[frameToBeDisplayed-1].style.visibility = "hidden";  }
+    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp1.children[frameToBeDisplayed-1].style.display = "none";  }
   }
   else {
-    if (frameToBeDisplayed < 28) {   glassContainerDuringGameGulp1.children[frameToBeDisplayed+1].style.visibility = "hidden";  }
+    if (frameToBeDisplayed < 28) {   glassContainerDuringGameGulp1.children[frameToBeDisplayed+1].style.display = "none";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp1.children[frameToBeDisplayed].style.visibility = "visible";
+  glassContainerDuringGameGulp1.children[frameToBeDisplayed].style.display = "block";
 
   if (frameToBeDisplayed == 28) {  counterForPointOfNoReturn++;  }
   if (counterForPointOfNoReturn == 4) {
@@ -455,13 +455,13 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp(event) { ev
   else if (frameToBeDisplayed>40) { frameToBeDisplayed = 40; beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; }
   // With extra safety measures
   if (isMovingDownwards) {
-    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp2.children[frameToBeDisplayed-1].style.visibility = "hidden";  }
+    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp2.children[frameToBeDisplayed-1].style.display = "none";  }
   }
   else {
-    if (frameToBeDisplayed < 40) {   glassContainerDuringGameGulp2.children[frameToBeDisplayed+1].style.visibility = "hidden";  }
+    if (frameToBeDisplayed < 40) {   glassContainerDuringGameGulp2.children[frameToBeDisplayed+1].style.display = "none";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp2.children[frameToBeDisplayed].style.visibility = "visible";
+  glassContainerDuringGameGulp2.children[frameToBeDisplayed].style.display = "block";
 
   if (frameToBeDisplayed == 40) {  counterForPointOfNoReturn++;  }
   if (counterForPointOfNoReturn == 4) {
@@ -493,13 +493,13 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp(event) { e
   else if (frameToBeDisplayed>51) { frameToBeDisplayed = 51; beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; }
   // With extra safety measures
   if (isMovingDownwards) {
-    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp3.children[frameToBeDisplayed-1].style.visibility = "hidden";  }
+    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp3.children[frameToBeDisplayed-1].style.display = "none";  }
   }
   else {
-    if (frameToBeDisplayed < 51) {   glassContainerDuringGameGulp3.children[frameToBeDisplayed+1].style.visibility = "hidden";  }
+    if (frameToBeDisplayed < 51) {   glassContainerDuringGameGulp3.children[frameToBeDisplayed+1].style.display = "none";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp3.children[frameToBeDisplayed].style.visibility = "visible";
+  glassContainerDuringGameGulp3.children[frameToBeDisplayed].style.display = "block";
 
   if (frameToBeDisplayed == 51) {  counterForPointOfNoReturn++;  }
   if (counterForPointOfNoReturn == 4) {
@@ -536,13 +536,13 @@ function updateGlassTiltMobileWithoutDeviceOrientationEmptiedUp(event) { event.p
   else if (frameToBeDisplayed>59) { frameToBeDisplayed = 59; beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; }
   // With extra safety measures
   if (isMovingDownwards) {
-    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp4.children[frameToBeDisplayed-1].style.visibility = "hidden";  }
+    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp4.children[frameToBeDisplayed-1].style.display = "none";  }
   }
   else {
-    if (frameToBeDisplayed < 59) {   glassContainerDuringGameGulp4.children[frameToBeDisplayed+1].style.visibility = "hidden";  }
+    if (frameToBeDisplayed < 59) {   glassContainerDuringGameGulp4.children[frameToBeDisplayed+1].style.display = "none";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp4.children[frameToBeDisplayed].style.visibility = "visible";
+  glassContainerDuringGameGulp4.children[frameToBeDisplayed].style.display = "block";
 }
 
 
