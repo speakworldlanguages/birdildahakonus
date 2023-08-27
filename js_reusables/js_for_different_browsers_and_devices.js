@@ -56,8 +56,9 @@ window.addEventListener('DOMContentLoaded', function(){
   if (deviceDetector.isMobile) { // Let's allow bubbling by omitting event.stopPropagation();
 
     // iosta ipadte ses prevent default yüzünden mi çalışmadı ???????????? ??????? ???????????
+    // Hayır.. Görünen o ki sorun webm desteğinin eksik olması imiş
 
-    //window.ontouchstart = function(event) {     event.preventDefault();     return false;    }; // It looks like this is working...
+    window.ontouchstart = function(event) {     event.preventDefault();     return false;    }; // It looks like this is working...
   } else { } // We need the right click menu on desktops » it opens the [start-fullscreen-mode] box
 
   /* DESPITE: Being sick of writing special code for Apple */
@@ -66,6 +67,8 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 
   if (detectedOS_name == "macos") {
+    // DECIDE: Desktop Safari supports playing webm but Mobile Safari doesn't.
+    // Should we use mp3 for Desktop Safari too???? ???? ???? YES IF it runs faster and hover sounds are accurate
     console.warn("Will use HTML5 Audio instead of Web Audio on Mac OS");
     try {
       Howler.usingWebAudio = false; // force html5 // Otherwise every alert mutes and unmutes all the sounds and it keeps toggling like that
@@ -168,7 +171,9 @@ window.addEventListener('DOMContentLoaded', function(){
       // Opera 30 to 50
       // Samsung 4 to 9.1
       // NOTE THAT Safari will never fall here because with 16.0 Permissions API came with microphone included.
+
       tellTheUserToChangeOrUpdateTheBrowser();
+
     });
   } else {
     // User's browser doesn't have permissions API at all which happens on
@@ -179,7 +184,9 @@ window.addEventListener('DOMContentLoaded', function(){
     // EVEN THOUGH Safari started supporting speech recognition with 14.1 on Mac and 14.5 on iOS, it didn't support PermissionStatus API until 16.0 and it didn't support change event before 16.4
     // As a result, an iPad with Safari 15.6 fell here in October 2022. Note that desktop Safari and mobile Safari are different.
     // Best practice seems to be: Show an alert box that tells the user to either update his/her browser or open the app on a Windows/Android device with Chrome.
+
     tellTheUserToChangeOrUpdateTheBrowser();
+
     // Safari 15.x does not support avif files so those will be notified here
     // Safari has partially started supporting avif files during 16.0~16.3 and full support came with 16.4
     // So it is necessary to warn older Safari users and force them to update
@@ -190,6 +197,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 // ---
 function tellTheUserToChangeOrUpdateTheBrowser() {
+
   let alertTime;
   if (isUnknownBrowserInTermsOfSpeechRecognition) { alertTime = 5555; } // An alert box has already been displayed therefore we must delay the second alert to avoid flooding
   else { alertTime = 500; }
@@ -197,6 +205,7 @@ function tellTheUserToChangeOrUpdateTheBrowser() {
     const filePath = "/user_interface/text/"+userInterfaceLanguage+"/0-if_something_is_not_working.txt"; // A plain [Better if you use Chrome on a PC] msg
     fetch(filePath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  alert(contentOfTheTxtFile.split("|")[1]);  });
   },alertTime);
+
 }
 
 /*________________window LOAD___________________*/
@@ -341,8 +350,17 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
           // Opera 20 to 29
           // Desktop Safari 14.1 ~ 15.x
           // Mobile Safari 14.5 ~ 15.x
-          tellTheUserToChangeOrUpdateTheBrowser(); // This will be shown for the second time to Safari users between 14.x ~ 15.x
+
+          // tellTheUserToChangeOrUpdateTheBrowser(); // This will be shown for the second time to Safari users between 14.x ~ 15.x
           // Safari users before 14.x will not see this repetition. They will see the "You must update" alert only once as handled above.
+
+          // 28 Ağustos 2023 İstanbul: iPad buraya düşüyor
+          // İlerletmeyi deneyelim - çalışacak mı?
+          // Ve evet çalıştı - konuşma algılandı
+          //AMA rotating globe preloader kaybolmuyor - BELKİ DE AVIF desteği olmadığı için olabilir
+          removeAllowMicrophoneBlinkerForcedly();
+          // Bu şekilde hemen startTeaching çağırmak yerine dah mantıklı birşey yapılabilir mi ???  ???  ???  ???
+          setTimeout(function () {     startTeaching(nameOfButtonIsWhatWillBeTaught);     },2002);
         }
         // END OF ---Permission handling---
 
