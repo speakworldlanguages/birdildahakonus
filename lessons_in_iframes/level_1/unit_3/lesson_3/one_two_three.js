@@ -126,7 +126,7 @@ function startSpeechRecognition() { console.log("let annyang start listening");
         for (z = 0; z < fromPhraseToSingleWords.length; z++) {
 
           let searchResult = false;
-          if (fromPhraseToSingleWords[z].toLowerCase() == "3" || fromPhraseToSingleWords[z].toLowerCase() == "dur") { searchResult = true; }
+          if (fromPhraseToSingleWords[z].toLowerCase() == "3" || fromPhraseToSingleWords[z].toLowerCase() == "üç" || fromPhraseToSingleWords[z].toLowerCase() == "dur" || fromPhraseToSingleWords[z].toLowerCase() == "doğru") { searchResult = true; }
           if (!aMatchWasFound && searchResult) {
             aMatchWasFound = true; // Using this, we make sure that stopListeningAndProceedToNext fires only and only once
             if (parent.annyang.getSpeechRecognizer().interimResults) { console.warn("!!! Keyword detected with interimResults enabled");

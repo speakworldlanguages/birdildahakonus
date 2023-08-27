@@ -20,19 +20,19 @@ function updateGlassTiltDesktopUntilFirstGulp(event) { // fires with every mouse
     sipSound.play(); sipSoundHasBeenHeard = true;
   }
   // ------
-  if (directionIsDown) {    glassContainerDuringGameGulp0.children[frameNumber-1].style.display = "none";  }
-  else {    glassContainerDuringGameGulp0.children[frameNumber+1].style.display = "none";  }
+  if (directionIsDown) {    glassContainerDuringGameGulp0.children[frameNumber-1].style.visibility = "hidden";  }
+  else {    glassContainerDuringGameGulp0.children[frameNumber+1].style.visibility = "hidden";  }
   // Regardless of direction
-  glassContainerDuringGameGulp0.children[frameNumber].style.display = "block";
+  glassContainerDuringGameGulp0.children[frameNumber].style.visibility = "visible";
   if (frameNumber == 16) {
-    if (isApple) { insistence += 0.2; } else { insistence++; }
+    if (isApple) { insistence += 0.1; } else { insistence++; }
   }
   if (insistence >= 2) {
     main.removeEventListener("wheel",updateGlassTiltDesktopUntilFirstGulp);
     main.addEventListener("wheel",updateGlassTiltDesktopUntilSecondGulp);
     insistence = 0;
-    glassContainerDuringGameGulp0.style.display = "none";
-    glassContainerDuringGameGulp1.style.display = "block";
+    glassContainerDuringGameGulp0.style.visibility = "hidden";
+    glassContainerDuringGameGulp1.style.visibility = "visible";
     gulpSound1.play();
   }
 }
@@ -43,19 +43,19 @@ function updateGlassTiltDesktopUntilSecondGulp(event) { event.preventDefault();
   if (frameNumber<0) { frameNumber = 0; }
   else if (frameNumber>28) { frameNumber = 28; }
   // ------
-  if (directionIsDown) {    glassContainerDuringGameGulp1.children[frameNumber-1].style.display = "none";  }
-  else {    glassContainerDuringGameGulp1.children[frameNumber+1].style.display = "none";  }
+  if (directionIsDown) {    glassContainerDuringGameGulp1.children[frameNumber-1].style.visibility = "hidden";  }
+  else {    glassContainerDuringGameGulp1.children[frameNumber+1].style.visibility = "hidden";  }
   // Regardless of direction
-  glassContainerDuringGameGulp1.children[frameNumber].style.display = "block";
+  glassContainerDuringGameGulp1.children[frameNumber].style.visibility = "visible";
   if (frameNumber == 28) {
-    if (isApple) { insistence += 0.2; } else { insistence++; }
+    if (isApple) { insistence += 0.1; } else { insistence++; }
   }
   if (insistence >= 2) {
     main.removeEventListener("wheel",updateGlassTiltDesktopUntilSecondGulp);
     main.addEventListener("wheel",updateGlassTiltDesktopUntilThirdGulp);
     insistence = 0;
-    glassContainerDuringGameGulp1.style.display = "none";
-    glassContainerDuringGameGulp2.style.display = "block";
+    glassContainerDuringGameGulp1.style.visibility = "hidden";
+    glassContainerDuringGameGulp2.style.visibility = "visible";
     gulpSound2.play();
   }
 }
@@ -67,19 +67,19 @@ function updateGlassTiltDesktopUntilThirdGulp(event) { event.preventDefault();
   if (frameNumber<0) { frameNumber = 0; }
   else if (frameNumber>40) { frameNumber = 40; }
   // ------
-  if (directionIsDown) {    glassContainerDuringGameGulp2.children[frameNumber-1].style.display = "none";  }
-  else {    glassContainerDuringGameGulp2.children[frameNumber+1].style.display = "none";  }
+  if (directionIsDown) {    glassContainerDuringGameGulp2.children[frameNumber-1].style.visibility = "hidden";  }
+  else {    glassContainerDuringGameGulp2.children[frameNumber+1].style.visibility = "hidden";  }
   // Regardless of direction
-  glassContainerDuringGameGulp2.children[frameNumber].style.display = "block";
+  glassContainerDuringGameGulp2.children[frameNumber].style.visibility = "visible";
   if (frameNumber == 40) {
-    if (isApple) { insistence += 0.2; } else { insistence++; }
+    if (isApple) { insistence += 0.1; } else { insistence++; }
   }
   if (insistence >= 2) {
     main.removeEventListener("wheel",updateGlassTiltDesktopUntilThirdGulp);
     main.addEventListener("wheel",updateGlassTiltDesktopUntilFourthGulp);
     insistence = 0;
-    glassContainerDuringGameGulp2.style.display = "none";
-    glassContainerDuringGameGulp3.style.display = "block";
+    glassContainerDuringGameGulp2.style.visibility = "hidden";
+    glassContainerDuringGameGulp3.style.visibility = "visible";
     gulpSound3.play();
   }
 }
@@ -91,19 +91,19 @@ function updateGlassTiltDesktopUntilFourthGulp(event) { event.preventDefault();
   if (frameNumber<0) { frameNumber = 0; }
   else if (frameNumber>51) { frameNumber = 51; }
   // ------
-  if (directionIsDown) {    glassContainerDuringGameGulp3.children[frameNumber-1].style.display = "none";  }
-  else {    glassContainerDuringGameGulp3.children[frameNumber+1].style.display = "none";  }
+  if (directionIsDown) {    glassContainerDuringGameGulp3.children[frameNumber-1].style.visibility = "hidden";  }
+  else {    glassContainerDuringGameGulp3.children[frameNumber+1].style.visibility = "hidden";  }
   // Regardless of direction
-  glassContainerDuringGameGulp3.children[frameNumber].style.display = "block";
+  glassContainerDuringGameGulp3.children[frameNumber].style.visibility = "visible";
   if (frameNumber == 51) {
-    if (isApple) { insistence += 0.2; } else { insistence++; }
+    if (isApple) { insistence += 0.1; } else { insistence++; }
   }
   if (insistence >= 2) {
     main.removeEventListener("wheel",updateGlassTiltDesktopUntilFourthGulp);
     main.addEventListener("wheel",updateGlassTiltDesktopNowIsEmpty);
     insistence = 0;
-    glassContainerDuringGameGulp3.style.display = "none";
-    glassContainerDuringGameGulp4.style.display = "block";
+    glassContainerDuringGameGulp3.style.visibility = "hidden";
+    glassContainerDuringGameGulp4.style.visibility = "visible";
     gulpSound4.play();
     let winTime;  switch (parent.speedAdjustmentSetting) {  case "slow": winTime = 3000; break;  case "fast": winTime = 1000; break;  default: winTime = 2000;  }
     new SuperTimeout(function () {
@@ -120,10 +120,10 @@ function updateGlassTiltDesktopNowIsEmpty(event) { event.preventDefault();
   if (frameNumber<0) { frameNumber = 0; }
   else if (frameNumber>59) { frameNumber = 59; }
   // ------
-  if (directionIsDown) {    glassContainerDuringGameGulp4.children[frameNumber-1].style.display = "none";  }
-  else {    glassContainerDuringGameGulp4.children[frameNumber+1].style.display = "none";  }
+  if (directionIsDown) {    glassContainerDuringGameGulp4.children[frameNumber-1].style.visibility = "hidden";  }
+  else {    glassContainerDuringGameGulp4.children[frameNumber+1].style.visibility = "hidden";  }
   // Regardless of direction
-  glassContainerDuringGameGulp4.children[frameNumber].style.display = "block";
+  glassContainerDuringGameGulp4.children[frameNumber].style.visibility = "visible";
 }
 
 // ------------- WITHOUT MOUSEWHEEL ---------------
@@ -154,21 +154,21 @@ function updateGlassTiltWithoutWheelUntilFirstGulp(event) {
   }
   // With extra safety measures
   if (directionIsDown) {
-    if (frameNumber > 0) {    glassContainerDuringGameGulp0.children[frameNumber-1].style.display = "none";  }
+    if (frameNumber > 0) {    glassContainerDuringGameGulp0.children[frameNumber-1].style.visibility = "hidden";  }
   }
   else {
-    if (frameNumber < 16) {   glassContainerDuringGameGulp0.children[frameNumber+1].style.display = "none";  }
+    if (frameNumber < 16) {   glassContainerDuringGameGulp0.children[frameNumber+1].style.visibility = "hidden";  }
   }
   // Regardless of direction
   // console.log("current fr: "+frameNumber);
-  glassContainerDuringGameGulp0.children[frameNumber].style.display = "block";
+  glassContainerDuringGameGulp0.children[frameNumber].style.visibility = "visible";
 
   if (frameNumber == 16) {  insistence++;  }
   if (insistence == 5) {
     main.removeEventListener("mousemove",updateGlassTiltWithoutWheelUntilFirstGulp);
     insistence = 0;
-    glassContainerDuringGameGulp0.style.display = "none";
-    glassContainerDuringGameGulp1.style.display = "block";
+    glassContainerDuringGameGulp0.style.visibility = "hidden";
+    glassContainerDuringGameGulp1.style.visibility = "visible";
     gulpSound1.play();
     console.log("First gulp without mouse wheel");
     toCalculateCurrentFrame = frameNumber*gearRatio; // Undo the overdrive during insistence incrementation
@@ -191,20 +191,20 @@ function updateGlassTiltWithoutWheelUntilSecondGulp() {
   // Movement and threshold points
   // With extra safety measures
   if (directionIsDown) {
-    if (frameNumber > 0) {    glassContainerDuringGameGulp1.children[frameNumber-1].style.display = "none";  }
+    if (frameNumber > 0) {    glassContainerDuringGameGulp1.children[frameNumber-1].style.visibility = "hidden";  }
   }
   else {
-    if (frameNumber < 28) {   glassContainerDuringGameGulp1.children[frameNumber+1].style.display = "none";  }
+    if (frameNumber < 28) {   glassContainerDuringGameGulp1.children[frameNumber+1].style.visibility = "hidden";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp1.children[frameNumber].style.display = "block";
+  glassContainerDuringGameGulp1.children[frameNumber].style.visibility = "visible";
 
   if (frameNumber == 28) {  insistence++;  }
   if (insistence == 4) {
     main.removeEventListener("mousemove",updateGlassTiltWithoutWheelUntilSecondGulp);
     insistence = 0;
-    glassContainerDuringGameGulp1.style.display = "none";
-    glassContainerDuringGameGulp2.style.display = "block";
+    glassContainerDuringGameGulp1.style.visibility = "hidden";
+    glassContainerDuringGameGulp2.style.visibility = "visible";
     gulpSound2.play();
     console.log("Second gulp without mouse wheel");
     toCalculateCurrentFrame = frameNumber*gearRatio;
@@ -226,20 +226,20 @@ function updateGlassTiltWithoutWheelUntilThirdGulp() {
   // Movement and threshold points
   // With extra safety measures
   if (directionIsDown) {
-    if (frameNumber > 0) {    glassContainerDuringGameGulp2.children[frameNumber-1].style.display = "none";  }
+    if (frameNumber > 0) {    glassContainerDuringGameGulp2.children[frameNumber-1].style.visibility = "hidden";  }
   }
   else {
-    if (frameNumber < 40) {   glassContainerDuringGameGulp2.children[frameNumber+1].style.display = "none";  }
+    if (frameNumber < 40) {   glassContainerDuringGameGulp2.children[frameNumber+1].style.visibility = "hidden";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp2.children[frameNumber].style.display = "block";
+  glassContainerDuringGameGulp2.children[frameNumber].style.visibility = "visible";
 
   if (frameNumber == 40) {  insistence++;  }
   if (insistence == 3) {
     main.removeEventListener("mousemove",updateGlassTiltWithoutWheelUntilThirdGulp);
     insistence = 0;
-    glassContainerDuringGameGulp2.style.display = "none";
-    glassContainerDuringGameGulp3.style.display = "block";
+    glassContainerDuringGameGulp2.style.visibility = "hidden";
+    glassContainerDuringGameGulp3.style.visibility = "visible";
     gulpSound3.play();
     console.log("Third gulp without mouse wheel");
     toCalculateCurrentFrame = frameNumber*gearRatio;
@@ -261,20 +261,20 @@ function updateGlassTiltWithoutWheelUntilFourthGulp() {
   // Movement and threshold points
   // With extra safety measures
   if (directionIsDown) {
-    if (frameNumber > 0) {    glassContainerDuringGameGulp3.children[frameNumber-1].style.display = "none";  }
+    if (frameNumber > 0) {    glassContainerDuringGameGulp3.children[frameNumber-1].style.visibility = "hidden";  }
   }
   else {
-    if (frameNumber < 51) {   glassContainerDuringGameGulp3.children[frameNumber+1].style.display = "none";  }
+    if (frameNumber < 51) {   glassContainerDuringGameGulp3.children[frameNumber+1].style.visibility = "hidden";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp3.children[frameNumber].style.display = "block";
+  glassContainerDuringGameGulp3.children[frameNumber].style.visibility = "visible";
 
   if (frameNumber == 51) {  insistence++;  }
   if (insistence == 3) {
     main.removeEventListener("mousemove",updateGlassTiltWithoutWheelUntilFourthGulp);
     insistence = 0;
-    glassContainerDuringGameGulp3.style.display = "none";
-    glassContainerDuringGameGulp4.style.display = "block";
+    glassContainerDuringGameGulp3.style.visibility = "hidden";
+    glassContainerDuringGameGulp4.style.visibility = "visible";
     gulpSound4.play();
     console.log("Last (4th) gulp without mouse wheel");
     toCalculateCurrentFrame = frameNumber*gearRatio;
@@ -301,13 +301,13 @@ function updateGlassTiltWithoutWheelThatNowIsEmpty() {
   // Movement and threshold points
   // With extra safety measures
   if (directionIsDown) {
-    if (frameNumber > 0) {    glassContainerDuringGameGulp4.children[frameNumber-1].style.display = "none";  }
+    if (frameNumber > 0) {    glassContainerDuringGameGulp4.children[frameNumber-1].style.visibility = "hidden";  }
   }
   else {
-    if (frameNumber < 59) {   glassContainerDuringGameGulp4.children[frameNumber+1].style.display = "none";  }
+    if (frameNumber < 59) {   glassContainerDuringGameGulp4.children[frameNumber+1].style.visibility = "hidden";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp4.children[frameNumber].style.display = "block";
+  glassContainerDuringGameGulp4.children[frameNumber].style.visibility = "visible";
 }
 
 function winHappenedOnDesktop() {

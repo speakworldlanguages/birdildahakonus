@@ -128,8 +128,8 @@ function updateGlassTiltMobileUntilFirstGulp(event) {
     window.removeEventListener("deviceorientation",updateGlassTiltMobileUntilFirstGulp);
     window.addEventListener("deviceorientation",updateGlassTiltMobileUntilSecondGulp);
     counterForPointOfNoReturn = 0; // reset
-    glassContainerDuringGameGulp0.style.display = "none";
-    glassContainerDuringGameGulp1.style.display = "block";
+    glassContainerDuringGameGulp0.style.visibility = "hidden";
+    glassContainerDuringGameGulp1.style.visibility = "visible";
     gulpSound1.play();
   }
   // ---
@@ -145,9 +145,9 @@ function updateGlassTiltMobileUntilFirstGulp(event) {
   // ---
   function update(onlyThisMustShow) {
     for (let i = 0; i < glassContainerDuringGameGulp0.children.length; i++) {
-      glassContainerDuringGameGulp0.children[i].style.display = "none";
+      glassContainerDuringGameGulp0.children[i].style.visibility = "hidden";
     }
-    glassContainerDuringGameGulp0.children[onlyThisMustShow].style.display = "block";
+    glassContainerDuringGameGulp0.children[onlyThisMustShow].style.visibility = "visible";
   }
 }
 
@@ -178,8 +178,8 @@ function updateGlassTiltMobileUntilSecondGulp() {
     window.removeEventListener("deviceorientation",updateGlassTiltMobileUntilSecondGulp);
     window.addEventListener("deviceorientation",updateGlassTiltMobileUntilThirdGulp);
     counterForPointOfNoReturn = 0; // reset
-    glassContainerDuringGameGulp1.style.display = "none";
-    glassContainerDuringGameGulp2.style.display = "block";
+    glassContainerDuringGameGulp1.style.visibility = "hidden";
+    glassContainerDuringGameGulp2.style.visibility = "visible";
     gulpSound2.play();
   }
   // ---
@@ -195,9 +195,9 @@ function updateGlassTiltMobileUntilSecondGulp() {
   // ---
   function update(onlyThisMustShow) {
     for (let i = 0; i < glassContainerDuringGameGulp1.children.length; i++) {
-      glassContainerDuringGameGulp1.children[i].style.display = "none";
+      glassContainerDuringGameGulp1.children[i].style.visibility = "hidden";
     }
-    glassContainerDuringGameGulp1.children[onlyThisMustShow].style.display = "block";
+    glassContainerDuringGameGulp1.children[onlyThisMustShow].style.visibility = "visible";
   }
 }
 
@@ -228,8 +228,8 @@ function updateGlassTiltMobileUntilThirdGulp() {
     window.removeEventListener("deviceorientation",updateGlassTiltMobileUntilThirdGulp);
     window.addEventListener("deviceorientation",updateGlassTiltMobileUntilFourthGulp);
     counterForPointOfNoReturn = 0; // reset
-    glassContainerDuringGameGulp2.style.display = "none";
-    glassContainerDuringGameGulp3.style.display = "block";
+    glassContainerDuringGameGulp2.style.visibility = "hidden";
+    glassContainerDuringGameGulp3.style.visibility = "visible";
     gulpSound3.play();
   }
   // ---
@@ -245,9 +245,9 @@ function updateGlassTiltMobileUntilThirdGulp() {
   // ---
   function update(onlyThisMustShow) {
     for (let i = 0; i < glassContainerDuringGameGulp2.children.length; i++) {
-      glassContainerDuringGameGulp2.children[i].style.display = "none";
+      glassContainerDuringGameGulp2.children[i].style.visibility = "hidden";
     }
-    glassContainerDuringGameGulp2.children[onlyThisMustShow].style.display = "block";
+    glassContainerDuringGameGulp2.children[onlyThisMustShow].style.visibility = "visible";
   }
 }
 
@@ -278,8 +278,8 @@ function updateGlassTiltMobileUntilFourthGulp() {
     window.removeEventListener("deviceorientation",updateGlassTiltMobileUntilFourthGulp);
     window.addEventListener("deviceorientation",updateGlassTiltMobileWhichIsNowEmpty);
     counterForPointOfNoReturn = 0; // reset
-    glassContainerDuringGameGulp3.style.display = "none";
-    glassContainerDuringGameGulp4.style.display = "block";
+    glassContainerDuringGameGulp3.style.visibility = "hidden";
+    glassContainerDuringGameGulp4.style.visibility = "visible";
     gulpSound4.play();
     let winTime;  switch (parent.speedAdjustmentSetting) {  case "slow": winTime = 3000; break;  case "fast": winTime = 1000; break;  default: winTime = 2000;  }
     new SuperTimeout(function () {
@@ -300,9 +300,9 @@ function updateGlassTiltMobileUntilFourthGulp() {
   // ---
   function update(onlyThisMustShow) {
     for (let i = 0; i < glassContainerDuringGameGulp3.children.length; i++) {
-      glassContainerDuringGameGulp3.children[i].style.display = "none";
+      glassContainerDuringGameGulp3.children[i].style.visibility = "hidden";
     }
-    glassContainerDuringGameGulp3.children[onlyThisMustShow].style.display = "block";
+    glassContainerDuringGameGulp3.children[onlyThisMustShow].style.visibility = "visible";
   }
 }
 
@@ -341,9 +341,9 @@ function updateGlassTiltMobileWhichIsNowEmpty() {
   // ---
   function update(onlyThisMustShow) {
     for (let i = 0; i < glassContainerDuringGameGulp4.children.length; i++) {
-      glassContainerDuringGameGulp4.children[i].style.display = "none";
+      glassContainerDuringGameGulp4.children[i].style.visibility = "hidden";
     }
-    glassContainerDuringGameGulp4.children[onlyThisMustShow].style.display = "block";
+    glassContainerDuringGameGulp4.children[onlyThisMustShow].style.visibility = "visible";
   }
 }
 
@@ -378,14 +378,14 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp(event) { ev
   }
   // With extra safety measures
   if (isMovingDownwards) {
-    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp0.children[frameToBeDisplayed-1].style.display = "none";  }
+    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp0.children[frameToBeDisplayed-1].style.visibility = "hidden";  }
   }
   else {
-    if (frameToBeDisplayed < 16) {   glassContainerDuringGameGulp0.children[frameToBeDisplayed+1].style.display = "none";  }
+    if (frameToBeDisplayed < 16) {   glassContainerDuringGameGulp0.children[frameToBeDisplayed+1].style.visibility = "hidden";  }
   }
   // Regardless of direction
   // console.log("current fr: "+frameToBeDisplayed);
-  glassContainerDuringGameGulp0.children[frameToBeDisplayed].style.display = "block";
+  glassContainerDuringGameGulp0.children[frameToBeDisplayed].style.visibility = "visible";
 
   if (frameToBeDisplayed == 16) {  counterForPointOfNoReturn++;  }
   if (counterForPointOfNoReturn == 4) {
@@ -393,8 +393,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp(event) { ev
     main.removeEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp);
     main.removeEventListener("touchend",updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp);
     counterForPointOfNoReturn = 0;
-    glassContainerDuringGameGulp0.style.display = "none";
-    glassContainerDuringGameGulp1.style.display = "block";
+    glassContainerDuringGameGulp0.style.visibility = "hidden";
+    glassContainerDuringGameGulp1.style.visibility = "visible";
     gulpSound1.play();
     console.log("First gulp without deviceorientation");
     beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; // Undo the overdrive during insistence incrementation
@@ -417,13 +417,13 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp(event) { e
   else if (frameToBeDisplayed>28) { frameToBeDisplayed = 28; beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; }
   // With extra safety measures
   if (isMovingDownwards) {
-    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp1.children[frameToBeDisplayed-1].style.display = "none";  }
+    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp1.children[frameToBeDisplayed-1].style.visibility = "hidden";  }
   }
   else {
-    if (frameToBeDisplayed < 28) {   glassContainerDuringGameGulp1.children[frameToBeDisplayed+1].style.display = "none";  }
+    if (frameToBeDisplayed < 28) {   glassContainerDuringGameGulp1.children[frameToBeDisplayed+1].style.visibility = "hidden";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp1.children[frameToBeDisplayed].style.display = "block";
+  glassContainerDuringGameGulp1.children[frameToBeDisplayed].style.visibility = "visible";
 
   if (frameToBeDisplayed == 28) {  counterForPointOfNoReturn++;  }
   if (counterForPointOfNoReturn == 4) {
@@ -431,8 +431,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp(event) { e
     main.removeEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp);
     main.removeEventListener("touchend",updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp);
     counterForPointOfNoReturn = 0;
-    glassContainerDuringGameGulp1.style.display = "none";
-    glassContainerDuringGameGulp2.style.display = "block";
+    glassContainerDuringGameGulp1.style.visibility = "hidden";
+    glassContainerDuringGameGulp2.style.visibility = "visible";
     gulpSound2.play();
     console.log("2nd gulp without deviceorientation");
     beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; // Undo the overdrive during insistence incrementation
@@ -455,13 +455,13 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp(event) { ev
   else if (frameToBeDisplayed>40) { frameToBeDisplayed = 40; beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; }
   // With extra safety measures
   if (isMovingDownwards) {
-    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp2.children[frameToBeDisplayed-1].style.display = "none";  }
+    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp2.children[frameToBeDisplayed-1].style.visibility = "hidden";  }
   }
   else {
-    if (frameToBeDisplayed < 40) {   glassContainerDuringGameGulp2.children[frameToBeDisplayed+1].style.display = "none";  }
+    if (frameToBeDisplayed < 40) {   glassContainerDuringGameGulp2.children[frameToBeDisplayed+1].style.visibility = "hidden";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp2.children[frameToBeDisplayed].style.display = "block";
+  glassContainerDuringGameGulp2.children[frameToBeDisplayed].style.visibility = "visible";
 
   if (frameToBeDisplayed == 40) {  counterForPointOfNoReturn++;  }
   if (counterForPointOfNoReturn == 4) {
@@ -469,8 +469,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp(event) { ev
     main.removeEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp);
     main.removeEventListener("touchend",updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp);
     counterForPointOfNoReturn = 0;
-    glassContainerDuringGameGulp2.style.display = "none";
-    glassContainerDuringGameGulp3.style.display = "block";
+    glassContainerDuringGameGulp2.style.visibility = "hidden";
+    glassContainerDuringGameGulp3.style.visibility = "visible";
     gulpSound3.play();
     console.log("3rd gulp without deviceorientation");
     beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; // Undo the overdrive during insistence incrementation
@@ -493,13 +493,13 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp(event) { e
   else if (frameToBeDisplayed>51) { frameToBeDisplayed = 51; beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; }
   // With extra safety measures
   if (isMovingDownwards) {
-    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp3.children[frameToBeDisplayed-1].style.display = "none";  }
+    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp3.children[frameToBeDisplayed-1].style.visibility = "hidden";  }
   }
   else {
-    if (frameToBeDisplayed < 51) {   glassContainerDuringGameGulp3.children[frameToBeDisplayed+1].style.display = "none";  }
+    if (frameToBeDisplayed < 51) {   glassContainerDuringGameGulp3.children[frameToBeDisplayed+1].style.visibility = "hidden";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp3.children[frameToBeDisplayed].style.display = "block";
+  glassContainerDuringGameGulp3.children[frameToBeDisplayed].style.visibility = "visible";
 
   if (frameToBeDisplayed == 51) {  counterForPointOfNoReturn++;  }
   if (counterForPointOfNoReturn == 4) {
@@ -507,8 +507,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp(event) { e
     main.removeEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp);
     main.removeEventListener("touchend",updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp);
     counterForPointOfNoReturn = 0;
-    glassContainerDuringGameGulp3.style.display = "none";
-    glassContainerDuringGameGulp4.style.display = "block";
+    glassContainerDuringGameGulp3.style.visibility = "hidden";
+    glassContainerDuringGameGulp4.style.visibility = "visible";
     gulpSound4.play();
     let winTime;  switch (parent.speedAdjustmentSetting) {  case "slow": winTime = 3000; break;  case "fast": winTime = 1000; break;  default: winTime = 2000;  }
     new SuperTimeout(function () {
@@ -536,13 +536,13 @@ function updateGlassTiltMobileWithoutDeviceOrientationEmptiedUp(event) { event.p
   else if (frameToBeDisplayed>59) { frameToBeDisplayed = 59; beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; }
   // With extra safety measures
   if (isMovingDownwards) {
-    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp4.children[frameToBeDisplayed-1].style.display = "none";  }
+    if (frameToBeDisplayed > 0) {    glassContainerDuringGameGulp4.children[frameToBeDisplayed-1].style.visibility = "hidden";  }
   }
   else {
-    if (frameToBeDisplayed < 59) {   glassContainerDuringGameGulp4.children[frameToBeDisplayed+1].style.display = "none";  }
+    if (frameToBeDisplayed < 59) {   glassContainerDuringGameGulp4.children[frameToBeDisplayed+1].style.visibility = "hidden";  }
   }
   // Regardless of direction
-  glassContainerDuringGameGulp4.children[frameToBeDisplayed].style.display = "block";
+  glassContainerDuringGameGulp4.children[frameToBeDisplayed].style.visibility = "visible";
 }
 
 

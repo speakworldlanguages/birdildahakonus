@@ -259,6 +259,7 @@ function stopLoopingAndGetToNewPosition() {
       pictogramContainer.style.display = "none";
       glassContainerBeforeGame.style.display = "none";
       glassContainerDuringGameGulp0.style.display = "block";
+      glassContainerDuringGameGulp0.style.visibility = "visible";
     }, newPositionTime*1000+100);
   }, 100);
   // unblur if was blurred
