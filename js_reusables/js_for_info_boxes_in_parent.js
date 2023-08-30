@@ -3,7 +3,7 @@
 // This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 // We don't want appearance sounds for any of these boxes,,, see each note below
-let closeTheBoxSound;
+let closeTheBox_OK_Sound;
 
 // --- Notes shown through P elements
 const willTryToSaveYourProgressNoteP = document.createElement("P"); willTryToSaveYourProgressNoteP.innerHTML = "...";
@@ -31,12 +31,12 @@ okLetsTryRefreshingTheBrowserBoxDIV.innerHTML = "&#9989;"; // Default content of
 // ---
 window.addEventListener("DOMContentLoaded",function() { // QUESTION: Could DOMContentLoaded still be too early for deviceDetector at parent level? A: Not if js_for_info_boxes_in_parent is listed after js_for_different_browsers_and_devices
   // soundFileFormat exists in js_for_different_browsers_and_devices
-  closeTheBoxSound = new Howl({  src: ["/user_interface/sounds/notification2_close."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
+  closeTheBox_OK_Sound = new Howl({  src: ["/user_interface/sounds/notification2_close."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
   // notification3_close is also used as dismissVocabularySound in js_for_info_boxes_in_lessons
   /* DEPRECATE
   // Do not access isApple before DOMContentLoaded in js_for_different_browsers_and_devices
-  if (isApple) {  closeTheBoxSound = new Howl({  src: ["/user_interface/sounds/notification3_close.mp3"]   });  }
-  else {          closeTheBoxSound = new Howl({  src: ["/user_interface/sounds/notification3_close.webm"]  });  }
+  if (isApple) {  closeTheBox_OK_Sound = new Howl({  src: ["/user_interface/sounds/notification3_close.mp3"]   });  }
+  else {          closeTheBox_OK_Sound = new Howl({  src: ["/user_interface/sounds/notification3_close.webm"]  });  }
   */
   // -
   const pathOfSaveLoadInfoNoticeTexts = "/user_interface/text/"+userInterfaceLanguage+"/0-about_saving_loading_users_progress.txt";
@@ -136,14 +136,14 @@ function createAndHandleGoBackOrProceedBox() {
     }
 
     function cancelButtonIsTouchedOrClicked() {
-      closeTheBoxSound.play();
+      closeTheBox_OK_Sound.play();
       // Play disappear animation and remove and do nothing
       hideTheSaveLoadBoxAndDismissTheNotice();
       // WHY? IT WORKED BUT » document.body.removeChild(saveLoadInfoBoxContainerDIV); was causing an error after its first usage (from 2nd time and on)
       setTimeout(function () { reject(false); },350); // Let the .then().catch() fire in js_for_the_parent_all_browsers_all_devices
     }
     function proceedButtonIsTouchedOrClicked() {
-      closeTheBoxSound.play();
+      closeTheBox_OK_Sound.play();
       // Play disappear animation and remove and proceed
       hideTheSaveLoadBoxAndDismissTheNotice();
       // WHY? IT WORKED BUT » document.body.removeChild(saveLoadInfoBoxContainerDIV); was causing an error after its first usage (from 2nd time and on)
@@ -198,7 +198,7 @@ function createAndHandleProgressHasBeenLoadedBox() { // Called if memoryCard exi
   }
 
   function okGoodButtonIsClicked() {
-    closeTheBoxSound.play();
+    closeTheBox_OK_Sound.play();
     // Play disappear animation and get ready for a new call
     progressLoadOkNoticeBoxContainerDIV.style.animationName = "theBlueBackgroundAndTheContentsDisappear"; // Should take 330ms » See css_for_info_boxes_in_parent
     setTimeout(function () {
@@ -272,12 +272,12 @@ function createAndHandleMaybeYouShouldReloadBox() {
   }
 
   function waitButtonIsClicked() {
-    closeTheBoxSound.play();
+    closeTheBox_OK_Sound.play();
     // Play disappear animation and remove and do nothing
     hideWouldYouLikeToRestartTheAppBox();
   }
   function reloadButtonIsClicked() {
-    closeTheBoxSound.play();
+    closeTheBox_OK_Sound.play();
     // Play disappear animation and remove and REFRESH
     hideWouldYouLikeToRestartTheAppBox();
     setTimeout(function () {  itIsAlreadyCertainThatUserWantsToReload = true;  location.reload();  }, 350); // See js_for_the_parent_all_browsers_all_devices » Better if onbeforeunload is bypassed in this case

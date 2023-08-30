@@ -1,1 +1,1 @@
-﻿DURAKLATILDI|Devam et
+﻿DURAKLATILDI|<span style="white-space:nowrap;">Devam et</span>
