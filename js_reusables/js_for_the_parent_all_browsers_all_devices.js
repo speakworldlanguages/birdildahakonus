@@ -42,7 +42,22 @@ var firstUserGestureHasUnleashedAudio = false; // Used in js_for_the_sliding_nav
 
 // NOTE: Chrome does not count an alert box click as a user gesture. Only the first element click or touch will unlock sound. Must be silent until then.
 // _________________
-
+function setSpeechRecognitionLanguage(input) {
+  // Set language
+  if (annyang) {
+    annyang.setLanguage(input); // Firefox v60's and v70's won't let buttons function unless this is wrapped in an if (annyang){} like this.
+    // SAFARI BUG: Safari does not update the recognition.lang before returning at least one wrong result >>> Keeps listening for the last language that was set before being changed with setLanguage()
+    // WAIT A MINUTE: Chrome is doing the same, isn't it?
+    //if (isApple) { // DO NOT ACCESS isApple BEFORE DOMContentLoaded in js_for_different_browsers_and_devices
+    /*
+      annyang.abort();
+      setTimeout(function () { annyang.start(); }, 150); // NOTE: annyang.resume() equals annyang.start()
+      setTimeout(function () { annyang.setLanguage(input); }, 300);
+      setTimeout(function () { annyang.abort();  }, 450); //Try to force update
+    */
+    //}
+  }
+}
 // DEPRECATED let dismissNotificationSound1;
 let clickSound; //BETTER WITHOUT: hoverSound
 window.addEventListener("load",function () {
@@ -87,17 +102,8 @@ window.addEventListener("load",function () {
     langCodeForAnnyang = localStorage.theLanguageUserWasLearningLastTimeToSetAnnyang; // Same situation.
     targetLanguageReadsLeftToRightOrRightToLeft = localStorage.theLanguageUserWasLearningReadsLTRorRTL; // Same situation.
     // CANCELLED targetLanguageIsWrittenWithoutSpaces = localStorage.theLanguageUserWasLearningIsWrittenWithoutSpaces;
-    if (annyang) {
-        annyang.setLanguage(langCodeForAnnyang); // Firefox v60's and v70's won't let buttons function unless this is wrapped in an if (annyang){} like this.
-        // SAFARI BUG: Safari does not update the recognition.lang before returning at least one wrong result >>> Keeps listening for the last language that was set before being changed with setLanguage()
-        // WAIT A MINUTE: Chrome is doing the same, isn't it?
-        //if (isApple) { // DO NOT ACCESS isApple BEFORE DOMContentLoaded in js_for_different_browsers_and_devices
-          annyang.abort();
-          setTimeout(function () { annyang.start(); }, 150); // NOTE: annyang.resume() equals annyang.start()
-          setTimeout(function () { annyang.setLanguage(langCodeForAnnyang); }, 300);
-          setTimeout(function () { annyang.abort();  }, 450); //Try to force update
-        //}
-    }
+    setSpeechRecognitionLanguage(langCodeForAnnyang);
+
     if (localStorage.genderOfTheUserSavedToLocalStorage) { // Retrieve
         genderOfTheUser = localStorage.genderOfTheUserSavedToLocalStorage;
         if (genderOfTheUser=="female") {         userIsFemaleSoUseFemaleConjugation = true;        }
@@ -138,6 +144,9 @@ async function mouseDownMenuButtonF(event) { event.preventDefault();
     else { folderName = userWantsToLearnWhichLanguage; }
 
     setLangCodeForFilePathsAndCacheTheFirstTeachingAssets(folderName);
+    langCodeForAnnyang = folderName.substring(0,2)
+    setSpeechRecognitionLanguage(langCodeForAnnyang); // Set as soon as possible // Will be saved to localStorage by openFirstLesson
+
     setTimeout(function () { event.target.classList.remove("buttonMousedownOrTouchend"); },1201); // See css_for_the_container_parent_html
     setTimeout(function () {
       if (!chosenLanguageWasPreviouslyStudied) {
@@ -180,6 +189,9 @@ async function touchEndMenuButtonF(event) { event.preventDefault();
       else { folderName = userWantsToLearnWhichLanguage; }
 
       setLangCodeForFilePathsAndCacheTheFirstTeachingAssets(folderName);
+      langCodeForAnnyang = folderName.substring(0,2)
+      setSpeechRecognitionLanguage(langCodeForAnnyang); // Set as soon as possible // Will be saved to localStorage by openFirstLesson
+
       setTimeout(function () { theThingThatWasChosen.classList.remove("buttonMousedownOrTouchend"); },1201); // See css_for_the_container_parent_html
       setTimeout(function () {
         if (!chosenLanguageWasPreviouslyStudied) {
@@ -315,7 +327,7 @@ femalesIcon.src = "/user_interface/images/gender_ladies.webp"; // Only 1,5KB
 /* JA - Hito */
 function letTheIFrameTeachJapanese(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "ltr"; // See openFirstLesson() to find how this is saved to localStorage
-  langCodeForAnnyang = "ja";
+  //langCodeForAnnyang = "ja";
   if (!savedProgress.ja) { // if it doesn't exist
     savedProgress.ja = {}; console.log("Create a new save slot for "+langCodeForTeachingFilePaths.substring(0,2)); // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
     saveJSON = JSON.stringify(savedProgress); // See js_for_every_single_html
@@ -328,7 +340,7 @@ function letTheIFrameTeachJapanese(){ // Called from within startTeaching()
 /* KO - Saram */
 function letTheIFrameTeachKorean(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "ltr"; // See openFirstLesson() to find how this is saved to localStorage
-  langCodeForAnnyang = "ko";
+  //langCodeForAnnyang = "ko";
   if (!savedProgress.ko) { // if it doesn't exist
     savedProgress.ko = {}; console.log("Create a new save slot for "+langCodeForTeachingFilePaths.substring(0,2)); // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
     saveJSON = JSON.stringify(savedProgress); // See js_for_every_single_html
@@ -341,7 +353,7 @@ function letTheIFrameTeachKorean(){ // Called from within startTeaching()
 /* ZH - Renmen */
 function letTheIFrameTeachChinese(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "ltr"; // See openFirstLesson() to find how this is saved to localStorage
-  langCodeForAnnyang = "zh"; // "zh" alone works on Android. UNCERTAIN: Would it still be better with "zh-CN" or "zh-TW" or vice-versa on Android and Windows? Because Android turns the mic on and off too quickly in some less supported languages even though we want longer listens.
+  //langCodeForAnnyang = "zh"; // "zh" alone works on Android. UNCERTAIN: Would it still be better with "zh-CN" or "zh-TW" or vice-versa on Android and Windows? Because Android turns the mic on and off too quickly in some less supported languages even though we want longer listens.
   // Mac Safari works with zh only // Does not work with "zh-Hans"!
   if (!savedProgress.zh) { // if it doesn't exist
     savedProgress.zh = {}; console.log("Create a new save slot for "+langCodeForTeachingFilePaths.substring(0,2)); // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
@@ -355,7 +367,7 @@ function letTheIFrameTeachChinese(){ // Called from within startTeaching()
 /* TR - Kişi */
 function letTheIFrameTeachTurkish(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "ltr"; // See openFirstLesson() to find how this is saved to localStorage
-  langCodeForAnnyang = "tr";
+  //langCodeForAnnyang = "tr";
   if (!savedProgress.tr) { // if it doesn't exist
     savedProgress.tr = {}; console.log("Create a new save slot for "+langCodeForTeachingFilePaths.substring(0,2)); // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
     saveJSON = JSON.stringify(savedProgress);
@@ -368,7 +380,7 @@ function letTheIFrameTeachTurkish(){ // Called from within startTeaching()
 /* AR - Annaas */
 function letTheIFrameTeachArabic(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "rtl"; // See openFirstLesson() to find how this is saved to localStorage
-  langCodeForAnnyang = "ar"; // We still want "ar" instead of "ar-SA" on Android for better performance (frequency of the mic turn on&off thing).
+  //langCodeForAnnyang = "ar"; // We still want "ar" instead of "ar-SA" on Android for better performance (frequency of the mic turn on&off thing).
   // SOLVED: Safari problem with ar: the word is detected correctly and matches the answer key but for some reason the commands object still won't fire the default annyang function
   if (!savedProgress.ar) { // if it doesn't exist
     // Get user's gender
@@ -440,7 +452,7 @@ function letTheIFrameTeachArabic(){ // Called from within startTeaching()
 /* DE - Leute */
 function letTheIFrameTeachGerman(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "ltr"; // See openFirstLesson() to find how this is saved to localStorage
-  langCodeForAnnyang = "de";
+  //langCodeForAnnyang = "de";
   if (!savedProgress.de) { // if it doesn't exist
     savedProgress.de = {}; console.log("Create a new save slot for "+langCodeForTeachingFilePaths.substring(0,2)); // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
     saveJSON = JSON.stringify(savedProgress);
@@ -453,7 +465,7 @@ function letTheIFrameTeachGerman(){ // Called from within startTeaching()
 /* FR - Gens */
 function letTheIFrameTeachFrench(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "ltr"; // See openFirstLesson() to find how this is saved to localStorage
-  langCodeForAnnyang = "fr";
+  //langCodeForAnnyang = "fr";
   if (!savedProgress.fr) { // if it doesn't exist
     savedProgress.fr = {}; console.log("Create a new save slot for "+langCodeForTeachingFilePaths.substring(0,2)); // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
     saveJSON = JSON.stringify(savedProgress);
@@ -476,7 +488,7 @@ function chooseBetweenBritishAndAmerican() { // See letUserChooseAnAccentOrDiale
 }
 function letTheIFrameTeachEnglish(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "ltr"; // See openFirstLesson() to find how this is saved to localStorage
-  langCodeForAnnyang = "en";
+  //langCodeForAnnyang = "en";
   // DECIDE!!! Should different dialects|accents of the same language use the same progress save slot???
   // DECISION: Yes.
   if (!savedProgress.en) { // if it doesn't exist » CAUTION: The key name must match langCodeForTeachingFilePaths
@@ -500,17 +512,7 @@ function openFirstLesson(freshNewOrReturning) {
   localStorage.theLanguageUserWasLearningReadsLTRorRTL = targetLanguageReadsLeftToRightOrRightToLeft;
   // CANCELLED localStorage.theLanguageUserWasLearningIsWrittenWithoutSpaces = targetLanguageIsWrittenWithoutSpaces;
 
-  // Set language
-  if (annyang) {
-    annyang.setLanguage(langCodeForAnnyang); // Firefox v60's and v70's won't let buttons function unless this is wrapped in an if (annyang){} like this.
-    // SAFARI BUG: Safari does not update the recognition.lang before returning at least one wrong result >>> Keeps listening for the last language that was set before being changed with setLanguage()
-    if (isApple) { // DO NOT ACCESS isApple BEFORE DOMContentLoaded in js_for_different_browsers_and_devices
-      annyang.abort();
-      setTimeout(function () { annyang.start(); }, 150); // NOTE: annyang.resume() equals annyang.start()
-      setTimeout(function () { annyang.setLanguage(langCodeForAnnyang); }, 300);
-      setTimeout(function () { annyang.abort();  }, 450); //Try to force update
-    }
-  }
+
 
   setTimeout(function() {
     // Hide the welcome screen ( <<choose the language you want to learn>> screen's menu-div)
