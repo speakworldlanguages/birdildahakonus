@@ -4,7 +4,7 @@
 
 var willUserTalkToSpeechRecognition = false;
 var detectedBrowserName;
-let detectedBrowserVersion = 000000;
+let detectedBrowserVersion = 0;
 var detectedOS_name;
 var detectedBrandName = "unknown manufacturer";
 var deviceDetector = {device:"desktop",isMobile:false}; // Defaults
