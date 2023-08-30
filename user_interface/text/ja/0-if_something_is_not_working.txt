@@ -1,3 +1,4 @@
 ﻿音声認識が機能していません
 それはWindowsまたはAndroidのChromeなら使用できます
-|ブラウザを更新して、またはWindowsかAndroidでChromeを使ってみてください
+|ブラウザを更新する必要があるかもしれません
+失敗した場合にWindowsかAndroidでChromeを使用してみてください

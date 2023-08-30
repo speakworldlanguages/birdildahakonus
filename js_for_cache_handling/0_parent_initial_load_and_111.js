@@ -130,6 +130,7 @@ async function cacheCommonJSandCSSfilesForAllLessons() {
   const cacheForCommonJSandCSSandTXTfilesUsedByLessonHTMLs = await caches.open('common-js-css-txt-used-by-lessons-August2023');
   const u = "/user_interface/text/"+userInterfaceLanguage; // See js_for_every_single_html
   // ---
+  // soundFileFormat exists in js_for_different_browsers_and_devices
   let listOfCommonJSandCSSandTXTfilesUsedByLessonHTMLs = [
     // Needed in 1-1-1
     "/css_reusables/css_for_every_single_html.css",
@@ -161,23 +162,27 @@ async function cacheCommonJSandCSSfilesForAllLessons() {
     u+"/0lesson-ok_i_understand.txt",
     u+"/0lesson-vocabulary_button1_button2.txt",
     // sounds for lessons with speech recognition
-    "/user_interface/sounds/glass_button_hover.webm",
-    "/user_interface/sounds/glass_button_click.webm",
+    "/user_interface/sounds/glass_button_hover."+soundFileFormat,
+    "/user_interface/sounds/glass_button_click."+soundFileFormat,
     // sounds for notice1 and notice2
-    "/user_interface/sounds/looping_bgm_stereo_therapy.webm",
-    "/user_interface/sounds/section_as_button_hover.webm",
-    "/user_interface/sounds/section_as_button_click.webm",
+    "/user_interface/sounds/looping_bgm_stereo_therapy."+soundFileFormat,
+    "/user_interface/sounds/section_as_button_hover."+soundFileFormat,
+    "/user_interface/sounds/section_as_button_click."+soundFileFormat,
     // info boxes in lessons
-    "/user_interface/sounds/notification1_appear.webm",
-    "/user_interface/sounds/notification1_close.webm",
-    "/user_interface/sounds/notification3_appear.webm",
-    "/user_interface/sounds/notification3_close.webm",
+    "/user_interface/sounds/notification1_appear."+soundFileFormat,
+    "/user_interface/sounds/notification1_close."+soundFileFormat,
+    "/user_interface/sounds/notification3_appear."+soundFileFormat,
+    "/user_interface/sounds/notification3_close."+soundFileFormat,
     // js_for_proceed_buttons
-    "/user_interface/sounds/address_as_button_hover.webm",
-    "/user_interface/sounds/address_as_button_click.webm",
+    "/user_interface/sounds/address_as_button_hover."+soundFileFormat,
+    "/user_interface/sounds/address_as_button_click."+soundFileFormat,
     // sounds for progress_chart - OTHER ASSETS FOR progress_chart ARE EXPECTED TO BE UPDATED FREQUENTLY
-    "/user_interface/sounds/progress_chart_click.webm",
-    "/user_interface/sounds/progress_chart_hover.webm",
+    "/user_interface/sounds/progress_chart_click."+soundFileFormat,
+    "/user_interface/sounds/progress_chart_hover."+soundFileFormat,
+    // CRUCIAL WARNING !!!
+    // There aren't any video webm files here as of August 2023 so it is safe to change all webm file paths to mp3 with an array map (for apple devices)
+    // EXTREMELY IMPORTANT !!!
+    // In case there has to be a video webm here cache it separately, otherwise the app will break when its extension is set to mp3 with the array map function below
 
     // fonts
     // ???
@@ -187,6 +192,8 @@ async function cacheCommonJSandCSSfilesForAllLessons() {
     // blank html
     "/user_interface/blank.html"
   ];
+  // soundFileFormat in js_for_different_browsers_and_devices
+
   if (isAndroid) { listOfCommonJSandCSSandTXTfilesUsedByLessonHTMLs.push(u+"/0lesson-android_speech_timing.txt"); }
   if (deviceDetector.isMobile) {
     listOfCommonJSandCSSandTXTfilesUsedByLessonHTMLs.push(
@@ -203,8 +210,12 @@ async function cacheCommonJSandCSSfilesForAllLessons() {
     );
   }
   // ----
-  if (isApple) {
+  if (isApple) { // Do not access isApple before DOMContentLoaded in js_for_different_browsers_and_devices
     listOfCommonJSandCSSandTXTfilesUsedByLessonHTMLs.push("/user_interface/images/now_you_say_it_to_speech_recognition.avif");
+    /* DEPRECATE and use soundFileFormat from js_for_different_browsers_and_devices
+    // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
+    listOfCommonJSandCSSandTXTfilesUsedByLessonHTMLs = listOfCommonJSandCSSandTXTfilesUsedByLessonHTMLs.map(filepath => filepath.replace(".webm", ".mp3"));
+    */
   } else {
     listOfCommonJSandCSSandTXTfilesUsedByLessonHTMLs.push("/user_interface/images/now_you_say_it_to_speech_recognition.webp");
   }
@@ -233,7 +244,8 @@ async function cacheLesson111CommonAssetsForAllLanguages() {
   const primaryCacheForLesson_1_1_1 = await caches.open('1-1-1-primary-assets-for-all-languages-August2023');
   const secondaryCacheForLesson_1_1_1 = await caches.open('1-1-1-secondary-assets-for-all-languages-August2023');
 
-  const listOfPrimaryAssetsForLesson_1_1_1 = [
+  // --------
+  let listOfPrimaryAssetsForLesson_1_1_1 = [
     "/lessons_in_iframes/level_1/unit_1/lesson_1/1a.avif",
     "/lessons_in_iframes/level_1/unit_1/lesson_1/1b.avif",
     "/lessons_in_iframes/level_1/unit_1/lesson_1/2a.avif",
@@ -252,13 +264,21 @@ async function cacheLesson111CommonAssetsForAllLanguages() {
     "/lessons_in_iframes/level_1/unit_1/lesson_1/c10.avif",
     "/lessons_in_iframes/level_1/unit_1/lesson_1/index.html",
     "/lessons_in_iframes/level_1/unit_1/lesson_1/water.js",
-    "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_1.webm",
-    "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_2.webm",
-    "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_3.webm",
-    "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_4.webm",
-    "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_5.webm"
+    "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_1."+soundFileFormat,
+    "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_2."+soundFileFormat,
+    "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_3."+soundFileFormat,
+    "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_4."+soundFileFormat,
+    "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_5."+soundFileFormat
   ];
+  // soundFileFormat exists in js_for_different_browsers_and_devices
 
+  /* DEPRECATE and use soundFileFormat from js_for_different_browsers_and_devices
+  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
+  if (isApple) { // Do not access isApple before DOMContentLoaded in js_for_different_browsers_and_devices
+    listOfPrimaryAssetsForLesson_1_1_1 = listOfPrimaryAssetsForLesson_1_1_1.map(filepath => filepath.replace(".webm", ".mp3"));
+  }
+  */
+  // --------
   let listOfSecondaryAssetsForLesson_1_1_1 = [
     "/lessons_in_iframes/level_1/unit_1/lesson_1/waterfall1.webp",
     "/lessons_in_iframes/level_1/unit_1/lesson_1/waterfall2.webp"
@@ -270,8 +290,8 @@ async function cacheLesson111CommonAssetsForAllLanguages() {
     );
   } else {
     listOfSecondaryAssetsForLesson_1_1_1.push(
-      "/lessons_in_iframes/level_1/unit_1/lesson_1/v1_vp9.webm",
-      "/lessons_in_iframes/level_1/unit_1/lesson_1/v2_vp9.webm"
+      "/lessons_in_iframes/level_1/unit_1/lesson_1/v1_vp9.webm", // This is a VIDEO webm and not AUDIO webm !!!
+      "/lessons_in_iframes/level_1/unit_1/lesson_1/v2_vp9.webm"  // This is a VIDEO webm and not AUDIO webm !!!
     );
   }
   // ---
@@ -305,15 +325,21 @@ async function cacheLesson111AssetsForTheTargetLanguage() {
   } else {
 
     const cacheForTargetLanguage_1_1_1 = await caches.open('1-1-1-assets-for-'+langCodeForTeachingFilePaths+'-August2023'); // Create a new slot
-
+    // soundFileFormat exists in js_for_different_browsers_and_devices
     let listOfFilesForTargetLanguage_1_1_1 = [
-      "/audio_files_for_listening/"+langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_1-2.webm",
-      "/audio_files_for_listening/"+langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_3.webm",
-      "/audio_files_for_listening/"+langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_4-5.webm",
-      "/audio_files_for_listening/"+langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_6.webm",
-      "/audio_files_for_listening/"+langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_7-8.webm",
+      "/audio_files_for_listening/"+langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_1-2."+soundFileFormat,
+      "/audio_files_for_listening/"+langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_3."+soundFileFormat,
+      "/audio_files_for_listening/"+langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_4-5."+soundFileFormat,
+      "/audio_files_for_listening/"+langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_6."+soundFileFormat,
+      "/audio_files_for_listening/"+langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_7-8."+soundFileFormat,
       "/speech_recognition_answer_key/"+langCodeForTeachingFilePaths+"/1-1-1-water.txt"
     ];
+    /* DEPRECATE and use soundFileFormat from js_for_different_browsers_and_devices
+    // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
+    if (isApple) { // Do not access isApple before DOMContentLoaded in js_for_different_browsers_and_devices
+      listOfFilesForTargetLanguage_1_1_1 = listOfFilesForTargetLanguage_1_1_1.map(filepath => filepath.replace(".webm", ".mp3"));
+    }
+    */
     const u = "/user_interface/text/"+userInterfaceLanguage; // See js_for_every_single_html
     switch (langCodeForTeachingFilePaths.substring(0,2)) { // Using substring, we trim "tr_istanbul" to "tr", "zh_putonghua" to "zh" etc
       case "ar":

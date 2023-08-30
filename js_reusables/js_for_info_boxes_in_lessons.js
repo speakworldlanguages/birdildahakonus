@@ -26,13 +26,32 @@ function assignOKButtonText() {
     okButtonToCloseTheNotification2.innerHTML = okTexts.split("|")[0];
   }
 }
-
-const popUpNotificationSound = new parent.Howl({  src: ["/user_interface/sounds/notification1_appear.webm"]  });
-const dismissNotificationSound = new parent.Howl({  src: ["/user_interface/sounds/notification1_close.webm"]  });
+let popUpNotificationType1Sound;
+let dismissNotificationType1Sound;
+window.addEventListener("DOMContentLoaded",loadNotificationType1Sounds,{once:true});
+function loadNotificationType1Sounds() {
+  // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
+  popUpNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_appear."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
+  dismissNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_close."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
+  /* DEPRECATE
+  if (isApple) { // isApple is copied from the parent window by js_for_all_iframed_lesson_htmls
+    popUpNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_appear.mp3"]  });
+    dismissNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_close.mp3"]  });
+  } else {
+    popUpNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_appear.webm"]  });
+    dismissNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_close.webm"]  });
+  }
+  */
+}
+window.addEventListener("beforeunload",unloadNotificationType1Sounds,{once:true});
+function unloadNotificationType1Sounds() {
+  popUpNotificationType1Sound.unload();
+  dismissNotificationType1Sound.unload();
+}
 
 /*Info box with only one [OK] button*/
 function createAndHandleInfoBoxType1BeforeLessonStarts() {
-  popUpNotificationSound.play();
+  popUpNotificationType1Sound.play();
   const notificationBoxContainer = document.createElement("DIV");
   notificationBoxContainer.classList.add("notificationBG"); // See css_for_info_boxes_in_lessons
   document.body.appendChild(notificationBoxContainer);
@@ -58,7 +77,7 @@ function createAndHandleInfoBoxType1BeforeLessonStarts() {
   if (deviceDetector.isMobile) { okButtonToCloseTheNotification1.addEventListener("touchstart",okButtonIsClickedToStartLesson); }
   else { okButtonToCloseTheNotification1.addEventListener("mousedown",okButtonIsClickedToStartLesson); }
   function okButtonIsClickedToStartLesson(event) { event.preventDefault(); event.stopPropagation();
-    dismissNotificationSound.play();
+    dismissNotificationType1Sound.play();
     notificationBoxContainer.classList.add("addThisToAButtonForPlayStationStyleClick"); // See css_for_every_single_html_css
     setTimeout(function () {     notificationBoxContainer.parentNode.removeChild(notificationBoxContainer);     },1000); // The animation completes in 600ms
     if (typeof startTheLesson === "function") {
@@ -68,7 +87,7 @@ function createAndHandleInfoBoxType1BeforeLessonStarts() {
 }
 
 function createAndHandleInfoBoxType1AmidLesson() {
-  popUpNotificationSound.play();
+  popUpNotificationType1Sound.play();
   const notificationBoxContainer2 = document.createElement("DIV");
   notificationBoxContainer2.classList.add("notificationBG"); // See css_for_info_boxes_in_lessons
   document.body.appendChild(notificationBoxContainer2);
@@ -93,7 +112,7 @@ function createAndHandleInfoBoxType1AmidLesson() {
   if (deviceDetector.isMobile) { okButtonToCloseTheNotification2.addEventListener("touchstart",okButtonIsClickedToContinueLesson); }
   else { okButtonToCloseTheNotification2.addEventListener("mousedown",okButtonIsClickedToContinueLesson); }
   function okButtonIsClickedToContinueLesson(event) { event.preventDefault(); event.stopPropagation();
-    dismissNotificationSound.play();
+    dismissNotificationType1Sound.play();
     notificationBoxContainer2.classList.add("addThisToAButtonForPlayStationStyleClick"); // See css_for_every_single_html_css
     setTimeout(function () {     notificationBoxContainer2.parentNode.removeChild(notificationBoxContainer2);  },1000); // The animation completes in 600ms
     if (typeof continueLesson === "function") {
@@ -132,8 +151,29 @@ fetch(wavesurferButton1Button2Path,myHeaders).then(function(response){return res
   startButtonTxt = contentOfTheTxtFile.split("|")[2];
   nextButtonTxt = contentOfTheTxtFile.split("|")[3];
 });
-const popUpVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_appear.webm"]  });
-const dismissVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_close.webm"]  });
+// -
+let popUpVocabularySound;
+let dismissVocabularySound;
+window.addEventListener("DOMContentLoaded",loadVocabularyBoxButtonSounds,{once:true});
+function loadVocabularyBoxButtonSounds() {
+  // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
+  popUpVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_appear."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
+  dismissVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_close."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
+  /* DEPRECATE
+  if (isApple) {
+    popUpVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_appear.mp3"]  });
+    dismissVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_close.mp3"]  });
+  } else {
+    popUpVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_appear.webm"]  });
+    dismissVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_close.webm"]  });
+  }
+  */
+}
+window.addEventListener("beforeunload",unloadVocabularyBoxButtonSounds,{once:true});
+function unloadVocabularyBoxButtonSounds() {
+  popUpVocabularySound.unload();
+  dismissVocabularySound.unload();
+}
 
 /*FUNCTION DECLARATION*/
 function createAndHandleListenManyTimesBox(filePathOfTheAudio,isLessonOutro) {

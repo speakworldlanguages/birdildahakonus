@@ -44,6 +44,22 @@
           }
         }
       }
+      // ---
+      // Check for AVIF support » MAINLY FOR EDGE USERS with version 115 or older
+      function isAVIFSupported() { const img = new Image();   return img.decode ? true : false; }
+      if (!isAVIFSupported()) { // Display alert if AVIF is not supported
+        alert("AVIF?"); // _WARNING_ This didn't fire on an iPad: August 2023, which could mean that it returns a false-positive.
+        setTimeout(function () { parent.tellTheUserToChangeOrUpdateTheBrowser(); }, 4000);
+      } else {
+        parent.console.log("AVIF images may be supported.");
+        // HARD TEST TO SEE if avif is indeed supported
+        const img = new Image();
+        img.onload = function() {
+          if (img.naturalWidth > 0 || img.naturalHeight > 0) { parent.console.log("AVIF images are definitely supported."); }
+          else { alert("avif?"); setTimeout(function () { parent.tellTheUserToChangeOrUpdateTheBrowser(); }, 4000); }
+        };
+        img.src = "data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZgAAAOptZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAAA5waXRtAAAAAAABAAAAImlsb2MAAAAAREAAAQABAAAAAAEOAAEAAAAAAAAAIgAAACNpaW5mAAAAAAABAAAAFWluZmUCAAAAAAEAAGF2MDEAAAAAamlwcnAAAABLaXBjbwAAABNjb2xybmNseAABAA0AAIAAAAAMYXYxQ4EgAgAAAAAUaXNwZQAAAAAAAAAQAAAAEAAAABBwaXhpAAAAAAMICAgAAAAXaXBtYQAAAAAAAAABAAEEgYIDhAAAACptZGF0EgAKCDgM/9lAQ0AIMhQQAAAAFLm4wN/TRReKCcSo648oag==";
+      }
     </script>
   </head>
 
@@ -102,13 +118,6 @@
     <!-- SPECIAL CASE FOR HANDLING BIGGER FILES: Load or skip and reorder -->
     <script>
       window.addEventListener('DOMContentLoaded', function(){
-        // Check for AVIF support » MAINLY FOR EDGE USERS with version 115 or older
-        function isAVIFSupported() { const img = new Image();   return img.decode ? true : false; }
-        if (!isAVIFSupported()) { // Display alert if AVIF is not supported
-          alert("AVIF?");
-          setTimeout(function () { parent.tellTheUserToChangeOrUpdateTheBrowser(); }, 4000);
-        } else { console.log("AVIF images are supported."); }
-
         /* waterfall webps are 4,68MB in total,,, and a bit hard on CPU ,,, Use https://downloadtimecalculator.com */
         function getConnectionForWater() {return navigator.connection || navigator.mozConnection || navigator.webkitConnection || navigator.msConnection;}
         var internetForWater = getConnectionForWater();

@@ -16,15 +16,15 @@ async function cacheLesson132CommonAssetsForAllLanguages() {
     "/lessons_in_iframes/level_1/unit_3/lesson_2/cloud1.webp",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/cloud2.webp",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/elder_pictogram_eyes_blinking_naturally.webp",
-    "/lessons_in_iframes/level_1/unit_3/lesson_2/fish_jumps_1.webm",
-    "/lessons_in_iframes/level_1/unit_3/lesson_2/fish_jumps_2.webm",
+    "/lessons_in_iframes/level_1/unit_3/lesson_2/fish_jumps_1."+soundFileFormat,
+    "/lessons_in_iframes/level_1/unit_3/lesson_2/fish_jumps_2."+soundFileFormat,
     "/lessons_in_iframes/level_1/unit_3/lesson_2/fish_jumps_minified.webp",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/fish_swimming_in_water_minified.webp",
-    "/lessons_in_iframes/level_1/unit_3/lesson_2/fishswim_loop.webm",
+    "/lessons_in_iframes/level_1/unit_3/lesson_2/fishswim_loop."+soundFileFormat,
     "/lessons_in_iframes/level_1/unit_3/lesson_2/index.html",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/ripple_sprite_minified.png",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/river_mask.png",
-    "/lessons_in_iframes/level_1/unit_3/lesson_2/successfully_observed_the_fish.webm",
+    "/lessons_in_iframes/level_1/unit_3/lesson_2/successfully_observed_the_fish."+soundFileFormat,
     "/lessons_in_iframes/level_1/unit_3/lesson_2/there_is_a_fish.css",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/there_is_a_fish.js",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_between_b_c.webp",
@@ -37,13 +37,21 @@ async function cacheLesson132CommonAssetsForAllLanguages() {
     "/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_d.webp",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_e.webp",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/two_pictograms_state_f.webp",
-    "/lessons_in_iframes/level_1/unit_3/lesson_2/waterfall_loop.webm",
+    "/lessons_in_iframes/level_1/unit_3/lesson_2/waterfall_loop."+soundFileFormat,
     "/lessons_in_iframes/level_1/unit_3/lesson_2/waterfall_minified.webp",
     "/lessons_in_iframes/level_1/unit_3/lesson_2/younger_pictogram_eyes_blinking_naturally.webp",
     "/user_interface/text/"+userInterfaceLanguage+"/1-3-2.txt", // See js_for_every_single_html to find userInterfaceLanguage
     "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_vocabulary_outro_p1_p2.txt",
     "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_vocabulary_p1_p2.txt"
   ];
+  // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
+
+  /* DEPRECATE and use soundFileFormat from js_for_all_iframed_lesson_htmls which copies it from js_for_different_browsers_and_devices
+  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
+  if (isApple) {
+    listOfFilesForAllLanguages_1_3_2 = listOfFilesForAllLanguages_1_3_2.map(filepath => filepath.replace(".webm", ".mp3"));
+  }
+  */
   // -
   if (deviceDetector.isMobile) {
     listOfFilesForAllLanguages_1_3_2.push(
@@ -89,20 +97,21 @@ async function cacheLesson132CommonAssetsForAllLanguages() {
 async function cacheLesson132AssetsForTheTargetLanguage() {
   const cacheForTargetLanguage_1_3_2 = await caches.open('1-3-2-assets-for-'+parent.langCodeForTeachingFilePaths+'-August2023');
   // ---
-  let itemA = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox.webm";
-  let item1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water.webm";
-  let item2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water_slow.webm";
-  let item3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/huh.webm";
-  let item4 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/it_is_a_fish.webm";
-  let item5 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_a_fish_in_the_water.webm";
-  let itemZ = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox.webm";
+  // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
+  let itemA = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox."+soundFileFormat;
+  let item1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water."+soundFileFormat;
+  let item2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water_slow."+soundFileFormat;
+  let item3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/huh."+soundFileFormat;
+  let item4 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/it_is_a_fish."+soundFileFormat;
+  let item5 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_a_fish_in_the_water."+soundFileFormat;
+  let itemZ = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox."+soundFileFormat;
   /* No commands given to user in this lesson
   if (parent.userIsFemaleSoUseFemaleConjugation) { // See js_for_the_parent_all_browsers_all_devices
-    item1 = item1.split(".")[0] + "_tofemale.webm";
-    item2 = item2.split(".")[0] + "_tofemale.webm";
-    item3 = item3.split(".")[0] + "_tofemale.webm";
-    item4 = item4.split(".")[0] + "_tofemale.webm";
-    item5 = item5.split(".")[0] + "_tofemale.webm";
+    item1 = item1.split(".")[0] + "_tofemale."+soundFileFormat;
+    item2 = item2.split(".")[0] + "_tofemale."+soundFileFormat;
+    item3 = item3.split(".")[0] + "_tofemale."+soundFileFormat;
+    item4 = item4.split(".")[0] + "_tofemale."+soundFileFormat;
+    item5 = item5.split(".")[0] + "_tofemale."+soundFileFormat;
   }
   */
   let listOfFilesForTargetLanguage_1_3_2 = [
@@ -110,6 +119,12 @@ async function cacheLesson132AssetsForTheTargetLanguage() {
     item1,    item2,    item3,    item4,    item5,
     itemZ
   ];
+  /* DEPRECATE and use soundFileFormat from js_for_all_iframed_lesson_htmls which copies it from js_for_different_browsers_and_devices
+  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
+  if (isApple) {
+    listOfFilesForTargetLanguage_1_3_2 = listOfFilesForTargetLanguage_1_3_2.map(filepath => filepath.replace(".webm", ".mp3"));
+  }
+  */
   const u = "/user_interface/text/"+userInterfaceLanguage; // Works without "parent." notation » See js_for_every_single_html
   switch (parent.langCodeForTeachingFilePaths.substring(0,2)) { // Using substring, we trim "tr_istanbul" to "tr", "zh_putonghua" to "zh" etc
     case "ar":

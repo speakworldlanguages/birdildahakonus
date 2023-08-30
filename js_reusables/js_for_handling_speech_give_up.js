@@ -3,6 +3,8 @@
 // This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 let skipInUserInterfaceLanguage = "⏩";
 let nextInUserInterfaceLanguage = "⏩";
+let hoverSoundForGlassyButtons;
+let clickSoundForGlassyButtons;
 // ASIDE elements are used as a new/other TYPE OF BUTTON
 window.addEventListener('DOMContentLoaded', function(){
 
@@ -30,19 +32,35 @@ window.addEventListener('DOMContentLoaded', function(){
     giveUpButtonASIDE.classList.add('glassmorphismOnMobiles'); // See css_for_all_iframed_lesson_htmls.css
     giveUpButtonASIDE.addEventListener("touchstart", giveUpButtonIsTouchedFunction, { once: true });
     // Design choice: no touchend function for this one
+    // Glassy sound for touchstart
+    // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
+    clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
+    /* DEPRECATE
+    if (isApple) { // isApple is copied from the parent window by js_for_all_iframed_lesson_htmls
+      clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click.mp3"]  });
+    } else {
+      clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click.webm"]  });
+    }
+    */
   } else {
     giveUpButtonASIDE.classList.add('glassmorphismOnDesktops'); // See css_for_all_iframed_lesson_htmls.css
     giveUpButtonASIDE.addEventListener("mousedown", giveUpButtonIsClickedFunction, { once: true });
     giveUpButtonASIDE.addEventListener("mouseenter", mouseEnterGlassy);
+    // Glassy sounds for hover and click
+    hoverSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_hover."+soundFileFormat]  }); // DESKTOPS ONLY! // See js_for_all_iframed_lesson_htmls to find soundFileFormat
+    clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls to find soundFileFormat
+    /* DEPRECATE
+    if (isApple) { // isApple is copied from the parent window by js_for_all_iframed_lesson_htmls
+      hoverSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_hover.mp3"]  }); // DESKTOPS ONLY!
+      clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click.mp3"]  });
+    } else {
+      hoverSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_hover.webm"]  }); // DESKTOPS ONLY!
+      clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click.webm"]  });
+    }
+    */
   }
-
-  // Glassy sounds for hover and click
-  const hoverSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_hover.webm"]  }); // DESKTOPS ONLY! Could add code to disable it on mobile but guess it just works when left like this.
-  const clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click.webm"]  });
-
-  function mouseEnterGlassy() {
-    hoverSoundForGlassyButtons.play();
-  }
+  // ---
+  function mouseEnterGlassy() {  hoverSoundForGlassyButtons.play();  }
 
   // Click makes it explode. Touch makes it fade out
   function giveUpButtonIsTouchedFunction(event) { event.preventDefault(); event.stopPropagation();
@@ -60,6 +78,7 @@ window.addEventListener('DOMContentLoaded', function(){
     clickSoundForGlassyButtons.play();
     userHasGivenUp = true; // Redeclared in each lesson's js » This makes success tone "not play" before proceeding to the next lesson.
     setTimeout(function () { stopListeningAndProceedToNext(); },100); // See each lesson's own js » Might do different things depending on the lesson
+    // NOTE THAT typeof might become necessary to detect the existence of variables and functions
   }
 
 }, { once: true });

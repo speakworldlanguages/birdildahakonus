@@ -3,12 +3,27 @@
 // This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
 // USE SECTION & ADDRESS elements as new/other TYPES OF BUTTONS
+// UPDATE: SECTION ELEMENT IS HANDLED SEPARATELY BY notice.js
 /* ADDRESS element is turned into the button for [See how you can help] in we_are_working_for_new_levels */
 /* SECTION element is turned into the button for [Next] in author's notice */
-window.addEventListener('DOMContentLoaded', function(){
+let hoverSoundForAddressElementAsButton;
+let clickSoundForAddressElementAsButton;
 
-  const hoverSoundForAddressElementAsButton = new parent.Howl({  src: ["/user_interface/sounds/address_as_button_hover.webm"]  });
-  const clickSoundForAddressElementAsButton = new parent.Howl({  src: ["/user_interface/sounds/address_as_button_click.webm"]  });
+window.addEventListener('DOMContentLoaded', function(){
+  // -
+  // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
+  hoverSoundForAddressElementAsButton = new parent.Howl({  src: ["/user_interface/sounds/address_as_button_hover."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
+  clickSoundForAddressElementAsButton = new parent.Howl({  src: ["/user_interface/sounds/address_as_button_click."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
+  /* DEPRECATE
+  if (isApple) { // isApple is copied from the parent window by js_for_all_iframed_lesson_htmls
+    hoverSoundForAddressElementAsButton = new parent.Howl({  src: ["/user_interface/sounds/address_as_button_hover.mp3"]  });
+    clickSoundForAddressElementAsButton = new parent.Howl({  src: ["/user_interface/sounds/address_as_button_click.mp3"]  });
+  } else {
+    hoverSoundForAddressElementAsButton = new parent.Howl({  src: ["/user_interface/sounds/address_as_button_hover.webm"]  });
+    clickSoundForAddressElementAsButton = new parent.Howl({  src: ["/user_interface/sounds/address_as_button_click.webm"]  });
+  }
+  */
+  // -
   const allAddressButtonElementsAreInThisArray = document.getElementsByTagName("ADDRESS");
   let i;
   for (i = 0; i < allAddressButtonElementsAreInThisArray.length; i++)

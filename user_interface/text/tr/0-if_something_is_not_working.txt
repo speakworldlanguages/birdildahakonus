@@ -1,3 +1,3 @@
 ﻿Konuşma algılama çalışmıyor.
 Bu özellik Windows ya da Android üzerinde Chrome ile kullanılabilir.
-|Tarayıcını güncellemelisin ya da ister Windows ister Android üzerinde Chrome kullanabilirsin.
+|Tarayıcını güncellemen gerekiyor olabilir ya da ister Windows ister Android üzerinde Chrome kullanabilirsin.

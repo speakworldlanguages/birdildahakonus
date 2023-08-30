@@ -20,11 +20,12 @@ const filePathForTheWordOrPhrase = "/speech_recognition_answer_key/"+parent.lang
 fetch(filePathForTheWordOrPhrase,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ theNewWordUserIsLearningNowAndPossibleMishaps = contentOfTheTxtFile; });
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
-const say1say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_3/spoon_1-2.webm";
-const say3Path     = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_3/spoon_3.webm";
-const say4say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_3/spoon_4-5.webm";
-const say6Path     = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_3/spoon_6.webm";
-const say7say8Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_3/spoon_7-8.webm";
+// Find soundFileFormat in js_for_all_iframed_lesson_htmls
+const say1say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_3/spoon_1-2."+soundFileFormat;
+const say3Path     = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_3/spoon_3."+soundFileFormat;
+const say4say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_3/spoon_4-5."+soundFileFormat;
+const say6Path     = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_3/spoon_6."+soundFileFormat;
+const say7say8Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_3/spoon_7-8."+soundFileFormat;
 
 const sayAB = new parent.Howl({  src: [say1say2Path]  });
 const sayC  = new parent.Howl({  src: [say3Path]      });
@@ -32,13 +33,13 @@ const sayDE = new parent.Howl({  src: [say4say5Path]  });
 const sayF  = new parent.Howl({  src: [say6Path]      });
 const sayGH = new parent.Howl({  src: [say7say8Path]  });
 
-const whatSpoonSoundsLike1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_3/what_spoon_sounds_like_1.webm"]  });
-const whatSpoonSoundsLike2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_3/what_spoon_sounds_like_2.webm"]  });
+const whatSpoonSoundsLike1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_3/what_spoon_sounds_like_1."+soundFileFormat]  });
+const whatSpoonSoundsLike2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_3/what_spoon_sounds_like_2."+soundFileFormat]  });
 //3
 //4
 //5
-const successTone = new parent.Howl({  src: ["/user_interface/sounds/success1b.webm"]  });
-const notificationDingTone = new parent.Howl({  src: ["/user_interface/sounds/ding.webm"]  });
+const successTone = new parent.Howl({  src: ["/user_interface/sounds/success1b."+soundFileFormat]  });
+const notificationDingTone = new parent.Howl({  src: ["/user_interface/sounds/ding."+soundFileFormat]  });
 /* Sound initialization happens on the parent but the consts exist in frame. SEE js_for_all_iframed_lesson_htmls » FIND onbeforeunload. */
 // listOfAllSoundsInThisLesson is also used by pauseTheAppFunction in js_for_the_sliding_navigation_menu
 var listOfAllSoundsInThisLesson = [

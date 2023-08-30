@@ -21,12 +21,17 @@ if (window.location.href == parent.ayFreym.src) {
 }
 
 // ___ THESE SHOULD BE OK WITHOUT window load or DOMContentLoaded
+// See js_for_different_browsers_and_devices
 var deviceDetector = parent.deviceDetector;
 var isApple = parent.isApple;
 var isSafari = parent.isSafari;
 var isAndroid = parent.isAndroid;
-var isWebViewOnAndroid = parent.isWebViewOnAndroid;
+var isWebViewOnAndroid = parent.isWebViewOnAndroid; // Even though it is never used as of August 2023
 var isFirefox = parent.isFirefox;
+// CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
+var soundFileFormat = parent.soundFileFormat; // See js_for_different_browsers_and_devices
+// GET FROM PARENT INSTEAD: if (isApple) {  soundFileFormat = "mp3";  } else {  soundFileFormat = "webm";  }
+
 // DISABLE ALL LONG-TOUCH-MENUs on mobiles
 // NOTE THAT: window.oncontextmenu IS NO GOOD - BECAUSE IT TRIGGERS AN ANNOYING VIBRATION everytime a long touch happens USE-pointer events none carefully or prevent default for touchstart
 if (deviceDetector.isMobile) { // Let's allow bubbling by omitting event.stopPropagation();

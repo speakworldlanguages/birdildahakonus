@@ -109,6 +109,8 @@ function spoonIsAwayFromThePlate() {
   if (!spoonIsLoaded) {  canLoadTheSpoonNow = false;  }
   spoonIsTooFarFromPlate = true;
 }
+
+let looksLikeDESKTOPUserAlreadyKnowsHowToEat = false;
 function loadTheSpoonIfIsEmptyAndIsOverThePlate() {
   if (canLoadTheSpoonNow && !spoonIsLoaded) {
     scoopingFoodSound.play();
@@ -122,13 +124,16 @@ function loadTheSpoonIfIsEmptyAndIsOverThePlate() {
       plateStates.children[yumNumber-1].style.opacity="0";
     }, 2000);
   }
-  // Show how to use the wheel only once
+  // Show how to use the wheel only once per session and only if user hasn't tried wheeling
   if (!sessionStorage.mouseWheelInstruction124HasBeenShown) {
     new SuperTimeout(function () {
-      showHowDesktop.style.display = "block"; showHowDesktop.classList.add("appearQuickly");
-      hideTheMouseWheelInstructionTimeout = new SuperTimeout(function () { showHowDesktop.classList.remove("appearQuickly"); showHowDesktop.classList.add("disappearSlowly"); }, 6000);
-      window.addEventListener("wheel",makeItDisappearSooner,{once:true});
-      function makeItDisappearSooner() { showHowDesktop.classList.remove("appearQuickly"); showHowDesktop.classList.add("disappearSlowly"); }
+      if (!looksLikeDESKTOPUserAlreadyKnowsHowToEat) {
+        console.log("Showing how to use the mouse wheel to eat");
+        showHowDesktop.style.display = "block"; showHowDesktop.classList.add("appearQuickly");
+        hideTheMouseWheelInstructionTimeout = new SuperTimeout(function () { showHowDesktop.classList.remove("appearQuickly"); showHowDesktop.classList.add("disappearSlowly"); }, 6000);
+        window.addEventListener("wheel",makeItDisappearEarlierThanNormal,{once:true});
+        function makeItDisappearEarlierThanNormal() { hideTheMouseWheelInstructionTimeout.clear(); showHowDesktop.classList.remove("appearQuickly"); showHowDesktop.classList.add("disappearSlowly"); }
+      }
     }, 2500);
     // --
     sessionStorage.mouseWheelInstruction124HasBeenShown = "yes";
@@ -137,8 +142,10 @@ function loadTheSpoonIfIsEmptyAndIsOverThePlate() {
     // Do nothing
   }
 }
-function eatIfCan(event) {
-  event.preventDefault();
+function eatIfCan(event) { event.preventDefault();
+  looksLikeDESKTOPUserAlreadyKnowsHowToEat = true; console.log("mouse wheel movement detected");
+  // Accept wheeling upwards too even though the instruction webp tells the user to wheel downwards
+  // Mainly because the two-finger-touchpad-gesture of apple works in the opposite direction
   if (spoonIsLoaded && event.deltaY!=0 && !isSwallowing) { // Doesn't matter if is away from the plate
     isSwallowing = true; // Prevent multiple firing with boolean instead of once:true
     switch(yumNumber) {

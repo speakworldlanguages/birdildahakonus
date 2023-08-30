@@ -24,24 +24,25 @@ let couldYouFigureOutHowToSayEat = " ";
 fetch(noteAtTheEndOfLessonPath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ couldYouFigureOutHowToSayEat = contentOfTheTxtFile; });
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
-let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_1_normal.webm";
-let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_1_slow.webm";
-let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_2_normal.webm";
-let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_2_slow.webm";
-let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_normal.webm";
-let say6Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_bread_normal.webm";
-let say7Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_slow.webm";
-let say8Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_bread_slow.webm";
+// Find soundFileFormat in js_for_all_iframed_lesson_htmls
+let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_1_normal."+soundFileFormat;
+let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_1_slow."+soundFileFormat;
+let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_2_normal."+soundFileFormat;
+let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_2_slow."+soundFileFormat;
+let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_normal."+soundFileFormat;
+let say6Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_bread_normal."+soundFileFormat;
+let say7Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_slow."+soundFileFormat;
+let say8Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_bread_slow."+soundFileFormat;
 
 if (parent.userIsFemaleSoUseFemaleConjugation) { // See js_for_the_parent_all_browsers_all_devices
-  say1Path = say1Path.split(".")[0] + "_tofemale.webm";
-  say2Path = say2Path.split(".")[0] + "_tofemale.webm";
-  say3Path = say3Path.split(".")[0] + "_tofemale.webm";
-  say4Path = say4Path.split(".")[0] + "_tofemale.webm";
-  say5Path = say5Path.split(".")[0] + "_tofemale.webm";
-  say6Path = say6Path.split(".")[0] + "_tofemale.webm";
-  say7Path = say7Path.split(".")[0] + "_tofemale.webm";
-  say8Path = say8Path.split(".")[0] + "_tofemale.webm";
+  say1Path = say1Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say2Path = say2Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say3Path = say3Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say4Path = say4Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say5Path = say5Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say6Path = say6Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say7Path = say7Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say8Path = say8Path.split(".")[0] + "_tofemale."+soundFileFormat;
 }
 let isNowSayingTheSecondSet = false; // First set is say1 + say2,,, second set is say3 + say4
 const say1 = new parent.Howl({  src: [say1Path]  });
@@ -53,14 +54,14 @@ const say6 = new parent.Howl({  src: [say6Path]  });
 const say7 = new parent.Howl({  src: [say7Path]  });
 const say8 = new parent.Howl({  src: [say8Path]  });
 
-const touchClickBreadSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/user_contacts_bread.webm"]  });
-const startDraggingBreadSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/user_starts_dragging_bread.webm"]  });
-const bitingSound0 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/bite_0.webm"]  });
-const bitingSound1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/bite_1.webm"]  });
-const bitingSound2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/bite_2.webm"]  });
-const bitingSound3 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/bite_3.webm"]  });
-const winSound1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/user_takes_the_bread.webm"]  });
-const finalSuccessSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/user_has_eaten_bread.webm"]  });
+const touchClickBreadSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/user_contacts_bread."+soundFileFormat]  });
+const startDraggingBreadSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/user_starts_dragging_bread."+soundFileFormat]  });
+const bitingSound0 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/bite_0."+soundFileFormat]  });
+const bitingSound1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/bite_1."+soundFileFormat]  });
+const bitingSound2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/bite_2."+soundFileFormat]  });
+const bitingSound3 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/bite_3."+soundFileFormat]  });
+const winSound1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/user_takes_the_bread."+soundFileFormat]  });
+const finalSuccessSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_4/user_has_eaten_bread."+soundFileFormat]  });
 /* Sound initialization happens on the parent but the consts exist in frame. SEE js_for_all_iframed_lesson_htmls » FIND onbeforeunload. */
 // listOfAllSoundsInThisLesson is also used by pauseTheAppFunction in js_for_the_sliding_navigation_menu
 var listOfAllSoundsInThisLesson = [
@@ -115,7 +116,7 @@ function loadingIsCompleteFunction() {
 
 function startTheLesson() {
   // User must listen to wavesurfer vocabulary box no matter what language he/she is studying
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox.webm";  // In case of "ar" wavesurfer box will play the verb root in male conjugation even if the user is female
+  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox."+soundFileFormat;  // In case of "ar" wavesurfer box will play the verb root in male conjugation even if the user is female
   const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
   fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
   // See js_for_info_boxes_in_lessons » iframe-lesson level

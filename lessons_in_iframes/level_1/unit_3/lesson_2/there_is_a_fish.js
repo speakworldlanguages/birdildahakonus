@@ -30,11 +30,12 @@ if (studiedLang == "ar") {
 }
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
-let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water.webm";
-let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water_slow.webm";
-let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/huh.webm";
-let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/it_is_a_fish.webm";
-let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_a_fish_in_the_water.webm";
+// Find soundFileFormat in js_for_all_iframed_lesson_htmls
+let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water."+soundFileFormat;
+let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water_slow."+soundFileFormat;
+let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/huh."+soundFileFormat;
+let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/it_is_a_fish."+soundFileFormat;
+let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_a_fish_in_the_water."+soundFileFormat;
 
 const say1 = new parent.Howl({  src: [say1Path]  });
 const say2 = new parent.Howl({  src: [say2Path]  });
@@ -42,13 +43,13 @@ const say3 = new parent.Howl({  src: [say3Path]  });
 const say4 = new parent.Howl({  src: [say4Path]  });
 const say5 = new parent.Howl({  src: [say5Path]  });
 
-/*const mouseHoverAndTouchStartSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/mouseenter_touchstart.webm"]  });
-const mouseDownAndTouchEndSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/mousedown_touchend.webm"]  });*/
-const waterfallSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/waterfall_loop.webm"] , loop:true });
-const fishswimSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/fishswim_loop.webm"] , loop:true });
-const fishJump1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/fish_jumps_1.webm"]  });
-const fishJump2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/fish_jumps_2.webm"]  });
-const winSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/successfully_observed_the_fish.webm"]  });
+/*const mouseHoverAndTouchStartSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/mouseenter_touchstart."+soundFileFormat]  });
+const mouseDownAndTouchEndSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/mousedown_touchend."+soundFileFormat]  });*/
+const waterfallSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/waterfall_loop."+soundFileFormat] , loop:true });
+const fishswimSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/fishswim_loop."+soundFileFormat] , loop:true });
+const fishJump1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/fish_jumps_1."+soundFileFormat]  });
+const fishJump2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/fish_jumps_2."+soundFileFormat]  });
+const winSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_2/successfully_observed_the_fish."+soundFileFormat]  });
 /* Sound initialization happens on the parent but the consts exist in frame. SEE js_for_all_iframed_lesson_htmls » FIND onbeforeunload. */
 // listOfAllSoundsInThisLesson is also used by pauseTheAppFunction in js_for_the_sliding_navigation_menu
 var listOfAllSoundsInThisLesson = [
@@ -145,7 +146,7 @@ function loadingIsCompleteFunction() {
 
 function startTheLesson() {
   // User must listen to wavesurfer vocabulary box no matter what language he/she is studying
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox.webm";
+  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox."+soundFileFormat;
   const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
   fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
   // See js_for_info_boxes_in_lessons » iframe-lesson level
@@ -507,7 +508,7 @@ function makeTheFishJumpOutOfWater() {
 let anOutroBoxIsNowShowing = false; // 1 - To block keyboard input when needed 2 - To exit RAF loop
 function handleWinning() {
   // Display wavesurfer box about the meaning of "a thing" or "something"
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox.webm";
+  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox."+soundFileFormat;
   const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_vocabulary_outro_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
   fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
     handleP1P2ActualTextOUTRO(contentOfTheTxtFile); // CAUTION: It's outro

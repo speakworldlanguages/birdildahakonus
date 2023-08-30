@@ -3,19 +3,50 @@
 // May NOT BE MODIFIED by UNAUTHORIZED PEOPLE
 
 const allNavElements = document.getElementsByTagName('NAV');
-const hoverProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_hover.webm"]  });
-const clickProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_click.webm"]  });
-let local_i_in_progress; // var i was already or could be declared somewhere else
-for (local_i_in_progress = 0; local_i_in_progress < allNavElements.length; local_i_in_progress++)
-{
-  if (deviceDetector.device == "desktop") {
-    allNavElements[local_i_in_progress].addEventListener("mouseenter", mouseEnterProgressF);
-    allNavElements[local_i_in_progress].addEventListener("mousedown", mouseDownProgressF);
+// -
+let hoverProgress;
+let clickProgress;
+let listOfAllSoundsInThisLesson;
+window.addEventListener("DOMContentLoaded",function () { // ACTUALLY: We don't need DOMContentLoaded as long as progress.js is listed after js_for_all_iframed_lesson_htmls.js, yet here we make it double safe
+  // -
+  // soundFileFormat exists in js_for_all_iframed_lesson_htmls and is copied from js_for_different_browsers_and_devices which is at the parent level
+  hoverProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_hover."+soundFileFormat]  });
+  clickProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_click."+soundFileFormat]  });
+  /* DEPRECATE
+  if (isApple) { // isApple is copied from the parent window by js_for_all_iframed_lesson_htmls
+    hoverProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_hover.mp3"]  });
+    clickProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_click.mp3"]  });
   } else {
-    allNavElements[local_i_in_progress].addEventListener("touchstart", touchStartProgressF);
-    allNavElements[local_i_in_progress].addEventListener("touchend", touchEndProgressF);
+    hoverProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_hover.webm"]  });
+    clickProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_click.webm"]  });
   }
-}
+  */
+  //
+  listOfAllSoundsInThisLesson = [
+    hoverProgress,
+    //clickProgress // EXCEPTION: See unloadThatLastSoundWhichCannotBeUnloadedNormally
+  ];
+  // HANDLE ALL SOUNDS
+  let local_i_in_progress; // var i was already or could be declared somewhere else
+  for (local_i_in_progress = 0; local_i_in_progress < allNavElements.length; local_i_in_progress++)
+  {
+    if (deviceDetector.device == "desktop") {
+      allNavElements[local_i_in_progress].addEventListener("mouseenter", mouseEnterProgressF);
+      allNavElements[local_i_in_progress].addEventListener("mousedown", mouseDownProgressF);
+    } else {
+      allNavElements[local_i_in_progress].addEventListener("touchstart", touchStartProgressF);
+      allNavElements[local_i_in_progress].addEventListener("touchend", touchEndProgressF);
+    }
+  }
+  // HANDLE ALL NAVIGATIONS
+  if (deviceDetector.isMobile) {
+    handleAllNavigationsByTOUCHENDs();
+  } else {
+    handleAllNavigationsByMOUSEUPs();
+  }
+  // -
+},{once:true});
+
 function mouseEnterProgressF() { hoverProgress.play(); } // Must display "YOUR PREVIOUS PROGRESS HAS BEEN LOADED" to unlock sound and prevent [sound flood-explosions]
 function mouseDownProgressF()  { clickProgress.play(); }
 function touchStartProgressF(event) { event.preventDefault(); // See stopPropagation INLINE
@@ -26,23 +57,20 @@ function touchEndProgressF(event)   { event.preventDefault(); // See stopPropaga
 }
 
 // Unload sounds » Same method with every lesson's own js
-var listOfAllSoundsInThisLesson = [
-  hoverProgress,
-  //clickProgress // EXCEPTION: See unloadThatLastSoundWhichCannotBeUnloadedNormally
-];
 function unloadTheSoundsOfThisLesson() { // See onbeforeunload in js_for_all_iframed_lesson_htmls
   for (let i = 0; i < listOfAllSoundsInThisLesson.length; i++) {
       const snd = listOfAllSoundsInThisLesson[i]; snd.unload();
+      // As of August 2023 there is only one sound but that may change when [SHOW NEXT/PREVIOUS SCREEN] buttons are added
   }
   parent.unloadThatLastSoundWhichCannotBeUnloadedNormally(clickProgress); // Exists in js_for_navigation_handling,,, unloads the sound after 5s
 }
 
 /* ___ Viewing the progress_chart RESETS difficulty adjustment for whatever game user was trying to win ___ */
-sessionStorage.userHasTriedToWinButFailedThisManyTimesAlready = "0"; // Not used in any lesson as of March 2023
+// NEVER USED as of August 2023: sessionStorage.userHasTriedToWinButFailedThisManyTimesAlready = "0"; // Not used in any lesson as of March 2023
 
 /* ___See js_for_every_single_html.js to find how MEMORY CARD IS READ___ */
 const studiedLangCode = parent.langCodeForTeachingFilePaths.substr(0,2);
-const mainInProgress = document.getElementsByTagName('MAIN')[0];
+// NEVER USED as of August 2023: const mainInProgress = document.getElementsByTagName('MAIN')[0];
 const lesson111 = document.getElementById('1_1_1');
 const lesson112 = document.getElementById('1_1_2');
 const lesson113 = document.getElementById('1_1_3');
@@ -127,7 +155,7 @@ if (localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) 
 
 /*__Handle Mobile and Desktop separately__*/
 
-if (deviceDetector.isMobile) {
+function handleAllNavigationsByTOUCHENDs() {
   lesson111.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_1/index.html",lessonsAndTheirReadinessForOffline[111]); });
   lesson112.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html",lessonsAndTheirReadinessForOffline[112]); });
   lesson113.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_3/index.html",lessonsAndTheirReadinessForOffline[113]); });
@@ -140,7 +168,8 @@ if (deviceDetector.isMobile) {
   lesson132.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_2/index.html",lessonsAndTheirReadinessForOffline[132]); });
   lesson133.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_3/index.html",lessonsAndTheirReadinessForOffline[133]); });
   lesson134.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_4/index.html",lessonsAndTheirReadinessForOffline[134]); });
-} else {
+}
+function handleAllNavigationsByMOUSEUPs() {
   lesson111.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_1/index.html",lessonsAndTheirReadinessForOffline[111]); });
   lesson112.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html",lessonsAndTheirReadinessForOffline[112]); });
   lesson113.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_3/index.html",lessonsAndTheirReadinessForOffline[113]); });

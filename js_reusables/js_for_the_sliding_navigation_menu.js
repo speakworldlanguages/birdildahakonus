@@ -227,8 +227,19 @@ var itIsCertainlyNotTheNativeGoBackButtonThatIsNavigating = false; // See blank.
 let theTimeoutThatMustBeStopped;
 
 window.addEventListener("load",function() {
-  navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover.webm"]  });
-  navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click.webm"]  });
+  // -
+  // Do not access soundFileFormat before DOMContentLoaded fires in js_for_different_browsers_and_devices
+  navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
+  navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
+  /* DEPRECATE
+  if (isApple) { // Do not access isApple before DOMContentLoaded in js_for_different_browsers_and_devices
+    navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover.mp3"]  });
+    navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click.mp3"]  });
+  } else {
+    navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover.webm"]  });
+    navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click.webm"]  });
+  }
+  */
   // What to do on MOBILE DEVICES
   // Use ayFreym from js_for_the_parent_all_browsers_all_devices
   // What to do on MOBILES

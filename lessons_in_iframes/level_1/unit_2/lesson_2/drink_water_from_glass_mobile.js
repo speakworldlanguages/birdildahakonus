@@ -128,8 +128,8 @@ function updateGlassTiltMobileUntilFirstGulp(event) {
     window.removeEventListener("deviceorientation",updateGlassTiltMobileUntilFirstGulp);
     window.addEventListener("deviceorientation",updateGlassTiltMobileUntilSecondGulp);
     counterForPointOfNoReturn = 0; // reset
-    glassContainerDuringGameGulp0.style.visibility = "hidden";
-    glassContainerDuringGameGulp1.style.visibility = "visible";
+    glassContainerDuringGameGulp0.style.opacity = "0"; glassContainerDuringGameGulp0.remove();
+    glassContainerDuringGameGulp1.style.opacity = "1";
     gulpSound1.play();
   }
   // ---
@@ -178,8 +178,8 @@ function updateGlassTiltMobileUntilSecondGulp() {
     window.removeEventListener("deviceorientation",updateGlassTiltMobileUntilSecondGulp);
     window.addEventListener("deviceorientation",updateGlassTiltMobileUntilThirdGulp);
     counterForPointOfNoReturn = 0; // reset
-    glassContainerDuringGameGulp1.style.visibility = "hidden";
-    glassContainerDuringGameGulp2.style.visibility = "visible";
+    glassContainerDuringGameGulp1.style.opacity = "0"; glassContainerDuringGameGulp1.remove();
+    glassContainerDuringGameGulp2.style.opacity = "1";
     gulpSound2.play();
   }
   // ---
@@ -228,8 +228,8 @@ function updateGlassTiltMobileUntilThirdGulp() {
     window.removeEventListener("deviceorientation",updateGlassTiltMobileUntilThirdGulp);
     window.addEventListener("deviceorientation",updateGlassTiltMobileUntilFourthGulp);
     counterForPointOfNoReturn = 0; // reset
-    glassContainerDuringGameGulp2.style.visibility = "hidden";
-    glassContainerDuringGameGulp3.style.visibility = "visible";
+    glassContainerDuringGameGulp2.style.opacity = "0"; glassContainerDuringGameGulp2.remove();
+    glassContainerDuringGameGulp3.style.opacity = "1";
     gulpSound3.play();
   }
   // ---
@@ -278,8 +278,8 @@ function updateGlassTiltMobileUntilFourthGulp() {
     window.removeEventListener("deviceorientation",updateGlassTiltMobileUntilFourthGulp);
     window.addEventListener("deviceorientation",updateGlassTiltMobileWhichIsNowEmpty);
     counterForPointOfNoReturn = 0; // reset
-    glassContainerDuringGameGulp3.style.visibility = "hidden";
-    glassContainerDuringGameGulp4.style.visibility = "visible";
+    glassContainerDuringGameGulp3.style.opacity = "0"; glassContainerDuringGameGulp3.remove();
+    glassContainerDuringGameGulp4.style.opacity = "1";
     gulpSound4.play();
     let winTime;  switch (parent.speedAdjustmentSetting) {  case "slow": winTime = 3000; break;  case "fast": winTime = 1000; break;  default: winTime = 2000;  }
     new SuperTimeout(function () {
@@ -393,8 +393,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp(event) { ev
     main.removeEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp);
     main.removeEventListener("touchend",updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp);
     counterForPointOfNoReturn = 0;
-    glassContainerDuringGameGulp0.style.visibility = "hidden";
-    glassContainerDuringGameGulp1.style.visibility = "visible";
+    glassContainerDuringGameGulp0.style.opacity = "0"; glassContainerDuringGameGulp0.remove();
+    glassContainerDuringGameGulp1.style.opacity = "1";
     gulpSound1.play();
     console.log("First gulp without deviceorientation");
     beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; // Undo the overdrive during insistence incrementation
@@ -431,8 +431,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp(event) { e
     main.removeEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp);
     main.removeEventListener("touchend",updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp);
     counterForPointOfNoReturn = 0;
-    glassContainerDuringGameGulp1.style.visibility = "hidden";
-    glassContainerDuringGameGulp2.style.visibility = "visible";
+    glassContainerDuringGameGulp1.style.opacity = "0"; glassContainerDuringGameGulp1.remove();
+    glassContainerDuringGameGulp2.style.opacity = "1";
     gulpSound2.play();
     console.log("2nd gulp without deviceorientation");
     beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; // Undo the overdrive during insistence incrementation
@@ -469,8 +469,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp(event) { ev
     main.removeEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp);
     main.removeEventListener("touchend",updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp);
     counterForPointOfNoReturn = 0;
-    glassContainerDuringGameGulp2.style.visibility = "hidden";
-    glassContainerDuringGameGulp3.style.visibility = "visible";
+    glassContainerDuringGameGulp2.style.opacity = "0"; glassContainerDuringGameGulp2.remove();
+    glassContainerDuringGameGulp3.style.opacity = "1";
     gulpSound3.play();
     console.log("3rd gulp without deviceorientation");
     beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; // Undo the overdrive during insistence incrementation
@@ -507,8 +507,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp(event) { e
     main.removeEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp);
     main.removeEventListener("touchend",updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp);
     counterForPointOfNoReturn = 0;
-    glassContainerDuringGameGulp3.style.visibility = "hidden";
-    glassContainerDuringGameGulp4.style.visibility = "visible";
+    glassContainerDuringGameGulp3.style.opacity = "0"; glassContainerDuringGameGulp3.remove();
+    glassContainerDuringGameGulp4.style.opacity = "1";
     gulpSound4.play();
     let winTime;  switch (parent.speedAdjustmentSetting) {  case "slow": winTime = 3000; break;  case "fast": winTime = 1000; break;  default: winTime = 2000;  }
     new SuperTimeout(function () {
@@ -583,7 +583,7 @@ function getHowTheDeviceIsBeingHeld() {
   new SuperTimeout(afterAnUnnoticableDelay,100); // This solves the wrong-firing-order issue on Samsung Browser.
   function afterAnUnnoticableDelay() {
     // UPDATE Safari 16.4 (at last) supports screen.orientation
-    // As of August2023 (without testing) we don't know if screen.orientation.angle returns 270 or -90
+    // BUT: As of August2023 (without testing) we don't know if screen.orientation.angle returns 270 or -90 when using Safari
     if (screen.orientation) { // Mainly for Android (as of 2022)
       // screen.orientation.angle on Android (as of 2022) returns 0 or 90 or 270 or 180
       if (screen.orientation.angle == 0)   {    theDeviceIsRotated="no";     }

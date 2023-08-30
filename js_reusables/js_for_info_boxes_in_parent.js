@@ -29,10 +29,16 @@ okLetsTryRefreshingTheBrowserBoxDIV.innerHTML = "&#9989;"; // Default content of
 //-
 
 // ---
-window.addEventListener("DOMContentLoaded",function() { // NOTE: DOMContentLoaded is or can be too early for deviceDetector at parent level
-
-  closeTheBoxSound = new Howl({  src: ["/user_interface/sounds/notification3_close.webm"]  });
-
+window.addEventListener("DOMContentLoaded",function() { // QUESTION: Could DOMContentLoaded still be too early for deviceDetector at parent level? A: Not if js_for_info_boxes_in_parent is listed after js_for_different_browsers_and_devices
+  // soundFileFormat exists in js_for_different_browsers_and_devices
+  closeTheBoxSound = new Howl({  src: ["/user_interface/sounds/notification2_close."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
+  // notification3_close is also used as dismissVocabularySound in js_for_info_boxes_in_lessons
+  /* DEPRECATE
+  // Do not access isApple before DOMContentLoaded in js_for_different_browsers_and_devices
+  if (isApple) {  closeTheBoxSound = new Howl({  src: ["/user_interface/sounds/notification3_close.mp3"]   });  }
+  else {          closeTheBoxSound = new Howl({  src: ["/user_interface/sounds/notification3_close.webm"]  });  }
+  */
+  // -
   const pathOfSaveLoadInfoNoticeTexts = "/user_interface/text/"+userInterfaceLanguage+"/0-about_saving_loading_users_progress.txt";
   const pathOfThreeBoxClosingTexts = "/user_interface/text/"+userInterfaceLanguage+"/0-cancel_proceed_good.txt";
   const pathOfKeepWaitingOrReloadTexts = "/user_interface/text/"+userInterfaceLanguage+"/0-wait_or_reload.txt";
@@ -121,22 +127,22 @@ function createAndHandleGoBackOrProceedBox() {
   return new Promise(function (resolve, reject) {
     // It's Ok if we don't remove all these EventListeners when the box is closed, yes or no?
     if (deviceDetector.isMobile) {
-      cancelButtonToCloseTheWillSaveBoxDIV.addEventListener("touchend",cancelButtonIsClicked);
-      proceedButtonToCloseTheWillSaveBoxDIV.addEventListener("touchend",proceedButtonIsClicked);
+      cancelButtonToCloseTheWillSaveBoxDIV.addEventListener("touchend",cancelButtonIsTouchedOrClicked);
+      proceedButtonToCloseTheWillSaveBoxDIV.addEventListener("touchend",proceedButtonIsTouchedOrClicked);
     }
     else {
-      cancelButtonToCloseTheWillSaveBoxDIV.addEventListener("mouseup",cancelButtonIsClicked);
-      proceedButtonToCloseTheWillSaveBoxDIV.addEventListener("mouseup",proceedButtonIsClicked);
+      cancelButtonToCloseTheWillSaveBoxDIV.addEventListener("mouseup",cancelButtonIsTouchedOrClicked);
+      proceedButtonToCloseTheWillSaveBoxDIV.addEventListener("mouseup",proceedButtonIsTouchedOrClicked);
     }
 
-    function cancelButtonIsClicked() {
+    function cancelButtonIsTouchedOrClicked() {
       closeTheBoxSound.play();
       // Play disappear animation and remove and do nothing
       hideTheSaveLoadBoxAndDismissTheNotice();
       // WHY? IT WORKED BUT » document.body.removeChild(saveLoadInfoBoxContainerDIV); was causing an error after its first usage (from 2nd time and on)
       setTimeout(function () { reject(false); },350); // Let the .then().catch() fire in js_for_the_parent_all_browsers_all_devices
     }
-    function proceedButtonIsClicked() {
+    function proceedButtonIsTouchedOrClicked() {
       closeTheBoxSound.play();
       // Play disappear animation and remove and proceed
       hideTheSaveLoadBoxAndDismissTheNotice();

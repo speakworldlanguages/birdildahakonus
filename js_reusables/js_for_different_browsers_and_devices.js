@@ -4,14 +4,15 @@
 
 var willUserTalkToSpeechRecognition = false;
 var detectedBrowserName;
-let detectedBrowserVersion = "?";
+let detectedBrowserVersion = 000000;
 var detectedOS_name;
-var detectedBrandName = "unknown";
+var detectedBrandName = "unknown manufacturer";
 var deviceDetector = {device:"desktop",isMobile:false}; // Defaults
 var isApple = false;
 var isSafari = false;
+var soundFileFormat = "____";
 var isAndroid = false;
-var isWebViewOnAndroid = false;
+var isWebViewOnAndroid = false; // Even though it is never used as of August 2023
 var isFirefox = false;
 let isUnknownBrowserInTermsOfSpeechRecognition = false;
 
@@ -36,7 +37,17 @@ window.addEventListener('DOMContentLoaded', function(){
   detectedBrowserName = parser.getBrowser().name.toLowerCase();
   if (parser.getBrowser().version) {
     let versionString = parser.getBrowser().version;
-    detectedBrowserVersion = Number(versionString.split(".")[0]+versionString.split(".")[1]); // Works OK
+    function removeNonNumbersAndKeepDot(inputString) {    return inputString.replace(/[^0-9.]/g, '');    }
+    let versionNumberWithDots = removeNonNumbersAndKeepDot(versionString);
+    if (typeof versionNumberWithDots.split(".")[1] === 'undefined') {
+      if (typeof versionNumberWithDots.split(".")[0] === 'undefined') {
+        detectedBrowserVersion = 0;
+      } else {
+        detectedBrowserVersion = Number(  versionNumberWithDots.split(".")[0]  ); // Number() returns 0 when the string is empty
+      }
+    } else {
+      detectedBrowserVersion = Number(  versionNumberWithDots.split(".")[0]+versionNumberWithDots.split(".")[1]  );
+    }
   }
   detectedOS_name = parser.getOS().name.toLowerCase();
   if (parser.getDevice().vendor) { detectedBrandName = parser.getDevice().vendor.toLowerCase(); }
@@ -61,11 +72,18 @@ window.addEventListener('DOMContentLoaded', function(){
     window.ontouchstart = function(event) {     event.preventDefault();     return false;    }; // It looks like this is working...
   } else { } // We need the right click menu on desktops » it opens the [start-fullscreen-mode] box
 
-  /* DESPITE: Being sick of writing special code for Apple */
+  /* DESPITE: Being sick of writing extra code to handle Apple */
   if (detectedOS_name == "ios" || detectedOS_name == "macos" || detectedBrandName == "apple") {
     isApple=true;
+    // Set the sound file format for the entire app
+    soundFileFormat = "mp3"; // CAUTION: Parent level only! See js_for_all_iframed_lesson_htmls to find how it's passed to the iframe level
+    // We don't want to put this into js_for_every_single_html because that precedes all js files
+  } else {
+    // Set the sound file format for the entire app
+    soundFileFormat = "webm"; // CAUTION: Parent level only! See js_for_all_iframed_lesson_htmls to find how it's passed to the iframe level
+    // We don't want to put this into js_for_every_single_html because that precedes all js files
   }
-
+  // -
   if (detectedOS_name == "macos") {
     // DECIDE: Desktop Safari supports playing webm but Mobile Safari doesn't.
     // Should we use mp3 for Desktop Safari too???? ???? ???? YES IF it runs faster and hover sounds are accurate
@@ -86,7 +104,7 @@ window.addEventListener('DOMContentLoaded', function(){
   }
   // Android Chrome and Webview on Android are different // Like support for change event is not the same in 2022 >>> https://developer.mozilla.org/en-US/docs/Web/API/PermissionStatus/change_event
   if (detectedBrowserName.search("webview") >= 0) {
-    isWebViewOnAndroid = true;
+    isWebViewOnAndroid = true; // Even though it is never used as of August 2023
   }
 
   if (detectedOS_name.search("android") >= 0) {
@@ -351,23 +369,26 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
           // Desktop Safari 14.1 ~ 15.x
           // Mobile Safari 14.5 ~ 15.x
 
-          // tellTheUserToChangeOrUpdateTheBrowser(); // This will be shown for the second time to Safari users between 14.x ~ 15.x
+          // tellTheUserToChangeOrUpdateTheBrowser(); // If uncommented, this will be shown for the second time to Safari users between 14.x ~ 15.x
           // Safari users before 14.x will not see this repetition. They will see the "You must update" alert only once as handled above.
 
           // 28 Ağustos 2023 İstanbul: iPad buraya düşüyor
-          // İlerletmeyi deneyelim - çalışacak mı?
-          // Ve evet çalıştı - konuşma algılandı
-          //AMA rotating globe preloader kaybolmuyor - BELKİ DE AVIF desteği olmadığı için olabilir
+          // The app is fully functional with speech recognition and even deviceorientation
+          // BUT THE rotating-globe preloader sticks to the screen and never disappears
+          // NORMALLY: rotating-globe preloader disappers every time window.onload fires in js_for_all_iframed_lesson_htmls
+          // POSSIBLY BECAUSE lack of AVIF support breaks something and 'load' never fires
           removeAllowMicrophoneBlinkerForcedly();
-          // Bu şekilde hemen startTeaching çağırmak yerine dah mantıklı birşey yapılabilir mi ???  ???  ???  ???
-          setTimeout(function () {     startTeaching(nameOfButtonIsWhatWillBeTaught);     },2002);
+          // IN THIS CASE WE HAVE TWO OPTIONS:
+          // A- Implement webp fallback for browsers that don't support avif in favor of old-hardware iPad users
+          // B- Comment out startTeaching(nameOfButtonIsWhatWillBeTaught) so that the app never starts wherever permissions API doesn't exist
+          // setTimeout(function () {     startTeaching(nameOfButtonIsWhatWillBeTaught);     },2002);
         }
         // END OF ---Permission handling---
 
         // Make the “allow microphone” box appear for fresh new users
         // Here we know that SpeechRecogntion is supported
         // To make the mic permission prompt appear we do a quick TURN ON AND THEN OFF
-        // Either with or without permissons API
+        // Either with or without permissions API
         // UNCERTAIN: We don't know if a browser would pause the script execution during a permission prompt similar to the way it pauses during an alert.
         // THEREFORE: We start the setInterval before the prompt appears so that it doesn't matter even if its ticking is paused by the permission box.
         setTimeout(function () {  handleMicFirstTurnOn();  annyang.start();  },1750); // This will make the prompt box appear for allowing microphone usage

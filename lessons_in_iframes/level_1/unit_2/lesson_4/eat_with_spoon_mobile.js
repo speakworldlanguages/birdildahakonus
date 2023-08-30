@@ -37,6 +37,7 @@ function getFingerPressure(event) { event.preventDefault(); event.stopPropagatio
     theLongSpoonContainerDivWithStates.style.translate = (usefulNumber/2).toFixed(3) + "vmin 0 0";
   }
 }
+
 let measureSpoonHoldTimeInterval = null; let heldMilliseconds = 0;
 function whatToDoWhenSpoonIsTouched(event) { event.preventDefault(); event.stopPropagation();
   // --
@@ -55,7 +56,7 @@ function whatToDoWhenSpoonIsTouched(event) { event.preventDefault(); event.stopP
     // theLongSpoonContainerDivWithStates.style.marginTop = (initialDistanceToTop - ooo.y - ooo.height/2).toFixed(1) + "px";
     // Try a more absolute-ish way
     let iii = theSquareSpoonContainerDiv.getBoundingClientRect();
-    // console.log(iii.width); console.log(iii.x); console.log(iii.height); console.log(iii.y); // Works OK
+    // parent.console.log(iii.width); parent.console.log(iii.x); parent.console.log(iii.height); parent.console.log(iii.y); // Works OK
     theLongSpoonContainerDivWithStates.style.marginLeft = (initialDistanceToLeft - iii.x - iii.width*0.775).toFixed(1) +"px"; // Accroding to photoshop center of spoon is at 77.5%
     theLongSpoonContainerDivWithStates.style.marginTop = (initialDistanceToTop - iii.y - iii.height*0.545).toFixed(1) + "px"; // Accroding to photoshop center of spoon is at 54.5%
     // ---
@@ -167,7 +168,7 @@ function whatToDoWhenSpoonIsDragged(event) { event.preventDefault(); event.stopP
   } // END OF elementFromPoint HIT DETECTED
 } // END OF whatToDoWhenSpoonIsDragged
 
-function onlyToPreventSwipeMenu(event) { event.preventDefault(); event.stopPropagation(); console.log("Swipe menu was prevented"); }
+function onlyToPreventSwipeMenu(event) { event.preventDefault(); event.stopPropagation(); parent.console.log("Swipe menu was prevented"); }
 // ---
 let hideInstructionTimeout = null;
 function hideTabletInstruction() {  showHowTablet.classList.remove("appearQuickly"); showHowTablet.classList.add("disappearSlowly"); hideInstructionTimeout = null; }
@@ -190,10 +191,10 @@ let motionIsNotAvailableSoWillPlayWithTouchmove = false;
 function handleSensorPermissions(event) { event.preventDefault(); event.stopPropagation();
   // By using {once:true} we eliminate the need to execute main.removeEventListener("touchend",handleSensorPermissions);
   // Feature detect
-  console.log("Check if DeviceMotionEvent.requestPermission exists");
+  parent.console.log("Check if DeviceMotionEvent.requestPermission exists");
   if (typeof DeviceMotionEvent.requestPermission === 'function') {
     // iOS
-    console.log("Yes, DeviceMotionEvent.requestPermission exists");
+    parent.console.log("Yes, DeviceMotionEvent.requestPermission exists");
     // unclear: CAN WE MAKE PERMISSIONS PERMANENT AND WHAT HAPPENS IF IT IS ALREADY GIVEN???
     DeviceMotionEvent.requestPermission()
       .then(permissionState => {
@@ -209,10 +210,10 @@ function handleSensorPermissions(event) { event.preventDefault(); event.stopProp
           }, 2200);
         }
       })
-      .catch(console.error);
+      .catch(parent.console.error);
   } else {
     // Android
-    console.log("No, DeviceMotionEvent.requestPermission does not exist");
+    parent.console.log("No, DeviceMotionEvent.requestPermission does not exist");
     testDevicemotion();
     new SuperTimeout(function () {
       showHowToMoveTheSpoonInOrderToSwallow(motionIsNotAvailableSoWillPlayWithTouchmove); // See drink_water_from_glass_mobile.js
@@ -222,7 +223,7 @@ function handleSensorPermissions(event) { event.preventDefault(); event.stopProp
 // ---
 let devicemotionHasNeverFired = true;
 function testDevicemotion() {
-  console.log("testing devicemotion");
+  parent.console.log("testing devicemotion");
   window.addEventListener("devicemotion",tryToReadAcceleration,{once:true});
   function tryToReadAcceleration(event) {
     devicemotionHasNeverFired = false;
@@ -230,48 +231,49 @@ function testDevicemotion() {
     try {
       x = event.accelerationIncludingGravity.x; y = event.accelerationIncludingGravity.y; z = event.accelerationIncludingGravity.z;
     } catch (e) {
-      motionIsNotAvailableSoWillPlayWithTouchmove = true; console.log("devicemotion fired but event.accelerationIncludingGravity threw an error");
+      motionIsNotAvailableSoWillPlayWithTouchmove = true; parent.console.log("devicemotion fired but event.accelerationIncludingGravity threw an error");
     } finally {
       if (x || y || z) {
-        console.log("devicemotion is working");
+        parent.console.log("devicemotion is working");
       } else {
-        motionIsNotAvailableSoWillPlayWithTouchmove = true; console.log("devicemotion fired but cannot read x y z values from the event");
+        motionIsNotAvailableSoWillPlayWithTouchmove = true; parent.console.log("devicemotion fired but cannot read x y z values from the event");
       }
     }
   }
   new SuperTimeout(check, 2000);
   function check() {
     if (devicemotionHasNeverFired) {
-      motionIsNotAvailableSoWillPlayWithTouchmove = true; console.log("devicemotion doesn't fire at all");
+      motionIsNotAvailableSoWillPlayWithTouchmove = true; parent.console.log("devicemotion doesn't fire at all");
       window.removeEventListener("devicemotion",tryToReadAcceleration); // Even though {once:true} was enabled
     } else {
-      console.log("can play the game with devicemotion");
+      parent.console.log("can play the game with devicemotion");
     }
   }
 }
 // ---
+let looksLikeMOBILEUserAlreadyKnowsHowToEat = false;
 function showHowToMoveTheSpoonInOrderToSwallow(devicemotionDidNotWorkIsTrueOrFalse) {
   // Show how to use the accelerometer or how to unpinch » display only once
   // --
   if (devicemotionDidNotWorkIsTrueOrFalse) {
     // Show finger movement instruction webp
     if (deviceDetector.device == "tablet") {
-      if (!sessionStorage.mobileDevicePlayInstruction124HasBeenShown) {
+      if (!sessionStorage.mobileDeviceHowToPlay124HasBeenShown && !looksLikeMOBILEUserAlreadyKnowsHowToEat) {
         showHowTablet.style.display = "block"; showHowTablet.children[0].style.display = "block";
         showHowTablet.classList.add("appearQuickly");
         hideInstructionTimeout = new SuperTimeout(hideTabletInstruction, 4444); // Webp duration is 5380 (March2023)
-        sessionStorage.mobileDevicePlayInstruction124HasBeenShown = "yes"; // Create the key-value pair so that it will return true inside if()
+        sessionStorage.mobileDeviceHowToPlay124HasBeenShown = "yes"; // Create the key-value pair so that it will return true inside if()
       }
     } else { // phone
-      if (!sessionStorage.mobileDevicePlayInstruction124HasBeenShown) {
+      if (!sessionStorage.mobileDeviceHowToPlay124HasBeenShown && !looksLikeMOBILEUserAlreadyKnowsHowToEat) {
         showHowPhone.style.display = "block"; showHowPhone.children[0].style.display = "block";
         showHowPhone.classList.add("appearQuickly");
         hideInstructionTimeout = new SuperTimeout(hidePhoneInstruction, 4444); // Webp duration is 5380 (March2023)
-        sessionStorage.mobileDevicePlayInstruction124HasBeenShown = "yes"; // Create the key-value pair so that it will return true inside if()
+        sessionStorage.mobileDeviceHowToPlay124HasBeenShown = "yes"; // Create the key-value pair so that it will return true inside if()
       }
     }
     //---
-    console.log("can not use devicemotion,,, will play with touch-unpinch");
+    parent.console.log("can not use devicemotion,,, will play with touch-unpinch");
     new SuperTimeout(function () {
       main.removeEventListener("touchstart",onlyToPreventSwipeMenu);
       main.addEventListener("touchstart",getTouchesAndCheck);
@@ -281,22 +283,22 @@ function showHowToMoveTheSpoonInOrderToSwallow(devicemotionDidNotWorkIsTrueOrFal
   } else {
     // Show how to use acceleration webp
     if (deviceDetector.device == "tablet") {
-      if (!sessionStorage.mobileDevicePlayInstruction124HasBeenShown) {
+      if (!sessionStorage.mobileDeviceHowToPlay124HasBeenShown && !looksLikeMOBILEUserAlreadyKnowsHowToEat) {
         showHowTablet.style.display = "block"; showHowTablet.children[1].style.display = "block";
         showHowTablet.classList.add("appearQuickly");
         hideInstructionTimeout = new SuperTimeout(hideTabletInstruction, 7500);
-        sessionStorage.mobileDevicePlayInstruction124HasBeenShown = "yes"; // Create the key-value pair so that it will return true inside if()
+        sessionStorage.mobileDeviceHowToPlay124HasBeenShown = "yes"; // Create the key-value pair so that it will return true inside if()
       }
     } else { // phone
-      if (!sessionStorage.mobileDevicePlayInstruction124HasBeenShown) {
+      if (!sessionStorage.mobileDeviceHowToPlay124HasBeenShown && !looksLikeMOBILEUserAlreadyKnowsHowToEat) {
         showHowPhone.style.display = "block"; showHowPhone.children[1].style.display = "block";
         showHowPhone.classList.add("appearQuickly");
         hideInstructionTimeout = new SuperTimeout(hidePhoneInstruction, 7500);
-        sessionStorage.mobileDevicePlayInstruction124HasBeenShown = "yes"; // Create the key-value pair so that it will return true inside if()
+        sessionStorage.mobileDeviceHowToPlay124HasBeenShown = "yes"; // Create the key-value pair so that it will return true inside if()
       }
     }
     // ---
-    console.log("devicemotion is available,,, will play with movement-acceleration");
+    parent.console.log("devicemotion is available,,, will play with movement-acceleration");
     new SuperTimeout(function () {
       main.removeEventListener("touchstart",onlyToPreventSwipeMenu);
       window.addEventListener("devicemotion",getAccelerationDataAndCheck);
@@ -322,7 +324,7 @@ function getAccelerationDataAndCheck(event) {
     }
     // --------
     if ((currentAccelerationFloorCeil+previousAccelerationOne+previousAccelerationTwo+previousAccelerationThree+previousAccelerationFour)<=-2) {
-      // console.log("The sum of latest 5 is <=-2");
+      // parent.console.log("The sum of latest 5 is <=-2");
       // Possibly backward movement
       backwardMovementPreventsSuccess();
     }
@@ -330,7 +332,7 @@ function getAccelerationDataAndCheck(event) {
       hasProbablyMovedBackwards = true;
       if (!shortWaitTimeout) { // Countdown was not ticking
         shortWaitTimeout = new SuperTimeout(function () { hasProbablyMovedBackwards = false; shortWaitTimeout = null; }, 777);
-        console.log("Prevent success for 777ms");
+        parent.console.log("Prevent success for 777ms");
       } else { // Countdown was already ticking
         if (shortWaitTimeout) {  shortWaitTimeout.clear();  } //clearTimeout(shortWaitTimeout);
         shortWaitTimeout = new SuperTimeout(function () { hasProbablyMovedBackwards = false; shortWaitTimeout = null; }, 777);
@@ -340,7 +342,7 @@ function getAccelerationDataAndCheck(event) {
     if (currentAccelerationFloorCeil>0 && previousAccelerationOne>0 && previousAccelerationTwo>0 && previousAccelerationThree>0){
       if (!hasProbablyMovedBackwards) {
         // The latest four are all positive
-        console.log("All latest four are at least 1");
+        parent.console.log("All latest four are at least 1");
         // Count that as success
         firstConditionMet = true;
       }
@@ -350,7 +352,7 @@ function getAccelerationDataAndCheck(event) {
     if (Math.min(currentAccelerationFloorCeil, previousAccelerationOne, previousAccelerationTwo, previousAccelerationThree)>=0) {
       if ((currentAccelerationFloorCeil+previousAccelerationOne+previousAccelerationTwo)>=4) {
         if (!hasProbablyMovedBackwards) {
-          console.log("4/4 are at least ZERO and sum of latest 3 is >= 4");
+          parent.console.log("4/4 are at least ZERO and sum of latest 3 is >= 4");
           // Count that as success
           secondConditionMet = true;
         }
@@ -358,13 +360,13 @@ function getAccelerationDataAndCheck(event) {
     }
     // ----
     if ((currentAccelerationFloorCeil+previousAccelerationOne+previousAccelerationTwo+previousAccelerationThree+previousAccelerationFour)>=7) {
-      console.log("The sum of latest 5 is >=7");
+      parent.console.log("The sum of latest 5 is >=7");
       // Count that as success
       thirdConditionMet = true;
     }
     // --------
     if (currentAccelerationFloorCeil==0 && previousAccelerationOne==0 && previousAccelerationTwo==0 && previousAccelerationThree==0 && previousAccelerationFour==0) {
-      if (!isAtRest) { console.log("Is at rest"); }
+      if (!isAtRest) { parent.console.log("Is at rest"); }
       isAtRest = true;
       unrestCounter = 0;
       hasProbablyMovedBackwards = false;
@@ -373,7 +375,7 @@ function getAccelerationDataAndCheck(event) {
       // ---
       if (unrestCounter == 1) { // The very first reading after rest was negative
         if (currentAccelerationFloorCeil<0) {
-          console.log("First value was negative");
+          parent.console.log("First value was negative");
           backwardMovementPreventsSuccess();
         }
       }
@@ -384,7 +386,7 @@ function getAccelerationDataAndCheck(event) {
           // The latest 5 are all at least -1
           if ((currentAccelerationFloorCeil+previousAccelerationOne+previousAccelerationTwo+previousAccelerationThree+previousAccelerationFour)>=4) {
             if (!hasProbablyMovedBackwards) {
-              console.log("5/5 are at least -1 AND the sum of latest 5 is >=4");
+              parent.console.log("5/5 are at least -1 AND the sum of latest 5 is >=4");
               // Count that as success
               fourthConditionMet = true;
             }
@@ -392,7 +394,7 @@ function getAccelerationDataAndCheck(event) {
         }
       }
       // There is MOVEMENT
-      console.log(currentAccelerationFloorCeil+" "+previousAccelerationOne+" "+previousAccelerationTwo+" "+previousAccelerationThree+" "+previousAccelerationFour);
+      parent.console.log(currentAccelerationFloorCeil+" "+previousAccelerationOne+" "+previousAccelerationTwo+" "+previousAccelerationThree+" "+previousAccelerationFour);
     }
 
     // firstConditionMet || secondConditionMet || thirdConditionMet || fourthConditionMet
@@ -419,6 +421,7 @@ function getAccelerationDataAndCheck(event) {
 } // END OF function getAccelerationDataAndCheck
 
 function bringTheSpoonWithArmMovement() {
+  looksLikeMOBILEUserAlreadyKnowsHowToEat = true;
   switch(yumNumber) {
     case 1:          loadFoodSound1.play();   if (canVibrate) { navigator.vibrate([12,60,12,60,12]); }   break;
     case 2:          loadFoodSound2.play();   if (canVibrate) { navigator.vibrate([12,60,12,60,12]); }   break;
@@ -473,14 +476,14 @@ function getTouchesAndCheck(event) {
       initialX2 = event.touches[1].clientX; initialY2 = event.touches[1].clientY;
       let initialDistanceSquared = Math.pow(Math.abs(initialX2 - initialX1),2) + Math.pow(Math.abs(initialY2 - initialY1),2);
       initialDistanceBetweenTwoFingers = Math.pow(initialDistanceSquared,0.5);
-      // console.log("initial dist " + initialDistanceBetweenTwoFingers.toFixed(2)); // Works OK
+      // parent.console.log("initial dist " + initialDistanceBetweenTwoFingers.toFixed(2)); // Works OK
     }
     twoFingersDetected = true;
     // --
     let currentDistanceSquared = Math.pow(Math.abs(event.touches[1].clientX - event.touches[0].clientX),2) + Math.pow(Math.abs(event.touches[1].clientY - event.touches[0].clientY),2);
     currentDistanceBetweenTwoFingers = Math.pow(currentDistanceSquared,0.5);
     let movement = currentDistanceBetweenTwoFingers - initialDistanceBetweenTwoFingers;
-    // console.log("moved " + movement.toFixed(2)); // Works OK
+    // parent.console.log("moved " + movement.toFixed(2)); // Works OK
     if (movement<0) {
       // If fingers get closer then renew the initialDistanceBetweenTwoFingers
       initialDistanceBetweenTwoFingers = initialDistanceBetweenTwoFingers + movement;
@@ -489,6 +492,7 @@ function getTouchesAndCheck(event) {
     else if (movement<75) { // Swallow threshold
       theLongSpoonContainerDivWithStates.style.transform = "rotate(-90deg) translate(0%,4vmin) translateZ("+movement*2+"px)";
       if (movement>=25 && loadFoodSoundIsUnleashed) {
+        looksLikeMOBILEUserAlreadyKnowsHowToEat = true;
         switch(yumNumber) {
           case 1:        loadFoodSound1.play();        break;
           case 2:        loadFoodSound2.play();        break;
@@ -501,7 +505,7 @@ function getTouchesAndCheck(event) {
       main.removeEventListener("touchstart",getTouchesAndCheck);
       main.removeEventListener("touchmove",getTouchesAndCheck);
       main.removeEventListener("touchend",getTouchesAndCheck);
-      console.log("Swipe menu should be released now");
+      parent.console.log("Swipe menu should be released now");
       // Make teacher stop talking
       /*clearTimeout(to1); clearTimeout(to2); clearTimeout(to3); clearTimeout(to4);*/
       if (to1) { to1.clear(); } if (to2) { to2.clear(); } if (to3) { to3.clear(); } if (to4) { to4.clear(); }
@@ -527,6 +531,7 @@ function getTouchesAndCheck(event) {
 }
 // ---
 function swallowWithTheUnpinchGesture() {
+  looksLikeMOBILEUserAlreadyKnowsHowToEat = true;
   switch(yumNumber) {
     case 1:          firstSwallowSound.play();          break;
     case 2:          secondSwallowSound.play();         break;
@@ -554,7 +559,7 @@ function swallowWithTheUnpinchGesture() {
 
 // ----------------
 function winHappenedOnMobile() {
-  winSound.play(); console.log("Meal was successfully eaten!");
+  winSound.play(); parent.console.log("Meal was successfully eaten!");
   if (canVibrate) { navigator.vibrate([0,50,60,60,700]); }
   // Speed adjustment is not available on mobiles as of 2023 but will check it anyhow (it could be enabled in the future)
   let proceedTime;  switch (parent.speedAdjustmentSetting) {  case "slow": proceedTime = 5000; break;  case "fast": proceedTime = 3000; break;  default: proceedTime = 4000;  }

@@ -43,16 +43,15 @@ var firstUserGestureHasUnleashedAudio = false; // Used in js_for_the_sliding_nav
 // NOTE: Chrome does not count an alert box click as a user gesture. Only the first element click or touch will unlock sound. Must be silent until then.
 // _________________
 
-let dismissNotificationSound1;
+// DEPRECATED let dismissNotificationSound1;
 let clickSound; //BETTER WITHOUT: hoverSound
 window.addEventListener("load",function () {
 
-  if (deviceDetector.isMobile) {
-    window.addEventListener("touchend",function () {  firstUserGestureHasUnleashedAudio = true; }, {once:true}); // Prevent sound flooding (otherwise hover sounds that accumulate may explode with the first user gesture).
+  if (deviceDetector.isMobile) { // DO NOT ACCESS deviceDetector BEFORE DOMContentLoaded IN js_for_different_browsers_and_devices
+    window.addEventListener("touchend",function () { firstUserGestureHasUnleashedAudio = true; }, {once:true}); // Prevent sound flooding (otherwise hover sounds that accumulate may explode with the first user gesture).
   } else {
-    window.addEventListener("mouseup",function () {  firstUserGestureHasUnleashedAudio = true;  }, {once:true}); // Prevent sound flooding (otherwise hover sounds that accumulate may explode with the first user gesture).
+    window.addEventListener("mouseup", function () { firstUserGestureHasUnleashedAudio = true; }, {once:true}); // Prevent sound flooding (otherwise hover sounds that accumulate may explode with the first user gesture).
   }
-
 
   // ALL BUTTONS - Kishi Language, Hito Lanuage, Renmen Language etc.
   const allParentButtonElementsAreInThisArray = document.getElementsByTagName("BUTTON"); //All of them in container parents,,, NOT THE IFRAMED LESSON BUTTONS
@@ -66,12 +65,19 @@ window.addEventListener("load",function () {
       allParentButtonElementsAreInThisArray[i].addEventListener("touchend", touchEndMenuButtonF); // Not touchstart because it may have to be scrollable
     }
   }
-
-
+  // illuminant_button_click SOUND ALSO «ACTS AS-COVERS-CONNECTS TO» THE POPPING SOUND OF [Go back] [Ok, let's start] BOX // See js_for_info_boxes_in_parent
+  clickSound = new Howl({  src: ["/user_interface/sounds/illuminant_button_click."+soundFileFormat]  }); // See js_for_different_browsers_and_devices to find soundFileFormat
+  /* DEPRECATE
+  if (isApple) { // DO NOT ACCESS isApple BEFORE DOMContentLoaded IN js_for_different_browsers_and_devices
+    // DEPRECATED dismissNotificationSound1 = new Howl({  src: ["/user_interface/sounds/notification1_close.mp3"]  }); // notification1_close ALSO USED AS dismissNotificationType1Sound IN js_for_info_boxes_in_lessons
+    clickSound = new Howl({  src: ["/user_interface/sounds/illuminant_button_click.mp3"]  });
+  } else {
+    // DEPRECATED dismissNotificationSound1 = new Howl({  src: ["/user_interface/sounds/notification1_close.webm"]  }); // notification1_close ALSO USED AS dismissNotificationType1Sound IN js_for_info_boxes_in_lessons
+    clickSound = new Howl({  src: ["/user_interface/sounds/illuminant_button_click.webm"]  });
+  }
+  */
   // ---
-  dismissNotificationSound1 = new Howl({  src: ["/user_interface/sounds/notification1_close.webm"]  });
-  //clickSound = new Howl({  src: ["/user_interface/sounds/illuminant_button_click.webm"]  });
-  clickSound = new Howl({  src: ["/user_interface/sounds/test.mp3"]  });
+
   // ---
 
   // Skip the welcome screen and continue progress from last unit / last saved position
@@ -84,7 +90,7 @@ window.addEventListener("load",function () {
     if (annyang) {
         annyang.setLanguage(langCodeForAnnyang); // Firefox v60's and v70's won't let buttons function unless this is wrapped in an if (annyang){} like this.
         // SAFARI BUG: Safari does not update the recognition.lang before returning at least one wrong result >>> Keeps listening for the last language that was set before being changed with setLanguage()
-        if (isApple) {
+        if (isApple) { // DO NOT ACCESS isApple BEFORE DOMContentLoaded in js_for_different_browsers_and_devices
           annyang.abort();
           setTimeout(function () { annyang.start(); }, 150); // NOTE: annyang.resume() equals annyang.start()
           setTimeout(function () { annyang.setLanguage(langCodeForAnnyang); }, 300);
@@ -497,7 +503,7 @@ function openFirstLesson(freshNewOrReturning) {
   if (annyang) {
     annyang.setLanguage(langCodeForAnnyang); // Firefox v60's and v70's won't let buttons function unless this is wrapped in an if (annyang){} like this.
     // SAFARI BUG: Safari does not update the recognition.lang before returning at least one wrong result >>> Keeps listening for the last language that was set before being changed with setLanguage()
-    if (isApple) {
+    if (isApple) { // DO NOT ACCESS isApple BEFORE DOMContentLoaded in js_for_different_browsers_and_devices
       annyang.abort();
       setTimeout(function () { annyang.start(); }, 150); // NOTE: annyang.resume() equals annyang.start()
       setTimeout(function () { annyang.setLanguage(langCodeForAnnyang); }, 300);
@@ -522,7 +528,7 @@ function openFirstLesson(freshNewOrReturning) {
         if (localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) { // See js_for_cache_handling/0_parent_initial_load_and_111
           if (localStorage.getItem("lesson111CommonFilesCachedSuccessfully")) { // See js_for_cache_handling/0_parent_initial_load_and_111
             if (localStorage.getItem("lesson111FilesFor-"+langCodeForTeachingFilePaths+"-CachedSuccessfully")) { // See js_for_cache_handling/0_parent_initial_load_and_111
-               console.warn("All assets for lesson 111 are cached and READY! Therefore, will try to proceed");
+              console.warn("All assets for lesson 111 are cached and READY! Therefore, will try to proceed");
               ayFreym.src = pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; // Try the service-worker offline magic
             } else { goToSorryPage(); }
           } else { goToSorryPage(); }
@@ -552,5 +558,6 @@ function openFirstLesson(freshNewOrReturning) {
   // add("addThisClassToRevealThePreloader") is not used here because user is about to see the very first lesson (water) and we want that to happen asap (not after 1.5s of animation time)
   // removing "addThisClassToHideThePreloader" is enough to display it suddenly
   preloadHandlingDiv.classList.remove("addThisClassToHideThePreloader"); // It was added with window.load See css_for_the_container_parent_html,,, Should be 500ms if not changed.
+  // rotating-globe preloader disappers every time window.onload fires in js_for_all_iframed_lesson_htmls
 
 } // End of openFirstLesson

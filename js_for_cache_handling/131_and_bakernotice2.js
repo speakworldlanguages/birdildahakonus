@@ -19,9 +19,9 @@ async function cacheAuthorsNotice2Assets() {
     "/lessons_in_iframes/level_1/unit_2/notice_2/notice.js",
     "/user_interface/text/"+userInterfaceLanguage+"/1-2-notice_author_says.txt"
     // FOLLOWING FILES ARE USED both in notice1 and notice2 but they are cached by cacheCommonJSandCSSfilesForAllLessons in js_for_cache_handling/0_parent_initial_load_and_111
-    // "/user_interface/sounds/looping_bgm_stereo_therapy.webm"
-    // "/user_interface/sounds/section_as_button_hover.webm"
-    // "/user_interface/sounds/section_as_button_click.webm"
+    // "/user_interface/sounds/looping_bgm_stereo_therapy."+soundFileFormat
+    // "/user_interface/sounds/section_as_button_hover."+soundFileFormat
+    // "/user_interface/sounds/section_as_button_click."+soundFileFormat
   ];
   if (deviceDetector.device == "tablet") {
     list.push("/lessons_in_iframes/level_1/unit_2/notice_2/global_circulation_tablet.webp");
@@ -68,9 +68,17 @@ async function cacheLesson131CommonAssetsForAllLanguages() {
     "/lessons_in_iframes/level_1/unit_3/lesson_1/fish.css",
     "/lessons_in_iframes/level_1/unit_3/lesson_1/fish.js",
     "/lessons_in_iframes/level_1/unit_3/lesson_1/index.html",
-    "/lessons_in_iframes/level_1/unit_3/lesson_1/what_fish_sounds_like_1.webm",
-    "/lessons_in_iframes/level_1/unit_3/lesson_1/what_fish_sounds_like_2.webm"
+    "/lessons_in_iframes/level_1/unit_3/lesson_1/what_fish_sounds_like_1."+soundFileFormat,
+    "/lessons_in_iframes/level_1/unit_3/lesson_1/what_fish_sounds_like_2."+soundFileFormat
   ];
+  // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
+
+  /* DEPRECATE and use soundFileFormat from js_for_all_iframed_lesson_htmls which copies it from js_for_different_browsers_and_devices
+  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
+  if (isApple) {
+    listOfFilesForAllLanguages_1_3_1 = listOfFilesForAllLanguages_1_3_1.map(filepath => filepath.replace(".webm", ".mp3"));
+  }
+  */
   if (isApple || isFirefox) { // See js_for_all_iframed_lesson_htmls and then js_for_different_browsers_and_devices
     listOfFilesForAllLanguages_1_3_1.push(
       "/lessons_in_iframes/level_1/unit_3/lesson_1/v1_h264.mp4",
@@ -103,14 +111,21 @@ async function cacheLesson131CommonAssetsForAllLanguages() {
 async function cacheLesson131AssetsForTheTargetLanguage() {
   const cacheForTargetLanguage_1_3_1 = await caches.open('1-3-1-assets-for-'+parent.langCodeForTeachingFilePaths+'-August2023');
   // ---
+  // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
   let listOfFilesForTargetLanguage_1_3_1 = [
-    "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_1/fish_1-2.webm",
-    "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_1/fish_3.webm",
-    "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_1/fish_4-5.webm",
-    "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_1/fish_6.webm",
-    "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_1/fish_7-8.webm",
+    "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_1/fish_1-2."+soundFileFormat,
+    "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_1/fish_3."+soundFileFormat,
+    "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_1/fish_4-5."+soundFileFormat,
+    "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_1/fish_6."+soundFileFormat,
+    "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_1/fish_7-8."+soundFileFormat,
     "/speech_recognition_answer_key/"+parent.langCodeForTeachingFilePaths+"/1-3-1-fish.txt"
   ];
+  /* DEPRECATE and use soundFileFormat from js_for_all_iframed_lesson_htmls which copies it from js_for_different_browsers_and_devices
+  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
+  if (isApple) {
+    listOfFilesForTargetLanguage_1_3_1 = listOfFilesForTargetLanguage_1_3_1.map(filepath => filepath.replace(".webm", ".mp3"));
+  }
+  */
   /*
   const u = "/user_interface/text/"+userInterfaceLanguage; // See js_for_every_single_html
   switch (parent.langCodeForTeachingFilePaths.substring(0,2)) { // Using substring, we trim "tr_istanbul" to "tr", "zh_putonghua" to "zh" etc

@@ -24,20 +24,21 @@ fetch(translationPath,myHeaders).then(function(response){return response.text();
 });
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
-let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_normal.webm";
-let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_slow.webm";
-let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_water_normal.webm";
-let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_water_slow.webm";
-let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_water_from_the_glass_normal.webm";
-let say6Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_water_from_the_glass_slow.webm";
+// Find soundFileFormat in js_for_all_iframed_lesson_htmls
+let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_normal."+soundFileFormat;
+let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_slow."+soundFileFormat;
+let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_water_normal."+soundFileFormat;
+let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_water_slow."+soundFileFormat;
+let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_water_from_the_glass_normal."+soundFileFormat;
+let say6Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_water_from_the_glass_slow."+soundFileFormat;
 
 if (parent.userIsFemaleSoUseFemaleConjugation) { // See js_for_the_parent_all_browsers_all_devices
-  say1Path = say1Path.split(".")[0] + "_tofemale.webm";
-  say2Path = say2Path.split(".")[0] + "_tofemale.webm";
-  say3Path = say3Path.split(".")[0] + "_tofemale.webm";
-  say4Path = say4Path.split(".")[0] + "_tofemale.webm";
-  say5Path = say5Path.split(".")[0] + "_tofemale.webm";
-  say6Path = say6Path.split(".")[0] + "_tofemale.webm";
+  say1Path = say1Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say2Path = say2Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say3Path = say3Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say4Path = say4Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say5Path = say5Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say6Path = say6Path.split(".")[0] + "_tofemale."+soundFileFormat;
 }
 let isNowSayingTheSecondSet = false;
 const say1 = new parent.Howl({  src: [say1Path]  });
@@ -47,14 +48,14 @@ const say4 = new parent.Howl({  src: [say4Path]  });
 const say5 = new parent.Howl({  src: [say5Path]  });
 const say6 = new parent.Howl({  src: [say6Path]  });
 
-const mouseHoverAndTouchStartSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/mouseenter_touchstart.webm"]  });
-const mouseDownAndTouchEndSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/mousedown_touchend.webm"]  });
-const sipSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/sipping.webm"]  });
-const gulpSound1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/gulp1.webm"]  });
-const gulpSound2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/gulp2.webm"]  });
-const gulpSound3 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/gulp3.webm"]  });
-const gulpSound4 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/gulp4.webm"]  });
-const winSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/successfully_drunk.webm"]  });
+const mouseHoverAndTouchStartSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/mouseenter_touchstart."+soundFileFormat]  });
+const mouseDownAndTouchEndSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/mousedown_touchend."+soundFileFormat]  });
+const sipSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/sipping."+soundFileFormat]  });
+const gulpSound1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/gulp1."+soundFileFormat]  });
+const gulpSound2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/gulp2."+soundFileFormat]  });
+const gulpSound3 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/gulp3."+soundFileFormat]  });
+const gulpSound4 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/gulp4."+soundFileFormat]  });
+const winSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_2/successfully_drunk."+soundFileFormat]  });
 /* Sound initialization happens on the parent but the consts exist in frame. SEE js_for_all_iframed_lesson_htmls » FIND onbeforeunload. */
 // listOfAllSoundsInThisLesson is also used by pauseTheAppFunction in js_for_the_sliding_navigation_menu
 var listOfAllSoundsInThisLesson = [
@@ -103,7 +104,7 @@ function loadingIsCompleteFunction() {
 
 function startTheLesson() {
   // User must listen to wavesurfer vocabulary box no matter what language he/she is studying
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_listenbox.webm"; // In case of "ar" wavesurfer box will play the verb root in male conjugation even if the user is female
+  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_2/drink_listenbox."+soundFileFormat; // In case of "ar" wavesurfer box will play the verb root in male conjugation even if the user is female
   const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-2-2_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
   fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
   // See js_for_info_boxes_in_lessons » iframe-lesson level
@@ -259,7 +260,8 @@ function stopLoopingAndGetToNewPosition() {
       pictogramContainer.style.display = "none";
       glassContainerBeforeGame.style.display = "none";
       //glassContainerDuringGameGulp0.style.display = "block";
-      glassContainerDuringGameGulp0.style.visibility = "visible";
+      //glassContainerDuringGameGulp0.style.visibility = "visible";
+      glassContainerDuringGameGulp0.style.opacity = "1";
     }, newPositionTime*1000+100);
   }, 100);
   // unblur if was blurred
@@ -289,14 +291,16 @@ function getReadyToStartTheGameOnDESKTOP() {
     main.addEventListener("wheel",updateGlassTiltDesktopUntilFirstGulp); // See ____desktop.js
     window.addEventListener("wheel",wheelWorksSoCancelClickAndDrag,{ once:true });
     main.addEventListener("mousedown",checkIfShouldPlayTheDesktopGameWithoutMouseWheel);
-    function wheelWorksSoCancelClickAndDrag() {
-      if (mouseInstructionDisappearTimeout) {
+    function wheelWorksSoCancelClickAndDrag() { //  event.preventDefault();
+      // prevent default THROWS ERROR: Unable to preventDefault inside passive event listener due to target being treated as passive
+      if (mouseInstructionDisappearTimeout) { // Hide the instruction earlier than normal if was showing
         mouseInstructionDisappearTimeout.clear(); // clearTimeout(mouseInstructionDisappearTimeout); // Prevent the normal disappearance
         showHowDesktop.classList.remove("appearQuickly"); showHowDesktop.classList.add("disappearSlowly"); // Replace it with an earlier disappearance
       }
       // GAME WILL BE PLAYED WITH MOUSEWHEEL
       console.log("Game will be played with mouse wheel -> Drag will not work");
       main.removeEventListener("mousedown",checkIfShouldPlayTheDesktopGameWithoutMouseWheel);
+      // -
     }
     function checkIfShouldPlayTheDesktopGameWithoutMouseWheel() {
       console.log("See if drag will happen");

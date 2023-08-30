@@ -2,11 +2,14 @@
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
 // This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
 
-let clickTouchendSound; let hoverTouchstartSound;
+let clickTouchendSound;
+let hoverTouchstartSound;
+// -
 let theTextThatWillBePutInTheButton;
 let filePathForMonthlyFinanceBaseUsd; // Dynamic
 let filePathForMonthlyFinanceBaseEur; // Dynamic
 let goodbyeTextBothPieces;
+// - DEPRECATE???
 let useTheOtherExchangeService = false;
 const d = new Date();
 const today = d.getDate();
@@ -45,9 +48,18 @@ window.addEventListener('load', function(){
     }
   }
   // MOVED: needHitoicJapaneseFonts into window load because the font file is almost 5MB
+  // ---
+  // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
+  clickTouchendSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_click."+soundFileFormat]  });
+  hoverTouchstartSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_hover."+soundFileFormat]  });
+  /*DEPRECATE if (isApple) { // isApple is copied from the parent window by js_for_all_iframed_lesson_htmls
+    clickTouchendSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_click.mp3"]  });
+    hoverTouchstartSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_hover.mp3"]  });
+  } else {
+    clickTouchendSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_click.webm"]  });
+    hoverTouchstartSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_hover.webm"]  });
+  }*/
 
-  clickTouchendSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_click.webm"]  }); // 1.3s is the climax and 2.6 is end of excitement
-  hoverTouchstartSound = new parent.Howl({  src: ["/user_interface/sounds/financial_thirdparty_hover.webm"]  });
   // ------- Fill the divs with text depending on the user interface language --------
   const filePathForLicense = "/LICENSE";
   fetch(filePathForLicense,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ const keepTheNiceLineBreaks = contentOfTheTxtFile.replace(/\n\s*/g, "<br>"); document.getElementById('putTheLicenseIntoThisP').innerHTML = keepTheNiceLineBreaks; });

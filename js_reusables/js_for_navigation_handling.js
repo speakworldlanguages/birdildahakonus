@@ -1,11 +1,22 @@
 "use strict";
-let userIsAwaySound, userIsBackSound;
+let userIsAwaySound;
+let userIsBackSound;
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
 // This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
-window.addEventListener('DOMContentLoaded', function(){ // NOTE: DOMContentLoaded is (or can be) too early for deviceDetector
-
-  userIsAwaySound = new Howl({  src: ["/user_interface/sounds/user_is_away.webm"]  });
-  userIsBackSound = new Howl({  src: ["/user_interface/sounds/user_is_back.webm"]  });
+window.addEventListener('DOMContentLoaded', function(){ // NOTE: Do not access deviceDetector before DOMContentLoaded in js_for_different_browsers_and_devices
+  // --
+  // soundFileFormat exists in js_for_different_browsers_and_devices
+  userIsAwaySound = new Howl({  src: ["/user_interface/sounds/user_is_away."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
+  userIsBackSound = new Howl({  src: ["/user_interface/sounds/user_is_back."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
+  /* DEPRECATE
+  if (isApple) { // Do not access isApple before DOMContentLoaded in js_for_different_browsers_and_devices
+    userIsAwaySound = new Howl({  src: ["/user_interface/sounds/user_is_away.mp3"]  });
+    userIsBackSound = new Howl({  src: ["/user_interface/sounds/user_is_back.mp3"]  });
+  } else {
+    userIsAwaySound = new Howl({  src: ["/user_interface/sounds/user_is_away.webm"]  });
+    userIsBackSound = new Howl({  src: ["/user_interface/sounds/user_is_back.webm"]  });
+  }
+  */
 
   // Handle lesson PAUSE with visibility change on mobile devices for return after tab navigation or when on/off button is pressed etc.
   // Use “var” (not “const”) for things that need to be accessible from elsewhere.

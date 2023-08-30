@@ -30,18 +30,19 @@ if (studiedLang == "ja") {
 }
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
-let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/eat_normal.webm";
-let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/eat_with_spoon_normal.webm";
-let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/eat_slow.webm";
-let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/eat_with_spoon_slow.webm";
-let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/say_when_meal_is_finished.webm";
+// Find soundFileFormat in js_for_all_iframed_lesson_htmls
+let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/eat_normal."+soundFileFormat;
+let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/eat_with_spoon_normal."+soundFileFormat;
+let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/eat_slow."+soundFileFormat;
+let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/eat_with_spoon_slow."+soundFileFormat;
+let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/say_when_meal_is_finished."+soundFileFormat;
 
 if (parent.userIsFemaleSoUseFemaleConjugation) { // See js_for_the_parent_all_browsers_all_devices
-  say1Path = say1Path.split(".")[0] + "_tofemale.webm";
-  say2Path = say2Path.split(".")[0] + "_tofemale.webm";
-  say3Path = say3Path.split(".")[0] + "_tofemale.webm";
-  say4Path = say4Path.split(".")[0] + "_tofemale.webm";
-  say5Path = say5Path.split(".")[0] + "_tofemale.webm";
+  say1Path = say1Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say2Path = say2Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say3Path = say3Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say4Path = say4Path.split(".")[0] + "_tofemale."+soundFileFormat;
+  say5Path = say5Path.split(".")[0] + "_tofemale."+soundFileFormat;
 }
 
 const say1 = new parent.Howl({  src: [say1Path]  });
@@ -50,17 +51,17 @@ const say3 = new parent.Howl({  src: [say3Path]  });
 const say4 = new parent.Howl({  src: [say4Path]  });
 const say5 = new parent.Howl({  src: [say5Path]  });
 
-const mouseEnterTouchStartSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/mouseenter_touchstart.webm"]  });
-const mouseDownTouchEndSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/mousedown_touchend.webm"]  });
-const scoopingFoodSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/scoop_some_food.webm"]  });
-const spoonOnPlateSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/spoon_on_porcelain.webm"]  });
-const loadFoodSound1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/load_1.webm"]  });
-const loadFoodSound2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/load_2.webm"]  });
-const loadFoodSound3 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/load_3.webm"]  });
-const firstSwallowSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/swallow_1.webm"]  });
-const secondSwallowSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/swallow_2.webm"]  });
-const thirdSwallowSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/swallow_3.webm"]  });
-const winSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/win.webm"]  });
+const mouseEnterTouchStartSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/mouseenter_touchstart."+soundFileFormat]  });
+const mouseDownTouchEndSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/mousedown_touchend."+soundFileFormat]  });
+const scoopingFoodSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/scoop_some_food."+soundFileFormat]  });
+const spoonOnPlateSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/spoon_on_porcelain."+soundFileFormat]  });
+const loadFoodSound1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/load_1."+soundFileFormat]  });
+const loadFoodSound2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/load_2."+soundFileFormat]  });
+const loadFoodSound3 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/load_3."+soundFileFormat]  });
+const firstSwallowSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/swallow_1."+soundFileFormat]  });
+const secondSwallowSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/swallow_2."+soundFileFormat]  });
+const thirdSwallowSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/swallow_3."+soundFileFormat]  });
+const winSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_2/lesson_4/win."+soundFileFormat]  });
 /* Sound initialization happens on the parent but the consts exist in frame. SEE js_for_all_iframed_lesson_htmls » FIND onbeforeunload. */
 // listOfAllSoundsInThisLesson is also used by pauseTheAppFunction in js_for_the_sliding_navigation_menu
 var listOfAllSoundsInThisLesson = [
@@ -103,7 +104,7 @@ window.addEventListener('load', loadingIsCompleteFunction, { once: true });
 // NOTE THAT: In this case the grammar [info box] must appear after the wavesurfer [listen box]
 function loadingIsCompleteFunction() {
   // User must listen to wavesurfer vocabulary box no matter what language he/she is studying
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/with_listenbox.webm"; // In case of "ar" wavesurfer box will play the verb root in male conjugation even if the user is female
+  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_4/with_listenbox."+soundFileFormat; // In case of "ar" wavesurfer box will play the verb root in male conjugation even if the user is female
   const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-2-4_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
   fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
   // See js_for_info_boxes_in_lessons » iframe-lesson level
@@ -189,7 +190,7 @@ function continueLesson() {
   parent.savedProgress[studiedLang].lesson_EATWITHSPOON_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
   parent.saveJSON = JSON.stringify(parent.savedProgress); // Convert
   localStorage.setItem("memoryCard", parent.saveJSON); // Save
-  
+
   // ---
   let endTime;
   switch (parent.speedAdjustmentSetting) { case "slow": endTime = 3500; break;    case "fast": endTime = 1500; break;    default: endTime = 2500; }

@@ -34,13 +34,14 @@ window.addEventListener('load', function(){
     theSilentSpeechOfTheAuthor.classList.add("textAlignLeft"); // css_for_every_single_html
   }
   // --
-  bgmSound = new parent.Howl({ src: ["/user_interface/sounds/looping_bgm_stereo_therapy.webm"], loop: true });
+  // Find soundFileFormat in js_for_all_iframed_lesson_htmls
+  bgmSound = new parent.Howl({ src: ["/user_interface/sounds/looping_bgm_stereo_therapy."+soundFileFormat], loop: true });
   bgmSound.once('load', function(){
     setTimeout(function () {   bgmSound.play(); bgmSound.fade(0,0.6,15000);   }, 4000);
     setTimeout(function () {   bgmSound.fade(0.6,0,15000);   }, 27000);
   });
-  hoverSound = new parent.Howl({  src: ["/user_interface/sounds/section_as_button_hover.webm"]  });
-  clickSound = new parent.Howl({  src: ["/user_interface/sounds/section_as_button_click.webm"]  });
+  hoverSound = new parent.Howl({  src: ["/user_interface/sounds/section_as_button_hover."+soundFileFormat]  });
+  clickSound = new parent.Howl({  src: ["/user_interface/sounds/section_as_button_click."+soundFileFormat]  });
   // --
   if (deviceDetector.isMobile) {
     clonedButtons0.addEventListener("touchstart",function (event) { event.preventDefault(); event.stopPropagation(); hoverSound.play(); });
