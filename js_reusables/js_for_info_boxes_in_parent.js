@@ -342,7 +342,7 @@ function createAndHandleTheAppIsPausedBox() { // THIS LOOKS OK WITHOUT someEleme
     function updateTheBox() { // USE IF NECESSARY: <span style='white-space: nowrap;'></span>
       theAppIsPausedMessage1.innerHTML = theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[0];
       theAppIsPausedMessage2.innerHTML = "(" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[0] + ")";
-      unpauseButton.innerHTML = " " + theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[1] + " " + "<span style='white-space: nowrap;'>(" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[1] + ")</span>";
+      unpauseButton.innerHTML = "&nbsp;" + theAppIsPausedDialogBoxTextsInTaughtLanguage.split("|")[1] + "&nbsp;" + "<span style='white-space: nowrap;'>&nbsp;(" + theAppIsPausedDialogBoxTextsInKnownLanguage.split("|")[1] + ")&nbsp;</span>";
     }
 
     // When user clicks|touches [UNPAUSE] button to continue
