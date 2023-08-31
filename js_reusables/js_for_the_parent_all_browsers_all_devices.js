@@ -211,14 +211,14 @@ function letUserChooseAnAccentOrDialect(theButtonNameWas) { // This function sho
     console.log("User must choose a dialect (i.e. unless auto-chosen) so that the correct file paths can be set");
     switch (theButtonNameWas) {
       // NOTE THAT: As of August 2023 letUserChooseAnAccentOrDialect() is never called unless button id equals "userMustChooseOneOfTheDialects" in the parent-index.html
-      case "ja": langCodeForAnnyang = "ja"; resolve("ja") break; // Only one (standard) dialect available
-      case "ko": langCodeForAnnyang = "ko"; resolve("ko") break; // Only one (standard) dialect available
-      case "zh": langCodeForAnnyang = "zh"; resolve("zh_putonghua"); break; // auto set without prompt
-      case "tr": langCodeForAnnyang = "tr"; resolve("tr_istanbul");  break; // auto set without prompt
-      case "ar": langCodeForAnnyang = "ar"; resolve("ar") break; // Only one (standard) dialect available
-      case "de": langCodeForAnnyang = "de"; resolve("de") break; // Only one (standard) dialect available
-      case "fr": langCodeForAnnyang = "fr"; resolve("fr") break; // Only one (standard) dialect available
-      case "en": /*langCodeForAnnyang = "en-US";*/ resolve(chooseBetweenBritishAndAmerican); break;
+      case "ja": langCodeForAnnyang = "ja"; resolve("ja"); break; // Pass the folder name for audio files with resolve
+      case "ko": langCodeForAnnyang = "ko"; resolve("ko"); break; // Pass the folder name for audio files with resolve
+      case "zh": langCodeForAnnyang = "zh"; resolve("zh_putonghua"); break; // Pass the folder name for audio files with resolve
+      case "tr": langCodeForAnnyang = "tr"; resolve("tr_istanbul");  break; // Pass the folder name for audio files with resolve
+      case "ar": langCodeForAnnyang = "ar"; resolve("ar"); break; // Pass the folder name for audio files with resolve
+      case "de": langCodeForAnnyang = "de"; resolve("de"); break; // Pass the folder name for audio files with resolve
+      case "fr": langCodeForAnnyang = "fr"; resolve("fr"); break; // Pass the folder name for audio files with resolve
+      case "en": /*langCodeForAnnyang = "en-US";*/ resolve(chooseBetweenBritishAndAmerican); break; // Set langCodeForAnnyang within chooseBetweenBritishAndAmerican
 
       default: console.error("letUserChooseAnAccentOrDialect function couldn't find a match for the button name!");
     }
@@ -490,6 +490,9 @@ function chooseBetweenBritishAndAmerican() { // See letUserChooseAnAccentOrDiale
     // The returned/resolved value will become the folder name for audio files
     // "en_east"; // British
     // "en_west"; // American
+    // Test with BRITISH
+    langCodeForAnnyang = "en-GB";
+    resolve("en_east");
   });
 }
 function letTheIFrameTeachEnglish() { // Called from within startTeaching()
