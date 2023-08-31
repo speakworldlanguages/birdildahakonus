@@ -129,12 +129,18 @@ function createAndHandleGoBackOrProceedBox() {
   return new Promise(function (resolve, reject) {
     // It's Ok if we don't remove all these EventListeners when the box is closed, yes or no?
     if (deviceDetector.isMobile) {
-      cancelButtonToCloseTheWillSaveBoxDIV.addEventListener("touchend",cancelButtonIsTouchedOrClicked);
-      proceedButtonToCloseTheWillSaveBoxDIV.addEventListener("touchend",proceedButtonIsTouchedOrClicked);
+      // cancelButtonToCloseTheWillSaveBoxDIV.addEventListener("touchend",cancelButtonIsTouchedOrClicked);
+      // proceedButtonToCloseTheWillSaveBoxDIV.addEventListener("touchend",proceedButtonIsTouchedOrClicked);
+      // It looks like we have to avoid adding duplicate event listeners everytime createAndHandleGoBackOrProceedBox is called
+      cancelButtonToCloseTheWillSaveBoxDIV.ontouchend = cancelButtonIsTouchedOrClicked;
+      proceedButtonToCloseTheWillSaveBoxDIV.ontouchend = proceedButtonIsTouchedOrClicked;
     }
     else {
-      cancelButtonToCloseTheWillSaveBoxDIV.addEventListener("mouseup",cancelButtonIsTouchedOrClicked);
-      proceedButtonToCloseTheWillSaveBoxDIV.addEventListener("mouseup",proceedButtonIsTouchedOrClicked);
+      // cancelButtonToCloseTheWillSaveBoxDIV.addEventListener("mouseup",cancelButtonIsTouchedOrClicked);
+      // proceedButtonToCloseTheWillSaveBoxDIV.addEventListener("mouseup",proceedButtonIsTouchedOrClicked);
+      // It looks like we have to avoid adding duplicate event listeners everytime createAndHandleGoBackOrProceedBox is called
+      cancelButtonToCloseTheWillSaveBoxDIV.onmouseup = cancelButtonIsTouchedOrClicked;
+      proceedButtonToCloseTheWillSaveBoxDIV.onmouseup = proceedButtonIsTouchedOrClicked;
     }
 
     function cancelButtonIsTouchedOrClicked() {
@@ -155,7 +161,7 @@ function createAndHandleGoBackOrProceedBox() {
       saveLoadInfoBoxContainerDIV.style.animationName = "theBlueBackgroundAndTheContentsDisappear"; // Should take 330ms » See css_for_info_boxes_in_parent
       setTimeout(function () {
         saveLoadInfoBoxContainerDIV.style.animationName = "none";
-        saveLoadInfoBoxContainerDIV.style.display="none"; // Try [display none] instead of [removeChild]
+        saveLoadInfoBoxContainerDIV.style.display="none"; // Try [display none] instead of [removeChild] OK
       }, 340);
     }
 
