@@ -4,6 +4,7 @@
 
 // We don't want appearance sounds for any of these boxes,,, see each note below
 let closeTheBox_OK_Sound;
+let closeTheBox_CANCEL_Sound;
 
 // --- Notes shown through P elements
 const willTryToSaveYourProgressNoteP = document.createElement("P"); willTryToSaveYourProgressNoteP.innerHTML = "...";
@@ -31,7 +32,8 @@ okLetsTryRefreshingTheBrowserBoxDIV.innerHTML = "&#9989;"; // Default content of
 // ---
 window.addEventListener("DOMContentLoaded",function() { // QUESTION: Could DOMContentLoaded still be too early for deviceDetector at parent level? A: Not if js_for_info_boxes_in_parent is listed after js_for_different_browsers_and_devices
   // soundFileFormat exists in js_for_different_browsers_and_devices
-  closeTheBox_OK_Sound = new Howl({  src: ["/user_interface/sounds/notification2_close."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
+  closeTheBox_OK_Sound = new Howl({  src: ["/user_interface/sounds/option_positive."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
+  closeTheBox_CANCEL_Sound = new Howl({  src: ["/user_interface/sounds/option_negative."+soundFileFormat]  });
   // notification3_close is also used as dismissVocabularySound in js_for_info_boxes_in_lessons
   /* DEPRECATE
   // Do not access isApple before DOMContentLoaded in js_for_different_browsers_and_devices
@@ -136,7 +138,7 @@ function createAndHandleGoBackOrProceedBox() {
     }
 
     function cancelButtonIsTouchedOrClicked() {
-      closeTheBox_OK_Sound.play();
+      closeTheBox_CANCEL_Sound.play();
       // Play disappear animation and remove and do nothing
       hideTheSaveLoadBoxAndDismissTheNotice();
       // WHY? IT WORKED BUT » document.body.removeChild(saveLoadInfoBoxContainerDIV); was causing an error after its first usage (from 2nd time and on)
@@ -272,12 +274,12 @@ function createAndHandleMaybeYouShouldReloadBox() {
   }
 
   function waitButtonIsClicked() {
-    closeTheBox_OK_Sound.play();
+    // ????_Sound.play();
     // Play disappear animation and remove and do nothing
     hideWouldYouLikeToRestartTheAppBox();
   }
   function reloadButtonIsClicked() {
-    closeTheBox_OK_Sound.play();
+    // ????_Sound.play();
     // Play disappear animation and remove and REFRESH
     hideWouldYouLikeToRestartTheAppBox();
     setTimeout(function () {  itIsAlreadyCertainThatUserWantsToReload = true;  location.reload();  }, 350); // See js_for_the_parent_all_browsers_all_devices » Better if onbeforeunload is bypassed in this case
