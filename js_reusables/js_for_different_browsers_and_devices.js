@@ -16,6 +16,8 @@ var isWebViewOnAndroid = false; // Even though it is never used as of August 202
 var isFirefox = false;
 let isUnknownBrowserInTermsOfSpeechRecognition = false;
 
+// annyang.debug(); // Uncomment to activate debug mode for speech recogntion
+
 
 // Prevent screen dimming -> handles the Android case -> Starting with Safari 16.4 it is supported on iOS too
 // Only Firefox is the one who still won't do it as of August 2023
