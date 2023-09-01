@@ -9,21 +9,21 @@
 /* VARIABLES AND CONSTANTS*/
 const putNotificationTxtIntoThisP1 = document.createElement("P");
 const putNotificationTxtIntoThisP2 = document.createElement("P");
-const okButtonToCloseTheNotification1 = document.createElement("DIV");
-const okButtonToCloseTheNotification2 = document.createElement("DIV");
+const okButtonToCloseInfoBoxType1 = document.createElement("DIV");
+const okButtonToCloseInfoBoxType1AmidLesson = document.createElement("DIV");
 // Put something like [OK], [Got it], [I see], [Oh really?], [Wow], [That's interesting] etc into the button.
 let okTexts = "&#10004;|&#10004;"; // Default content of the OK box is a "tick ✔" mark to be shown in case fetch fails
-okButtonToCloseTheNotification1.innerHTML = okTexts.split("|")[0];
-okButtonToCloseTheNotification2.innerHTML = okTexts.split("|")[1];
+okButtonToCloseInfoBoxType1.innerHTML = okTexts.split("|")[0];
+okButtonToCloseInfoBoxType1AmidLesson.innerHTML = okTexts.split("|")[1];
 const pathOfOkCloseTheBox = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-ok_i_understand.txt";
 fetch(pathOfOkCloseTheBox,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ okTexts=contentOfTheTxtFile; assignOKButtonText(); });
 function assignOKButtonText() {
   if(Math.random()<0.5) { // Heads or tails
-    okButtonToCloseTheNotification1.innerHTML = okTexts.split("|")[0];
-    okButtonToCloseTheNotification2.innerHTML = okTexts.split("|")[1];
+    okButtonToCloseInfoBoxType1.innerHTML = okTexts.split("|")[0];
+    okButtonToCloseInfoBoxType1AmidLesson.innerHTML = okTexts.split("|")[1];
   } else {
-    okButtonToCloseTheNotification1.innerHTML = okTexts.split("|")[1];
-    okButtonToCloseTheNotification2.innerHTML = okTexts.split("|")[0];
+    okButtonToCloseInfoBoxType1.innerHTML = okTexts.split("|")[1];
+    okButtonToCloseInfoBoxType1AmidLesson.innerHTML = okTexts.split("|")[0];
   }
 }
 let popUpNotificationType1Sound;
@@ -61,9 +61,9 @@ function createAndHandleInfoBoxType1BeforeLessonStarts() {
 
   notificationBoxItself.appendChild(putNotificationTxtIntoThisP1);
 
-  okButtonToCloseTheNotification1.classList.add("okButtonUnderNotification"); // See css_for_info_boxes_in_lessons
+  okButtonToCloseInfoBoxType1.classList.add("okButtonUnderNotification"); // See css_for_info_boxes_in_lessons
   if (needLatinFonts) {
-    okButtonToCloseTheNotification1.style.fontFamily = '"Oxanium SemiBold", sans-serif';
+    okButtonToCloseInfoBoxType1.style.fontFamily = '"Oxanium SemiBold", sans-serif';
     notificationBoxItself.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
     putNotificationTxtIntoThisP1.classList.add("latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
@@ -71,11 +71,11 @@ function createAndHandleInfoBoxType1BeforeLessonStarts() {
     notificationBoxItself.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
     putNotificationTxtIntoThisP1.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
-  notificationBoxItself.appendChild(okButtonToCloseTheNotification1);
+  notificationBoxItself.appendChild(okButtonToCloseInfoBoxType1);
 
 
-  if (deviceDetector.isMobile) { okButtonToCloseTheNotification1.addEventListener("touchstart",okButtonIsClickedToStartLesson); }
-  else { okButtonToCloseTheNotification1.addEventListener("mousedown",okButtonIsClickedToStartLesson); }
+  if (deviceDetector.isMobile) { okButtonToCloseInfoBoxType1.addEventListener("touchstart",okButtonIsClickedToStartLesson); }
+  else { okButtonToCloseInfoBoxType1.addEventListener("mousedown",okButtonIsClickedToStartLesson); }
   function okButtonIsClickedToStartLesson(event) { event.preventDefault(); event.stopPropagation();
     dismissNotificationType1Sound.play();
     notificationBoxContainer.classList.add("addThisToAButtonForPlayStationStyleClick"); // See css_for_every_single_html_css
@@ -97,9 +97,9 @@ function createAndHandleInfoBoxType1AmidLesson() {
 
   notificationBoxItself2.appendChild(putNotificationTxtIntoThisP2);
 
-  okButtonToCloseTheNotification2.classList.add("okButtonUnderNotification"); // See css_for_info_boxes_in_lessons
+  okButtonToCloseInfoBoxType1AmidLesson.classList.add("okButtonUnderNotification"); // See css_for_info_boxes_in_lessons
   if (needLatinFonts) {
-    okButtonToCloseTheNotification2.style.fontFamily = '"Oxanium SemiBold", sans-serif';
+    okButtonToCloseInfoBoxType1AmidLesson.style.fontFamily = '"Oxanium SemiBold", sans-serif';
     notificationBoxItself2.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
     putNotificationTxtIntoThisP2.classList.add("latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
@@ -107,10 +107,10 @@ function createAndHandleInfoBoxType1AmidLesson() {
     notificationBoxItself2.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
     putNotificationTxtIntoThisP2.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
-  notificationBoxItself2.appendChild(okButtonToCloseTheNotification2);
+  notificationBoxItself2.appendChild(okButtonToCloseInfoBoxType1AmidLesson);
 
-  if (deviceDetector.isMobile) { okButtonToCloseTheNotification2.addEventListener("touchstart",okButtonIsClickedToContinueLesson); }
-  else { okButtonToCloseTheNotification2.addEventListener("mousedown",okButtonIsClickedToContinueLesson); }
+  if (deviceDetector.isMobile) { okButtonToCloseInfoBoxType1AmidLesson.addEventListener("touchstart",okButtonIsClickedToContinueLesson); }
+  else { okButtonToCloseInfoBoxType1AmidLesson.addEventListener("mousedown",okButtonIsClickedToContinueLesson); }
   function okButtonIsClickedToContinueLesson(event) { event.preventDefault(); event.stopPropagation();
     dismissNotificationType1Sound.play();
     notificationBoxContainer2.classList.add("addThisToAButtonForPlayStationStyleClick"); // See css_for_every_single_html_css

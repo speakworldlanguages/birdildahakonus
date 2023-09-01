@@ -232,8 +232,8 @@ let pleaseAllowSound; // See js_for_info_boxes_in_parent for the preceding box s
 let micPermissionHasChangedToGrantedSound; // See js_for_info_boxes_in_parent for the preceding box sounds
 
 window.addEventListener("load",function() {
-  pleaseAllowSound = new Howl({  src: ["/user_interface/sounds/notification2_appear."+soundFileFormat]  }); // See js_for_different_browsers_and_devices to find soundFileFormat
-  micPermissionHasChangedToGrantedSound = new Howl({  src: ["/user_interface/sounds/notification2_close."+soundFileFormat]  }); // See js_for_different_browsers_and_devices to find soundFileFormat
+  pleaseAllowSound = new Howl({  src: ["/user_interface/sounds/notification2_appear."+soundFileFormat]  }); // See above to find soundFileFormat
+  micPermissionHasChangedToGrantedSound = new Howl({  src: ["/user_interface/sounds/notification2_close."+soundFileFormat]  }); // See above to find soundFileFormat
   allowMicrophoneBlinker = document.getElementById('allowMicrophoneDivID'); // See index.html
   const filePathForAllowMicrophoneText = "/user_interface/text/"+userInterfaceLanguage+"/0-allow_microphone.txt";
   fetch(filePathForAllowMicrophoneText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ allowMicrophoneBlinker.children[1].innerHTML =  contentOfTheTxtFile; });
