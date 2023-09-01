@@ -312,13 +312,10 @@ function speakToTheMic() {
   },120);
 
   // setLanguage() for annyang is in /js_reusables/js_for_the_parent_all_browsers_all_devices.js
-  // DEPRECATED var commands = {}; // Let's keep the older code for reference only here in bread.js to remember how we started out
   const eachWordArray = theNewWordUserIsLearningNowAndPossibleMishaps.split("|"); // The text files in speech_recognition_answer_key must be written with the | (bar) character as the separator between phrases.
-  parent.console.log("Speech recognition is waiting for: "+eachWordArray[0]);
 
-  if (parent.annyang) {
-    // October 2022 policy change: Stop using commands object with annyang
-    // DEPRECATED parent.annyang.addCommands(commands);
+  if (parent.annyang) { parent.console.log("Starting speech recognition for: "+eachWordArray[0]);
+
     if (!parent.isAndroid) { // See js_for_different_browsers_and_devices
         notificationDingTone.play(); // Android has its native DING tone. So let this DING tone play on desktops and iOS devices.
     }

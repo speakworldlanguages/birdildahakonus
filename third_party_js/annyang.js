@@ -162,14 +162,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       recognition.continuous = root.location.protocol === 'http:';
 
       // Sets the language to the default 'en-US'. This can be changed with annyang.setLanguage()
-      // recognition.lang = 'en-US'; // Better start without initial default
+      // recognition.lang = 'en-US'; // See if it is possible to start without an initial default
 
-      recognition.onstart = function () {
+      recognition.onstart = function () { console.log("Speech Recognition START event fired");
         _isListening = true;
         invokeCallbacks(callbacks.start);
       };
 
-      recognition.onsoundstart = function () {
+      recognition.onsoundstart = function () { console.log("Speech Recognition SOUNDSTART event fired");
         invokeCallbacks(callbacks.soundstart);
       };
 
@@ -246,7 +246,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
 
-    start: function start(options) {
+    start: function start(options) { console.log("The start function of annyang fired");
       initIfNeeded();
       options = options || {};
       if (options.paused !== undefined) {
@@ -274,11 +274,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
 
-    abort: function abort() {
+    abort: function abort() { console.log("The abort function of annyang fired");
       autoRestart = false;
       autoRestartCount = 0;
       if (isInitialized()) {
         recognition.abort();
+      } else {
+         console.warn("CANNOT abort because annyang isInitialized returned false");
       }
     },
 

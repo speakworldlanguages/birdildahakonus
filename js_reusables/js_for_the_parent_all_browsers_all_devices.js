@@ -53,7 +53,7 @@ window.addEventListener("load",function () {
     window.addEventListener("mouseup", function () { firstUserGestureHasUnleashedAudio = true; }, {once:true}); // Prevent sound flooding (otherwise hover sounds that accumulate may explode with the first user gesture).
   }
 
-  // ALL BUTTONS - Kishi Language, Hito Lanuage, Renmen Language etc.
+  // GET ALL BUTTONS - Kishi Language, Hito Lanuage, Renmen Language etc.
   const allParentButtonElementsAreInThisArray = document.getElementsByTagName("BUTTON"); //All of them in container parents,,, NOT THE IFRAMED LESSON BUTTONS
   let i;
   for (i = 0; i < allParentButtonElementsAreInThisArray.length; i++)
@@ -126,10 +126,7 @@ async function mouseDownMenuButtonF(event) { event.preventDefault();
 
     // Using await could be a good idea where letUserChooseAnAccentOrDialect returns a promise
     const folderName = await letUserChooseAnAccentOrDialect(userWantsToLearnWhichLanguage);
-    /* DEPRECATE
-    if (event.target.id == "userMustChooseOneOfTheDialects") { folderName = await letUserChooseAnAccentOrDialect(userWantsToLearnWhichLanguage); }
-    else { folderName = userWantsToLearnWhichLanguage; }
-    */
+    // -
     setLangCodeForFilePathsAndCacheTheFirstTeachingAssets(folderName);
     // HANDLE langCodeForAnnyang INSIDE letUserChooseAnAccentOrDialect INSTEAD OF »»» langCodeForAnnyang = folderName.substring(0,2)
     setSpeechRecognitionLanguage(langCodeForAnnyang); // Set as soon as possible // Will be saved to localStorage by openFirstLesson
@@ -173,10 +170,7 @@ async function touchEndMenuButtonF(event) { event.preventDefault();
 
       // Using await could be a good idea where letUserChooseAnAccentOrDialect returns a promise
       const folderName = await letUserChooseAnAccentOrDialect(userWantsToLearnWhichLanguage);
-      /* DEPRECATE
-      if (theThingThatWasChosen.id == "userMustChooseOneOfTheDialects") { folderName = await letUserChooseAnAccentOrDialect(userWantsToLearnWhichLanguage); }
-      else { folderName = userWantsToLearnWhichLanguage; }
-      */
+      // -
       setLangCodeForFilePathsAndCacheTheFirstTeachingAssets(folderName);
       // HANDLE langCodeForAnnyang INSIDE letUserChooseAnAccentOrDialect INSTEAD OF »»» langCodeForAnnyang = folderName.substring(0,2)
       setSpeechRecognitionLanguage(langCodeForAnnyang); // Set as soon as possible // Will be saved to localStorage by openFirstLesson
@@ -208,7 +202,7 @@ function checkIfThisLanguageWasPreviouslyStudied(twoLetterCodeOfLanguageToBeChec
 // ---
 function letUserChooseAnAccentOrDialect(theButtonNameWas) { // This function should return a promise which will pass the user's answer when resolves
   return new Promise(resolve => {
-    console.log("User must choose a dialect (i.e. unless auto-chosen) so that the correct file paths can be set");
+    console.log("Executing letUserChooseAnAccentOrDialect function");
     switch (theButtonNameWas) {
       // NOTE THAT: As of August 2023 letUserChooseAnAccentOrDialect() is never called unless button id equals "userMustChooseOneOfTheDialects" in the parent-index.html
       case "ja": langCodeForAnnyang = "ja"; resolve("ja"); break; // Pass the folder name for audio files with resolve
@@ -226,7 +220,7 @@ function letUserChooseAnAccentOrDialect(theButtonNameWas) { // This function sho
 }
 // ---
 function setLangCodeForFilePathsAndCacheTheFirstTeachingAssets(nameOfFolderThatWasPassedHere) {
-  console.log("On welcome screen user has chosen: "+nameOfFolderThatWasPassedHere);
+  console.log("The folder name for audio files will be »»» "+nameOfFolderThatWasPassedHere);
   langCodeForTeachingFilePaths = nameOfFolderThatWasPassedHere; // MUST NOT USE substring(0,2) here
   if (typeof cacheLesson111AssetsForTheTargetLanguage === "function") { cacheLesson111AssetsForTheTargetLanguage(); }
   // User will spend at least 10 seconds or so through the [allow microphone] procedure. That should be enough to cache all teaching-speech files
@@ -235,7 +229,7 @@ function setLangCodeForFilePathsAndCacheTheFirstTeachingAssets(nameOfFolderThatW
 // ---
 function setSpeechRecognitionLanguage(input) {
   // Set language
-  if (annyang) {
+  if (annyang) { console.log("Now setting annyang language to »»» "+ input);
     annyang.setLanguage(input); // Firefox v60's and v70's won't let buttons function unless this is wrapped in an if (annyang){} like this.
     // SAFARI BUG: Safari does not update the recognition.lang before returning at least one wrong result >>> Keeps listening for the last language that was set before being changed with setLanguage()
     // WAIT A MINUTE: Chrome is doing the same, isn't it?
@@ -307,14 +301,14 @@ function goToProgressChart() { // Called either from within openFirstLesson() or
 function startTeaching(usersChoice) { // Normally called from within testAnnyangAndAllowMic() » See js_for_different_browsers_and_devices
   console.log("startTeaching() fired; will try to proceed via one of letTheIframeTeach...()");
   switch (usersChoice) {
-    case "ja": letTheIFrameTeachJapanese();  break;
-    case "ko": letTheIFrameTeachKorean();    break;
-    case "zh": letTheIFrameTeachChinese();   break;
-    case "tr": letTheIFrameTeachTurkish();   break;
-    case "ar": letTheIFrameTeachArabic();    break;
-    case "de": letTheIFrameTeachGerman();    break;
-    case "fr": letTheIFrameTeachFrench();    break;
-    case "en": letTheIFrameTeachEnglish();   break;
+    case "ja": letTheIFrameTeachJapanese();  break; // Will handle memoryCard and then call openFirstLesson
+    case "ko": letTheIFrameTeachKorean();    break; // Will handle memoryCard and then call openFirstLesson
+    case "zh": letTheIFrameTeachChinese();   break; // Will handle memoryCard and then call openFirstLesson
+    case "tr": letTheIFrameTeachTurkish();   break; // Will handle memoryCard and then call openFirstLesson
+    case "ar": letTheIFrameTeachArabic();    break; // Will handle memoryCard and then call openFirstLesson
+    case "de": letTheIFrameTeachGerman();    break; // Will handle memoryCard and then call openFirstLesson
+    case "fr": letTheIFrameTeachFrench();    break; // Will handle memoryCard and then call openFirstLesson
+    case "en": letTheIFrameTeachEnglish();   break; // Will handle memoryCard and then call openFirstLesson
 
     default: console.error("startTeaching function couldn't find a match for the button name!");
   }

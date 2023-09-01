@@ -271,7 +271,7 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
         // In case of testing on http://localhost we don't want "Allow-Deny" dialog to appear
         if (httpORhttps.search("https") >= 0) {
           if (deviceDetector.isMobile) { // PHONES AND TABLETS
-            // Mobiles already have a native touch blocker
+            // Mobiles already have a native touch blocker - UNCERTAIN: Does every single mobile browser do that?
             allowMicrophoneBlinker.classList.add("letYouMustAllowMicrophoneDialogAppearMobile"); // 1.5s See css_for_the_container_parent_html
             setTimeout(function () { pleaseAllowSound.play(); }, 300);
           } else { // DESKTOPS
