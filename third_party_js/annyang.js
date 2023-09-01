@@ -140,7 +140,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   annyang = {
 
 
-    init: function init(commands) {
+    init: function init(commands) { console.log("INIT ANNYANG");
       var resetCommands = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
       // Abort previous instances of recognition already running
