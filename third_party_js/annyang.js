@@ -152,7 +152,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       recognition = new SpeechRecognition();
 
       // THE LINE FOR interimResults IS NOT PART OF ORIGINAL ANNYANG.JS
-      recognition.interimResults = true;
+      recognition.interimResults = true; // COULD THIS BE WHY IT STOPPED WORKING ON SAMSUNG ???
 
       // Set the max number of alternative transcripts to try and match with a command
       recognition.maxAlternatives = 5;

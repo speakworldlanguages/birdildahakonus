@@ -50,8 +50,11 @@ window.addEventListener("load",function() {
       iFrameDocumentInFullscreenHandling.addEventListener("touchstart", handleTouchSoundBeforeFullscreen);
     }
     function handleTouchForFullscreen() {
+      if (!hasGoneFullscreen){ openFullscreen(); }
+      /* IDEA
       // If a tablet screen size is BIG ENOUGH we can leave it without going FULLSCREEN
       const smallerDimension = Math.min(window.screen.width, window.screen.height);
+      // SUSPECTED PROBLEM: Could smallerDimension be different for the parent and the iframe???
       if (smallerDimension<599) { // 650 should be a good threshold value
         if (!hasGoneFullscreen){ openFullscreen(); }
         // But a user could still prefer to view the app in fullscreen mode
@@ -68,6 +71,7 @@ window.addEventListener("load",function() {
           setTimeout(function () { window.document.removeEventListener("touchstart", handleDoubleTouchForFullscreen); }, 700);
         }
       }
+      */
     }
     function handleTouchSoundBeforeFullscreen() {
       // Test on a big tablet to see if it's better to prevent the first touchstart sound
