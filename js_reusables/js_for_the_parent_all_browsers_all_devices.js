@@ -141,7 +141,7 @@ async function mouseDownMenuButtonF(event) { event.preventDefault();
         // See js_for_info_boxes_in_parent
         createAndHandleGoBackOrProceedBox().then(function () { // Note: There was a time when this threw an error when removeChild was used the second time, said: Failed to execute 'removeChild' on 'Node'
           //console.log("promise resolved");
-          setTimeout(function () { testAnnyangAndAllowMic(userWantsToLearnWhichLanguage); },700); // 300+1501=1801ms??? See js_for_different_browsers_and_devices
+          setTimeout(function () { testAnnyangAndAllowMic(userWantsToLearnWhichLanguage); },1600); // 300+1501=1801ms??? See js_for_different_browsers_and_devices
           // blockOtherWelcomeScreenButtonsUntilItIsSafe will be set to false bl user_interface/blank.html onbeforeunload
         }).catch(function () {
           //console.log("promise rejected"); // Works OK
@@ -187,7 +187,7 @@ async function touchEndMenuButtonF(event) { event.preventDefault();
           // Use the app's modal box instead of the browser's native confirm box » reason1 it's much nicer, reason2 Safari mutes unmutes sound after native alert/confirm boxes
           // See js_for_info_boxes_in_parent
           createAndHandleGoBackOrProceedBox().then(function () {
-            setTimeout(function () { testAnnyangAndAllowMic(userWantsToLearnWhichLanguage); },500); // See js_for_different_browsers_and_devices
+            setTimeout(function () { testAnnyangAndAllowMic(userWantsToLearnWhichLanguage); },1600); // See js_for_different_browsers_and_devices
             // blockOtherWelcomeScreenButtonsUntilItIsSafe will be set to false by user_interface/blank.html when beforeunload fires
           }).catch(function () {
             blockOtherWelcomeScreenButtonsUntilItIsSafe = false; // User changed his|her mind and wants to stay at [select language] screen

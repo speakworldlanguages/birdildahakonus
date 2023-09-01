@@ -228,9 +228,12 @@ function tellTheUserToChangeOrUpdateTheBrowser() {
 
 /*________________window LOAD___________________*/
 let allowMicrophoneBlinker;
+let pleaseAllowSound; // See js_for_info_boxes_in_parent for the preceding box sounds
+let micPermissionHasChangedToGrantedSound; // See js_for_info_boxes_in_parent for the preceding box sounds
 
 window.addEventListener("load",function() {
-
+  pleaseAllowSound = new Howl({  src: ["/user_interface/sounds/notification2_appear."+soundFileFormat]  }); // See js_for_different_browsers_and_devices to find soundFileFormat
+  micPermissionHasChangedToGrantedSound = new Howl({  src: ["/user_interface/sounds/notification2_close."+soundFileFormat]  }); // See js_for_different_browsers_and_devices to find soundFileFormat
   allowMicrophoneBlinker = document.getElementById('allowMicrophoneDivID'); // See index.html
   const filePathForAllowMicrophoneText = "/user_interface/text/"+userInterfaceLanguage+"/0-allow_microphone.txt";
   fetch(filePathForAllowMicrophoneText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ allowMicrophoneBlinker.children[1].innerHTML =  contentOfTheTxtFile; });
@@ -270,10 +273,12 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
           if (deviceDetector.isMobile) { // PHONES AND TABLETS
             // Mobiles already have a native touch blocker
             allowMicrophoneBlinker.classList.add("letYouMustAllowMicrophoneDialogAppearMobile"); // 1.5s See css_for_the_container_parent_html
+            setTimeout(function () { pleaseAllowSound.play(); }, 300);
           } else { // DESKTOPS
             // On desktops create and display a full viewport half opaque DIV to block all hovering and clicking while native allow box is showing
             blockAllClicksAndHoversDIV.classList.add("allowMicDesktopBackground"); document.body.appendChild(blockAllClicksAndHoversDIV); // See css_for_the_container_parent_html
             allowMicrophoneBlinker.classList.add("letYouMustAllowMicrophoneDialogAppearDesktop"); // 1.5s See css_for_the_container_parent_html
+            setTimeout(function () { pleaseAllowSound.play(); }, 300);
           }
         } else {
           willUserTalkToSpeechRecognition = false; // if somehow http instead of https
@@ -333,6 +338,7 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
                 const newPermissionState = event.target.state;
                 if (newPermissionState === 'granted') {
                   console.log('Microphone permission STATE has CHANGED TO GRANTED.');
+                  micPermissionHasChangedToGrantedSound.play(); // See js_for_info_boxes_in_parent for the accompanying sound
                   localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed = "yes"; // Prevent all future prompts
                   willUserTalkToSpeechRecognition = true; // Necessary: In case user is on an unknown browser that supports "Speech Recognition"
                 } else if (newPermissionState === 'denied') {
@@ -418,6 +424,7 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
                     clearInterval(checkInterval);
                     console.log("User's answer was detected by using a setInterval check");
                     if (currentState == 'granted') {
+                      micPermissionHasChangedToGrantedSound.play(); // See js_for_info_boxes_in_parent for the accompanying sound
                       willUserTalkToSpeechRecognition = true; // In case user is on an unknown browser that supports "Speech Recognition"
                       console.log("User has chosen OK for microphone");
                       localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed = "yes"; // Prevent all future prompts
