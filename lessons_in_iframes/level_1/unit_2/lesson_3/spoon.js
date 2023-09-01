@@ -320,7 +320,7 @@ function speakToTheMic() {
         notificationDingTone.play(); // Android has its native DING tone. So let this DING tone play on desktops and iOS devices.
     }
     // Start listening.
-    new SuperTimeout(function() {  parent.annyang.start();  },500);
+    new SuperTimeout(function() {  parent.annyang.start({ autoRestart: true });  },500);
     new SuperTimeout(function() {  startAudioInputVisualization();  },600); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js
     // New method of detecting matches
     parent.annyang.addCallback('result', compareAndSeeIfTheAnswerIsCorrect);

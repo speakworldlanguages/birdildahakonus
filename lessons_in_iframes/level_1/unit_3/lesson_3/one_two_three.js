@@ -113,7 +113,7 @@ function startSpeechRecognition() { console.log("let annyang start listening");
     parent.annyang.setLanguage("tr");
     //new SuperTimeout(function() {  parent.annyang.start();  },100);
     parent.annyang.addCallback('result', compareAndSeeIfTheKeywordWasSaid);
-    parent.annyang.start(); console.warn("annyang is now listening");
+    parent.annyang.start(); console.warn("annyang is now listening"); // SHOULD WE USE { autoRestart: true } ???
     function compareAndSeeIfTheKeywordWasSaid(phrasesArray) {
       //parent.console.log('Speech recognized. Possibly said: '+phrasesArray);
       console.log('Speech recognized. Possibly said: '+phrasesArray);
