@@ -121,20 +121,20 @@
         /* waterfall webps are 4,68MB in total,,, and a bit hard on CPU ,,, Use https://downloadtimecalculator.com */
         function getConnectionForWater() {return navigator.connection || navigator.mozConnection || navigator.webkitConnection || navigator.msConnection;}
         var internetForWater = getConnectionForWater();
-        if (deviceDetector.isMobile) { console.log("Checking if the internet speed is readable on this mobile device..."); // PHONE & TABLET
-          if(internetForWater){ console.log("Internet speed is readable."); // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
-            if(internetForWater.downlink>=1.5){ console.log("Speed is fast enough: "+internetForWater.downlink); /*Fast enough: Let it load and display*/ // Get waterfalls and show
+        if (deviceDetector.isMobile) { parent.console.log("Checking if the internet speed is readable on this mobile device..."); // PHONE & TABLET
+          if(internetForWater){ parent.console.log("Internet speed is readable."); // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
+            if(internetForWater.downlink>=1.5){ parent.console.log("Speed is fast enough: "+internetForWater.downlink); /*Fast enough: Let it load and display*/ // Get waterfalls and show
               switchToAnimatedWebpWaterfallsMOBILE();
-            } else { preventRepetitionOf3aAnd3b(); console.log("Speed is NOT fast enough: "+internetForWater.downlink); } // Too slow: Loading of waterfalls won't make it in time
-          } else { console.warn("Internet speed is NOT readable.");
+            } else { preventRepetitionOf3aAnd3b(); parent.console.log("Speed is NOT fast enough: "+internetForWater.downlink); } // Too slow: Loading of waterfalls won't make it in time
+          } else { parent.console.warn("Internet speed is NOT readable.");
             if (isApple) { /*Too CPU intensive for Apple*/ } else { /*switchToAnimatedWebpWaterfallsMOBILE();*/ } // Should we let Firefox try???
           } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
-        } else { console.log("Checking if the internet speed is readable on this desktop device..."); // DESKTOP
-          if(internetForWater){ console.log("Internet speed is readable."); // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
-            if(internetForWater.downlink>=1.5){ console.log("Speed is fast enough: "+internetForWater.downlink); /*Fast enough: Let it load and display*/ // Get waterfalls and show
+        } else { parent.console.log("Checking if the internet speed is readable on this desktop device..."); // DESKTOP
+          if(internetForWater){ parent.console.log("Internet speed is readable."); // Chrome, Edge, Opera, SamsungInternet » Check how fast the internet is now, thanks to NetworkInformation API
+            if(internetForWater.downlink>=1.5){ parent.console.log("Speed is fast enough: "+internetForWater.downlink); /*Fast enough: Let it load and display*/ // Get waterfalls and show
               switchToAnimatedWebpWaterfallsDESKTOP();
-            } else { preventRepetitionOf3aAnd3b(); console.log("Speed is NOT fast enough: "+internetForWater.downlink); } // Too slow: Loading of waterfalls won't make it in time
-          } else { console.warn("Internet speed is NOT readable.");
+            } else { preventRepetitionOf3aAnd3b(); parent.console.log("Speed is NOT fast enough: "+internetForWater.downlink); } // Too slow: Loading of waterfalls won't make it in time
+          } else { parent.console.warn("Internet speed is NOT readable.");
             if (isApple) { /*Too CPU intensive for Apple*/ } else { /*switchToAnimatedWebpWaterfallsDESKTOP(); */ } // Should we let Firefox try???
           } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported » Try to display the waterfalls anyway
         }

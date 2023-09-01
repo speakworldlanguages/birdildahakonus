@@ -162,7 +162,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       recognition.continuous = root.location.protocol === 'http:';
 
       // Sets the language to the default 'en-US'. This can be changed with annyang.setLanguage()
-      // recognition.lang = 'en-US'; // See if it is possible to start without an initial default
+      recognition.lang = 'en-US'; // See if it is possible to start without an initial default
 
       recognition.onstart = function () { console.log("Speech Recognition START event fired");
         _isListening = true;
@@ -265,7 +265,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       lastStartedAt = new Date().getTime();
       try {
-        recognition.start();
+        recognition.start(); console.log("annyang should now be listening");
       } catch (e) {
         if (debugState) {
           logMessage(e.message);
