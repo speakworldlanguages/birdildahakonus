@@ -155,7 +155,7 @@ function playTheLoopingVoiceInstruction() {
     to3 = new SuperTimeout(function () { say4.play(); }, sayTime*3); // Clear this timeout as soon as the gameplay starts
     // Exit the loop by not calling any further repetition
     to4 = new SuperTimeout(function () {
-      howManySaysFinished++; //console.log("howManySaysFinished=" + howManySaysFinished);
+      howManySaysFinished++; //parent.console.log("howManySaysFinished=" + howManySaysFinished);
       if (howManySaysFinished<4) {  loopingTalk();  }
     }, sayTime*4+2500); // Clear this timeout as soon as the gameplay starts
   }
@@ -210,7 +210,7 @@ function continueLesson() {
       new SuperTimeout(function () { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
     } else { parent.console.warn("THE DEVICE IS OFFLINE (detected at the end of lesson");
       const isCached = checkIfNextLessonIsCachedAndRedirectIfNot(131); // See js_for_all_iframed_lesson_htmls
-      if (isCached) { console.warn("WILL TRY TO CONTINUE OFFLINE");
+      if (isCached) { parent.console.warn("WILL TRY TO CONTINUE OFFLINE");
         new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
       }
     }

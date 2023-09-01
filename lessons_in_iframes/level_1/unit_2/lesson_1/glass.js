@@ -330,7 +330,7 @@ function speakToTheMic() {
     }
     // Start listening.
     new SuperTimeout(function() {  parent.annyang.start();  },500);
-    new SuperTimeout(function() {  startAudioInputVisualization();  },600); // Will work everywhere except on Android. See js_for_microphone_input_visualization.js
+    new SuperTimeout(function() {  startAudioInputVisualization();  },600); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js
     // New method of detecting matches
     parent.annyang.addCallback('result', compareAndSeeIfTheAnswerIsCorrect);
     function compareAndSeeIfTheAnswerIsCorrect(phrasesArray) {
@@ -346,7 +346,7 @@ function speakToTheMic() {
             let searchResult = false;
             if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; } // For some reason this fails for Arabic in Safari >>> Works without any problems in Chrome though
             else if (isApple) {
-              if (parent.annyang.getSpeechRecognizer().lang == "ar") { console.warn("Listening for Arabic on Safari/Apple");
+              if (parent.annyang.getSpeechRecognizer().lang == "ar") { parent.console.warn("Listening for Arabic on Safari/Apple");
                 // Use string search to try and find it within the phrase and not individual words
                 if (phrasesArray[k].search(eachWordArray[j]) >= 0) { searchResult = true; }
               }
@@ -354,9 +354,9 @@ function speakToTheMic() {
             // -
             if (!aMatchWasFound && searchResult) {
               aMatchWasFound = true; // Using this, we make sure that stopListeningAndProceedToNext fires only and only once
-              if (parent.annyang.getSpeechRecognizer().interimResults) { console.log("Correct answer detected with interimResults enabled");
+              if (parent.annyang.getSpeechRecognizer().interimResults) { parent.console.log("Correct answer detected with interimResults enabled");
                 setTimeout(function () { stopListeningAndProceedToNext(); }, 250); // Interim results is or can be too quick (especially on Windows)
-              } else { console.log("Correct answer detected without interimResults");
+              } else { parent.console.log("Correct answer detected without interimResults");
                 stopListeningAndProceedToNext();
               }
             } else {
@@ -414,7 +414,7 @@ function stopListeningAndProceedToNext() {
     new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; },endTime); // See js_for_all_iframed_lesson_htmls » onbeforeunload
   } else { parent.console.warn("THE DEVICE IS OFFLINE (detected at the end of lesson");
     const isCached = checkIfNextLessonIsCachedAndRedirectIfNot(122); // See js_for_all_iframed_lesson_htmls
-    if (isCached) { console.warn("WILL TRY TO CONTINUE OFFLINE");
+    if (isCached) { parent.console.warn("WILL TRY TO CONTINUE OFFLINE");
       new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; },endTime); // See js_for_all_iframed_lesson_htmls » onbeforeunload
     }
   }

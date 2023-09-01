@@ -58,7 +58,7 @@ function updateGlassTiltDesktopUntilFirstGulp(event) { // fires with every mouse
   else {    glassContainerDuringGameGulp0.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
   glassContainerDuringGameGulp0.children[frameNumber].style.display = "block";
-  if (frameNumber == 16) { console.log("Limit reached");
+  if (frameNumber == 16) { console.log("Threshold reached");
     if (isApple) { insistence += 0.25; } else { insistence++; }
     if (insistence >= 4) {
       main.removeEventListener("wheel",updateGlassTiltDesktopUntilFirstGulp);
@@ -90,7 +90,7 @@ function updateGlassTiltDesktopUntilSecondGulp(event) { event.preventDefault();
   else {    glassContainerDuringGameGulp1.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
   glassContainerDuringGameGulp1.children[frameNumber].style.display = "block";
-  if (frameNumber == 28) { console.log("Limit reached");
+  if (frameNumber == 28) { console.log("Threshold reached");
     if (isApple) { insistence += 0.25; } else { insistence++; }
     if (insistence >= 4) {
       main.removeEventListener("wheel",updateGlassTiltDesktopUntilSecondGulp);
@@ -123,7 +123,7 @@ function updateGlassTiltDesktopUntilThirdGulp(event) { event.preventDefault();
   else {    glassContainerDuringGameGulp2.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
   glassContainerDuringGameGulp2.children[frameNumber].style.display = "block";
-  if (frameNumber == 40) { console.log("Limit reached");
+  if (frameNumber == 40) { console.log("Threshold reached");
     if (isApple) { insistence += 0.25; } else { insistence++; }
     if (insistence >= 4) {
       main.removeEventListener("wheel",updateGlassTiltDesktopUntilThirdGulp);
@@ -156,7 +156,7 @@ function updateGlassTiltDesktopUntilFourthGulp(event) { event.preventDefault();
   else {    glassContainerDuringGameGulp3.children[frameNumber+1].style.display = "none";  }
   // Regardless of direction
   glassContainerDuringGameGulp3.children[frameNumber].style.display = "block";
-  if (frameNumber == 51) { console.log("Limit reached");
+  if (frameNumber == 51) { console.log("Threshold reached");
     if (isApple) { insistence += 0.25; } else { insistence++; }
     if (insistence >= 4) {
       main.removeEventListener("wheel",updateGlassTiltDesktopUntilFourthGulp);
@@ -400,7 +400,7 @@ function goToTheNextLessonDesktop() { // Same with goToTheNextLessonMobile
       new SuperTimeout(function () { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
     } else { parent.console.warn("THE DEVICE IS OFFLINE (detected at the end of lesson");
       const isCached = checkIfNextLessonIsCachedAndRedirectIfNot(123); // See js_for_all_iframed_lesson_htmls
-      if (isCached) { console.warn("WILL TRY TO CONTINUE OFFLINE");
+      if (isCached) { parent.console.warn("WILL TRY TO CONTINUE OFFLINE");
         new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
       }
     }

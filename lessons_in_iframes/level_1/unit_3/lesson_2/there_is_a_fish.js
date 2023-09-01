@@ -84,7 +84,7 @@ if (parent.lastRecordedWindowWidth>parent.lastRecordedWindowHeight) { // Apply s
 }
 requestAnimationFrame(function () { requestAnimationFrame(detectEndOfAnimation); });
 function detectEndOfAnimation() { firstCloud.addEventListener("animationend", regenerateClouds); }
-function regenerateClouds() { console.log("New clouds on their way...");
+function regenerateClouds() { //parent.console.log("New clouds on their way...");
   firstCloud.style.animationName = "none"; secondCloud.style.animationName = "none";
   setTimeout(function () {
     if (parent.lastRecordedWindowWidth>parent.lastRecordedWindowHeight) {
@@ -156,7 +156,7 @@ function startTheLesson() {
 let isParentBlurred = true; // Clicking on iframe blurs/deselects the parent,,, so start blurred as the only way to proceed is to click the buttons of the wavesurfer box
 let isFrameBlurred = false; // Clicking on iframe brings-focus-to/selects the frame,,, so start focused
 function vocabularyBoxIsClosed(x,y) { // Will fire from within createAndHandleListenManyTimesBox with touch/click coordinate values passed » vocabularyBoxIsClosed(lastPointerX,lastPointerY)
-  console.log("lesson intro listenbox is closed");
+  // console.log("lesson intro listenbox is closed");
   // No use for last mouse or touch coordinates: x, y
   isParentBlurred = true; // Clicking on iframe blurs the parent,,, so start blurred
   isFrameBlurred = false; //
@@ -313,12 +313,12 @@ function letThePictogramStartTalking() {
   let nextImageTime;  switch (parent.speedAdjustmentSetting) {  case "slow": nextImageTime = 5000; break;  case "fast": nextImageTime = 3000; break;  default: nextImageTime = 4000;  }
   pictogramStates.children[0].style.display = "none"; elderEyes.style.visibility = "hidden"; // DO NOT USE display none because position:relative top:100vmin
   pictogramStates.children[1].style.display = "block"; // Points his finger to water // 7 x 70ms = 490ms
-  new SuperTimeout(function () { say1.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; console.log("Says..."); }, nextImageTime/5); // This is the quicker say
-  new SuperTimeout(function () { console.log("Younger one stops watching the fish");
+  new SuperTimeout(function () { say1.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; parent.console.log("Says..."); }, nextImageTime/5); // This is the quicker say
+  new SuperTimeout(function () { parent.console.log("Younger one stops watching the fish");
     pictogramStates.children[1].style.display = "none"; resetWebp(pictogramStates.children[1]); youngerEyes.style.visibility = "hidden";
     pictogramStates.children[2].style.display = "block"; // Younger one turns his head
   }, nextImageTime*1.6);
-  new SuperTimeout(function () { console.log("Says again...");
+  new SuperTimeout(function () { parent.console.log("Says again...");
     pictogramStates.children[2].style.display = "none"; // Static webp » no animation
     pictogramStates.children[3].style.display = "block"; // Fish to question mark <-> Question mark back to fish
     say2.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; // This is the slower say
@@ -328,7 +328,7 @@ function letThePictogramStartTalking() {
   } else {
     keyboardTimeout3 = new SuperTimeout(function () { showHowToJumpDESKTOP(); console.log("Arrow keys appear"); theFishMayJumpNow = true; }, nextImageTime*4.1);
   }
-  repeatSay2Timeout = new SuperTimeout(function () { say2.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; console.log("Says again one last time..."); }, nextImageTime*6.3);
+  repeatSay2Timeout = new SuperTimeout(function () { say2.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; parent.console.log("Says again one last time..."); }, nextImageTime*6.3);
 }
 // ---
 function showHowToSwimMOBILE() {
@@ -440,7 +440,7 @@ function makeTheFishJumpOutOfWater() {
     pictogramStates.children[4].style.display = "block"; // 7 x 70ms = 490ms
     new SuperTimeout(function () {
       // Play Huh? surprise sound like plants vs zombies squash
-      say3.play(); console.log("Huh? What's that?");
+      say3.play(); parent.console.log("Huh? What's that?");
       // Make both pictograms look at the fish
       pictogramStates.children[4].style.display = "none"; resetWebp(pictogramStates.children[4]);
       pictogramStates.children[0].style.display = "block";
@@ -453,13 +453,13 @@ function makeTheFishJumpOutOfWater() {
       // Show state d: speech bubble grows with fish in it
       pictogramStates.children[0].style.display = "none"; // Static webp » no animation
       pictogramStates.children[5].style.display = "block"; // 7 x 70ms = 490ms
-      new SuperTimeout(function () { say4.play(); injectTextIntoTheHelpBoxP.innerHTML = translation2; console.log("It´s a fish!"); }, reactionTime/5);
+      new SuperTimeout(function () { say4.play(); injectTextIntoTheHelpBoxP.innerHTML = translation2; parent.console.log("It´s a fish!"); }, reactionTime/5);
       let nextActionTime;  switch (parent.speedAdjustmentSetting) {  case "slow": nextActionTime = 7500; break;  case "fast": nextActionTime = 4500; break;  default: nextActionTime = 6000;  }
       new SuperTimeout(function () {
         // Speech bubble (with question) shrinks
         pictogramStates.children[5].style.display = "none"; resetWebp(pictogramStates.children[5]);
         pictogramStates.children[6].style.display = "block"; // 7 x 70ms = 490ms
-        new SuperTimeout(function () { console.log("Both look at the fish again");
+        new SuperTimeout(function () { parent.console.log("Both look at the fish again");
           injectTextIntoTheHelpBoxP.innerHTML = "…";
           // Make both pictograms watch the fish again
           pictogramStates.children[6].style.display = "none"; resetWebp(pictogramStates.children[6]);
@@ -481,9 +481,9 @@ function makeTheFishJumpOutOfWater() {
     },2000);
     let reactionTime;  switch (parent.speedAdjustmentSetting) {  case "slow": reactionTime = 5000; break;  case "fast": reactionTime = 3000; break;  default: reactionTime = 4000;  }
     new SuperTimeout(function () {
-      say5.play(); injectTextIntoTheHelpBoxP.innerHTML = translation3; console.log("There is a fish in the water!");
+      say5.play(); injectTextIntoTheHelpBoxP.innerHTML = translation3; parent.console.log("There is a fish in the water!");
       let endingActionTime;  switch (parent.speedAdjustmentSetting) {  case "slow": endingActionTime = 7000; break;  case "fast": endingActionTime = 4000; break;  default: endingActionTime = 5500;  }
-      new SuperTimeout(function () { console.log("Both smile and then look at the camera");
+      new SuperTimeout(function () { parent.console.log("Both smile and then look at the camera");
         setTimeout(function () { winSound.play(); }, 2800); // respect the timing in webp
         // Make pictograms look at the camera
         elderEyes.style.visibility = "hidden"; youngerEyes.style.visibility = "hidden";
@@ -491,7 +491,7 @@ function makeTheFishJumpOutOfWater() {
         pictogramStates.children[7].style.display = "none"; resetWebp(pictogramStates.children[7]);
         pictogramStates.children[8].style.display = "block"; // This also needs resetting at the end of the lesson but it's not that big of a deal...
         let proceedTime;  switch (parent.speedAdjustmentSetting) {  case "slow": proceedTime = 6500; break;  case "fast": proceedTime = 3500; break;  default: proceedTime = 5000;  }
-        new SuperTimeout(function () { console.log("End of this lesson");
+        new SuperTimeout(function () { parent.console.log("End of this lesson");
           injectTextIntoTheHelpBoxP.innerHTML = "…";
           // if (fishIsHearing) { fishswimSound.fade(0.75,0,1500); } else { waterfallSound.fade(0.75,0,1500); }
           fishswimSound.fade(0.5,0,1500);
@@ -563,7 +563,7 @@ function continueLesson() {
   }
 }
 // ---
-function goToTheNextLesson() { console.log("Proceeding to the next lesson...");
+function goToTheNextLesson() { parent.console.log("Proceeding to the next lesson...");
 
   waterfallSound.fade(0.5,0,1500);
   let proceedTime;  switch (parent.speedAdjustmentSetting) {  case "slow": proceedTime = 500; break;  case "fast": proceedTime = 100; break;  default: proceedTime = 300;  }
@@ -576,7 +576,7 @@ function goToTheNextLesson() { console.log("Proceeding to the next lesson...");
       new SuperTimeout(function () { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
     } else { parent.console.warn("THE DEVICE IS OFFLINE (detected at the end of lesson");
       const isCached = checkIfNextLessonIsCachedAndRedirectIfNot(133); // See js_for_all_iframed_lesson_htmls
-      if (isCached) { console.warn("WILL TRY TO CONTINUE OFFLINE");
+      if (isCached) { parent.console.warn("WILL TRY TO CONTINUE OFFLINE");
         new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
       }
     }

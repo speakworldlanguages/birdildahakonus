@@ -45,7 +45,7 @@ function showHowToPlayOnMobile(deviceorientationDidNotWorkIsTrueOrFalse) {
       }
     }
     // -
-    console.log("can not use deviceorientation,,, will play with touch");
+    parent.console.log("can not use deviceorientation,,, will play with touch");
     new SuperTimeout(function () {
       main.addEventListener("touchstart",updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp);
       main.addEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp);
@@ -359,8 +359,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp(event) { ev
   touchMovedInY = Math.round(event.changedTouches[0].clientY) - touchDistanceFromTopWas;
   touchDifferenceInY = touchMovedInY - touchPreviousY;
   touchPreviousY = touchMovedInY;
-  if (touchDifferenceInY > 0) { console.log("down"); beforeCalculatingCurrentFrame++; isMovingDownwards = true; }
-  else if (touchDifferenceInY < 0) { console.log("up"); beforeCalculatingCurrentFrame--; isMovingDownwards = false; }
+  if (touchDifferenceInY > 0) { parent.console.log("down"); beforeCalculatingCurrentFrame++; isMovingDownwards = true; }
+  else if (touchDifferenceInY < 0) { parent.console.log("up"); beforeCalculatingCurrentFrame--; isMovingDownwards = false; }
   else {  /*horizontal movement that we don't need in this case*/  }
   // Gear ratio
   frameToBeDisplayed = Math.round(beforeCalculatingCurrentFrame / touchGearRatio);
@@ -384,7 +384,7 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp(event) { ev
     if (frameToBeDisplayed < 16) {   glassContainerDuringGameGulp0.children[frameToBeDisplayed+1].style.display = "none";  }
   }
   // Regardless of direction
-  // console.log("current fr: "+frameToBeDisplayed);
+  // parent.console.log("current fr: "+frameToBeDisplayed);
   glassContainerDuringGameGulp0.children[frameToBeDisplayed].style.display = "block";
 
   if (frameToBeDisplayed == 16) {  counterForPointOfNoReturn++;  }
@@ -396,7 +396,7 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFirstGulp(event) { ev
     glassContainerDuringGameGulp0.style.opacity = "0"; glassContainerDuringGameGulp0.remove();
     glassContainerDuringGameGulp1.style.opacity = "1";
     gulpSound1.play();
-    console.log("First gulp without deviceorientation");
+    parent.console.log("First gulp without deviceorientation");
     beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; // Undo the overdrive during insistence incrementation
     main.addEventListener("touchstart",updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp);
     main.addEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp);
@@ -407,8 +407,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp(event) { e
   touchMovedInY = Math.round(event.changedTouches[0].clientY) - touchDistanceFromTopWas;
   touchDifferenceInY = touchMovedInY - touchPreviousY;
   touchPreviousY = touchMovedInY;
-  if (touchDifferenceInY > 0) { console.log("down"); beforeCalculatingCurrentFrame++; isMovingDownwards = true; }
-  else if (touchDifferenceInY < 0) { console.log("up"); beforeCalculatingCurrentFrame--; isMovingDownwards = false; }
+  if (touchDifferenceInY > 0) { parent.console.log("down"); beforeCalculatingCurrentFrame++; isMovingDownwards = true; }
+  else if (touchDifferenceInY < 0) { parent.console.log("up"); beforeCalculatingCurrentFrame--; isMovingDownwards = false; }
   else {  /*horizontal movement that we don't need in this case*/  }
   // Gear ratio
   frameToBeDisplayed = Math.round(beforeCalculatingCurrentFrame / touchGearRatio);
@@ -434,7 +434,7 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilSecondGulp(event) { e
     glassContainerDuringGameGulp1.style.opacity = "0"; glassContainerDuringGameGulp1.remove();
     glassContainerDuringGameGulp2.style.opacity = "1";
     gulpSound2.play();
-    console.log("2nd gulp without deviceorientation");
+    parent.console.log("2nd gulp without deviceorientation");
     beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; // Undo the overdrive during insistence incrementation
     main.addEventListener("touchstart",updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp);
     main.addEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp);
@@ -445,8 +445,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp(event) { ev
   touchMovedInY = Math.round(event.changedTouches[0].clientY) - touchDistanceFromTopWas;
   touchDifferenceInY = touchMovedInY - touchPreviousY;
   touchPreviousY = touchMovedInY;
-  if (touchDifferenceInY > 0) { console.log("down"); beforeCalculatingCurrentFrame++; isMovingDownwards = true; }
-  else if (touchDifferenceInY < 0) { console.log("up"); beforeCalculatingCurrentFrame--; isMovingDownwards = false; }
+  if (touchDifferenceInY > 0) { parent.console.log("down"); beforeCalculatingCurrentFrame++; isMovingDownwards = true; }
+  else if (touchDifferenceInY < 0) { parent.console.log("up"); beforeCalculatingCurrentFrame--; isMovingDownwards = false; }
   else {  /*horizontal movement that we don't need in this case*/  }
   // Gear ratio
   frameToBeDisplayed = Math.round(beforeCalculatingCurrentFrame / touchGearRatio);
@@ -472,7 +472,7 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilThirdGulp(event) { ev
     glassContainerDuringGameGulp2.style.opacity = "0"; glassContainerDuringGameGulp2.remove();
     glassContainerDuringGameGulp3.style.opacity = "1";
     gulpSound3.play();
-    console.log("3rd gulp without deviceorientation");
+    parent.console.log("3rd gulp without deviceorientation");
     beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; // Undo the overdrive during insistence incrementation
     main.addEventListener("touchstart",updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp);
     main.addEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp);
@@ -483,8 +483,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp(event) { e
   touchMovedInY = Math.round(event.changedTouches[0].clientY) - touchDistanceFromTopWas;
   touchDifferenceInY = touchMovedInY - touchPreviousY;
   touchPreviousY = touchMovedInY;
-  if (touchDifferenceInY > 0) { console.log("down"); beforeCalculatingCurrentFrame++; isMovingDownwards = true; }
-  else if (touchDifferenceInY < 0) { console.log("up"); beforeCalculatingCurrentFrame--; isMovingDownwards = false; }
+  if (touchDifferenceInY > 0) { parent.console.log("down"); beforeCalculatingCurrentFrame++; isMovingDownwards = true; }
+  else if (touchDifferenceInY < 0) { parent.console.log("up"); beforeCalculatingCurrentFrame--; isMovingDownwards = false; }
   else {  /*horizontal movement that we don't need in this case*/  }
   // Gear ratio
   frameToBeDisplayed = Math.round(beforeCalculatingCurrentFrame / touchGearRatio);
@@ -515,7 +515,7 @@ function updateGlassTiltMobileWithoutDeviceOrientationUntilFourthGulp(event) { e
       winSound.play();
       winHappenedOnMobile();
     }, winTime);
-    console.log("Last gulp without deviceorientation");
+    parent.console.log("Last gulp without deviceorientation");
     beforeCalculatingCurrentFrame = frameToBeDisplayed*touchGearRatio; // Undo the overdrive during insistence incrementation
     main.addEventListener("touchstart",updateGlassTiltMobileWithoutDeviceOrientationEmptiedUp);
     main.addEventListener("touchmove",updateGlassTiltMobileWithoutDeviceOrientationEmptiedUp);
@@ -526,8 +526,8 @@ function updateGlassTiltMobileWithoutDeviceOrientationEmptiedUp(event) { event.p
   touchMovedInY = Math.round(event.changedTouches[0].clientY) - touchDistanceFromTopWas;
   touchDifferenceInY = touchMovedInY - touchPreviousY;
   touchPreviousY = touchMovedInY;
-  if (touchDifferenceInY > 0) { console.log("down"); beforeCalculatingCurrentFrame++; isMovingDownwards = true; }
-  else if (touchDifferenceInY < 0) { console.log("up"); beforeCalculatingCurrentFrame--; isMovingDownwards = false; }
+  if (touchDifferenceInY > 0) { parent.console.log("down"); beforeCalculatingCurrentFrame++; isMovingDownwards = true; }
+  else if (touchDifferenceInY < 0) { parent.console.log("up"); beforeCalculatingCurrentFrame--; isMovingDownwards = false; }
   else {  /*horizontal movement that we don't need in this case*/  }
   // Gear ratio
   frameToBeDisplayed = Math.round(beforeCalculatingCurrentFrame / touchGearRatio);
@@ -568,7 +568,7 @@ function goToTheNextLessonMobile() { // Same with goToTheNextLessonDesktop
       new SuperTimeout(function () { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
     } else { parent.console.warn("THE DEVICE IS OFFLINE (detected at the end of lesson");
       const isCached = checkIfNextLessonIsCachedAndRedirectIfNot(123); // See js_for_all_iframed_lesson_htmls
-      if (isCached) { console.warn("WILL TRY TO CONTINUE OFFLINE");
+      if (isCached) { parent.console.warn("WILL TRY TO CONTINUE OFFLINE");
         new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
       }
     }

@@ -505,7 +505,7 @@ function goToTheNextLesson() {
       new SuperTimeout(function () { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
     } else { parent.console.warn("THE DEVICE IS OFFLINE (detected at the end of lesson");
       const isCached = checkIfNextLessonIsCachedAndRedirectIfNot(113); // See js_for_all_iframed_lesson_htmls
-      if (isCached) { console.warn("WILL TRY TO CONTINUE OFFLINE");
+      if (isCached) { parent.console.warn("WILL TRY TO CONTINUE OFFLINE");
         new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
       }
     }
