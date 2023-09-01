@@ -140,7 +140,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   annyang = {
 
 
-    init: function init(commands) { console.log("INIT ANNYANG");
+    init: function init(commands) { //console.log("INIT ANNYANG");
       var resetCommands = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
       // Abort previous instances of recognition already running
@@ -162,14 +162,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       recognition.continuous = root.location.protocol === 'http:';
 
       // Sets the language to the default 'en-US'. This can be changed with annyang.setLanguage()
-      recognition.lang = 'en-US'; // See if it is possible to start without an initial default
+      // WEIRD: For desktops it is possible to start without an initial default and yet on Android it looks like it doesn't work without an initial value
+      // Or is it something else that is wrong???
+      recognition.lang = 'en-US';
 
-      recognition.onstart = function () { console.log("Speech Recognition START event fired");
+      recognition.onstart = function () { //console.log("Speech Recognition START event fired");
         _isListening = true;
         invokeCallbacks(callbacks.start);
       };
 
-      recognition.onsoundstart = function () { console.log("Speech Recognition SOUNDSTART event fired");
+      recognition.onsoundstart = function () { //console.log("Speech Recognition SOUNDSTART event fired");
         invokeCallbacks(callbacks.soundstart);
       };
 
@@ -246,7 +248,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
 
-    start: function start(options) { console.log("The start function of annyang fired");
+    start: function start(options) { //console.log("The start function of annyang fired");
       initIfNeeded();
       options = options || {};
       if (options.paused !== undefined) {
@@ -274,7 +276,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
 
-    abort: function abort() { console.log("The abort function of annyang fired");
+    abort: function abort() { //console.log("The abort function of annyang fired");
       autoRestart = false;
       autoRestartCount = 0;
       if (isInitialized()) {
