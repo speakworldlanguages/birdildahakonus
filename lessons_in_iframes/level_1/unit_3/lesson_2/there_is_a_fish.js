@@ -335,11 +335,12 @@ function showHowToSwimMOBILE() {
   let showTime;  switch (parent.speedAdjustmentSetting) {  case "slow": showTime = 2800; break;  case "fast": showTime = 1200; break;  default: showTime = 2000;  }
   new SuperTimeout(function () {  touchscreenControls.classList.add("itAppears");  }, showTime);
 }
-function showHowToJumpMOBILE() {
+function showHowToJumpMOBILE(option) {
   let showTime;  switch (parent.speedAdjustmentSetting) {  case "slow": showTime = 900; break;  case "fast": showTime = 300; break;  default: showTime = 600;  }
   fishJumpButton.style.visibility = "visible";
   setTimeout(function () { fishJumpButton.style.visibility = "hidden";  }, showTime);
   setTimeout(function () { fishJumpButton.style.visibility = "visible"; }, showTime*2);
+  if (option == "shorter_blink") { return; }
   setTimeout(function () { fishJumpButton.style.visibility = "hidden";  }, showTime*3);
   setTimeout(function () { fishJumpButton.style.visibility = "visible"; }, showTime*4);
   setTimeout(function () { fishJumpButton.style.visibility = "hidden";  }, showTime*5);
@@ -466,6 +467,8 @@ function makeTheFishJumpOutOfWater() {
           pictogramStates.children[0].style.display = "block";
           elderEyes.style.visibility = "visible"; youngerEyes.style.visibility = "visible";
           theFishMayJumpNow = true;
+          if (deviceDetector.isMobile) {         showHowToJumpMOBILE("shorter_blink");          }
+          // We will expect desktop user to be smart enough to try and jump at least one more time
         }, 500);
       },nextActionTime);
     },reactionTime);
@@ -703,8 +706,10 @@ function removeKeyboardListeners() { //
 function handleInputForPlayingTheFishGameWithTouchscreen() {
   // alert("fires ok"); //tested ok
   fishJumpButton.addEventListener("touchstart",fishUp);
+  fishJumpButton.addEventListener("touchend",hideUntilTheFishCanJumpAgain,{once:true});
   swimLeftButton.addEventListener("touchstart",fishLeft);
   swimRightButton.addEventListener("touchstart",fishRight);
+  function hideUntilTheFishCanJumpAgain() { setTimeout(function () { fishJumpButton.style.visibility = "hidden"; }, 1234); }
   function fishUp(event) { event.preventDefault(); event.stopPropagation();
     fishJumpButton.children[0].style.display = "none"; fishJumpButton.children[1].style.display = "block";
     // NOT NECESSARY FOR MOBILE upArrowIsAlreadyPressed = true;
