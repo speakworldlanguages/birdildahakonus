@@ -140,7 +140,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   annyang = {
 
 
-    init: function init(commands) { //console.log("INIT ANNYANG");
+    init: function init(commands) { console.log("INIT ANNYANG");
       var resetCommands = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
       // Abort previous instances of recognition already running
@@ -248,7 +248,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
 
-    start: function start(options) { //console.log("The start function of annyang fired");
+    start: function start(options) { console.log("The start function of annyang fired");
       initIfNeeded();
       options = options || {};
       if (options.paused !== undefined) {
@@ -268,7 +268,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       lastStartedAt = new Date().getTime();
       try {
         recognition.start(); console.log("annyang should now be listening");
-      } catch (e) {
+      } catch (e) { console.warn("!!! annyang recognition could not start !!!");
         if (debugState) {
           logMessage(e.message);
         }
