@@ -709,7 +709,7 @@ function handleInputForPlayingTheFishGameWithTouchscreen() {
   fishJumpButton.addEventListener("touchend",hideUntilTheFishCanJumpAgain,{once:true});
   swimLeftButton.addEventListener("touchstart",fishLeft);
   swimRightButton.addEventListener("touchstart",fishRight);
-  function hideUntilTheFishCanJumpAgain() { setTimeout(function () { fishJumpButton.style.visibility = "hidden"; }, 1234); }
+  function hideUntilTheFishCanJumpAgain() { setTimeout(function () { fishJumpButton.style.visibility = "hidden"; }, 500); }
   function fishUp(event) { event.preventDefault(); event.stopPropagation();
     fishJumpButton.children[0].style.display = "none"; fishJumpButton.children[1].style.display = "block";
     // NOT NECESSARY FOR MOBILE upArrowIsAlreadyPressed = true;

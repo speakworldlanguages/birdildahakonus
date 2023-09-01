@@ -84,11 +84,11 @@ window.addEventListener('DOMContentLoaded', function(){
 
   // Attach event listeners to the buttons
   if (deviceDetector.isMobile) {
-    recordButton.addEventListener('touchstart', startRecordingAndListening);
+    recordButton.addEventListener('touchstart', startRecordingAndStartListening);
     stopButton.addEventListener('touchstart', stopRecordingViaButton);
     playButton.addEventListener('touchstart', playRecording);
   } else { // desktop
-    recordButton.addEventListener('mousedown', startRecordingAndListening);
+    recordButton.addEventListener('mousedown', startRecordingAndStartListening);
     stopButton.addEventListener('mousedown', stopRecordingViaButton);
     playButton.addEventListener('mousedown', playRecording);
   }
@@ -97,8 +97,8 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
 
-function startRecordingAndListening(event) { event.preventDefault(); event.stopPropagation();
-  console.log("startRecordingAndListening() fired!");
+function startRecordingAndStartListening(event) { event.preventDefault(); event.stopPropagation();
+  console.log("startRecordingAndStartListening() fired!");
   recordButton.disabled = true;
   playButton.disabled = true;
   startRecording();
@@ -113,7 +113,7 @@ function startSpeechRecognition() { console.log("let annyang start listening");
     parent.annyang.setLanguage("tr");
     //new SuperTimeout(function() {  parent.annyang.start();  },100);
     parent.annyang.addCallback('result', compareAndSeeIfTheKeywordWasSaid);
-    parent.annyang.start(); console.warn("annyang is now listening"); // SHOULD WE USE { autoRestart: true } ???
+    parent.annyang.start({ autoRestart: true }); console.warn("annyang is now listening"); // SHOULD WE USE { autoRestart: true } ???
     function compareAndSeeIfTheKeywordWasSaid(phrasesArray) {
       //parent.console.log('Speech recognized. Possibly said: '+phrasesArray);
       console.log('Speech recognized. Possibly said: '+phrasesArray);
