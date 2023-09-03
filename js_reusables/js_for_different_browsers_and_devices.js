@@ -82,7 +82,8 @@ window.addEventListener('DOMContentLoaded', function(){
     // We don't want to put this into js_for_every_single_html because that precedes all js files
   } else {
     // Set the sound file format for the entire app
-    soundFileFormat = "webm"; // CAUTION: Parent level only! See js_for_all_iframed_lesson_htmls to find how it's passed to the iframe level
+    soundFileFormat = "mp3";
+    //soundFileFormat = "webm"; // CAUTION: Parent level only! See js_for_all_iframed_lesson_htmls to find how it's passed to the iframe level
     // We don't want to put this into js_for_every_single_html because that precedes all js files
   }
   // -
