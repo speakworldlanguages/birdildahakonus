@@ -152,7 +152,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       recognition = new SpeechRecognition();
 
       // THE LINE FOR interimResults IS NOT PART OF ORIGINAL ANNYANG.JS
-      recognition.interimResults = true; // COULD THIS BE WHY IT STOPPED WORKING ON SAMSUNG ???
+      recognition.interimResults = true; // COULD THIS BE WHY IT STOPPED WORKING ON SAMSUNG BROWSER? -> LATER: Looks like abort doesn't fire properly on Samsung Browser
 
       // Set the max number of alternative transcripts to try and match with a command
       recognition.maxAlternatives = 5;
@@ -163,8 +163,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // Sets the language to the default 'en-US'. This can be changed with annyang.setLanguage()
       // WEIRD: For desktops it is possible to start without an initial default and yet on Android it looks like it doesn't work without an initial value
-      // Or is it something else that is wrong???
-      recognition.lang = 'en-US';
+      // Or is it something else that is wrong -> LATER: It was probably because autoRestart wasn't set back to true after abort function set it to false
+      // ANYHOW: Calling annyang.setLanguage() will force init SpeechRecognition
+      // recognition.lang = 'en-US';
 
       recognition.onstart = function () { //console.log("Speech Recognition START event fired");
         _isListening = true;
