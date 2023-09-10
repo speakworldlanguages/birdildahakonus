@@ -17,7 +17,9 @@ var isWebViewOnAndroid = false; // Even though it is never used as of August 202
 var isFirefox = false;
 let isUnknownBrowserInTermsOfSpeechRecognition = false;
 
-annyang.debug(); // Uncomment to activate debug mode for speech recogntion
+if (annyang) {
+  annyang.debug(); // Uncomment to activate debug mode for speech recognition
+}
 
 
 // Prevent screen dimming -> handles the Android case -> Starting with Safari 16.4 it is supported on iOS too
@@ -115,10 +117,12 @@ window.addEventListener('DOMContentLoaded', function(){
   // Android Chrome and Webview on Android are different // Like support for change event is not the same in 2022 >>> https://developer.mozilla.org/en-US/docs/Web/API/PermissionStatus/change_event
   if (detectedBrowserName.search("webview") >= 0) {
     isWebViewOnAndroid = true; // Even though it is never used as of August 2023
+    if (annyang) {    annyangRestartDelayTime = 1000;    } // Override the default value of 100
   }
 
   if (detectedOS_name.search("android") >= 0) {
     isAndroid=true; // Primary use case: In lesson 1-1-1 lesson.js to notify user about microphone timing
+    if (annyang) {    annyangRestartDelayTime = 1000;    } // Override the default value of 100
   }
 
 
@@ -362,14 +366,6 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
 
                 // When the setting is changed anyhow
                 removeAllowMicrophoneBlinkerSoftly(); // With nice animation » Should work both on mobile and desktop
-                // Samsung Browser skips the annyang.abort() that exists in handleMicFirstTurnOn function
-                // Handle that and any possibly similar browser
-                setTimeout(function () {
-                  if (annyang.isListening()) { console.warn("annyang isListening returned true when mic-permission-prompt was closed");
-                    annyang.abort();
-                  }
-                }, 500);
-
                 // The first lesson may start in 1502ms
                 setTimeout(function () {     startTeaching(nameOfButtonIsWhatWillBeTaught);     },2002);
               }
@@ -419,19 +415,23 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
         // BUT: On Samsung Browser onchange works fine so we don't use the setInterval » so better try calling annyang.abort() shortly after onchange fires
         // SEE: proceedAccordingToUsersChoiceAboutMicPermission() function above
         if (isSamsungBrowser || false || false) { // In Samsung Browser the [Would you like to allow] prompt gets hidden under the fullscreened document element
-          if (hasGoneFullscreen) { // To reveal the prompt we have to exit fullscreen temporarily
+          if (hasGoneFullscreen) { // To reveal the prompt we have to exit fullscreen temporarily in Samsung Browser
             console.warn("Unblocking the permission prompt in Samsung Browser");
             setTimeout(function () { closeFullscreen(); }, 750); // See js_for_handling_fullscreen_mode
           }
+          // Samsung Browser throws an error -> Failed to execute 'start' on 'SpeechRecognition', recognition has already started.
+          console.warn("SAMSUNG BROWSER: Will now turn off interim results to avoid already started error");
+          let recog = annyang.getSpeechRecognizer(); recog.interimResults = false;
         }
         // ---
-        setTimeout(function () {  handleMicFirstTurnOn();  annyang.start();  },1750); // This will make the prompt box appear for allowing microphone usage
+        setTimeout(function () {  handleMicFirstTurnOn();  annyang.start({ autoRestart: false });  },1750); // This will make the prompt box appear for allowing microphone usage
         // Note that proceedAccordingToUsersChoiceAboutMicPermission will be armed and ready to fire startTeaching() IF AND ONLY IF change event is supported
         function handleMicFirstTurnOn() {
           // Before the prompt is showing
           if (isApple) { setTimeout(function () { annyang.pause(); },3500); } // Pause without turning the mic off and hope that user will choose OK
           else { setTimeout(function () { annyang.abort(); },3500); } // Turn the mic off and hope that user will choose OK
-          //
+          // -
+          // -
           if (changeEventIsSupported) {
             // Do nothing and let proceedAccordingToUsersChoiceAboutMicPermission() react to the user's answer
           } else {

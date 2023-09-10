@@ -12,13 +12,15 @@ let speedLimitAllowsItToMove = true;
 
 function resetSpeedLimitTimer() { //event.preventDefault();
   // prevent default THROWS ERROR: Unable to preventDefault inside passive event listener due to target being treated as passive
-  // Let speed limit apply to all desktop wheeling activity regardless of OS and input device
-  speedLimitAllowsItToMove = false;
-  requestAnimationFrame(function () {
+  // Let speed limit apply to all desktop wheeling activity regardless of OS and input device, even though the main purpose is to limit the speed on MacOS (touchpad gesture)
+  if (speedLimitAllowsItToMove) {
+    speedLimitAllowsItToMove = false;
     requestAnimationFrame(function () {
-      speedLimitAllowsItToMove = true;
+      requestAnimationFrame(function () {
+        speedLimitAllowsItToMove = true; // Remove the blocker after 2 RAF frames ~= 33ms
+      });
     });
-  });
+  }
   // Not accurate enough: setTimeout(function () { speedLimitAllowsItToMove = true; }, 25); // Adjust speed limit here 80ms means 12,5fps is max
 }
 
@@ -32,7 +34,7 @@ function updateGlassTiltDesktopUntilFirstGulp(event) { // fires with every mouse
     window.addEventListener("wheel",resetSpeedLimitTimer);
     if (isApple) {
       // If the very first movement is downwards then let downwards movement rotate the glass downwards
-      // If the very first movement is mathematically upwards then let mathematically upwards movement rotate the glass downwards
+      // If the very first movement is mathematically upwards then let mathematically upwards movement rotate the glass downwards (MacOS)
       if (event.deltaY > 0) { /*Normal direction: Do nothing*/ } else {  reverseDirection = true;  }
     }
   }

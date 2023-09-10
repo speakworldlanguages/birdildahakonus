@@ -64,6 +64,9 @@ async function cacheLesson113CommonAssetsForAllLanguages() {
     if (!errorHappened) {
       parent.console.log("... and common files for 1-1-3 are ready");
       localStorage.setItem("lesson113CommonFilesCachedSuccessfully", "excellent");
+    } else {
+      // Try again
+      setTimeout(function () {  cacheLesson113CommonAssetsForAllLanguages();  }, 4000);
     }
   } // End of try-catch-finally
 
@@ -107,6 +110,9 @@ async function cacheLesson113AssetsForTheTargetLanguage() {
     if (!errorHappened) {
       parent.console.log("... and files for 1-1-3 "+parent.langCodeForTeachingFilePaths+" are ready");
       localStorage.setItem("lesson113FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully", "nice");
+    } else {
+      // Try again
+      setTimeout(function () {  cacheLesson113AssetsForTheTargetLanguage();  }, 4000);
     }
   } // End of try-catch-finally
 

@@ -34,6 +34,9 @@ async function cacheAuthorsNotice1Assets() {
   } finally {
     if (!errorHappened) {
       localStorage.setItem("authorsNotice1FilesCachedSuccessfully", "beautiful");
+    } else {
+      // Try again
+      setTimeout(function () {  cacheAuthorsNotice1Assets();  }, 4000);
     }
   } // End of try-catch-finally
 }
@@ -95,6 +98,9 @@ async function cacheLesson121CommonAssetsForAllLanguages() {
     if (!errorHappened) {
       parent.console.log("... and common files for 1-2-1 are ready");
       localStorage.setItem("lesson121CommonFilesCachedSuccessfully", "freshmint");
+    } else {
+      // Try again
+      setTimeout(function () {  cacheLesson121CommonAssetsForAllLanguages();  }, 4000);
     }
   } // End of try-catch-finally
 
@@ -141,6 +147,9 @@ async function cacheLesson121AssetsForTheTargetLanguage() {
     if (!errorHappened) {
       parent.console.log("... and files for 1-2-1 "+parent.langCodeForTeachingFilePaths+" are ready");
       localStorage.setItem("lesson121FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully", "brilliant");
+    } else {
+      // Try again
+      setTimeout(function () {  cacheLesson121AssetsForTheTargetLanguage();  }, 4000);
     }
   } // End of try-catch-finally
 

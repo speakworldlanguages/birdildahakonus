@@ -12,6 +12,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //! license : MIT
 //! https://www.TalAter.com/annyang/
 
+
+// annyangRestartDelayTime is a MODIFICATION (feature for speakworldlanguages.app)
+var annyangRestartDelayTime = 100; // Better if this is increased on Android » See js_for_different_browsers_and_devices
+let restartTimeout = null;
+
 (function (root, factory) {
   'use strict';
 
@@ -53,6 +58,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   var debugStyle = 'font-weight: bold; color: #00f;';
   var pauseListening = false;
   var _isListening = false;
+
 
   // The command matching code is a modified version of Backbone.Router by Jeremy Ashkenas, under the MIT license.
   var optionalParam = /\s*\((.*?)\)\s*/g;
@@ -140,7 +146,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   annyang = {
 
 
-    init: function init(commands) { console.log("INIT ANNYANG");
+    init: function init(commands) { console.log("annyang.js » INIT ANNYANG");
       var resetCommands = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
       // Abort previous instances of recognition already running
@@ -152,7 +158,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       recognition = new SpeechRecognition();
 
       // THE LINE FOR interimResults IS NOT PART OF ORIGINAL ANNYANG.JS
-      recognition.interimResults = true; // COULD THIS BE WHY IT STOPPED WORKING ON SAMSUNG BROWSER? -> LATER: Looks like abort doesn't fire properly on Samsung Browser
+      recognition.interimResults = true; // THIS CAUSES an error in SAMSUNG BROWSER (bug) // SAYS: Failed to execute 'start' on 'SpeechRecognition', recognition has already started
 
       // Set the max number of alternative transcripts to try and match with a command
       recognition.maxAlternatives = 5;
@@ -167,16 +173,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // ANYHOW: Calling annyang.setLanguage() will force init SpeechRecognition
       // recognition.lang = 'en-US';
 
-      recognition.onstart = function () { //console.log("Speech Recognition START event fired");
+      recognition.onstart = function () { //console.log("annyang.js » Speech Recognition START event fired");
         _isListening = true;
         invokeCallbacks(callbacks.start);
       };
 
-      recognition.onsoundstart = function () { //console.log("Speech Recognition SOUNDSTART event fired");
+      recognition.onsoundstart = function () { //console.log("annyang.js » Speech Recognition SOUNDSTART event fired");
         invokeCallbacks(callbacks.soundstart);
       };
 
       // NOTE: See https://webreflection.medium.com/taming-the-web-speech-api-ef64f5a245e1
+      // According to taming-the-web-speech-api article only start and audiostart are logged on iOS
+      // According to MDN
+      // The audiostart event of the Web Speech API is fired when the user agent has started to capture audio for speech recognition
+      // The soundstart event of the Web Speech API is fired when any sound — recognizable speech or not — has been detected.
+      // The speechstart event of the Web Speech API is fired when sound recognized by the speech recognition service as speech has been detected.
 
       recognition.onerror = function (event) {
         invokeCallbacks(callbacks.error, event);
@@ -211,12 +222,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               logMessage('Speech Recognition is repeatedly stopping and starting. See http://is.gd/annyang_restarts for tips.');
             }
           }
-          if (timeSinceLastStart < 1000) {
-            setTimeout(function () {
+          if (timeSinceLastStart < 1500) { // MODIFIED for SWL: Original annyang had different values
+            restartTimeout = setTimeout(function () {
               annyang.start({ paused: pauseListening });
-            }, 1000 - timeSinceLastStart);
+            }, 1500 + annyangRestartDelayTime - timeSinceLastStart); // MODIFIED for SWL: Original annyang had different values
           } else {
-            annyang.start({ paused: pauseListening });
+            restartTimeout = setTimeout(function () {
+              annyang.start({ paused: pauseListening });
+            }, 0 + annyangRestartDelayTime); // MODIFIED for SWL: Original annyang had different values
           }
         }
       };
@@ -249,7 +262,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
 
-    start: function start(options) { console.log("The start function of annyang fired");
+    start: function start(options) { console.log("annyang.js » The start function of annyang fired");
       initIfNeeded();
       options = options || {};
       if (options.paused !== undefined) {
@@ -268,8 +281,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       lastStartedAt = new Date().getTime();
       try {
-        recognition.start(); console.log("annyang should now be listening");
-      } catch (e) { console.warn("!!! annyang recognition could not start !!!");
+        recognition.start(); console.log("annyang.js » recognition.start() was successful");
+      } catch (e) { console.warn("annyang.js » !!! recognition could not start !!!");
         if (debugState) {
           logMessage(e.message);
         }
@@ -277,11 +290,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
 
-    abort: function abort() { //console.log("The abort function of annyang fired");
+    abort: function abort() {
+      // Start of MODIFICATION for SWL
+      if (restartTimeout) {      clearTimeout(restartTimeout);      }
+      // End of MODIFICATION for SWL
       autoRestart = false;
       autoRestartCount = 0;
       if (isInitialized()) {
-        recognition.abort();
+        recognition.abort(); console.log("annyang.js » recognition.abort() was successful");
       } else {
          console.warn("CANNOT abort because annyang isInitialized returned false");
       }

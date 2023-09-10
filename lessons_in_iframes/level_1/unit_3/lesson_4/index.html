@@ -1,17 +1,96 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- ONETWOTHREE -->
+    <title>1-3-4 ☝✌</title>
     <meta charset="utf-8">
-    <title></title>
-
-
-
+    <meta name="robots" content="noindex" />
+    <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Disable long-touch on video -->
+    <link rel="stylesheet" href="/css_reusables/css_for_lessons_with_interactables.css"> <!-- Fill MAIN with the right color -->
+    <link rel="stylesheet" href="/css_reusables/css_for_displaying_translation_help.css"> <!-- MOBILES: Draggable man | DESKTOPS: movie subtitle style -->
+    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css"> <!-- Wavesurfer teacher box visual style -->
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <link rel="stylesheet" href="/lessons_in_iframes/level_1/unit_3/lesson_4/one_two_three.css">
+    <!-- Empty line 1 -->
+    <!-- Empty line 2 -->
     <script defer src="/js_reusables/js_for_every_single_html.js">/*LET userInterfaceLanguage DEPEND ON DOMAIN NAME, fetch headers, fonts, resetWebp, canVibrate, defaultCursor*/</script>
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
-    <script defer src="proceed.js">/*Teach and let user play the lesson game*/</script>
+    <!-- <script defer src="/js_reusables/js_for_displaying_translation_help.js">/*Desktops: Like movie subtitles, Mobiles: Drag the figure down*/</script> -->
+    <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
+    <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
+    <!-- We do not need the microphone plugin in this case -->
+    <!-- <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script> -->
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <script defer src="/lessons_in_iframes/level_1/unit_3/lesson_4/one_two_three.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
+    <!-- Find the link to worker.js in one_two_three.js -->
+    <!-- Empty line 2 -->
+    <!-- Uncomment to use the console on mobiles -->
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
 
+    <script> /*CACHE THE NEXT LESSON and make it offline ready*/
+      window.addEventListener("load",startDownloadingFilesForTheNextLessonIfNecessary,{once:true});
+      function startDownloadingFilesForTheNextLessonIfNecessary() { // Wait for a short while and get the files if device is still online, otherwise wait for internet connectivity.
+        setTimeout(afterSomeSeconds,7001); // After being offline, attempt downloading if two consecutive firings of updateOnlineStatus both report ONLINE // See js_for_online_and_offline_modes
+        function afterSomeSeconds() { // As of August 2023 parent.internetConnectivityIsNiceAndUsable is updated every 7000ms
+          if (parent.internetConnectivityIsNiceAndUsable) { // Start getting the files for the next lesson
+            const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "/js_for_cache_handling/211_and_bakernotice3.js"; document.body.appendChild(delayedScript);
+          } else { // Check & Retry
+            let connectivityCheckInterval = setInterval(function () { // Analyse the recursion logic
+              if (parent.internetConnectivityIsNiceAndUsable) { clearInterval(connectivityCheckInterval); startDownloadingFilesForTheNextLessonIfNecessary(); }
+            }, 2000);
+          }
+        }
+      }
+    </script>
   </head>
+
   <body>
+
+    <!-- MAIN :: Start blurred 8px if there is an info box or wavesurfer listen box -->
+    <main style="filter: blur(0px); transition-property: filter; transition-timing-function: ease;"> <!-- See css_for_lessons_with_interactables -->
+
+      <!-- ENDLESS BACKGROUND GRADIENT --> <!-- Filled with img repeat-x via css background -->
+      <!-- <div class="putThingsAtBottomCenter underTheBackground"></div>  -->
+      <!-- <button type="button" name="button" id="recordButtonID">Start recording</button> -->
+      <!-- <button type="button" name="button" id="stopButtonID">Stop recording</button> -->
+      <!-- <button type="button" name="button" id="playButtonID">Play</button> -->
+      <button type="button" id="oneID">1</button>
+      <button type="button" id="twoID">2</button>
+      <button type="button" id="threeID">3</button>
+
+      <div class="" style="position:fixed;top:62%;left:0px;width:100vw;width:100dvw;">
+        <div id="amplitude-meter" style="border:1px dotted black; width:100%;">
+          <div id="amplitude-bar" style="border:2px solid green; width:100%;"></div>
+        </div>
+	     <div id="monitorID"></div>
+      </div>
+
+    </main>
+    <!-- END OF MAIN -->
+
+    <script>
+      window.addEventListener('DOMContentLoaded', whatMustBeDoneAtFirstOnThisDevice, { once: true });
+      function whatMustBeDoneAtFirstOnThisDevice() {
+        // change to RTL image if target language is Arabic or any other right-to-left reading language
+        // const toRTL = document.getElementById('changeToRTL');
+        if (parent.targetLanguageReadsLeftToRightOrRightToLeft == "rtl") {
+          // toRTL.src = "/lessons_in_iframes/level_1/unit_3/lesson_3/???_rtl.webp";
+        }
+        // ---
+        if (deviceDetector.isMobile) {
+          // TABLETS AND PHONES
+
+        } else {
+          // DESKTOPS - DESKTOPS - DESKTOPS
+
+        }
+
+
+      } // END OF whatMustBeDoneAtFirstOnThisDevice()
+    </script>
 
   </body>
 </html>

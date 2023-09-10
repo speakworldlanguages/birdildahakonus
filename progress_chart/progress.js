@@ -117,10 +117,10 @@ if (parent.savedProgress[studiedLangCode].lesson_FISH_IsViewed) {  lesson131.cla
 if (parent.savedProgress[studiedLangCode].lesson_FISH_IsCompleted) {  lesson131.classList.add("thisLessonHasBeenCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_THEREISAFISHINTHEWATER_IsViewed) {  lesson132.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_THEREISAFISHINTHEWATER_IsCompleted) {  lesson132.classList.add("thisLessonHasBeenCompleted");  }
-if (parent.savedProgress[studiedLangCode].lesson_ONETWOTHREE_IsViewed) {  lesson133.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
-if (parent.savedProgress[studiedLangCode].lesson_ONETWOTHREE_IsCompleted) {  lesson133.classList.add("thisLessonHasBeenCompleted");  }
-if (parent.savedProgress[studiedLangCode].lesson_ROLLTHEBALL_IsViewed) {  lesson134.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
-if (parent.savedProgress[studiedLangCode].lesson_ROLLTHEBALL_IsCompleted) {  lesson134.classList.add("thisLessonHasBeenCompleted");  }
+if (parent.savedProgress[studiedLangCode].lesson_TREE_IsViewed) {  lesson133.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
+if (parent.savedProgress[studiedLangCode].lesson_TREE_IsCompleted) {  lesson133.classList.add("thisLessonHasBeenCompleted");  }
+if (parent.savedProgress[studiedLangCode].lesson_ONETWOTHREE_IsViewed) {  lesson134.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
+if (parent.savedProgress[studiedLangCode].lesson_ONETWOTHREE_IsCompleted) {  lesson134.classList.add("thisLessonHasBeenCompleted");  }
 // --------
 
 // handleFadingAndNavigation exists in js_for_the_parent_all_browsers_all_devices
@@ -136,7 +136,7 @@ let lessonCodes = [
 let lessonsAndTheirReadinessForOffline = {
   111:false, 112:false, 113:false, 114:false,
   121:false, 122:false, 123:false, 124:false,
-  131:false, 132:false, 133:true, 134:false//, //Set 133 back to false after tests
+  131:false, 132:false, 133:false, 134:false//,
   // 211:false, 212:false, 213:false, 214:false,
   // 221:false, 222:false, 223:false, 224:false,
   // 231:false, 232:false, 233:false, 234:false
