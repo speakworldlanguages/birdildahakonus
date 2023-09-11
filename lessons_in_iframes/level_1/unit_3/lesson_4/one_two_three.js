@@ -131,20 +131,20 @@ function activateMicrophone() { parent.console.log("activating microphone");
                   	  averageAmplitudeValuesDuringTheFirstMinute[frameCounter] = Math.round(averageAmplitude*100);
                       frameCounter++;
                   } else if (frameCounter == averageAmplitudeValuesDuringTheFirstMinute.length) {
-                  	  console.log("averageAmplitudeValuesDuringTheFirstMinute is full of data");
-                      console.log(averageAmplitudeValuesDuringTheFirstMinute);
+                      parent.console.log("averageAmplitudeValuesDuringTheFirstMinute is full of data");
+                      parent.console.log(averageAmplitudeValuesDuringTheFirstMinute);
                       const arrayLength = averageAmplitudeValuesDuringTheFirstMinute.length;
                       const twentyPercent = Math.floor(0.2 * arrayLength); // Calculate 20% of the length
                       // Step 1: Sort the Uint8Array
                       const sortedArray = new Uint8Array([...averageAmplitudeValuesDuringTheFirstMinute].sort((a, b) => a - b));
                       // Step 2: Create a new array containing the lowest values
                       const lowestValuesArray = sortedArray.slice(0, twentyPercent);
-                      console.log("lowest 20% is");
-  			              console.log(lowestValuesArray);
+                      parent.console.log("lowest 20% is");
+                      parent.console.log(lowestValuesArray);
                       // Step 3: Calculate the average of the lowest values
                       const sum = lowestValuesArray.reduce((acc, val) => acc + val, 0);
                       const average = sum / twentyPercent;
-                      console.log("average noise level is "+average);
+                      parent.console.log("average noise level is "+average);
                       frameCounter = 99999;
                   }
                   requestAnimationFrame(updateAmplitude);
@@ -152,11 +152,11 @@ function activateMicrophone() { parent.console.log("activating microphone");
 
       }) // End of then() block
       .catch(function (error) {
-        console.error('Error accessing the microphone:', error);
+        parent.console.error('Error accessing the microphone:', error);
         //self.postMessage({ type: 'error', message: 'Error accessing microphone' });
       });
   } else {
-      console.error('getUserMedia is not supported in this browser.');
+      parent.console.error('getUserMedia is not supported in this browser.');
       //self.postMessage({ type: 'error', message: 'getUserMedia is not supported in this browser' });
   }
 }
