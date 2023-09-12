@@ -6,99 +6,154 @@ worker.onmessage = function (event) {
     const message = event.data;
     switch (message.type) {
         case 'ready':
-            // Handle the recorded data (you can save or process it here)
-            parent.console.log("Worker is "+message.type);
-            parent.console.log(message.data);
+            parent.console.log("Worker is "+message.say);
             break;
-        /*
         case 'dataAvailable':
-            //updateTheBar(message.data);
+            updateTheBar(message.yield);
             break;
-        */
-        /*case 'recordingStarted':
-            recordButton.textContent = 'Stop Recording';
-            recordButton.onclick = stopRecording;
+        case 'switch':
+            const minMaxValues = message.newFloorAndNewCeiling;
+            parent.console.log("New min and max are "+ minMaxValues);
+            volumeFloorForSpeech = minMaxValues[0];
+            volumeCeilingForSpeech = minMaxValues[1];
+            canRecordNow = true;
             break;
-        case 'recordingStopped':
-            recordButton.textContent = 'Start Recording';
-            recordButton.onclick = startRecording;
-            break;*/
+        case 'adjust':
+            volumeCeilingForSpeech = message.newCeiling;
+            parent.console.log("Adjust maximum to "+ volumeCeilingForSpeech);
+            break;
         case 'error':
             parent.console.warn("error message coming from the worker");
-            parent.console.error(message.message);
+            parent.console.error(message.whichHappensToBe);
             break;
     }
 };
+// Handle errors from the web worker
+worker.onerror = function (error) { parent.console.error('Error from web worker:', error); };
+// ---
+const testSound = new parent.Howl({  src: ["/user_interface/sounds/ding."+soundFileFormat]  });
+var listOfAllSoundsInThisLesson = [
+  testSound
+];
 // ---
 const button1 = document.getElementById('oneID');
 const button2 = document.getElementById('twoID');
 const button3 = document.getElementById('threeID');
+let canRecordNow = false;
+let isRecordingRightNow = false;
+// const buttonRec = document.getElementById('recID');
 
 // TO BE DELETED AFTER TESTS
 const amplitudeMeter = document.getElementById('amplitude-meter');
 const amplitudeBar = document.getElementById('amplitude-bar');
 const monitor = document.getElementById('monitorID');
-/*
+const audioPlayer = document.getElementById('audioPlayerID');
+
+
+
+// ---
+let volumeFloorForSpeech = 0; // Will be updated via workers message
+let volumeCeilingForSpeech = 100; // Will be updated via workers message
 function updateTheBar(valueObtainedFromWorker) {
-  amplitudeBar.style.width = String(valueObtainedFromWorker)+"%";
+  if (valueObtainedFromWorker<=volumeFloorForSpeech) {
+    amplitudeBar.style.width = "0%";
+  } else if (valueObtainedFromWorker>volumeFloorForSpeech && valueObtainedFromWorker<volumeCeilingForSpeech) {
+    // Change the range from 0~100 to volumeFloorForSpeech~volumeCeilingForSpeech
+    const valueWithinRange = ((valueObtainedFromWorker - volumeFloorForSpeech)*100)/(volumeCeilingForSpeech-volumeFloorForSpeech);
+    amplitudeBar.style.width = valueWithinRange.toFixed(3)+"%";
+  } else {
+    amplitudeBar.style.width = "100%";
+  }
+
+  //amplitudeBar.style.width = valueObtainedFromWorker+"%";
   monitor.innerHTML = valueObtainedFromWorker.toFixed(1);
 }
-*/
+
+
 let startedCollectingDataForAmbientNoise = false;
 function button1Pressed(event) { event.preventDefault(); event.stopPropagation();
+  testSound.play();
   button1.disabled = true; button2.disabled = true; button3.disabled = true;
   setTimeout(function () {    button1.disabled = true; button2.disabled = false; button3.disabled = false;  }, 5000);
-  activateMicrophoneIfIsNotActive();
+  activateMicrophoneIfIsNotActive("one");
 }
 function button2Pressed(event) { event.preventDefault(); event.stopPropagation();
+  testSound.play();
   button1.disabled = true; button2.disabled = true; button3.disabled = true;
   setTimeout(function () { button1.disabled = false; button2.disabled = true; button3.disabled = false; }, 5000);
-  activateMicrophoneIfIsNotActive();
+  activateMicrophoneIfIsNotActive("two");
 }
 function button3Pressed(event) { event.preventDefault(); event.stopPropagation();
+  testSound.play();
   button1.disabled = true; button2.disabled = true; button3.disabled = true;
   setTimeout(function () { button1.disabled = false; button2.disabled = false; button3.disabled = true; }, 5000);
-  activateMicrophoneIfIsNotActive();
+  activateMicrophoneIfIsNotActive("three");
 }
-function activateMicrophoneIfIsNotActive() {
+function activateMicrophoneIfIsNotActive(whichButton) {
   if (startedCollectingDataForAmbientNoise == false) {
-
-    activateMicrophone();
-
-    //parent.console.log("posting initial message to worker");
-    //worker.postMessage('startListeningToAmbientNoise');
-
-    // As this function must fire only once and never again
+    activateMicrophone(); // This function must fire only once and never again
     startedCollectingDataForAmbientNoise = true;
+  }
+  // ---
+  if (canRecordNow && !isRecordingRightNow) {
+    isRecordingRightNow = true;
+    switch (whichButton) {
+      case "one":
+        startRecording(1);
+        break;
+      case "two":
+        startRecording(2);
+        break;
+      case "three":
+        startRecording(3);
+        break;
+      default:
+    }
   }
 }
 
+//let mediaStream = null;
+let mediaRecorder = null;
+let audioChunks = [];
 function activateMicrophone() { parent.console.log("activating microphone");
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(function (stream) {
+              //mediaStream = stream;
+              mediaRecorder = new MediaRecorder(stream);
+              mediaRecorder.ondataavailable = function (event) {   if (event.data.size > 0) {      audioChunks.push(event.data);      }   };
+              mediaRecorder.onstop = function () { parent.console.log("Stopped recording sound");
+                  isRecordingRightNow = false;
+                  const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                  audioChunks = []; // Reset to empty for reuse
+                  audioPlayer.src = URL.createObjectURL(audioBlob);
+              };
+
+
               const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+              parent.console.log("Sample rate is " + audioContext.sampleRate);
               const microphone = audioContext.createMediaStreamSource(stream);
               const analyser = audioContext.createAnalyser();
               microphone.connect(analyser);
               //analyser.connect(audioContext.destination);
 
               // Adjust the FFT size
-              analyser.fftSize = 128;
+              analyser.fftSize = 512;
 
               // Set the frequency range to ignore low bass and high treble
-              const lowerFrequencyLimit = 110;
-              const upperFrequencyLimit = 5500;
+              const lowerFrequencyLimit = 220; // Hz
+              const upperFrequencyLimit = 5500; // Hz
 
               const bufferLength = analyser.frequencyBinCount; // Always equals half of fftSize
+              parent.console.log("Buffer length is " + bufferLength);
               const dataArray = new Uint8Array(bufferLength);
               const startIndex = Math.floor(lowerFrequencyLimit / (audioContext.sampleRate / bufferLength));
               const endIndex = Math.ceil(upperFrequencyLimit / (audioContext.sampleRate / bufferLength));
+              parent.console.log("start index in main thread = " + startIndex);
+              parent.console.log("end index in main thread = " + endIndex);
+              const startAndEnd = [startIndex,endIndex];
+              worker.postMessage({ data: startAndEnd, task: 'setStartIndexAndEndIndex' });
               // ---
-              const numberOfAudioFramesInOneMinute = 3600; // With RAF running at 60fps it will take 60 seconds to fill
-              let averageAmplitudeValuesDuringTheFirstMinute = new Uint8Array(numberOfAudioFramesInOneMinute);
-              let frameCounter = 0;
-
               // ---
               let initialCheckInterval = setInterval(detectFirstNonZeroValue,200);
               function detectFirstNonZeroValue() {
@@ -107,57 +162,30 @@ function activateMicrophone() { parent.console.log("activating microphone");
                 var max = Math.max.apply(null, dataArray);
                 if (max > 0) {
                 	parent.console.log("First non zero value detected");
-                  parent.console.log(dataArray);
+                  //parent.console.log(dataArray);
                 	clearInterval(initialCheckInterval);
                   setTimeout(updateAmplitude,300); // updateAmplitude(); // Try to avoid the momentary awkward values at the beginning EVEN THOUGH IT DOESN'T WORK
                 }
               }
               // ---
               function updateAmplitude() {
-
+                  // -
                   analyser.getByteFrequencyData(dataArray);
                   // Calculate the average amplitude from the specified frequency range
-
-                  const filteredDataArray = dataArray.slice(startIndex, endIndex);
-                  const sum = filteredDataArray.reduce((acc, val) => acc + val, 0);
-                  const averageAmplitude = sum / filteredDataArray.length / 256; // Normalize to 0-1
-                  // POST MESSAGE
-                  amplitudeBar.style.width = `${averageAmplitude * 100}%`;
-                  // self.postMessage({ type: 'dataAvailable', data: averageAmplitude * 100 });
-                  // POST MESSAGE
-                  monitor.innerHTML = (averageAmplitude*100).toFixed(1);
-                  // ---
-                  if(frameCounter < averageAmplitudeValuesDuringTheFirstMinute.length) {
-                  	  averageAmplitudeValuesDuringTheFirstMinute[frameCounter] = Math.round(averageAmplitude*100);
-                      frameCounter++;
-                  } else if (frameCounter == averageAmplitudeValuesDuringTheFirstMinute.length) {
-                      parent.console.log("averageAmplitudeValuesDuringTheFirstMinute is full of data");
-                      parent.console.log(averageAmplitudeValuesDuringTheFirstMinute);
-                      const arrayLength = averageAmplitudeValuesDuringTheFirstMinute.length;
-                      const twentyPercent = Math.floor(0.2 * arrayLength); // Calculate 20% of the length
-                      // Step 1: Sort the Uint8Array
-                      const sortedArray = new Uint8Array([...averageAmplitudeValuesDuringTheFirstMinute].sort((a, b) => a - b));
-                      // Step 2: Create a new array containing the lowest values
-                      const lowestValuesArray = sortedArray.slice(0, twentyPercent);
-                      parent.console.log("lowest 20% is");
-                      parent.console.log(lowestValuesArray);
-                      // Step 3: Calculate the average of the lowest values
-                      const sum = lowestValuesArray.reduce((acc, val) => acc + val, 0);
-                      const average = sum / twentyPercent;
-                      parent.console.log("average noise level is "+average);
-                      frameCounter = 99999;
-                  }
+                  worker.postMessage({ data: dataArray, task: 'filterAndCalculate' });
+                  // RAF, recursion, loop
                   requestAnimationFrame(updateAmplitude);
+                  // -
               }
 
       }) // End of then() block
       .catch(function (error) {
         parent.console.error('Error accessing the microphone:', error);
-        //self.postMessage({ type: 'error', message: 'Error accessing microphone' });
+        // WORKERS CANNOT ACCESS navigator.getUserMedia » self.postMessage({ type: 'error', message: 'Error accessing microphone' });
       });
   } else {
       parent.console.error('getUserMedia is not supported in this browser.');
-      //self.postMessage({ type: 'error', message: 'getUserMedia is not supported in this browser' });
+      // WORKERS CANNOT ACCESS navigator.getUserMedia » self.postMessage({ type: 'error', message: 'getUserMedia is not supported in this browser' });
   }
 }
 
@@ -166,4 +194,10 @@ function loadComplete() {
   button1.addEventListener("pointerdown",button1Pressed);
   button2.addEventListener("pointerdown",button2Pressed);
   button3.addEventListener("pointerdown",button3Pressed);
+}
+
+
+function startRecording() { parent.console.log("Start recording sound");
+  mediaRecorder.start();
+  setTimeout(function () {    mediaRecorder.stop();   }, 6000);
 }
