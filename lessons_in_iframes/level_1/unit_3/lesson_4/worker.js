@@ -52,7 +52,7 @@ function processDataForArray(fromAnalyserUint8Array) {
       return averageAmplitude;
   } else if (frameCounterA == averageAmplitudeValuesDuringTheFirstMinute.length) {
       console.log("averageAmplitudeValuesDuringTheFirstMinute is full of data");
-      console.log(averageAmplitudeValuesDuringTheFirstMinute);
+      // console.log(averageAmplitudeValuesDuringTheFirstMinute);
       const arrayLength = averageAmplitudeValuesDuringTheFirstMinute.length;
       const twentyPercent = Math.floor(0.2 * arrayLength); // Calculate 20% of the length
       // Step 1: Sort the Uint8Array
@@ -60,10 +60,10 @@ function processDataForArray(fromAnalyserUint8Array) {
       // Step 2: Create new arrays containing the lowest and highest values
       const lowestValuesArray = sortedArrayLowToHigh.slice(0, twentyPercent);
       const greatestFiveValuesArray = sortedArrayLowToHigh.slice(-5); // Resulting array contains the greatest five values (last five elements)
-      console.log("lowest 20% is");
-      console.log(lowestValuesArray);
-      console.log("highest 5 is");
-      console.log(greatestFiveValuesArray);
+      // console.log("lowest 20% is");
+      // console.log(lowestValuesArray);
+      // console.log("highest 5 is");
+      // console.log(greatestFiveValuesArray);
       // Step 3: Calculate the average of the lowest and highest values
       const sumOfLows = lowestValuesArray.reduce((acc, val) => acc + val, 0);
       const sumOfHighs = greatestFiveValuesArray.reduce((acc, val) => acc + val, 0);

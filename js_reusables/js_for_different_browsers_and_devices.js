@@ -124,7 +124,10 @@ window.addEventListener('DOMContentLoaded', function(){
     isAndroid=true; // Primary use case: In lesson 1-1-1 lesson.js to notify user about microphone timing
     if (annyang) {
       annyangRestartDelayTime = 3000;
-      let recog = annyang.getSpeechRecognizer(); recog.interimResults = false; // Turn off interimResults on all Android devices regardless of browser
+      // CANNOT turn off interimResults here because annyang is not initialized
+      // Instead we will manipulate a variable so that annyang will be initialized without interimResults
+      annyangBetterIfInterimResultsAreDisabled = true;
+      // THROWS ERROR: let recog = annyang.getSpeechRecognizer(); recog.interimResults = false; // Turn off interimResults on all Android devices regardless of browser
       // NOTE: When interimResults are ON, speech recognition throws an error on Samsung Browser, says it has already started.
       // NOTE: Chrome actually DOES NOT throw an error but it looks like it starts later than expected when interimResults are ON.
     } // Override the default value of 100

@@ -15,6 +15,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 // annyangRestartDelayTime is a MODIFICATION (feature for speakworldlanguages.app)
 var annyangRestartDelayTime = 100; // Better if this is increased on Android » See js_for_different_browsers_and_devices
+var annyangBetterIfInterimResultsAreDisabled = false;
 let restartTimeout = null;
 
 (function (root, factory) {
@@ -159,7 +160,14 @@ let restartTimeout = null;
 
       // THE LINES FOR interimResults IS NOT PART OF ORIGINAL ANNYANG.JS
       // Maybe it's better if we turn off interimResults for all Android devices and not only on Samsung Browser
-      recognition.interimResults = true; // THIS CAUSES an error in SAMSUNG BROWSER (bug) // SAYS: Failed to execute 'start' on 'SpeechRecognition', recognition has already started
+      if (annyangBetterIfInterimResultsAreDisabled) {
+        // Do nothing since interimResults are turned off by default
+        console.log("ANDROID: interimResults will not be activated");
+      } else {
+        console.log("interimResults will be activated to improve reaction times");
+        recognition.interimResults = true; // THIS CAUSES an error in SAMSUNG BROWSER (bug) // SAYS: Failed to execute 'start' on 'SpeechRecognition', recognition has already started
+      }
+
 
       // Set the max number of alternative transcripts to try and match with a command
       recognition.maxAlternatives = 5;

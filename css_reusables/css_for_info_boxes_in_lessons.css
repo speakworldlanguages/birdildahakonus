@@ -29,11 +29,12 @@
   white-space: pre-wrap; /* pre means do not convert the line breaks into regular spaces. pre-wrap handles the overflow as well for longer lines */
 }
 /* IT WORKS: Trying to target phones (and tablets) and especially in vertical position to increase the font size */
-@media (max-width: 888px) {  .notificationRoundedBox {   font-size: 4.4vmin; max-width: 550px; }   }
-@media (max-width: 777px) {  .notificationRoundedBox {   font-size: 4.7vmin; max-width: 480px; }   }
-@media (max-width: 666px) {  .notificationRoundedBox {   font-size: 5.0vmin; max-width: 426px; }   }
-@media (max-width: 555px) {  .notificationRoundedBox {   font-size: 5.3vmin; max-width: 375px; }   }
-@media (max-width: 444px) {  .notificationRoundedBox {   font-size: 5.6vmin; max-width: 344px; }   }
+@media (max-width: 800px) and (max-height: 800px) {  .notificationRoundedBox {   font-size: 4.2vmin; max-width: 700px; }   }
+@media (max-width: 700px) and (max-height: 700px) {  .notificationRoundedBox {   font-size: 4.4vmin; max-width: 610px; }   }
+@media (max-width: 600px) and (max-height: 600px) {  .notificationRoundedBox {   font-size: 4.6vmin; max-width: 520px; }   }
+@media (max-width: 500px) and (max-height: 500px) {  .notificationRoundedBox {   font-size: 4.8vmin; max-width: 430px; }   }
+@media (max-width: 400px) and (max-height: 400px) {  .notificationRoundedBox {   font-size: 5.0vmin; max-width: 340px; }   }
+@media (max-width: 300px) and (max-height: 300px) {  .notificationRoundedBox {   font-size: 5.2vmin; max-width: 250px; }   }
 
 .okButtonUnderNotification{ /*fontFamily depends on needLatinFonts true false » See js_for_info_boxes_in_lessons*/
   min-width:80px;  min-height:62px;
@@ -83,9 +84,12 @@
 @keyframes vocabularyWavesurferDisappears {  0%{opacity:1; transform: scale(1);}   100%{opacity:0; transform: scale(.5);} }
 
 /* IT WORKS: Trying to target phones (and tablets) especially in vertical position to increase the font size */
-@media (max-width: 666px) {  .vocabularyRoundedBox {   font-size: 5.0vmin;  }  }
-@media (max-width: 555px) {  .vocabularyRoundedBox {   font-size: 5.3vmin;  }  }
-@media (max-width: 444px) {  .vocabularyRoundedBox {   font-size: 5.6vmin;  }  }
+@media (max-width: 800px) and (max-height: 800px) {  .vocabularyRoundedBox {   font-size: 4.0vmin;  }  }
+@media (max-width: 700px) and (max-height: 700px) {  .vocabularyRoundedBox {   font-size: 4.2vmin;  }  }
+@media (max-width: 600px) and (max-height: 600px) {  .vocabularyRoundedBox {   font-size: 4.4vmin;  }  }
+@media (max-width: 500px) and (max-height: 500px) {  .vocabularyRoundedBox {   font-size: 4.8vmin;  }  }
+@media (max-width: 400px) and (max-height: 400px) {  .vocabularyRoundedBox {   font-size: 5.0vmin;  }  }
+@media (max-width: 300px) and (max-height: 300px) {  .vocabularyRoundedBox {   font-size: 5.2vmin;  }  }
 
 .vocabularyButtonsContainer{ display: flex; gap: 12px; }
 .buttonsUnderWavesurfer{

@@ -36,9 +36,12 @@
 @keyframes theInfoBoxAppears { 0%{transform: translateY(-100vh);} 100%{transform: translateY(0vh);} }
 @keyframes theInfoBoxDisappears { 0%{transform: translateY(0vh);} 100%{transform: translateY(-100vh);} }
 /* IT WORKS: Trying to target phones (and tablets) and especially in vertical position to increase the font size */
-@media (max-width: 666px) {  .saveLoadRoundedInfoBox {   font-size: 5.0vmin;  }   }
-@media (max-width: 555px) {  .saveLoadRoundedInfoBox {   font-size: 5.3vmin;  }   }
-@media (max-width: 444px) {  .saveLoadRoundedInfoBox {   font-size: 5.6vmin;  }   }
+@media (max-width: 800px) and (max-height: 800px) {  .saveLoadRoundedInfoBox {   font-size: 4.2vmin;  }   }
+@media (max-width: 700px) and (max-height: 700px) {  .saveLoadRoundedInfoBox {   font-size: 4.4vmin;  }   }
+@media (max-width: 600px) and (max-height: 600px) {  .saveLoadRoundedInfoBox {   font-size: 4.8vmin;  }   }
+@media (max-width: 500px) and (max-height: 500px) {  .saveLoadRoundedInfoBox {   font-size: 5.0vmin;  }   }
+@media (max-width: 400px) and (max-height: 400px) {  .saveLoadRoundedInfoBox {   font-size: 5.2vmin;  }   }
+@media (max-width: 300px) and (max-height: 300px) {  .saveLoadRoundedInfoBox {   font-size: 5.4vmin;  }   }
 
 .twoButtonsSideBySide{
   display: flex;  justify-content: center;  align-items: center; flex-direction: row;
