@@ -262,18 +262,21 @@ function display_nowItsYourTurn_animation() {
   // nowYouSayIt takes 5100ms
   // Display the “It's your turn” animation if the user's browser is whitelisted.
   new SuperTimeout(function(){
-    if (parent.willUserTalkToSpeechRecognition && parent.internetConnectivityIsNiceAndUsable) {
-      nowYouSayIt.style.display = "block"; // See » css_for_photos_and_videos_teach_a_new_word » to find how it is centered
-      if (nowYouSayIt.children[0].src.includes(".avif")) {        nowYouSayIt.children[0].classList.add("animateAvifSprite");      }
-      new SuperTimeout(function(){ resetWebp(nowYouSayIt.children[0]); nowYouSayIt.style.display = "none"; }, 5101);
-      countdownForGiveUpSkipOrGoToNext = 40000; // For whitelisted browsers » Should depend on how many photos there are!
+    if (parent.willUserTalkToSpeechRecognition) {
+      if (parent.internetConnectivityIsNiceAndUsable) {
+        nowYouSayIt.style.display = "block"; // See » css_for_photos_and_videos_teach_a_new_word » to find how it is centered
+        if (nowYouSayIt.children[0].src.includes(".avif")) {   nowYouSayIt.children[0].classList.add("animateAvifSprite");   }
+        new SuperTimeout(function(){ resetWebp(nowYouSayIt.children[0]); nowYouSayIt.style.display = "none"; }, 5101);
+        countdownForGiveUpSkipOrGoToNext = 40000; // For whitelisted browsers » Should depend on how many photos there are!
+      } else if (typeof warnUserAboutSlowNetwork === "function") {  warnUserAboutSlowNetwork();  } // Exists in js_for_all_iframed_lesson_htmls
     }
   }, changeTime*1000 - 600);
+  // --
   new SuperTimeout(function(){ speakToTheMic(); }, dingTimeMeansProceedTime); // Makes the DING tone play
   new SuperTimeout(function(){
     containerOfSingles.style.display = "block"; containerOfSingles.classList.add("singlesContainerAppears"); // Fixed animation duration (1.5s) to avoid conflict
     new SuperTimeout(function(){ showSinglesOneByOne(); }, 1500);
-  }, dingTimeMeansProceedTime + changeTime*200);
+  }, dingTimeMeansProceedTime + changeTime*300);
 }
 
 function showSinglesOneByOne() {
@@ -284,7 +287,7 @@ function showSinglesOneByOne() {
     case "fast": changeTime = 2.00; break;
     default:     changeTime = 3.50;
   }
-  new SuperInterval(bringTheNext, changeTime*1000); // Minor issue: Changing speedAdjustmentSetting will not take effect after this starts ticking
+  new SuperInterval(bringTheNext, changeTime*1000); // Minor issue: Changing speedAdjustmentSetting will not take effect once this starts ticking
   function bringTheNext() {
     let now = i%modulus; let next = (i+1)%modulus;
     allSingles[now].classList.remove("simpleFadeIn");    allSingles[now].classList.add("simpleFadeOut");  allSingles[now].style.animationDuration  = String(changeTime/2)+"s";

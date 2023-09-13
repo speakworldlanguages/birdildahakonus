@@ -82,7 +82,7 @@ function createAndHandleInfoBoxType1BeforeLessonStarts() {
     setTimeout(function () {     notificationBoxContainer.parentNode.removeChild(notificationBoxContainer);     },1000); // The animation completes in 600ms
     if (typeof startTheLesson === "function") {
       setTimeout(function () {     startTheLesson();     }, 1500);
-    } else { console.error("Error: createAndHandleInfoBoxType1BeforeLessonStarts() needs startTheLesson() function which doesn't exist???"); }
+    } else { parent.console.error("Error: createAndHandleInfoBoxType1BeforeLessonStarts() needs startTheLesson() function which doesn't exist???"); }
   }
 }
 
@@ -117,7 +117,7 @@ function createAndHandleInfoBoxType1AmidLesson() {
     setTimeout(function () {     notificationBoxContainer2.parentNode.removeChild(notificationBoxContainer2);  },1000); // The animation completes in 600ms
     if (typeof continueLesson === "function") {
       setTimeout(function () {     continueLesson();     }, 1500);
-    } else { console.error("Error: createAndHandleInfoBoxType1AmidLesson() needs continueLesson() function which doesn't exist???"); }
+    } else { parent.console.error("Error: createAndHandleInfoBoxType1AmidLesson() needs continueLesson() function which doesn't exist???"); }
   }
 }
 
@@ -332,11 +332,11 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio,isLessonOutro) {
     if (!isLessonOutro) { // CASE: Lesson intro
       if (typeof vocabularyBoxIsClosed === "function") {
         setTimeout(function () {     vocabularyBoxIsClosed(lastPointerX,lastPointerY);     }, 500);
-      } else { console.error("Error: vocabularyBoxIsClosed() function doesn't exist???"); }
+      } else { parent.console.error("Error: vocabularyBoxIsClosed() function doesn't exist???"); }
     } else { // CASE: Lesson outro
       if (typeof vocabularyBoxIsClosed_LESSON_OUTRO === "function") {
         setTimeout(function () {     vocabularyBoxIsClosed_LESSON_OUTRO(lastPointerX,lastPointerY);     }, 500);
-      } else { console.error("Error: vocabularyBoxIsClosed_LESSON_OUTRO() function doesn't exist???"); }
+      } else { parent.console.error("Error: vocabularyBoxIsClosed_LESSON_OUTRO() function doesn't exist???"); }
     }
 
     // -

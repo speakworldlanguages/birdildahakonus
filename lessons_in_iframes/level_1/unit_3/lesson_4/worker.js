@@ -35,9 +35,9 @@ function processDataForArray(fromAnalyserUint8Array) {
     if (volumeMeterCeiling<averageAmplitude) {
       volumeMeterCeiling++;
       self.postMessage({ type: 'adjust', newCeiling: volumeMeterCeiling });
-    } else if (volumeMeterCeiling>50) {
+    } else if (volumeMeterCeiling>40) {
       frameCounterB++;
-      if (frameCounterB>90) { // When RAF runs at 60 fps it will take one and a half seconds for one decrement
+      if (frameCounterB>120) { // When RAF runs at 60 fps «90» will take one and a half seconds for one decrement and «120» will take two seconds
         volumeMeterCeiling--;
         self.postMessage({ type: 'adjust', newCeiling: volumeMeterCeiling });
         frameCounterB = 0;

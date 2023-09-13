@@ -91,7 +91,9 @@ function showGlobyPreloaderBeforeExit() { // Call this at the end of every lesso
   parent.preloadHandlingDiv.classList.add("addThisClassToRevealThePreloader"); // 1500 ms » See css_for_preloader_and_orbiting_circles
 }
 
-/**/
+let slowNetworkWarningText = "💢 📶 💢"; // To be overwritten by fetch
+let slowNetworkWarningMustBeDisplayedAsSoonAsFetchGetsTheFile = false;
+// ---
 window.addEventListener('DOMContentLoaded', function(){
 
   function getConnection() {return navigator.connection || navigator.mozConnection || navigator.webkitConnection || navigator.msConnection;}
@@ -101,11 +103,8 @@ window.addEventListener('DOMContentLoaded', function(){
       if (sessionStorage.internetIsTooSlowNotificationHasBeenDisplayed) {
         // Do nothing. Connection is still slow but the user has already been notified.
       } else {
-        // fetch txt in userInterfaceLanguage and display it with an alert box
-        const filePathForHeyYourConnectionIsTooSlow = "/user_interface/text/"+userInterfaceLanguage+"/0-network_connection_too_slow.txt";
-        fetch(filePathForHeyYourConnectionIsTooSlow,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
-          alert(contentOfTheTxtFile); sessionStorage.internetIsTooSlowNotificationHasBeenDisplayed = "yes"; // Prevent all alerts from now on.
-        });
+        // See code below to find fetch » Get txt in userInterfaceLanguage and display it with an alert box
+        slowNetworkWarningMustBeDisplayedAsSoonAsFetchGetsTheFile = true;
       }
     }
   } else {  } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported
@@ -114,10 +113,19 @@ window.addEventListener('DOMContentLoaded', function(){
   if (whereAreWe.search("progress_chart") != -1) { parent.userIsOrWasJustViewing = "progress-chart"; } // See blank.html
   else if (whereAreWe.search("information") != -1) { parent.userIsOrWasJustViewing = "info-screen"; } // See blank.html
   else { parent.userIsOrWasJustViewing = "some-lesson"; } // See blank.html
+  // --- Get the text file ready
+  const filePathForHeyYourConnectionIsTooSlow = "/user_interface/text/"+userInterfaceLanguage+"/0-network_connection_too_slow.txt";
+  fetch(filePathForHeyYourConnectionIsTooSlow,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+    slowNetworkWarningText = contentOfTheTxtFile;
+    if (slowNetworkWarningMustBeDisplayedAsSoonAsFetchGetsTheFile) {    warnUserAboutSlowNetwork();   }
+  });
 
 }, { once: true }); // END OF DOMContentLoaded
-
-/**/
+// ___
+function warnUserAboutSlowNetwork() { // Can be called from lessons if necessary
+  alert(slowNetworkWarningText); sessionStorage.internetIsTooSlowNotificationHasBeenDisplayed = "yes"; // Prevent all alerts from now on.
+}
+// ___
 window.onload = function() { // DANGER: Do not use window.onload anywhere else. Use addEventListener "load" instead in order to avoid overwriting.
   // Clear timeout for [would you like to wait or refresh] box
   // WORKS MOST OF THE TIME BUT occasionally it either doesn't fire or fire too soon. Try adding a small delay to solve that.

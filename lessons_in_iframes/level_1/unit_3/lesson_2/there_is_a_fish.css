@@ -58,15 +58,21 @@
 }
 
 /* keyboard_whole.webp already has fade in animation » No need to add itAppears */
-.howToInteractInstruction{position: fixed; z-index: 90; width: 62vmin;}
+.howToInteractInstruction{position: fixed; z-index: 90; width: 62vmin; width: 62dvmin;}
 .extraSettingsForInstructionDESKTOP { pointer-events: none; filter: drop-shadow(0 0 6vmin #ebf9ff); }
 /* touchscreenControls don't have built-in fade in animation » Add itAppears to reveal it */
 .itAppears{animation: simpleAppear 1.5s;  animation-fill-mode: forwards;}
 @keyframes simpleAppear { 0%{ opacity: 0; }  100%{ opacity: 1; } }
 .itDisappears{ animation: simpleDisappear 1.5s;  animation-fill-mode: forwards; }
 @keyframes simpleDisappear { 0%{ opacity: 1; }  100%{ opacity: 0; visibility: hidden; } }
+.itBlinks{animation: blinker;  animation-fill-mode: forwards; animation-timing-function: linear; /*steps(6,jump-none);*/}
+@keyframes blinker {
+  0%{ opacity: 0; }  10%{ opacity: 1; } 20%{ opacity: 0; } 30%{ opacity: 1; } 40%{ opacity: 0; } 50%{ opacity: 1; }
+  60%{ opacity: 0; } 70%{ opacity: 1; } 80%{ opacity: 0; } 90%{ opacity: 1; } 100%{ opacity: 1; }
+}
 
 .touchControlsLineHeight{ height: 90px; }
+@media (min-width: 500px) and (min-height: 500px) {.touchControlsLineHeight{ height: 120px; }}
 #swimLeftButtonID{transform: rotate(-90deg);}
 #swimRightButtonID{transform: rotate(90deg);}
 

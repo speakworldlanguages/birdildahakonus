@@ -157,7 +157,8 @@ let restartTimeout = null;
       // initiate SpeechRecognition
       recognition = new SpeechRecognition();
 
-      // THE LINE FOR interimResults IS NOT PART OF ORIGINAL ANNYANG.JS
+      // THE LINES FOR interimResults IS NOT PART OF ORIGINAL ANNYANG.JS
+      // Maybe it's better if we turn off interimResults for all Android devices and not only on Samsung Browser
       recognition.interimResults = true; // THIS CAUSES an error in SAMSUNG BROWSER (bug) // SAYS: Failed to execute 'start' on 'SpeechRecognition', recognition has already started
 
       // Set the max number of alternative transcripts to try and match with a command
@@ -262,7 +263,7 @@ let restartTimeout = null;
     },
 
 
-    start: function start(options) { console.log("annyang.js » The start function of annyang fired");
+    start: function start(options) { //console.log("annyang.js » The start function of annyang fired");
       initIfNeeded();
       options = options || {};
       if (options.paused !== undefined) {

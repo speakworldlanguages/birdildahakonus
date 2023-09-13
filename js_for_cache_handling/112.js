@@ -58,7 +58,7 @@ async function cacheLesson112CommonAssetsForAllLanguages() {
   let errorHappened = false;
   try {
     parent.console.log("Caching common files for 1-1-2 ..."); // eruda console displays either the parent window only or the iframe window only
-    await cacheForAllLanguages_1_1_2.addAll(listOfFilesForAllLanguages_1_1_2); parent.console.log("done");
+    await cacheForAllLanguages_1_1_2.addAll(listOfFilesForAllLanguages_1_1_2); //parent.console.log("done");
   } catch(err) {
     parent.console.error(err);
     errorHappened = true;
@@ -113,7 +113,7 @@ async function cacheLesson112AssetsForTheTargetLanguage() {
   let errorHappened = false;
   try {
     parent.console.log("Caching files for 1-1-2 "+parent.langCodeForTeachingFilePaths+" ...");
-    await cacheForTargetLanguage_1_1_2.addAll(listOfFilesForTargetLanguage_1_1_2); parent.console.log("done");
+    await cacheForTargetLanguage_1_1_2.addAll(listOfFilesForTargetLanguage_1_1_2); //parent.console.log("done");
   } catch(err) {
     parent.console.error(err);
     errorHappened = true;

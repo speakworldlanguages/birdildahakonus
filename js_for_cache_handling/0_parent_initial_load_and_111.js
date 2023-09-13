@@ -113,7 +113,7 @@ async function makeProgressChartOfflineCompatible() {
   try {
     console.log("makeProgressChartOfflineCompatible() will try to cache files...");
     // load
-    await cacheForTheProgressChart.addAll(listOfEverythingInProgressChart); console.log("assets for progress chart done");
+    await cacheForTheProgressChart.addAll(listOfEverythingInProgressChart); //console.log("assets for progress chart done");
   } catch (err) {
     console.error(err);
     errorHappened = true;
@@ -228,7 +228,7 @@ async function cacheCommonJSandCSSfilesForAllLessons() {
   try {
     console.log("cacheCommonJSandCSSfilesForAllLessons() will try to cache files...");
     // load
-    await cacheForCommonJSandCSSandTXTfilesUsedByLessonHTMLs.addAll(listOfCommonJSandCSSandTXTfilesUsedByLessonHTMLs); console.log("common JS&CSS for lessons done");
+    await cacheForCommonJSandCSSandTXTfilesUsedByLessonHTMLs.addAll(listOfCommonJSandCSSandTXTfilesUsedByLessonHTMLs); //console.log("common JS&CSS for lessons done");
   } catch (err) {
     console.error(err);
     errorHappened = true;
@@ -306,9 +306,9 @@ async function cacheLesson111CommonAssetsForAllLanguages() {
   try {
     console.log("cacheLesson111CommonAssetsForAllLanguages() will try to cache TWO groups of files...");
     // load first group
-    await primaryCacheForLesson_1_1_1.addAll(listOfPrimaryAssetsForLesson_1_1_1); console.log("group 1 done");
+    await primaryCacheForLesson_1_1_1.addAll(listOfPrimaryAssetsForLesson_1_1_1); //console.log("group 1 done");
     // then load next group
-    await secondaryCacheForLesson_1_1_1.addAll(listOfSecondaryAssetsForLesson_1_1_1); console.log("group 2 done");
+    await secondaryCacheForLesson_1_1_1.addAll(listOfSecondaryAssetsForLesson_1_1_1); //console.log("group 2 done");
   } catch(err) {
     console.error(err);
     errorHappened = true;
@@ -367,7 +367,7 @@ async function cacheLesson111AssetsForTheTargetLanguage() {
     let errorHappened = false;
     try {
       console.log("Caching files for 1-1-1 "+langCodeForTeachingFilePaths+" ...");
-      await cacheForTargetLanguage_1_1_1.addAll(listOfFilesForTargetLanguage_1_1_1); console.log("done");
+      await cacheForTargetLanguage_1_1_1.addAll(listOfFilesForTargetLanguage_1_1_1); //console.log("done");
     } catch(err) {
       console.error(err);
       errorHappened = true;

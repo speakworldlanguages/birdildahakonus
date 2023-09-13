@@ -324,7 +324,7 @@ function letThePictogramStartTalking() {
     say2.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; // This is the slower say
   }, nextImageTime*2);
   if (deviceDetector.isMobile) {
-    new SuperTimeout(function () { showHowToJumpMOBILE(); theFishMayJumpNow = true; }, nextImageTime*4.1);
+    new SuperTimeout(function () { showHowToJumpMOBILE("normal_blink"); theFishMayJumpNow = true; }, nextImageTime*4.1);
   } else {
     keyboardTimeout3 = new SuperTimeout(function () { showHowToJumpDESKTOP(); console.log("Arrow keys appear"); theFishMayJumpNow = true; }, nextImageTime*4.1);
   }
@@ -336,16 +336,13 @@ function showHowToSwimMOBILE() {
   new SuperTimeout(function () {  touchscreenControls.classList.add("itAppears");  }, showTime);
 }
 function showHowToJumpMOBILE(option) {
-  let showTime;  switch (parent.speedAdjustmentSetting) {  case "slow": showTime = 900; break;  case "fast": showTime = 300; break;  default: showTime = 600;  }
+  let blinkTime;  switch (parent.speedAdjustmentSetting) {  case "slow": blinkTime = 4; break;  case "fast": blinkTime = 2; break;  default: blinkTime = 3;  }
   fishJumpButton.style.visibility = "visible";
-  setTimeout(function () { fishJumpButton.style.visibility = "hidden";  }, showTime);
-  setTimeout(function () { fishJumpButton.style.visibility = "visible"; }, showTime*2);
-  if (option == "shorter_blink") { return; }
-  setTimeout(function () { fishJumpButton.style.visibility = "hidden";  }, showTime*3);
-  setTimeout(function () { fishJumpButton.style.visibility = "visible"; }, showTime*4);
-  setTimeout(function () { fishJumpButton.style.visibility = "hidden";  }, showTime*5);
-  setTimeout(function () { fishJumpButton.style.visibility = "visible"; }, showTime*6);
+  if (option == "shorter_blink") { fishJumpButton.classList.add("itBlinks"); fishJumpButton.style.animationDuration = String(blinkTime*0.75) + "s"; }
+  else {                           fishJumpButton.classList.add("itBlinks"); fishJumpButton.style.animationDuration = String(blinkTime) + "s";   }
+  fishJumpButton.onanimationend = () => {  fishJumpButton.classList.remove("itBlinks");  };
 }
+// ---
 let keyboardTimeout1,keyboardTimeout2;
 function showHowToSwimDESTKOP() {
   let showTime;  switch (parent.speedAdjustmentSetting) {  case "slow": showTime = 2800; break;  case "fast": showTime = 1200; break;  default: showTime = 2000;  }

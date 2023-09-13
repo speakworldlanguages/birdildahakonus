@@ -263,6 +263,7 @@ function goFromCDtoEF() {
     case "fast": changeTime = 1; sayTime = 2500; proceedTime = 10500;  break; // Leave room for sfx - Consider special case WATERFALLS
     default:     changeTime = 2; sayTime = 3400; proceedTime = 12000; // Leave room for sfx - Consider special case WATERFALLS
   }
+  // ---
   imgC.classList.remove("makePhotosAppear");  imgC.classList.add("makePhotosDisappear");  imgC.style.animationDuration = String(changeTime)+"s";
   imgD.classList.remove("makePhotosAppear");  imgD.classList.add("makePhotosDisappear");  imgD.style.animationDuration = String(changeTime)+"s";
 
@@ -304,22 +305,25 @@ function display_nowItsYourTurn_animation() {
   new SuperTimeout(function(){ containerOfDoubles.parentNode.removeChild(containerOfDoubles); }, changeTime*1000 + 250); // Remove shortly after opacity hits zero
 
   fullVpDarkBlue.style.display = "block"; fullVpDarkBlue.classList.add("darkenLightenBackground"); fullVpDarkBlue.style.animationDuration = String(changeTime*2)+"s";
-  new SuperTimeout(function(){ fullVpDarkBlue.style.animationPlayState = "paused"; }, changeTime*1000); // Paused at halfway
+  new SuperTimeout(function(){ fullVpDarkBlue.style.animationPlayState = "paused"; }, changeTime*1000); // Pause at halfway
   // nowYouSayIt takes 5100ms
   // Display the “It's your turn” animation if the user's browser is whitelisted.
   new SuperTimeout(function(){
-    if (parent.willUserTalkToSpeechRecognition && parent.internetConnectivityIsNiceAndUsable) {
-      nowYouSayIt.style.display = "block"; // See » css_for_photos_and_videos_teach_a_new_word » to find how it is centered
-      if (nowYouSayIt.children[0].src.includes(".avif")) { nowYouSayIt.children[0].classList.add("animateAvifSprite"); }
-      new SuperTimeout(function(){ resetWebp(nowYouSayIt.children[0]); nowYouSayIt.style.display = "none"; }, 5101);
-      countdownForGiveUpSkipOrGoToNext = 40000; // For whitelisted browsers » Should depend on how many photos there are!
+    if (parent.willUserTalkToSpeechRecognition) {
+      if (parent.internetConnectivityIsNiceAndUsable) {
+        nowYouSayIt.style.display = "block"; // See » css_for_photos_and_videos_teach_a_new_word » to find how it is centered
+        if (nowYouSayIt.children[0].src.includes(".avif")) {   nowYouSayIt.children[0].classList.add("animateAvifSprite");   }
+        new SuperTimeout(function(){ resetWebp(nowYouSayIt.children[0]); nowYouSayIt.style.display = "none"; }, 5101);
+        countdownForGiveUpSkipOrGoToNext = 40000; // For whitelisted browsers » Should depend on how many photos there are!
+      } else if (typeof warnUserAboutSlowNetwork === "function") {  warnUserAboutSlowNetwork();  } // Exists in js_for_all_iframed_lesson_htmls
     }
   }, changeTime*1000 - 600);
+  // --
   new SuperTimeout(function(){ speakToTheMic(); }, dingTimeMeansProceedTime); // Makes the DING tone play
   new SuperTimeout(function(){
     containerOfSingles.style.display = "block"; containerOfSingles.classList.add("singlesContainerAppears"); // Fixed animation duration (1.5s) to avoid conflict
     new SuperTimeout(function(){ showSinglesOneByOne(); }, 1500);
-  }, dingTimeMeansProceedTime + changeTime*200);
+  }, dingTimeMeansProceedTime + changeTime*300);
 }
 
 function showSinglesOneByOne() {
@@ -330,7 +334,7 @@ function showSinglesOneByOne() {
     case "fast": changeTime = 2.00; break;
     default:     changeTime = 3.50;
   }
-  new SuperInterval(bringTheNext, changeTime*1000); // Possible issue: Changing speedAdjustmentSetting will not take effect after this starts ticking
+  new SuperInterval(bringTheNext, changeTime*1000); // Minor issue: Changing speedAdjustmentSetting will not take effect once this starts ticking
   function bringTheNext() {
     let now = i%modulus; let next = (i+1)%modulus;
     allSingles[now].classList.remove("simpleFadeIn");    allSingles[now].classList.add("simpleFadeOut");  allSingles[now].style.animationDuration  = String(changeTime/2)+"s";
@@ -348,7 +352,7 @@ let aMatchWasFound = false;
 function speakToTheMic() {
 
   new SuperTimeout(function () {
-    // The GIVE-UP-BUTTON appears (which is a Go-To-Next-Button on Firefox2021 etc).
+    // The GIVE-UP-BUTTON appears (which turns into a Go-To-Next-Button on Firefox2021 etc).
     // If speech is recognized, use clearTimeout to prevent its "showing-up".
     preventGiveUpButtonIfSuccessHappens = new SuperTimeout(function () { // This must start ticking only after countdownForGiveUpSkipOrGoToNext is updated.
       giveUpAndContinueButtonASIDE.classList.add("addThisToGlassButtonToUnhide");
