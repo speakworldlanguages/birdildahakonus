@@ -30,7 +30,7 @@ main{
   pointer-events: none; /*Disable click drag*/
 }
 
-@media screen and (orientation:portrait) {
+@media (orientation:portrait) {
   .fullViewportFlexPortraitColumnLandscapeRow {
     flex-direction: column;
   }
@@ -40,7 +40,7 @@ main{
   }
 }
 
-@media screen and (orientation:landscape) {
+@media (orientation:landscape) {
   .fullViewportFlexPortraitColumnLandscapeRow {
     flex-direction: row;
   }

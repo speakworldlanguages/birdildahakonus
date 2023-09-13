@@ -17,24 +17,24 @@
 }
 .notificationRoundedBox{
   display: flex;  justify-content: space-around;  align-items: center;  flex-direction: column;
-  max-width: 600px;  min-height: 42vh;
+  max-width: 650px;  min-height: 42vh;
   background-color: rgb(250, 251, 252);
   border-radius: 2.5vmin;
   box-shadow: rgba(141, 149, 155, 0.48) 0px -5px 16px 0px, rgba(255, 255, 255, 0.8) 0px 5px 16px 0px;
-  font-size: 4vmin;
+  font-size: 3.5vmin;
   color: rgb(130,155,173);
-  margin: 5vmin; /*Will take effect on very narrow screens only*/
+  margin: 5.5vmin; /*Will take effect on very narrow screens only*/
   padding-left: 4vmin; padding-right: 4vmin; padding-top: 5vmin; padding-bottom: 5vmin;
   /* text-align: justify; */ /*Must use justify with latin fonts only - so will set it via script conditionally*/
   white-space: pre-wrap; /* pre means do not convert the line breaks into regular spaces. pre-wrap handles the overflow as well for longer lines */
 }
 /* IT WORKS: Trying to target phones (and tablets) and especially in vertical position to increase the font size */
-@media (max-width: 800px) and (max-height: 800px) {  .notificationRoundedBox {   font-size: 4.2vmin; max-width: 700px; }   }
-@media (max-width: 700px) and (max-height: 700px) {  .notificationRoundedBox {   font-size: 4.4vmin; max-width: 610px; }   }
-@media (max-width: 600px) and (max-height: 600px) {  .notificationRoundedBox {   font-size: 4.6vmin; max-width: 520px; }   }
-@media (max-width: 500px) and (max-height: 500px) {  .notificationRoundedBox {   font-size: 4.8vmin; max-width: 430px; }   }
-@media (max-width: 400px) and (max-height: 400px) {  .notificationRoundedBox {   font-size: 5.0vmin; max-width: 340px; }   }
-@media (max-width: 300px) and (max-height: 300px) {  .notificationRoundedBox {   font-size: 5.2vmin; max-width: 250px; }   }
+@media (max-width: 800px) , (max-height: 800px) {  .notificationRoundedBox {   font-size: 3.9vmin;   }   }
+@media (max-width: 700px) , (max-height: 700px) {  .notificationRoundedBox {   font-size: 4.3vmin;   }   }
+@media (max-width: 600px) , (max-height: 600px) {  .notificationRoundedBox {   font-size: 4.7vmin;   }   }
+@media (max-width: 500px) , (max-height: 500px) {  .notificationRoundedBox {   font-size: 5.1vmin;   }   }
+@media (max-width: 400px) , (max-height: 400px) {  .notificationRoundedBox {   font-size: 5.5vmin;   }   }
+@media (orientation:landscape) and (max-width: 850px) {  .notificationRoundedBox {   max-width: 85.4vw;  }   }
 
 .okButtonUnderNotification{ /*fontFamily depends on needLatinFonts true false » See js_for_info_boxes_in_lessons*/
   min-width:80px;  min-height:62px;
@@ -84,12 +84,11 @@
 @keyframes vocabularyWavesurferDisappears {  0%{opacity:1; transform: scale(1);}   100%{opacity:0; transform: scale(.5);} }
 
 /* IT WORKS: Trying to target phones (and tablets) especially in vertical position to increase the font size */
-@media (max-width: 800px) and (max-height: 800px) {  .vocabularyRoundedBox {   font-size: 4.0vmin;  }  }
-@media (max-width: 700px) and (max-height: 700px) {  .vocabularyRoundedBox {   font-size: 4.2vmin;  }  }
-@media (max-width: 600px) and (max-height: 600px) {  .vocabularyRoundedBox {   font-size: 4.4vmin;  }  }
-@media (max-width: 500px) and (max-height: 500px) {  .vocabularyRoundedBox {   font-size: 4.8vmin;  }  }
-@media (max-width: 400px) and (max-height: 400px) {  .vocabularyRoundedBox {   font-size: 5.0vmin;  }  }
-@media (max-width: 300px) and (max-height: 300px) {  .vocabularyRoundedBox {   font-size: 5.2vmin;  }  }
+@media (max-width: 800px) , (max-height: 800px) {  .vocabularyRoundedBox {   font-size: 4.1vmin;  }  }
+@media (max-width: 700px) , (max-height: 700px) {  .vocabularyRoundedBox {   font-size: 4.4vmin;  }  }
+@media (max-width: 600px) , (max-height: 600px) {  .vocabularyRoundedBox {   font-size: 4.7vmin;  }  }
+@media (max-width: 500px) , (max-height: 500px) {  .vocabularyRoundedBox {   font-size: 5.0vmin;  }  }
+@media (max-width: 400px) , (max-height: 400px) {  .vocabularyRoundedBox {   font-size: 5.3vmin;  }  }
 
 .vocabularyButtonsContainer{ display: flex; gap: 12px; }
 .buttonsUnderWavesurfer{

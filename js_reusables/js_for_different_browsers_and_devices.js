@@ -123,7 +123,7 @@ window.addEventListener('DOMContentLoaded', function(){
   if (detectedOS_name.search("android") >= 0) {
     isAndroid=true; // Primary use case: In lesson 1-1-1 lesson.js to notify user about microphone timing
     if (annyang) {
-      annyangRestartDelayTime = 3000;
+      annyangRestartDelayTime = 2750;
       // CANNOT turn off interimResults here because annyang is not initialized
       // Instead we will manipulate a variable so that annyang will be initialized without interimResults
       annyangBetterIfInterimResultsAreDisabled = true;

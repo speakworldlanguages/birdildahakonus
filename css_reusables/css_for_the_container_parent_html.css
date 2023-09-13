@@ -141,9 +141,9 @@ canvas{
 }
 .canvasDesktop{width: 200px;}
 .zoomGlobeDesktop{width: 250px;}
-@media screen and (max-height: 600px) {  .canvasDesktop{width: 160px;}  .zoomGlobeDesktop{width: 200px;}  }
-@media screen and (max-height: 520px) {  .canvasDesktop{width: 120px;}  .zoomGlobeDesktop{width: 150px;}  }
-@media screen and (max-height: 440px) {  .canvasDesktop{width: 90px;}   .zoomGlobeDesktop{width: 112px;}  }
+@media (max-height: 600px) {  .canvasDesktop{width: 160px;}  .zoomGlobeDesktop{width: 200px;}  }
+@media (max-height: 520px) {  .canvasDesktop{width: 120px;}  .zoomGlobeDesktop{width: 150px;}  }
+@media (max-height: 440px) {  .canvasDesktop{width: 90px;}   .zoomGlobeDesktop{width: 112px;}  }
 
 .canvasPhoneOrTablet{ height: 88%; }
 /*footer contains [A project by Manheart Earthman]*/
@@ -169,7 +169,7 @@ footer{
   --desktopWidth: 420px;
 }
 
-@media screen and (orientation:portrait){
+@media (orientation:portrait){
   .headerPhoneOrTablet{   height: 23.6vmin;  }
   .articlePhoneOrTablet{   height: calc(100vh - 70.6vmin);  } /*23.6+22+10=55.6 sliding nav menu height is 22vmin in css_for_sliding_navigation_menu*/
   article{flex-direction: column;}
@@ -185,13 +185,13 @@ footer{
   .layerA2_mobile{ width:100%; height: 100%; border-radius: 12px; background-color: rgba(255,255,255,0.23); }
   .layerB2_mobile{ width:100%; height: 100%; border-radius: 12px; background-color: rgba(255,255,255,0.23); }
   /*Tablets (or huge phones)- PORTRAIT*/
-  @media screen and (min-width: 500px){
+  @media (min-width: 500px){
     .layerA1_mobile{width:80vw;}
     .layerB1_mobile{width:80vw;}
   }
 }
 
-@media screen and (orientation:landscape){
+@media (orientation:landscape){
   .headerPhoneOrTablet{   height: 14.6vmin;  }
   .articlePhoneOrTablet{   height: calc(100vh - 60vmin - 5px);  }
   article{flex-direction: row;}

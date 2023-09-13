@@ -230,6 +230,11 @@ let restartTimeout = null;
             if (debugState) {
               logMessage('Speech Recognition is repeatedly stopping and starting. See http://is.gd/annyang_restarts for tips.');
             }
+            // Apart from the mentioned situations in annyang documentation, one of these things could be happening
+            // 1 - User is trying but speech recognition won't function nicely (It happens on Android when there is only one very short word like "Ki" in Hito)
+            // 2 - User is away from the device and the mic hears nothing but silence
+            // 3 - In Safari we try not to abort annyang and pause it instead therefore autoRestartCount is never reset
+            // IDEA: We could try and see if 1 is happening and tell the user that it's not their fault but is a technical issue » [... Please skip ahead]
           }
           if (timeSinceLastStart < 1500) { // MODIFIED for SWL: Original annyang had different values
             restartTimeout = setTimeout(function () {

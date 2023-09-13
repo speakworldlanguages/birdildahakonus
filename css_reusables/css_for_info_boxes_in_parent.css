@@ -23,9 +23,9 @@
   background-color: rgb(250, 251, 252);
   mix-blend-mode: normal;
   border-radius: 2.5vmin;
-  font-size: 4vmin;
+  font-size: 3.5vmin; /*On any screen whose smaller dimension is greater than 800px*/
   color: rgb(130,155,173);
-  margin: 5vmin;
+  margin: 5.5vmin;
   padding-left: 4vmin; padding-right: 4vmin; padding-top: 5vmin; padding-bottom: 5vmin;
   /* line-height: normal; */ /*Must be conditional and depend on the font and UI*/
   /* text-align: justify; */ /*Must use justify only in case latin fonts are used - So set it via script conditionally*/
@@ -36,12 +36,13 @@
 @keyframes theInfoBoxAppears { 0%{transform: translateY(-100vh);} 100%{transform: translateY(0vh);} }
 @keyframes theInfoBoxDisappears { 0%{transform: translateY(0vh);} 100%{transform: translateY(-100vh);} }
 /* IT WORKS: Trying to target phones (and tablets) and especially in vertical position to increase the font size */
-@media (max-width: 800px) and (max-height: 800px) {  .saveLoadRoundedInfoBox {   font-size: 4.2vmin;  }   }
-@media (max-width: 700px) and (max-height: 700px) {  .saveLoadRoundedInfoBox {   font-size: 4.4vmin;  }   }
-@media (max-width: 600px) and (max-height: 600px) {  .saveLoadRoundedInfoBox {   font-size: 4.8vmin;  }   }
-@media (max-width: 500px) and (max-height: 500px) {  .saveLoadRoundedInfoBox {   font-size: 5.0vmin;  }   }
-@media (max-width: 400px) and (max-height: 400px) {  .saveLoadRoundedInfoBox {   font-size: 5.2vmin;  }   }
-@media (max-width: 300px) and (max-height: 300px) {  .saveLoadRoundedInfoBox {   font-size: 5.4vmin;  }   }
+@media (max-width: 800px) , (max-height: 800px) {  .saveLoadRoundedInfoBox {   font-size: 3.9vmin;  }   }
+@media (max-width: 700px) , (max-height: 700px) {  .saveLoadRoundedInfoBox {   font-size: 4.3vmin;  }   }
+@media (max-width: 600px) , (max-height: 600px) {  .saveLoadRoundedInfoBox {   font-size: 4.7vmin;  }   }
+@media (max-width: 500px) , (max-height: 500px) {  .saveLoadRoundedInfoBox {   font-size: 5.1vmin;  }   }
+@media (max-width: 400px) , (max-height: 400px) {  .saveLoadRoundedInfoBox {   font-size: 5.5vmin;  }   }
+@media (orientation:landscape) and (max-width: 850px) {  .saveLoadRoundedInfoBox {   max-width: 61.8vw;   }   }
+
 
 .twoButtonsSideBySide{
   display: flex;  justify-content: center;  align-items: center; flex-direction: row;

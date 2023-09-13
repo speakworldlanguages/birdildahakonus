@@ -30,10 +30,10 @@
   pointer-events: none;
 }
 
-@media screen and (orientation:portrait){
+@media (orientation:portrait){
   .theSmallNavigationMenuMOBILEStyling img{margin-left: 1vmin;  margin-right: 1vmin;}
 }
-@media screen and (orientation:landscape){
+@media (orientation:landscape){
   .theSmallNavigationMenuMOBILEStyling img{margin-left: 4vmin;  margin-right: 4vmin;}
 }
 
