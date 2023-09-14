@@ -635,7 +635,7 @@ window.addEventListener("load",function() {
       navMenuClickSound.play();
       clickToPauseTheAppImgC.style.display = "none";
       clickToPauseTheAppImgD.style.display = "block"; // Animation needs resetting
-      pauseTheAppFunction();
+      pauseTheAppFunction("becauseUserPressedTheStopButton");
     } );
 
     clickToFinanceDiv.addEventListener("touchstart", function () { event.preventDefault(); event.stopPropagation();
@@ -747,7 +747,7 @@ window.addEventListener("load",function() {
 // END OF "window load" event
 
 var theAppIsPaused = false;
-function pauseTheAppFunction() {
+function pauseTheAppFunction(reasonWhy) { // As of September 2023 reasonWhy is either becauseUserNavigatedAwayFromTheApp or becauseUserPressedTheStopButton
 
     // Pause the app
     theAppIsPaused = true;
@@ -810,7 +810,11 @@ function pauseTheAppFunction() {
     }
     // ---
     // See js_for_info_boxes_in_parent
-    createAndHandleTheAppIsPausedBox().then(unpauseAndContinueFunction);
+    let passTheReasonToTheBox;
+    if (reasonWhy) { passTheReasonToTheBox = reasonWhy; }
+    // As of September 2023 there is only one type of createAndHandleTheAppIsPausedBox
+    // Nevertheless its contents can be conditionally modified using passTheReasonToTheBox in case it becomes necessary
+    createAndHandleTheAppIsPausedBox(passTheReasonToTheBox).then(unpauseAndContinueFunction);
 
     function unpauseAndContinueFunction() {
 

@@ -41,7 +41,7 @@ window.addEventListener('load', function(){
           const iFrameWindowInTabNavigationHandling = iFrameInTabNavigationHandling.contentWindow;
           if (!theAppIsPaused) {
             if (iFrameWindowInTabNavigationHandling.listOfAllTickingSuperTimers) { // This way we do not trigger pauseTheAppFunction when viewing the progress chart or information etc
-              pauseTheAppFunction(); // See js_for_the_sliding_navigation_menu
+              pauseTheAppFunction("becauseUserNavigatedAwayFromTheApp"); // See js_for_the_sliding_navigation_menu
             }
           }
       } else { // When mobile user navigates back to the app
@@ -68,7 +68,7 @@ window.addEventListener('load', function(){
                 const iFrameWindowInTabNavigationHandling = iFrameInTabNavigationHandling.contentWindow;
                 if (!theAppIsPaused) {
                   if (iFrameWindowInTabNavigationHandling.listOfAllTickingSuperTimers) { // This way we do not trigger pauseTheAppFunction when viewing the progress chart or information etc
-                    pauseTheAppFunction(); // See js_for_the_sliding_navigation_menu
+                    pauseTheAppFunction("becauseUserNavigatedAwayFromTheApp"); // See js_for_the_sliding_navigation_menu
                   }
                 }
             } else {

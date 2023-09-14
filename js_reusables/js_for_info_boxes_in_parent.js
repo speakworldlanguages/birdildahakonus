@@ -316,7 +316,8 @@ function loadWasSuccessfulDespiteTakingTooLong() { // Called by stopTheTimerToSe
 
 // DIALOG BOX to be shown when the app is paused
 // _________ See js_for_the_sliding_navigation_menu » pauseTheAppFunction
-function createAndHandleTheAppIsPausedBox() { // THIS LOOKS OK WITHOUT someElement.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
+function createAndHandleTheAppIsPausedBox(whyWillTheAppBePaused) { // THIS LOOKS OK WITHOUT someElement.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
+  // As of September 2023 whyWillTheAppBePaused is never used but is ready to be implemented in the future if it becomes necessary to display different texts for different situations
   return new Promise(resolve => {
     // See js_for_every_single_html.js for the fetch headers thingy.
     // As of August 2023 this is the only case in which langCodeForTeachingFilePaths is used for fetching txt at parent level

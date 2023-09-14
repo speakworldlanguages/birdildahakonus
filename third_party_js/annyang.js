@@ -196,7 +196,7 @@ let numberOfRestartsDespiteDetectionOfAudioInput = 0;
       // Neither soundstart nor speechstart is usable on Safari
       recognition.onsoundstart = function () { //console.log("annyang.js » Speech Recognition SOUNDSTART event fired");
         invokeCallbacks(callbacks.soundstart);
-        silenceWasBroken = true;
+        silenceWasBroken = true; console.log("Audio input detected");
       };
 
 
@@ -248,8 +248,10 @@ let numberOfRestartsDespiteDetectionOfAudioInput = 0;
           // Try to handle case 1: On Android user tries to pronounce but SpeechRecognition fails even though it perhaps shouldn't have.
           if (silenceWasBroken && annyangBetterIfInterimResultsAreDisabled) {
             numberOfRestartsDespiteDetectionOfAudioInput++;
-            if (numberOfRestartsDespiteDetectionOfAudioInput == 3) {
-              alert("Maybe better if you skip"); // Comment out the alert after testing
+            if (numberOfRestartsDespiteDetectionOfAudioInput == 4) {
+              // Display (English): If speech recognition keeps failing you can skip it or try using Chrome on Windows for better performance
+              const filePathForMaybeYouShouldSkip = "/user_interface/text/"+userInterfaceLanguage+"/0-if_something_is_not_working.txt";
+              fetch(filePathForMaybeYouShouldSkip,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ alert(contentOfTheTxtFile.split("|")[2]); });
             }
           }
           silenceWasBroken = false; // Reset to be able to detect it again
