@@ -437,8 +437,8 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
         // Note that proceedAccordingToUsersChoiceAboutMicPermission will be armed and ready to fire startTeaching() IF AND ONLY IF change event is supported
         function handleMicFirstTurnOn() {
           // Before the prompt is showing
-          if (isApple) { setTimeout(function () { annyang.pause(); },3500); } // Pause without turning the mic off and hope that user will choose OK
-          else { setTimeout(function () { annyang.abort(); },3500); } // Turn the mic off and hope that user will choose OK
+          if (isApple) { setTimeout(function () { annyang.pause(); },5750); } // Pause without turning the mic off and hope that user will choose OK
+          else { setTimeout(function () { annyang.abort(); },5750); } // Turn the mic off and hope that user will choose OK
           // -
           // -
           if (changeEventIsSupported) {
