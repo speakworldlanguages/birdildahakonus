@@ -184,14 +184,11 @@ function activateMicrophone() { parent.console.log("activating microphone");
                   measureWorkerResponseStartTime = performance.now();
                   worker.postMessage({ data: dataArray, task: 'filterAndCalculate' });
                   // RAF, recursion, loop
-                  meter1.innerHTML = "worker response time: " + workerResponseTime.toFixed(1);
-                  if (workerResponseTime>16.66) { // Too late when running at 60fps
+                  meter1.innerHTML = "worker response time: " + workerResponseTime.toFixed(1); // See onmessage above
+                  if (workerResponseTime>mainThreadRAFPerformance) { // Example: If worker response is more than 16.66 it would be too late when running at 60fps
                     requestAnimationFrame(function () { requestAnimationFrame(updateAmplitude); }); // Skip a frame
                   } else {
                     measureRAFPerformanceStartTime = performance.now();
-                    if (mainThreadRAFPerformance>33.33) { // Current fps is lower than 30
-                      // Any practical solutions?
-                    }
                     requestAnimationFrame(updateAmplitude);
                   }
                   // -
