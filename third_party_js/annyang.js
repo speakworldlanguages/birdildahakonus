@@ -240,18 +240,21 @@ let numberOfRestartsDespiteDetectionOfAudioInput = 0;
               logMessage('Speech Recognition is repeatedly stopping and starting. See http://is.gd/annyang_restarts for tips.');
             }
             // Apart from the mentioned situations in annyang documentation, one of these things could be happening
-            // 1 - User is trying but speech recognition won't function nicely (It happens on Android when there is only one very short word like "Ki" in Hito)
+            // 1 - User is trying but speech recognition won't function nicely (It happens on Android and Windows when there is only one very short word like "Ki" in Hito)
             // 2 - User is away from the device and the mic hears nothing but silence
             // 3 - In Safari we try not to abort annyang and pause it instead which means auto-Restart-Count will never be reset
             // IDEA: We could try and see if 1 is happening and tell the user that it's not their fault but is a technical issue » [... Please skip ahead]
           }
-          // Try to handle case 1: On Android user tries to pronounce but SpeechRecognition fails even though it perhaps shouldn't have.
-          if (silenceWasBroken && annyangBetterIfInterimResultsAreDisabled) {
+          // Try to handle case 1: On Windows & Android user tries to pronounce but SpeechRecognition fails even though it perhaps shouldn't have.
+          if (silenceWasBroken) {
             numberOfRestartsDespiteDetectionOfAudioInput++;
-            if (numberOfRestartsDespiteDetectionOfAudioInput == 4) {
-              // Display (English): If speech recognition keeps failing you can skip it or try using Chrome on Windows for better performance
+            if (numberOfRestartsDespiteDetectionOfAudioInput == 4 && !localStorage.maybeYouShouldSkipAlertHasAlreadyBeenDisplayed) {
+              // Display (English): If speech recognition is not functioning properly please skip it.
               const filePathForMaybeYouShouldSkip = "/user_interface/text/"+userInterfaceLanguage+"/0-if_something_is_not_working.txt";
-              fetch(filePathForMaybeYouShouldSkip,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ alert(contentOfTheTxtFile.split("|")[2]); });
+              fetch(filePathForMaybeYouShouldSkip,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+                alert(contentOfTheTxtFile.split("|")[2]);
+                localStorage.maybeYouShouldSkipAlertHasAlreadyBeenDisplayed = "yes";
+              });
             }
           }
           silenceWasBroken = false; // Reset to be able to detect it again

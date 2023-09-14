@@ -1,4 +1,4 @@
 ﻿Speech recognition is not working.
 Try using Chrome on Windows or Android.
 |You may need to update your browser or try using Chrome on Windows or Android to view this app.
-|If speech recognition keeps failing you can skip it or try using Chrome on Windows for better performance.
+|If speech recognition is not functioning properly please skip it.
