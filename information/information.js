@@ -190,8 +190,10 @@ function handleNavigationToPatreon() {
   }
 
   // EXIT FULLSCREEN IF WAS FULLSCREEN
-  //setTimeout(function () {     },10000);
-  //setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },12000);
+  setTimeout(function () {
+    if (parent.hasGoneFullscreen) {    parent.closeFullscreen();    }
+  },10000);
+  setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },12000);
 }
 
 /* ___ MAKE ARROW BUTTONS FUNCTION - SWITCHING SCREENS ___ */

@@ -391,8 +391,8 @@ function stopListeningAndProceedToNext() {
   /* Save progress */
   if (!userHasGivenUp) { // User was successful with speech recognition
     parent.savedProgress[studiedLang].lesson_SPOON_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
-  } else { // User has given up and wants to continue anyhow
-    parent.savedProgress[studiedLang].lesson_SPOON_IsCompleted=false; // WATCH THE NAME OF THE LESSON!!!
+  } else { // User has given up and wants to continue anyhow // REVISED AND CHANGED: Count skipping as success
+    parent.savedProgress[studiedLang].lesson_SPOON_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
   }
   parent.saveJSON = JSON.stringify(parent.savedProgress); // Convert
   localStorage.setItem("memoryCard", parent.saveJSON); // Save
