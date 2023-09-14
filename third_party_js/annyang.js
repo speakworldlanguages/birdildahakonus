@@ -297,6 +297,7 @@ let restartTimeout = null;
       try {
         recognition.start(); console.log("annyang.js » recognition.start() was successful");
       } catch (e) { console.warn("annyang.js » !!! recognition could not start !!!");
+        console.error(e); console.warn(e.message);
         if (debugState) {
           logMessage(e.message);
         }
