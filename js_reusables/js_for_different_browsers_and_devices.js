@@ -73,10 +73,6 @@ window.addEventListener('DOMContentLoaded', function(){
   // NOTE THAT: window.oncontextmenu IS NO GOOD - BECAUSE IT TRIGGERS AN ANNOYING VIBRATION everytime a long touch happens USE-pointer events none carefully or prevent default for touchstart
   // HERE WE DON'T NEED TO WAIT FOR window.load to correctly access deviceDetector
   if (deviceDetector.isMobile) { // Let's allow bubbling by omitting event.stopPropagation();
-
-    // iosta ipadte ses prevent default yüzünden mi çalışmadı ???????????? ??????? ???????????
-    // Hayır.. Görünen o ki sorun webm desteğinin eksik olması imiş
-
     window.ontouchstart = function(event) {     event.preventDefault();     return false;    }; // It looks like this is working...
   } else { } // We need the right click menu on desktops » it opens the [start-fullscreen-mode] box
 
@@ -196,8 +192,13 @@ window.addEventListener('DOMContentLoaded', function(){
         console.log("Microphone permission is already set to GRANTED");
       } else if (result1.state == 'denied') {
         willUserTalkToSpeechRecognition = false; // Shorten the waiting time when showing c1 c2 c3 visuals and change the button from SKIP to NEXT
-        console.log("Microphone permission is already set to DENIED");
+        console.warn("Microphone permission is already set to DENIED");
         // Maybe give an alert(); box like "You will not be able to play the games in this app without giving microphone permission"
+
+        // WEIRD SITUATION: This block sometimes gets executed on mobile Chrome version 106 and the app functions normally after a reload
+        // When this problem happens console says "Script error at 0 0"
+        if (!sessionStorage.remedyForScriptErrorZeroZeroHasBeenTried) { alert("🔃"); setTimeout(function () { location.reload(); }, 2500); }
+        sessionStorage.remedyForScriptErrorZeroZeroHasBeenTried = "yes";
       } else {
         // Which means (result1.state == 'prompt') // Please allow will be showing unless removed
         localStorage.removeItem("allowMicrophoneDialogHasAlreadyBeenDisplayed"); // IDEA: Instead of removing it, we can actually use it to work around annoying permission policies of Safari.

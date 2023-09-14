@@ -17,6 +17,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var annyangRestartDelayTime = 100; // Better if this is increased on Android » See js_for_different_browsers_and_devices
 var annyangBetterIfInterimResultsAreDisabled = false;
 let restartTimeout = null;
+let silenceWasBroken = false;
+let numberOfRestartsDespiteDetectionOfAudioInput = 0;
 
 (function (root, factory) {
   'use strict';
@@ -158,6 +160,8 @@ let restartTimeout = null;
       // initiate SpeechRecognition
       recognition = new SpeechRecognition();
 
+      // NOTE: See https://webreflection.medium.com/taming-the-web-speech-api-ef64f5a245e1
+
       // THE LINES FOR interimResults IS NOT PART OF ORIGINAL ANNYANG.JS
       // Maybe it's better if we turn off interimResults for all Android devices and not only on Samsung Browser
       if (annyangBetterIfInterimResultsAreDisabled) {
@@ -187,11 +191,15 @@ let restartTimeout = null;
         invokeCallbacks(callbacks.start);
       };
 
+      // Ideally the events must fire in the following order start » audiostart » soundstart » speechstart » speechend » soundend » audioend » result » end
+      // In reality (as of 2023 Safari 17.0) iOS only fires start, audiostart, result and end
+      // Neither soundstart nor speechstart is usable on Safari
       recognition.onsoundstart = function () { //console.log("annyang.js » Speech Recognition SOUNDSTART event fired");
         invokeCallbacks(callbacks.soundstart);
+        silenceWasBroken = true;
       };
 
-      // NOTE: See https://webreflection.medium.com/taming-the-web-speech-api-ef64f5a245e1
+
       // According to taming-the-web-speech-api article only start and audiostart are logged on iOS
       // According to MDN
       // The audiostart event of the Web Speech API is fired when the user agent has started to capture audio for speech recognition
@@ -219,6 +227,7 @@ let restartTimeout = null;
       };
 
       recognition.onend = function () {
+
         _isListening = false;
         invokeCallbacks(callbacks.end);
         // annyang will auto restart if it is closed automatically and not by user action.
@@ -233,9 +242,18 @@ let restartTimeout = null;
             // Apart from the mentioned situations in annyang documentation, one of these things could be happening
             // 1 - User is trying but speech recognition won't function nicely (It happens on Android when there is only one very short word like "Ki" in Hito)
             // 2 - User is away from the device and the mic hears nothing but silence
-            // 3 - In Safari we try not to abort annyang and pause it instead therefore autoRestartCount is never reset
+            // 3 - In Safari we try not to abort annyang and pause it instead which means auto-Restart-Count will never be reset
             // IDEA: We could try and see if 1 is happening and tell the user that it's not their fault but is a technical issue » [... Please skip ahead]
           }
+          // Try to handle case 1: On Android user tries to pronounce but SpeechRecognition fails even though it perhaps shouldn't have.
+          if (silenceWasBroken && annyangBetterIfInterimResultsAreDisabled) {
+            numberOfRestartsDespiteDetectionOfAudioInput++;
+            if (numberOfRestartsDespiteDetectionOfAudioInput == 3) {
+              alert("Maybe better if you skip"); // Comment out the alert after testing
+            }
+          }
+          silenceWasBroken = false; // Reset to be able to detect it again
+          // ---
           if (timeSinceLastStart < 1500) { // MODIFIED for SWL: Original annyang had different values
             restartTimeout = setTimeout(function () {
               annyang.start({ paused: pauseListening });
@@ -308,6 +326,7 @@ let restartTimeout = null;
     abort: function abort() {
       // Start of MODIFICATION for SWL
       if (restartTimeout) {      clearTimeout(restartTimeout);      }
+      numberOfRestartsDespiteDetectionOfAudioInput = 0; // Reset back to initial value
       // End of MODIFICATION for SWL
       autoRestart = false;
       autoRestartCount = 0;

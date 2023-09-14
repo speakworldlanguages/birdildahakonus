@@ -11,8 +11,7 @@ async function updateOnlineStatus() {
   if (window.navigator.onLine) {
     // At this point it could be a false positive. We cannot be certain until fetch gives its final say
     // Get ready to check if internet connection is indeed functional and actually working
-    // Let's avoid CORS errors by not getting any third-parties involved
-    const url = new URL(window.location.origin);
+    const url = new URL(window.location.origin); // Avoid CORS errors by not getting any third-parties involved
     // Unique value to prevent cached responses
     url.searchParams.set('makeitunique', String(Date.now()));
     let waitBeforeCallingItNoGood = null; // See if extreme slowness is making the internet unusable
@@ -20,20 +19,24 @@ async function updateOnlineStatus() {
       const controller = new AbortController();
       waitBeforeCallingItNoGood = setTimeout(function () { controller.abort(); }, 6000); // Force fetch to throw an error so that the catch block will be executed in case time is out
       // Normally a response is expected in the range of a few milliseconds to a couple of seconds, depending on the network conditions and the server's response time
-      // !!! HEAD is not the HTML <head> » It's the HEADERS part of the fetch operation » In human language it's like "Q:Hey, are you there? A:Yes, I am here."
+      // NOTE-THAT »»» HEAD is not the HTML <head> » It's the HEADERS part of the fetch operation » In humanized terms it's like "Q:Hey, are you there? A:Yes, I am here."
       const response = await fetch( url.toString(), { method: 'HEAD', signal: controller.signal } ); // Intentional abortion is counted as an error
       // Since await will temporarily pause the code execution, the following will be delayed until fetch provides its response
       clearTimeout(waitBeforeCallingItNoGood);
       if (response.ok) {  internetConnectivityIsNiceAndUsable = true;  }
       else {  internetConnectivityIsNiceAndUsable = false;  }
-    } catch {
+    } catch (error) {
       internetConnectivityIsNiceAndUsable = false;
+      console.warn("The fetch in updateOnlineStatus function couldn't get any response within the time limit");
     }
-  } else {
+  } else { // window.navigator.onLine returned false
     internetConnectivityIsNiceAndUsable = false;
     // There is actually a case in which fetch could get the assets despite window.navigator.onLine returns false
     // And that is when you activate a mobile device's WiFi hotspot router and connect to the PC where XAMPP is the http/https server
-    // You could handle that here if you want to
+    // Why not handle that here when we can
+    const url = new URL(window.location.origin);
+    const response = await fetch( url.toString(), { method: 'HEAD' } );
+    if (response.ok) {  internetConnectivityIsNiceAndUsable = true;  }
   }
 }
 // ---
