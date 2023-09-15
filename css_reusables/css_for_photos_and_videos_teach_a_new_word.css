@@ -131,7 +131,16 @@ main{
   100%{ transform: translateY(-2250px); }
 }
 
-
+#audioMeterID{
+  position: fixed; pointer-events: none;
+  width: 86vmin; height: 86vmin;
+  left: 50%; top:50%;
+  transform: translate(-50%,-50%);
+  background-color: rgb(91, 108, 125);
+  border-radius: 15px;
+  border: 1vmin solid rgb(80, 96, 113);
+  /*scale: 1;*/
+}
 #singlesDivID{
   position: fixed; pointer-events: none;
   width: 86vmin; height: 86vmin; /*Will always be a perfect square so no need for object-fit*/

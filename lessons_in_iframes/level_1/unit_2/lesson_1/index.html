@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Disable long-touch on video -->
     <link rel="stylesheet" href="/css_reusables/css_for_photos_and_videos_teach_a_new_word.css"> <!-- MAIN has gradient background -->
     <link rel="stylesheet" href="/css_reusables/css_for_the_glassy_give_up_button.css"> <!-- Using ASIDE as a button with glassmorphism -->
-    <link rel="stylesheet" href="/css_reusables/css_for_wavesurfer_microphone_divs.css">
+    <!-- <link rel="stylesheet" href="/css_reusables/css_for_wavesurfer_microphone_divs.css"> -->
     <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css">
     <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
     <!-- Empty line 1 -->
@@ -18,8 +18,8 @@
     <script defer src="/js_reusables/js_for_every_single_html.js">/*LET userInterfaceLanguage DEPEND ON DOMAIN NAME, fetch headers, fonts, resetWebp, canVibrate, defaultCursor*/</script>
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
     <script defer src="/js_reusables/js_for_handling_speech_give_up.js">/*White listed browsers: wait for speech ,,, others: don't wait*/</script>
-    <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
-    <script defer src="/third_party_js/wavesurfer.microphone.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <!-- <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script> -->
+    <!-- <script defer src="/third_party_js/wavesurfer.microphone.min.js">/*Audio visualization. Github: katspaugh*/</script> -->
     <script defer src="/js_reusables/js_for_microphone_input_visualization.js">/*Start, Stop wavesurfer microphone*/</script>
     <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
     <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
@@ -83,6 +83,9 @@
 
     <!-- Background darkening -->
     <div id="fullVpDarkBlueDivID" style="display:none;"> </div>
+
+    <!-- Audio input visualization :: See css_for_photos_and_videos_teach_a_new_word -->
+    <div id="audioMeterID" style="display:none;"> </div>
 
     <!-- Single photos looping -->
     <div id="singlesDivID" class="" style="display:none;">

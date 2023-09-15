@@ -757,10 +757,10 @@ function pauseTheAppFunction(reasonWhy) { // As of September 2023 reasonWhy is e
     const iFrameDocumentInPauseTheAppFunction = iFrameInPauseTheAppFunction.contentDocument;
 
     // SpeechRecognition STOPS LISTENING
-    let annyangWasListeningWhenUserPaused = false;
+    let speechRecognitionWasListeningWhenUserPaused = false;
     if (annyang) {
-      annyangWasListeningWhenUserPaused = annyang.isListening();
-      if (annyangWasListeningWhenUserPaused) {
+      speechRecognitionWasListeningWhenUserPaused = annyang.isListening();
+      if (speechRecognitionWasListeningWhenUserPaused) {
         if (isApple) { annyang.pause(); }
         else { annyang.abort(); }
       }
@@ -768,9 +768,9 @@ function pauseTheAppFunction(reasonWhy) { // As of September 2023 reasonWhy is e
     }
 
     // STOP WAVESURFER
-    let wavesurferWasListeningWhenUserPaused = false;
+    let audioMeterWasListeningWhenUserPaused = false;
     // See js_for_microphone_input_visualization
-    if (iFrameWindowInPauseTheAppFunction.wavesurferIsListening) { iFrameWindowInPauseTheAppFunction.stopAudioInputVisualization(); wavesurferWasListeningWhenUserPaused = true; }
+    if (iFrameWindowInPauseTheAppFunction.audioMeterIsListening) { iFrameWindowInPauseTheAppFunction.stopAudioInputVisualization(); audioMeterWasListeningWhenUserPaused = true; }
     else {
       // DO NOTHING CASE 1: wavesurfer mic does not exist because it's not used in this lesson
       // DO NOTHING CASE 2: wavesurfer mic exists but it was not started yet
@@ -836,10 +836,10 @@ function pauseTheAppFunction(reasonWhy) { // As of September 2023 reasonWhy is e
       if (iFrameWindowInPauseTheAppFunction.listOfAllTickingSuperTimers) { iFrameWindowInPauseTheAppFunction.unpauseAllSuperTimers(); }
 
       // Continue receiving speech if it was interrupted
-      if (annyangWasListeningWhenUserPaused) {
+      if (speechRecognitionWasListeningWhenUserPaused) {
         setTimeout(function() {         if (annyang){ annyang.resume(); }         },50); // annyang.resume() works both with .abort() and .pause()
       }
-      if (wavesurferWasListeningWhenUserPaused) {
+      if (audioMeterWasListeningWhenUserPaused) {
         setTimeout(function () { iFrameWindowInPauseTheAppFunction.startAudioInputVisualization(); }, 100);
       }
 

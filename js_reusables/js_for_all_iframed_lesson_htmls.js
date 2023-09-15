@@ -246,7 +246,7 @@ window.onbeforeunload = function() {
   if (parent.annyang) { // DO NOT OMIT! Firefox and other no-speech browsers need this "if (parent.annyang)" to let the app work without Web Speech API.
     // This is like a "making it double-safe" thing // stopListeningAndProceedToNext() already has parent.annyang.abort();
     if (parent.annyang.isListening()) { // DANGER! It looks like this doesn't always fire correctly. Will try to remedy by adding it to progress/index.html
-      console.warn("__Annyang was still listening as the frame window got unloaded__");
+      console.warn("__SpeechRecognition was still listening as the frame window got unloaded__");
       parent.annyang.removeCallback();
       if (isApple) { parent.annyang.pause(); }
       else { parent.annyang.abort(); }

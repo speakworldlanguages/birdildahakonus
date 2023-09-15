@@ -72,7 +72,6 @@ function updateTheBar(valueObtainedFromWorker) {
     amplitudeBar.style.width = "100%";
   }
 
-  //amplitudeBar.style.width = valueObtainedFromWorker+"%";
   monitor.innerHTML = valueObtainedFromWorker.toFixed(1);
 }
 

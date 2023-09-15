@@ -387,7 +387,7 @@ function speakToTheMic() {
     }
     // Start listening.
     new SuperTimeout(function() {  parent.annyang.start({ autoRestart: true });  },500); // NOTE: annyang.resume() equals annyang.start()
-    new SuperTimeout(function() {  startAudioInputVisualization();  },600); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js
+    new SuperTimeout(function() {  startAudioInputVisualization();  },2500); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js
     // New method of detecting matches
     parent.annyang.addCallback('result', compareAndSeeIfTheAnswerIsCorrect);
     function compareAndSeeIfTheAnswerIsCorrect(phrasesArray) {
