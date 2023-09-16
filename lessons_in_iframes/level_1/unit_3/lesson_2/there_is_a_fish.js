@@ -503,8 +503,13 @@ function makeTheFishJumpOutOfWater() {
   }
 
   // fish_jumps.webp 50x50ms = 2500ms
-  setTimeout(function () {    swimmingFishImg.style.display = "block"; jumpingFishImg.style.display = "none"; resetWebp(jumpingFishImg); fishIsInTheAir = false;   }, 2500);
-}
+  setTimeout(function () {
+    swimmingFishImg.style.display = "block"; jumpingFishImg.style.display = "none";
+    resetWebp(jumpingFishImg); fishIsInTheAir = false;
+    if (fishJumpButton) {    fishJumpButton.style.visibility = "visible";    }
+  }, 2500);
+} // End of makeTheFishJumpOutOfWater
+
 let anOutroBoxIsNowShowing = false; // 1 - To block keyboard input when needed 2 - To exit RAF loop
 function handleWinning() {
   // Display wavesurfer box about the meaning of "a thing" or "something"
@@ -703,10 +708,10 @@ function removeKeyboardListeners() { //
 function handleInputForPlayingTheFishGameWithTouchscreen() {
   // alert("fires ok"); //tested ok
   fishJumpButton.addEventListener("touchstart",fishUp);
-  fishJumpButton.addEventListener("touchend",hideUntilTheFishCanJumpAgain,{once:true});
+  // SUSPECTED BUG: It breaks the app when is pressed too early » fishJumpButton.addEventListener("touchend",hideUntilTheFishCanJumpAgain,{once:true});
   swimLeftButton.addEventListener("touchstart",fishLeft);
   swimRightButton.addEventListener("touchstart",fishRight);
-  function hideUntilTheFishCanJumpAgain() { setTimeout(function () { fishJumpButton.style.visibility = "hidden"; }, 500); }
+  // SUSPECTED BUG: It breaks the app when is pressed too early » function hideUntilTheFishCanJumpAgain() { setTimeout(function () { fishJumpButton.style.visibility = "hidden"; }, 500); }
   function fishUp(event) { event.preventDefault(); event.stopPropagation();
     fishJumpButton.children[0].style.display = "none"; fishJumpButton.children[1].style.display = "block";
     // NOT NECESSARY FOR MOBILE upArrowIsAlreadyPressed = true;
@@ -715,6 +720,7 @@ function handleInputForPlayingTheFishGameWithTouchscreen() {
       if (Math.abs(fishSpeed)<0.1) { // Jump only if the fish isn't moving too fast already
         fishIsInTheAir = true;
         makeTheFishJumpOutOfWater();
+        fishJumpButton.style.visibility = "hidden";
       }
     }
   }

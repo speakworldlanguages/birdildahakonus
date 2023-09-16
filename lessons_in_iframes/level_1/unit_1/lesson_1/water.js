@@ -385,6 +385,9 @@ function speakToTheMic() {
     if (!parent.isAndroid) { // See js_for_different_browsers_and_devices
         notificationDingTone.play(); // Android has its native DING tone. So let this DING tone play on desktops and iOS devices.
     }
+    if (parent.isAndroid) {
+      if (parent.annyang.isListening()) {        parent.annyang.abort();      }
+    }
     // Start listening.
     new SuperTimeout(function() {  parent.annyang.start({ autoRestart: true });  },500); // NOTE: annyang.resume() equals annyang.start()
     new SuperTimeout(function() {  startAudioInputVisualization();  },2500); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js

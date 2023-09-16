@@ -149,15 +149,18 @@ var audioMeterIsListening = false; // See pauseTheAppFunction in js_for_the_slid
 /* ______ Functions to start-stop ______ */
 // These will be called from the particular js files of the particular lessons.
 function startAudioInputVisualization() {
-  activateMicrophone();
-  audioMeterIsListening = true;
-  if (audioMeterDiv) {
-    audioMeterDiv.style.opacity = "0";
-    audioMeterDiv.style.display = "block"; // It's an empty div that contains nothing
-    audioMeterDiv.style.animationDelay = "0.5s";
-    audioMeterDiv.style.animationDuration = "1.5s";
-    audioMeterDiv.classList.add("simplyMakeItAppear"); // simplyMakeItAppear exists in css_for_every_single_html
+  if (deviceDetector.device=="desktop" && !isApple) {
+    activateMicrophone();
+    audioMeterIsListening = true;
+    if (audioMeterDiv) {
+      audioMeterDiv.style.opacity = "0";
+      audioMeterDiv.style.display = "block"; // It's an empty div that contains nothing
+      audioMeterDiv.style.animationDelay = "0.5s";
+      audioMeterDiv.style.animationDuration = "1.5s";
+      audioMeterDiv.classList.add("simplyMakeItAppear"); // simplyMakeItAppear exists in css_for_every_single_html
+    }
   }
+
   /* DEPRECATE
   if (deviceDetector.device=="desktop" && !isApple) { // Test if this works on iOS,,, if it does then add || detectedOS_name == "ios"
     // Get information about CPU. Make things look better on faster machines and optimize for performance on slower machines.
@@ -186,20 +189,23 @@ function startAudioInputVisualization() {
 }
 
 function stopAudioInputVisualization() {
-  if (audioContext && audioMeterIsListening) {
-     audioContext.close();
-  }
-  if (mediaStream && audioMeterIsListening) {
-     mediaStream.getTracks().forEach(track => track.stop());
-  }
-  audioMeterIsListening = false;
+  if (deviceDetector.device=="desktop" && !isApple) {
+    if (audioContext && audioMeterIsListening) {
+       audioContext.close();
+    }
+    if (mediaStream && audioMeterIsListening) {
+       mediaStream.getTracks().forEach(track => track.stop());
+    }
+    audioMeterIsListening = false;
 
-  if (audioMeterDiv) {
-    audioMeterDiv.classList.remove("simplyMakeItAppear");
-    audioMeterDiv.style.animationDelay = "0s";
-    audioMeterDiv.classList.add("simplyMakeItDisappear"); // css_for_every_single_html
-    setTimeout(function () {  audioMeterDiv.style.display = "none";  }, 1600);
+    if (audioMeterDiv) {
+      audioMeterDiv.classList.remove("simplyMakeItAppear");
+      audioMeterDiv.style.animationDelay = "0s";
+      audioMeterDiv.classList.add("simplyMakeItDisappear"); // css_for_every_single_html
+      setTimeout(function () {  audioMeterDiv.style.display = "none";  }, 1600);
+    }
   }
+
   /* DEPRECATE
   // ISSUE THAT NEEDS SERIOUS CARE: Safari doesn't allow mic permanently; it allows for only 1 listening session and prompts for permission everytime mic restarts
   if (deviceDetector.device=="desktop" && !isApple) {

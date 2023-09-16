@@ -431,7 +431,8 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
           }
           // Samsung Browser throws an error -> Failed to execute 'start' on 'SpeechRecognition', recognition has already started.
           // Chrome on Android can function with interimResults but it looks like it causes a delay with annyang.start
-          // console.warn("SAMSUNG BROWSER: Will now turn off interim results to avoid already started error");
+          // DEPRECATED » console.warn("SAMSUNG BROWSER: Will now turn off interim results to avoid already started error");
+          // DECISION: Disable interimResults on Android entirely
         }
         // ---
         setTimeout(function () {  handleMicFirstTurnOn();  annyang.start({ autoRestart: false });  },1750); // This will make the prompt box appear for allowing microphone usage
@@ -439,7 +440,10 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
         function handleMicFirstTurnOn() {
           // Before the prompt is showing
           if (isApple) { setTimeout(function () { annyang.pause(); },5750); } // Pause without turning the mic off and hope that user will choose OK
-          else { setTimeout(function () { annyang.abort(); },5750); } // Turn the mic off and hope that user will choose OK
+          else {
+            setTimeout(function () { annyang.abort(); },5750);
+            setTimeout(function () {   if (annyang.isListening()) { annyang.abort(); }   },9750); // Crazy double safe
+          } // Turn the mic off and hope that user will choose OK
           // -
           // -
           if (changeEventIsSupported) {
