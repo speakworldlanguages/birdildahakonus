@@ -506,7 +506,7 @@ function makeTheFishJumpOutOfWater() {
   setTimeout(function () {
     swimmingFishImg.style.display = "block"; jumpingFishImg.style.display = "none";
     resetWebp(jumpingFishImg); fishIsInTheAir = false;
-    if (fishJumpButton) {    fishJumpButton.style.visibility = "visible";    }
+    // CANCELLED: if (fishJumpButton) {    fishJumpButton.style.visibility = "visible";    }
   }, 2500);
 } // End of makeTheFishJumpOutOfWater
 
@@ -720,7 +720,7 @@ function handleInputForPlayingTheFishGameWithTouchscreen() {
       if (Math.abs(fishSpeed)<0.1) { // Jump only if the fish isn't moving too fast already
         fishIsInTheAir = true;
         makeTheFishJumpOutOfWater();
-        fishJumpButton.style.visibility = "hidden";
+        // CANCELLED: fishJumpButton.style.visibility = "hidden";
       }
     }
   }
