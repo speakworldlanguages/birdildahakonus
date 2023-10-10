@@ -24,7 +24,7 @@
   mix-blend-mode: normal;
   border-radius: 2.5vmin;
   font-size: 3.5vmin; /*On any screen whose smaller dimension is greater than 800px*/
-  color: rgb(130,155,173);
+  color: rgb(20,65,99); /*Used to be 130,155,173 until October2023*/
   margin: 5.5vmin;
   padding-left: 4vmin; padding-right: 4vmin; padding-top: 5vmin; padding-bottom: 5vmin;
   /* line-height: normal; */ /*Must be conditional and depend on the font and UI*/
@@ -53,9 +53,11 @@
   min-width:100px;  min-height:62px;
   padding-top: 1.5vmin; padding-bottom: 1vmin; padding-left: calc(4px + 2.2vmin); padding-right: calc(4px + 2.2vmin);
   margin-top: 5vmin;
-  background-color: rgb(154,170,182);
+  /* background-color: rgb(154,170,182); old color used until October2023 */
+  background-color: rgb(109,133,152); /*Tried 104,127,145 but better if just a tiny bit brighter*/
   border-radius: 1.5vmin;
-  border: 3px solid rgb(124, 144, 160);
+  /* border: 3px solid rgb(124, 144, 160); old color used until October2023 */
+  border: 3px solid rgb(65, 92, 116); /*Tried 62,88,111 but better if just a tiny bit brighter*/
   color: white;
   display: flex;  justify-content: center;  align-items: center;
   text-shadow: none;
@@ -64,8 +66,10 @@
   line-height: normal;
 }
 .buttonsUnderSaveLoadInfo:hover{
-  background-color: rgb(93,114,137);
-  border: 3px solid rgb(73, 94, 110);
+  /* background-color: rgb(93,114,137); old color used until October2023 */
+  background-color: rgb(74,102,124);
+  /* border: 3px solid rgb(73, 94, 110); old color used until October2023 */
+  border: 3px solid rgb(25, 54, 84);
 }
 .buttonsUnderSaveLoadInfo:active{
   transform: scale(0.85);
@@ -80,7 +84,7 @@
   mix-blend-mode: normal;
   border-radius: 2.5vmin;
   font-size: 4vmin;
-  color: rgb(130,155,173);
+  color: rgb(130,155,173); /*In October2023 we've changed other elements' 130,155,173 color to 20,65,99 BUT we let this one stay the same*/
   padding-left: 4vmin; padding-right: 4vmin; padding-top: 5vmin; padding-bottom: 5vmin;
   white-space: pre-wrap; /* pre means do not convert the line breaks into regular spaces. pre-wrap handles the overflow as well for longer lines */
   cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto;

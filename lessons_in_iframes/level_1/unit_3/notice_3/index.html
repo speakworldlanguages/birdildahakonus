@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- ⁞ AUTHOR'S THIRD NOTICE ⁞ -->
+    <title>💬</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex" />
+
+    <!-- Make this notice skippable after 1-3-4 -->
+    <script> localStorage.donationsAcceptedNoticeHasBeenDisplayedAlready = "yes"; /*So that user will see this screen only once » See take_bread.js*/ </script>
+    <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
+    <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- line height for P elements -->
+    <link rel="stylesheet" href="/css_reusables/css_for_photos_and_videos_teach_a_new_word.css"> <!-- For bread photo -->
+    <link rel="stylesheet" href="/css_reusables/css_for_proceed_buttons.css"> <!-- SECTION element is turned into a button -->
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <link rel="stylesheet" href="/lessons_in_iframes/level_1/unit_3/notice_3/notice.css">
+
+    <script defer src="/js_reusables/js_for_every_single_html.js">/*LET userInterfaceLanguage DEPEND ON DOMAIN NAME, fetch headers, fonts, resetWebp, canVibrate, defaultCursor*/</script>
+    <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
+    <!-- No ADDRESS element used here so we don't need <script defer src="/js_reusables/js_for_proceed_buttons.js">/*Hover click touch sounds*/</script> -->
+    <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
+    <script defer src="/lessons_in_iframes/level_1/unit_3/notice_3/notice.js">/*What to do here*/</script>
+
+  </head>
+  <body class="defaultCursor">
+
+    <!-- No main element used here: A darker version of the standard background gradient is set in notice.css class cinematicViewport -->
+
+    <div class="upperDarkness">
+      <!-- Portrait2 only -->
+      <div class="oneOfTheTwoDivsThatContainSquarePictures portraitBread">
+        <img id="portraitImgSrcDependsOnTheDevice" draggable="false" src="" style="pointer-events:none;">
+      </div>
+      <section class="startHidden">...</section>
+    </div>
+    <div class="cinematicViewport">
+      <div class="leftOrLowerDivision">
+        <div class="speechBubble"><p style="white-space: pre-wrap;" id="putTheWordsInHereP"></p></div>
+        <svg id="arrow_under_speech_bubble" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" xml:space="preserve" style="">
+        <path id="arrow" fill="#FFFFFF" d="M76.778,34H23.222c-8.8,0-10.497,4.577-3.771,10.252l23.671,19.94
+        	c3.783,3.192,9.974,3.175,13.757-0.017L80.55,44.26C87.275,38.585,85.578,34,76.778,34z"/>
+        </svg>
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/notice_3/earthman_topraksoy_tsuchimoto.webp" style="pointer-events:none;">
+        <svg version="1.2" baseProfile="tiny" style="position:absolute; opacity:0;" id="antigoof" x="0px" y="0px" width="800px" height="800px" viewBox="0 0 800 800" xml:space="preserve">
+          <path style="cursor:none;" d="M785.349,760C772.458,696.575,751.541,623.056,704,583.516c-38.501-32.021-200.69-75.861-180.64-133.304c31.617-90.58,60.743-223.24,7.002-296.569c-23.409-31.94-62.54-52.624-124.036-53.669c-3.694-0.063-24.428,0.572-30.577,1.231c-33.357,3.575-58.939,14.585-78.248,30.857c-78.833,66.434-53.074,220.578-24.798,314.504c23.258,77.256-180.469,99.611-217.157,173.202C33.862,663.263,20.898,711.96,10.371,760H0v40h800v-40H785.349z"/>
+        </svg>
+      </div>
+      <div class="rightOrUpperDivision">
+        <!-- Landscape only -->
+        <div class="oneOfTheTwoDivsThatContainSquarePictures landscapeBread">
+          <img id="landcapeImgSrcDependsOnTheDevice" draggable="false" src="" style="pointer-events:none;">
+        </div>
+
+        <section class="startHidden">...</section>
+      </div>
+    </div>
+    <div class="lowerDarkness"></div>
+
+    <!-- Wow! We did it without writing separate code for desktops and mobiles -->
+
+  </body>
+  <script>
+    /*_________UI HANDLING__________*/
+    window.addEventListener('DOMContentLoaded', function(){
+      const pElement = document.getElementById('putTheWordsInHereP');
+      if (needLatinFonts) {
+        /*GET FONT*/
+        let speechBubbleFontFont;
+        speechBubbleFontFont = new FontFace('speechBubbleFont', "url(/user_interface/fonts/RussoOne-Regular.ttf)");
+        speechBubbleFontFont.load().then(function(loaded_face) {
+            document.fonts.add(loaded_face);
+        }).catch(function(error) {    console.error("Unable to get the font: " + error);  });
+        /*SET FONT*/
+        pElement.style.fontFamily = "speechBubbleFont";
+        pElement.classList.add("latinLineHeightAndLetterSpacing");
+      }
+      if (needHitoicJapaneseFonts) {
+        pElement.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing");
+      }
+      // ---
+      const businessModelImgPortrait = document.getElementById('portraitImgSrcDependsOnTheDevice');
+      const businessModelImgLandscape = document.getElementById('landcapeImgSrcDependsOnTheDevice');
+      if (deviceDetector.device == "desktop") {
+        businessModelImgPortrait.src = "/lessons_in_iframes/level_1/unit_3/notice_3/global_circulation_desktop.webp";
+        businessModelImgLandscape.src = "/lessons_in_iframes/level_1/unit_3/notice_3/global_circulation_desktop.webp";
+      } else if (deviceDetector.device == "tablet") {
+        businessModelImgPortrait.src = "/lessons_in_iframes/level_1/unit_3/notice_3/global_circulation_tablet.webp";
+        businessModelImgLandscape.src = "/lessons_in_iframes/level_1/unit_3/notice_3/global_circulation_tablet.webp";
+      } else { // phone
+        businessModelImgPortrait.src = "/lessons_in_iframes/level_1/unit_3/notice_3/global_circulation_phone.webp";
+        businessModelImgLandscape.src = "/lessons_in_iframes/level_1/unit_3/notice_3/global_circulation_phone.webp";
+      }
+    }, { once: true });
+  </script>
+</html>

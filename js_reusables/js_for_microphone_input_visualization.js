@@ -1,10 +1,10 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
 
 // This is js_for_microphone_input_visualization.js
 
-// AUDIO INPUT WAVEFORM VISUALIZATION CAN BE CPU INTENSIVE. On Android devices it is either too slow or incompatible ->  WAVESURFER didn't work together with speech recognition.
+// AUDIO INPUT WAVEFORM VISUALIZATION CAN BE CPU INTENSIVE. On Android devices it is either too slow or incompatible ->  When WAVESURFER-mic plugin was used, it didn't work together with speech recognition.
 // September 2023 » Quit wavesurfer-mic-plugin and try switching to our own audio input visualization method
 let audioMeterDiv = null;
 window.addEventListener('DOMContentLoaded', function(){
@@ -17,15 +17,24 @@ let measureWorkerResponseStartTime = 0;
 let measureRAFPerformanceStartTime = 0;
 let workerResponseTime = 0;
 let mainThreadRAFPerformance = 0;
+let errorIsPrintedToConsoleAlready = false;
 worker.onmessage = function (event) {
     workerResponseTime = performance.now() - measureWorkerResponseStartTime; // Calculate response time
     const message = event.data;
     switch (message.type) {
         case 'ready':
-            parent.console.log("Worker is "+message.say);
+            parent.console.log("Audiometer Web-Worker is "+message.say);
             break;
         case 'dataAvailable':
-            updateTheAudioMeterDiv(message.yield); // Rename to update the audio-meter-div
+            if (audioMeterDiv) {  updateTheStandardAudioMeterDiv(message.yield);  }
+            else if (typeof updateUniqueGraphicsWithNumbersRangingFromZeroToTwenty === "function") { // Data will be driving some kind of unique graphics, like 134
+              updateTheUniqueAudiometer(message.yield);
+            } else { // Hopefully this will never run
+              if (!errorIsPrintedToConsoleAlready) {
+                parent.console.error("NEITHER audioMeterDiv NOR updateUniqueGraphicsWithNumbersRangingFromZeroToTwenty EXIST ???");
+                errorIsPrintedToConsoleAlready = true;
+              }
+            }
             break;
         case 'adjust':
             volumeCeilingForSpeech = message.newCeiling;
@@ -43,19 +52,31 @@ worker.onerror = function (error) { parent.console.error('Error from web worker:
 // ---
 const volumeFloorForSpeech = 10; // Will NOT be updated via workers message
 let volumeCeilingForSpeech = 40; // Will be updated via workers message
-function updateTheAudioMeterDiv(valueObtainedFromWorker) {
-  if (valueObtainedFromWorker<=volumeFloorForSpeech) {
+function updateTheStandardAudioMeterDiv(valueObtainedFromWorker) {
+  if (valueObtainedFromWorker<=volumeFloorForSpeech) { // Ignore values between 0 and 10
     audioMeterDiv.style.width = "85vmin"; // Initial values found in css_for_photos_and_videos_teach_a_new_word
     audioMeterDiv.style.height = "85vmin"; // 86 - 1 » border is 1 vmin thick
   } else if (valueObtainedFromWorker>volumeFloorForSpeech && valueObtainedFromWorker<volumeCeilingForSpeech) {
     // Change input range from 0~100 to volumeFloorForSpeech~volumeCeilingForSpeech and set output range as 0~20
     const valueWithinRange = ((valueObtainedFromWorker - volumeFloorForSpeech)*20)/(volumeCeilingForSpeech-volumeFloorForSpeech);
-    audioMeterDiv.style.width = String(85+valueWithinRange)+"vmin";
-    audioMeterDiv.style.height = String(85+valueWithinRange)+"vmin";
+    audioMeterDiv.style.width = (85+valueWithinRange).toFixed(3)+"vmin";
+    audioMeterDiv.style.height = (85+valueWithinRange).toFixed(3)+"vmin";
   } else {
     audioMeterDiv.style.width = "105vmin";
     audioMeterDiv.style.height = "105vmin";
   }
+}
+let whatMicInputDrives;
+function updateTheUniqueAudiometer(gotThisValueFromWorker) {
+  if (gotThisValueFromWorker<=volumeFloorForSpeech) { // Ignore values between 0 and 10
+    whatMicInputDrives = 0; // For 134 start with transform rotateY(0deg)
+  } else if (gotThisValueFromWorker>volumeFloorForSpeech && gotThisValueFromWorker<volumeCeilingForSpeech) {
+    // Change input range from 0~100 to volumeFloorForSpeech~volumeCeilingForSpeech and set output range as 0~20
+    whatMicInputDrives = ((gotThisValueFromWorker - volumeFloorForSpeech)*20)/(volumeCeilingForSpeech-volumeFloorForSpeech);
+  } else {
+    whatMicInputDrives = 20; // For 134 multiply x4 to set the maximum at transform rotateY(80deg)
+  }
+  updateUniqueGraphicsWithNumbersRangingFromZeroToTwenty(whatMicInputDrives); // This function must exist at global level in the lessons own js
 }
 
 let audioContext = null;
@@ -87,12 +108,14 @@ function activateMicrophone() { parent.console.log("activating microphone");
               parent.console.log("start index in main thread = " + startIndex);
               parent.console.log("end index in main thread = " + endIndex);
               const startAndEnd = [startIndex,endIndex];
-              worker.postMessage({ data: startAndEnd, task: 'setStartIndexAndEndIndex' });
+              worker.postMessage({ data: startAndEnd, task: 'setStartIndexAndEndIndex' }); // High-pass Low-pass limits
               // ---
               requestAnimationFrame(updateAmplitude);
               // ---
               //let frameCount = 0; // Comment out after tests
               function updateAmplitude() {
+                  if (!standardAudiometerIsListening) { parent.console.log("Exiting the RAF loop » no more updates for the audiometer"); return; } // Exit RAF loop
+                  // ---
                   mainThreadRAFPerformance = performance.now() - measureRAFPerformanceStartTime;
                   //frameCount++; // Comment out after tests
                   //if (frameCount % 120 === 0) { parent.console.log("raf frame time: " + mainThreadRAFPerformance.toFixed(1)); }
@@ -101,9 +124,16 @@ function activateMicrophone() { parent.console.log("activating microphone");
                   // Calculate the average amplitude from the specified frequency range
                   measureWorkerResponseStartTime = performance.now();
                   worker.postMessage({ data: dataArray, task: 'filterAndCalculate' });
+                  /* not necessary » use if(audioMeterDiv) etc after dataAvailable inside worker.onmessage
+                  if (isUnique) {
+                    worker.postMessage({ data: dataArray, task: 'filterAndCalculateForUnique' });
+                  } else {
+                    worker.postMessage({ data: dataArray, task: 'filterAndCalculateForStandard' });
+                  }
+                  */
                   // RAF, recursion, loop
                   //if (frameCount % 120 === 0) { parent.console.log("worker response time: " + workerResponseTime.toFixed(1)); } // See onmessage above
-                  if (workerResponseTime>mainThreadRAFPerformance) { // Example: If worker response is more than 16.66 it would be too late when running at 60fps
+                  if (workerResponseTime>mainThreadRAFPerformance) { // Example: If worker response is more (longer) than 16.66 milliseconds it would be too late when running at 60fps
                     // By not updating measureRAFPerformanceStartTime here we reduce the probability of skipping more than 1 frame at a time
                     requestAnimationFrame(function () { requestAnimationFrame(updateAmplitude); }); // Skip a frame
                   } else {
@@ -121,99 +151,71 @@ function activateMicrophone() { parent.console.log("activating microphone");
   }
 }
 
-
-
-
-/* DEPRECATE
-// ALSO: There is a problem with making wavesurfer canvas width 100% on 1920x1080 desktop resolution. Use 50% and scaleX(2) instead!
-// NOTE: wavesurfer.js is included and run by iframed lesson htmls where necessary. It is not included by the container parent html.
-
-const waveformContainerDiv = document.createElement("DIV");
-waveformContainerDiv.id="waveform";
-waveformContainerDiv.classList.add("wavesurferMicrophoneDiv");
-
-var wavesurfer;
-
-// Make sure js_for_all_iframed_lesson_htmls is listed before(above) this js file. Otherwise access deviceDetector after window load.
-if (deviceDetector.device=="desktop" && !isApple) { // Too slow to run on Mac
-    document.body.appendChild(waveformContainerDiv);
-    wavesurfer = WaveSurfer.create({container:'#waveform',waveColor:'white',barWidth:'3',barGap:'3',barHeight:'3',interact:false,cursorWidth:0,height:'100', plugins:[WaveSurfer.microphone.create()]});
-} else {
-  // The MediaRecorder API and the Speech Recognition API cannot use the same microphone at the same time in every browser
-  // wavesurfer uses getUserMedia to read microphone which seems to be creating a conflict with SpeechRecognition
-}
-*/
-
-var audioMeterIsListening = false; // See pauseTheAppFunction in js_for_the_sliding_navigation_menu
+// ---
+var standardAudiometerIsListening = false; // See pauseTheAppFunction in js_for_the_sliding_navigation_menu
+// CANCEL var uniqueAudiometerIsListening = false; // See pauseTheAppFunction in js_for_the_sliding_navigation_menu
 // According to tests (as of JULY2023) Windows PCs are the only verified type of device that NICELY support simultaneous usage of the device microphone by multiple APIs
 /* ______ Functions to start-stop ______ */
 // These will be called from the particular js files of the particular lessons.
-function startAudioInputVisualization() {
-  if (deviceDetector.device=="desktop" && !isApple) {
+function startStandardAudioInputVisualization() { // Called from js_for_the_sliding_navigation_menu & Each standard vocabulary lesson's own js
+  if (deviceDetector.device=="desktop" && !isApple) { parent.console.log("proceed to microphone activation - standard");
     activateMicrophone();
-    audioMeterIsListening = true;
+    standardAudiometerIsListening = true;
     if (audioMeterDiv) {
       audioMeterDiv.style.opacity = "0";
       audioMeterDiv.style.display = "block"; // It's an empty div that contains nothing
       audioMeterDiv.style.animationDelay = "0.5s";
       audioMeterDiv.style.animationDuration = "1.5s";
       audioMeterDiv.classList.add("simplyMakeItAppear"); // simplyMakeItAppear exists in css_for_every_single_html
+    } else {
+      // ACTUALLY: It is possible to handle unique visualization here
     }
   }
-
-  /* DEPRECATE
-  if (deviceDetector.device=="desktop" && !isApple) { // Test if this works on iOS,,, if it does then add || detectedOS_name == "ios"
-    // Get information about CPU. Make things look better on faster machines and optimize for performance on slower machines.
-    if (window.navigator.hardwareConcurrency>3) {
-      wavesurfer.microphone.bufferSize = 2048; // This makes it look smoother. Default is 4096.
-    }
-    else if (window.navigator.hardwareConcurrency<2) {
-      wavesurfer.microphone.bufferSize = 8192; // Reduce quality if there is only 1 logical processor core available.
-    }
-    else {
-      // Let defaults be if
-      // [A]- User's browser doesn't support hardwareConcurrency
-      // [B]- User's machine has 2 or 3 cores » average power; not too weak and not too strong
-    }
-
-    // TEST IF DESKTOP SAFARI MIC PERMISSION PROMPT REPETITION CAN BE AVOIDED BY SACRIFICING wavesurfer (i.e. getUserMedia) and letting annyang work alone
-    // Start and fade in.
-    wavesurfer.microphone.start(); audioMeterIsListening = true;
-    waveformContainerDiv.classList.add("addThisToMakeItFadeIn"); // See css_for_wavesurfer_microphone_divs.css
-  } else {
-    // Neither Android nor iOS can handle both annyang and wavesurfer mic at the same time.
-    // IDEA! Try using a Web Worker to see if a workaround is possible
-  }
-  */
-
 }
-
-function stopAudioInputVisualization() {
+// ---
+function stopStandardAudioInputVisualization() { // Called from js_for_the_sliding_navigation_menu & js_for_all_iframed_lesson_htmls & Each standard vocabulary lesson's own js
   if (deviceDetector.device=="desktop" && !isApple) {
-    if (audioContext && audioMeterIsListening) {
+    if (audioContext && standardAudiometerIsListening) {
        audioContext.close();
     }
-    if (mediaStream && audioMeterIsListening) {
+    if (mediaStream && standardAudiometerIsListening) {
        mediaStream.getTracks().forEach(track => track.stop());
     }
-    audioMeterIsListening = false;
+    standardAudiometerIsListening = false;
 
     if (audioMeterDiv) {
       audioMeterDiv.classList.remove("simplyMakeItAppear");
       audioMeterDiv.style.animationDelay = "0s";
       audioMeterDiv.classList.add("simplyMakeItDisappear"); // css_for_every_single_html
       setTimeout(function () {  audioMeterDiv.style.display = "none";  }, 1600);
+    } else {
+      // ACTUALLY: It is possible to handle unique visualization here
     }
   }
-
-  /* DEPRECATE
-  // ISSUE THAT NEEDS SERIOUS CARE: Safari doesn't allow mic permanently; it allows for only 1 listening session and prompts for permission everytime mic restarts
-  if (deviceDetector.device=="desktop" && !isApple) {
-    wavesurfer.microphone.stop(); audioMeterIsListening = false;
-    waveformContainerDiv.classList.remove("addThisToMakeItFadeIn"); // Immediate disappearance is OK » See css_for_wavesurfer_microphone_divs.css
-  } else {
-    // Neither Android nor iOS can handle both annyang and wavesurfer mic at the same time.
-    // IDEA! Try using a Web Worker to see if a workaround is possible
-  }
-  */
 }
+
+/* CANCEL
+function startUniqueAudioInputVisualization() { // Called from js_for_the_sliding_navigation_menu & 134-mobile, 134-desktop
+  if (deviceDetector.device=="desktop" && !isApple) { parent.console.log("proceed to microphone activation - unique");
+    activateMicrophone(); // No need to pass any parameters » Use the absence of audioMeterDiv above » The line is below dataAvailable
+    uniqueAudiometerIsListening = true;
+
+    // Start non standard graphics » Also see updateTheUniqueAudiometer above
+  }
+}
+*/
+/* CANCEL
+function stopUniqueAudioInputVisualization() { // Called from js_for_the_sliding_navigation_menu & js_for_all_iframed_lesson_htmls & 134-mobile, 134-desktop
+  if (deviceDetector.device=="desktop" && !isApple) {
+    if (audioContext && uniqueAudiometerIsListening) {
+       audioContext.close();
+    }
+    if (mediaStream && uniqueAudiometerIsListening) {
+       mediaStream.getTracks().forEach(track => track.stop());
+    }
+    uniqueAudiometerIsListening = false;
+
+    // Stop non standard graphics
+  }
+}
+*/

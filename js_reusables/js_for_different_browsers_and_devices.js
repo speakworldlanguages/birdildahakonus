@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
 
 var willUserTalkToSpeechRecognition = false;
 var detectedBrowserName;
@@ -21,6 +21,11 @@ let isUnknownBrowserInTermsOfSpeechRecognition = false;
 //   annyang.debug(); // Uncomment to activate debug mode for speech recognition
 // }
 
+// On Android there are different system sliders that change the volume of sounds played by the device independently
+// This means: If system sounds are muted, user may not be able to hear the microphone ON OFF ding even if the webm/mp3 sounds of the app are audible
+// To get as safe as possible and to offer the best possible UX we display a visual help whenever SpeechRecognition is listening on Android
+const microphoneOnOffVisualIndicator = document.createElement("DIV"); // See annyang.js
+microphoneOnOffVisualIndicator.classList.add("toIndicateThatSpeechRecognitionIsON"); // See css_for_the_container_parent_html
 
 // Prevent screen dimming -> handles the Android case -> Starting with Safari 16.4 it is supported on iOS too
 // Only Firefox is the one who still won't do it as of August 2023
@@ -127,7 +132,7 @@ window.addEventListener('DOMContentLoaded', function(){
       // NOTE: When interimResults are ON, speech recognition throws an error on Samsung Browser, says it has already started.
       // NOTE: Chrome actually DOES NOT throw an error but it looks like it starts later than expected when interimResults are ON.
     } // Override the default value of 100
-    else {console.warn("annyang doesn't exist???");}
+    else {console.warn("SpeechRecognition doesn't exist???");}
   }
 
 
@@ -181,7 +186,7 @@ window.addEventListener('DOMContentLoaded', function(){
   if ("permissions" in navigator) {
     // According to caniuse
     // Safari 16.0 ~ 16.3 SUPPORT Permissions API without supporting [PermissionStatus change event]
-    // Safari 16.4 has full support with the change event
+    // Safari 16.4 ~ 16.6 appear to have full support with the change event but change event doesn't fire at all
     // Get the current status for mic from the browser
     const micPermissionPromise = navigator.permissions.query({name:'microphone'});
     micPermissionPromise.then(function(result1) { // Handle Windows & Android ...mainly Chrome
@@ -189,6 +194,7 @@ window.addEventListener('DOMContentLoaded', function(){
       // In case PermissionStatus API: change event is NOT SUPPORTED » Instead of onchange, we can check if the permission-state has actually changed with a setInterval and then clearInterval once user's answer is detected.
       if (result1.state == 'granted') {
         willUserTalkToSpeechRecognition = true; // Necessary: In case user is on an unknown browser that supports "Speech Recognition"
+        // -
         console.log("Microphone permission is already set to GRANTED");
       } else if (result1.state == 'denied') {
         willUserTalkToSpeechRecognition = false; // Shorten the waiting time when showing c1 c2 c3 visuals and change the button from SKIP to NEXT
@@ -322,6 +328,9 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
                 // This is a very rare case: It can only happen if
                 // 1 - This is a browser that allows microphone usage by default
                 // 2 - Before choosing his first target language user has changed the browser settings to allow microphone
+                // -
+                mobileCanGoFullscreenNow = true; // For a first-time-user whose browser's settings are SOMEHOW already good // See js_for_handling_fullscreen_mode » handleTouchForFullscreen
+                // -
                 console.log("Mic permission was somehow set to GRANTED without a prompt");
                 removeAllowMicrophoneBlinkerForcedly(); // Immediate HARD REMOVE » Never let anything appear
                 setTimeout(function () {     startTeaching(nameOfButtonIsWhatWillBeTaught);     },2002);
@@ -342,7 +351,7 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
               } finally {
                 if (result2.onchange) {
                   console.log("onchange appears to be supported");
-                  // INDEED: Tested Safari 16.6 and it did not respond to the change when [allow] button was clicked!!!
+                  // INDEED: Tested on MacOS with Safari 16.6 and it did not respond to the change when [allow] button was clicked!!!
                   if (isSafari) { console.log("but this is Safari and it could be lying");
                     changeEventIsSupported = false; // Thankfully: We can still react to user's choice
                   }
@@ -359,17 +368,20 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
 
               function proceedAccordingToUsersChoiceAboutMicPermission(event) {
                 console.log("User's answer was detected by listening to the CHANGE event");
+                // -
+                // -
                 const newPermissionState = event.target.state;
                 if (newPermissionState === 'granted') {
                   console.log('Microphone permission STATE has CHANGED TO GRANTED.');
                   micPermissionHasChangedToGrantedSound.play(); // See js_for_info_boxes_in_parent for the accompanying sound
                   localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed = "yes"; // Prevent all future prompts
+                  mobileCanGoFullscreenNow = true; // For a first-time-user who has just touched|clicked [Allow] // See js_for_handling_fullscreen_mode » handleTouchForFullscreen
                   willUserTalkToSpeechRecognition = true; // Necessary: In case user is on an unknown browser that supports "Speech Recognition"
                 } else if (newPermissionState === 'denied') {
                   console.log('Microphone permission STATE has CHANGED TO DENIED.');
                   willUserTalkToSpeechRecognition = false; // Shorten the waiting time when showing c1 c2 c3 visuals and change the button from SKIP to NEXT
                 } else {
-                  console.log('Microphone permission state has changed, but the user has not made a decision yet???');
+                  console.warn('Microphone permission state has changed, but the user has not made a decision yet???');
                   // Add your logic for handling when the permission state changes but the user hasn't made a decision yet here
                   // Is this ever possible in any browser?
                 }
@@ -424,6 +436,8 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
         // IN CASE: onchange isn't really supported (like Safari 16.x), we start a setInterval before the prompt appears and as a result it doesn't matter if its ticking is paused by the permission box or not.
         // BUT: On Samsung Browser onchange works fine so we don't use the setInterval » so better try calling annyang.abort() shortly after onchange fires
         // SEE: proceedAccordingToUsersChoiceAboutMicPermission() function above
+        // NEW fullscreening POLICY in October2023: We do not allow going fullscreen before the native [Allow microphone] dialog-box receives affirmative response from the user
+        // LET'S: Leave the isSamsungBrowser functional here even though the new policy makes it obsolete
         if (isSamsungBrowser || false || false) { // In Samsung Browser the [Would you like to allow] prompt gets hidden under the fullscreened document element
           if (hasGoneFullscreen) { // To reveal the prompt we have to exit fullscreen temporarily in Samsung Browser
             console.warn("Unblocking the permission prompt in Samsung Browser");
@@ -432,7 +446,7 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
           // Samsung Browser throws an error -> Failed to execute 'start' on 'SpeechRecognition', recognition has already started.
           // Chrome on Android can function with interimResults but it looks like it causes a delay with annyang.start
           // DEPRECATED » console.warn("SAMSUNG BROWSER: Will now turn off interim results to avoid already started error");
-          // DECISION: Disable interimResults on Android entirely
+          // FINAL DECISION: Disable interimResults on Android entirely
         }
         // ---
         setTimeout(function () {  handleMicFirstTurnOn();  annyang.start({ autoRestart: false });  },1750); // This will make the prompt box appear for allowing microphone usage
@@ -464,12 +478,15 @@ function testAnnyangAndAllowMic(nameOfButtonIsWhatWillBeTaught) { // See js_for_
                   if (previousState != currentState) {
                     // Change detected without any event listeners
                     clearInterval(checkInterval);
+                    // -
+                    // -
                     console.log("User's answer was detected by using a setInterval check");
                     if (currentState == 'granted') {
                       micPermissionHasChangedToGrantedSound.play(); // See js_for_info_boxes_in_parent for the accompanying sound
                       willUserTalkToSpeechRecognition = true; // In case user is on an unknown browser that supports "Speech Recognition"
                       console.log("User has chosen OK for microphone");
                       localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed = "yes"; // Prevent all future prompts
+                      mobileCanGoFullscreenNow = true; // For a first-time-user who has just touched|clicked [Allow] // See js_for_handling_fullscreen_mode » handleTouchForFullscreen
                     }
                     if (currentState == 'denied') {
                       willUserTalkToSpeechRecognition = false; // Shorten the waiting time when showing c1 c2 c3 visuals and change the button from SKIP to NEXT

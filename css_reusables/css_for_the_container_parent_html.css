@@ -266,7 +266,18 @@ footer{
 }
 @keyframes fadeInAndCoverEverything {  0%{ opacity:0; } 100%{ opacity:1; }  }
 
-.gentlemenAndLadiesButtonClass{
+.toIndicateThatSpeechRecognitionIsON { /*See js_for_different_browsers_and_devices.js*/
+  position: fixed; left: 0; top: 0; width: 100vw; width: 100dvw; height: 100%; height: 100dvh; pointer-events: none;
+  background-color: rgba(255, 255, 255, 0);
+  background-image: linear-gradient(   0deg, rgba(225,255,255,0.25), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   ),
+                    linear-gradient(  90deg, rgba(225,255,255,0.25), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   ),
+                    linear-gradient( 180deg, rgba(225,255,255,0.25), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   ),
+                    linear-gradient( -90deg, rgba(225,255,255,0.25), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   );
+  mix-blend-mode: normal;
+}
+
+
+.gentlemenAndLadiesButtonClass {
   box-shadow: 0px 0px 8px 0px white, 0px 0px 3px 0px white;
   position: fixed;
   background-color: white;
@@ -281,24 +292,24 @@ footer{
   z-index: 9990;
   cursor: url("/user_interface/images/cursor/button_cursor.png") 16 4,auto;
 }
-.gentlemenButtonClass{
+.gentlemenButtonClass {
   transform: translate(-50%,-109%) scale(1);
   animation-name: gentlemenSlideAnimation;
   animation-duration: 1.8s;
   animation-fill-mode: forwards;
   animation-timing-function: ease-in-out;
 }
-.gentlemenButtonClass:hover{
+.gentlemenButtonClass:hover {
   transform: translate(-50%,-109%) scale(1.05);
 }
-.ladiesButtonClass{
+.ladiesButtonClass {
   transform: translate(-50%,9%) scale(1);
   animation-name: ladiesSlideAnimation;
   animation-duration: 1.8s;
   animation-fill-mode: forwards;
   animation-timing-function: ease-in-out;
 }
-.ladiesButtonClass:hover{
+.ladiesButtonClass:hover {
   transform: translate(-50%,9%) scale(1.05);
 }
 @keyframes gentlemenSlideAnimation {
@@ -311,5 +322,5 @@ footer{
   10%{ top: 150%; }
   100%{ top: 50%; }
 }
-.bringGenderButtonToVerticalCenter{top: 50%; transform: translate(-50%,-50%) scale(1.15);}
-.fadeGenderButtonToZeroOpacity{opacity:0;}
+.bringGenderButtonToVerticalCenter {top: 50%; transform: translate(-50%,-50%) scale(1.15);}
+.fadeGenderButtonToZeroOpacity {opacity:0;}

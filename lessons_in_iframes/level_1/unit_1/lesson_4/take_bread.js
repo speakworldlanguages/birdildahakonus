@@ -1,10 +1,10 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without obtaining permission
+// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without consent
 
 
 /* __ SAVE PROGRESS TO LOCAL STORAGE __ */
-// See js_for_the_parent_all_browsers_all_devices to find how savedProgress.ja savedProgress.zh savedProgress.tr savedProgress.ar savedProgress.en are created
+// See js_for_the_parent_all_browsers_all_devices to find how savedProgress.ja savedProgress.zh savedProgress.tr etc are created
 const studiedLang = parent.langCodeForTeachingFilePaths.substr(0,2); // en_east en_west will use the same save-slot
 // !!! VERY CAREFUL: Watch the lesson name!!!
 parent.savedProgress[studiedLang].lesson_TAKEBREAD_IsViewed=true; // Create and add... or overwrite the same thing
@@ -19,9 +19,7 @@ let explanationB = "…"; // Warning: Without an initial value it returns UNDEFI
 fetch(explanationPathA,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ explanationA = contentOfTheTxtFile; });
 fetch(explanationPathB,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ explanationB = contentOfTheTxtFile; });
 /* __ TEXT TO BE INJECTED INTO NOTIFICATION BOX AT THE END __ */
-const noteAtTheEndOfLessonPath = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_end_of_lesson.txt"; // Could you figure out how to say eat
-let couldYouFigureOutHowToSayEat = " ";
-fetch(noteAtTheEndOfLessonPath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ couldYouFigureOutHowToSayEat = contentOfTheTxtFile; });
+let couldYouFigureOutHowToSayEat = null; // Will be displayed for all languages // See window-load below
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
 // Find soundFileFormat in js_for_all_iframed_lesson_htmls
@@ -109,14 +107,23 @@ function loadingIsCompleteFunction() {
       // createAndHandleInfoBoxType1BeforeLessonStarts will fire startTheLesson 1.5 seconds after its OK button is clicked/touched
     });
   }
+  else if (studiedLang == "??") {
+
+  }
   else {
     startTheLesson(); // Call it now if it was not to be called from within createAndHandleInfoBoxType1BeforeLessonStarts() in js_for_all_iframed_lesson_htmls.js
   }
+  //--- By the way: Get the end of lesson text ready
+  const noteAtTheEndOfLessonPath = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_end_of_lesson.txt"; // Could you figure out how to say eat
+  setTimeout(function () {
+    // Will show for all languages
+    fetch(noteAtTheEndOfLessonPath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ couldYouFigureOutHowToSayEat = contentOfTheTxtFile; });
+  }, 5000);
 }
 
 function startTheLesson() {
-  // User must listen to wavesurfer vocabulary box no matter what language he/she is studying
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox."+soundFileFormat;  // In case of "ar" wavesurfer box will play the verb root in male conjugation even if the user is female
+  // User must listen to pronunciation-teacher vocabulary box no matter what language he/she is studying
+  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox."+soundFileFormat;  // In case of "ar" pronunciation-teacher-box will play the verb root in male conjugation even if the user is female
   const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
   fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
   // See js_for_info_boxes_in_lessons » iframe-lesson level
@@ -877,8 +884,8 @@ function whenWin2happens() {
   let proceedTime;
   switch (parent.speedAdjustmentSetting) { case "slow": proceedTime = 8500; break;    case "fast": proceedTime = 5500; break;    default: proceedTime = 7000; }
   new SuperTimeout(function () {
-    if (couldYouFigureOutHowToSayEat.length > 2) { // This means fetch successfully got the text
-      createAndHandleInfoBoxType1AmidLesson(); putNotificationTxtIntoThisP2.innerHTML = couldYouFigureOutHowToSayEat;
+    if (couldYouFigureOutHowToSayEat) { // This means fetch successfully got the text
+      createAndHandleInfoBoxType1AmidLesson(); putNotificationTxtIntoThisP2.innerHTML = couldYouFigureOutHowToSayEat; // Will show for all languages
       // continueLesson() will be fired from within createAndHandleInfoBoxType1AmidLesson()
     } else {
       continueLesson();
@@ -886,7 +893,7 @@ function whenWin2happens() {
   }, proceedTime);
 }
 
-function continueLesson() {
+function continueLesson() { // In this case, it means exiting the lesson as there is nothing left to do
 
   /* Save progress */
   parent.savedProgress[studiedLang].lesson_TAKEBREAD_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
@@ -911,6 +918,7 @@ function continueLesson() {
       new SuperTimeout(function () { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
     } else { parent.console.warn("THE DEVICE IS OFFLINE (detected at the end of lesson");
       const isCached = checkIfNextLessonIsCachedAndRedirectIfNot(121); // See js_for_all_iframed_lesson_htmls
+      // As of October 2023 we are not making 100% certain if assets for author's notice are cached » We expect it will be cached 99.99% of the time if everything for 121 is cached
       if (isCached) { parent.console.warn("WILL TRY TO CONTINUE OFFLINE");
         new SuperTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
       }

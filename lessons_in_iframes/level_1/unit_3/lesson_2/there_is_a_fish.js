@@ -1,10 +1,10 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without obtaining permission
+// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without consent
 
 
 /* __ SAVE PROGRESS TO LOCAL STORAGE __ */
-// See js_for_the_parent_all_browsers_all_devices to find how savedProgress.ja savedProgress.zh savedProgress.tr savedProgress.ar savedProgress.en are created
+// See js_for_the_parent_all_browsers_all_devices to find how savedProgress.ja savedProgress.zh savedProgress.tr etc are created
 const studiedLang = parent.langCodeForTeachingFilePaths.substr(0,2); // en_east en_west will use the same save-slot
 // !!! VERY CAREFUL: Watch the lesson name!!!
 parent.savedProgress[studiedLang].lesson_THEREISAFISHINTHEWATER_IsViewed=true; // Create and add... or overwrite the same thing
@@ -22,12 +22,9 @@ fetch(translationPath,myHeaders).then(function(response){return response.text();
   translation2 = contentOfTheTxtFile.split("|")[1];
   translation3 = contentOfTheTxtFile.split("|")[2];
 });
+
 /* __ TEXT TO BE INJECTED INTO NOTIFICATION BOX AT THE END __ */
-const noteAtTheEndOfLessonPath = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_arabic_ma_shayunma.txt"; // ONLY 1 KB
-let differenceBetweenWaterMaAndWhatMa = " ";
-if (studiedLang == "ar") {
-  fetch(noteAtTheEndOfLessonPath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ differenceBetweenWaterMaAndWhatMa = contentOfTheTxtFile; });
-}
+let noteToBeDisplayedAtTheEndOfThisLesson = null; // See what follows after window-load below // Will show only for Arabic
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
 // Find soundFileFormat in js_for_all_iframed_lesson_htmls
@@ -115,7 +112,7 @@ const startingPositionOfTheFish = 18; // vmin
 
 /* SET OFF */
 window.addEventListener('load', loadingIsCompleteFunction, { once: true });
-// NOTE THAT: In this case the grammar [info box] must appear after the wavesurfer [listen box]
+// NOTE THAT: In this case the grammar [info box] must appear after the pronunciation-teacher-box [listen box]
 function loadingIsCompleteFunction() {
   swimmingFishContainer.style.transform = "translateX("+(0+startingPositionOfTheFish).toFixed(3)+"vmin)";
   // --
@@ -136,16 +133,28 @@ function loadingIsCompleteFunction() {
       // createAndHandleInfoBoxType1BeforeLessonStarts will fire startTheLesson 1.5 seconds after its OK button is clicked/touched
     });
   }
-  else if (false) { // Add another here if necessary
+  else if (studiedLang == "??") { // Add another here if necessary
 
   }
   else {
     startTheLesson(); // Call it now if it was not to be called from within createAndHandleInfoBoxType1BeforeLessonStarts() in js_for_all_iframed_lesson_htmls.js
   }
+  //---
+  // By the way: Get the end of lesson texts ready
+  setTimeout(function () {
+    const noteAtTheEndOfLessonPath = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_arabic_ma_shayunma.txt"; // ONLY 1 KB
+    if (studiedLang == "ar") {
+      fetch(noteAtTheEndOfLessonPath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ noteToBeDisplayedAtTheEndOfThisLesson = contentOfTheTxtFile; });
+    } else if (studiedLang == "??") {
+
+    } else {
+      // Let noteToBeDisplayedAtTheEndOfThisLesson stay null in order to skip the end of lesson box
+    }
+  }, 5000);
 }
 
 function startTheLesson() {
-  // User must listen to wavesurfer vocabulary box no matter what language he/she is studying
+  // User must listen to pronunciation-teacher vocabulary box no matter what language he/she is studying
   const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox."+soundFileFormat;
   const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
   fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
@@ -512,7 +521,7 @@ function makeTheFishJumpOutOfWater() {
 
 let anOutroBoxIsNowShowing = false; // 1 - To block keyboard input when needed 2 - To exit RAF loop
 function handleWinning() {
-  // Display wavesurfer box about the meaning of "a thing" or "something"
+  // Display pronunciation-teacher-box about the meaning of "a thing" or "something"
   const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox."+soundFileFormat;
   const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_vocabulary_outro_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
   fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
@@ -534,16 +543,14 @@ function handleWinning() {
 }
 let checkFishSpeedInterval; let countElapsed = 0;
 function vocabularyBoxIsClosed_LESSON_OUTRO() { // Called from createAndHandleListenManyTimesBox with outro enabled by second parameter
-  if (studiedLang == "ar") {
+  if (noteToBeDisplayedAtTheEndOfThisLesson) { // This means fetch successfully got the text
     // something shay-un ma & water ma » MA-MA difference
     let boxAppearTime; switch (parent.speedAdjustmentSetting) { case "slow": boxAppearTime = 3500; break;    case "fast": boxAppearTime = 1500; break;    default: boxAppearTime = 2500; }
     new SuperTimeout(function () {
-      if (differenceBetweenWaterMaAndWhatMa.length > 2) { // This means fetch successfully got the text
-        createAndHandleInfoBoxType1AmidLesson(); putNotificationTxtIntoThisP2.innerHTML = differenceBetweenWaterMaAndWhatMa;
-        // continueLesson() will be fired from within createAndHandleInfoBoxType1AmidLesson()
-      } else { continueLesson(); } // Hopefull will never happen » Proceed without the end of lesson info box about arabic because fetch couldn't get the file
+      createAndHandleInfoBoxType1AmidLesson(); putNotificationTxtIntoThisP2.innerHTML = noteToBeDisplayedAtTheEndOfThisLesson;
+      // continueLesson() will be fired from within createAndHandleInfoBoxType1AmidLesson()
     }, boxAppearTime);
-  } else {
+  } else { // Nothing to display
     continueLesson();
   }
 } // End of vocabularyBoxIsClosed_LESSON_OUTRO

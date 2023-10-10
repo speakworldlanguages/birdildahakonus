@@ -1,0 +1,1 @@
+﻿Arapça'da bütün varlıklar ya eril ya da dişi gramer kuralına uymak zorundadır. Örneğin varlıkların özellikleri hakkında konuşurken eril ise farklı, dişi ise farklı ses sıralaması kullanılarak niteliği belirtilir. Nitelik bildiren bir kelimenin eril çekimi ile dişi çekiminin söylenişleri farklı olsa da bunlar iki ayrı kelime değildirler çünkü kökleri aynıdır.

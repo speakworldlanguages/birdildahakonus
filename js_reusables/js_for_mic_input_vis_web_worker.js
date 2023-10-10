@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
 
 // This is js_for_mic_input_vis_web_worker.js
 
@@ -12,7 +12,7 @@ self.onmessage = function (event) {
   if (task === 'filterAndCalculate') {
     const result = processDataForArray(data);
     self.postMessage({ type: 'dataAvailable', yield: result });
-  } else if (task === 'setStartIndexAndEndIndex') {
+  } else if (task === 'setStartIndexAndEndIndex') { // High-pass Low-pass limits
     const result = data;
     console.log("start index in worker = " + result[0]); // Works OK
     console.log("end index in worker = " + result[1]); // Works OK

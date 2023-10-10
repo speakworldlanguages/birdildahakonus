@@ -1,14 +1,22 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
 let skipInUserInterfaceLanguage = "⏩";
 let nextInUserInterfaceLanguage = "⏩";
 let hoverSoundForGlassyButtons;
 let clickSoundForGlassyButtons;
 // ASIDE elements are used as a new/other TYPE OF BUTTON
-window.addEventListener('DOMContentLoaded', function(){
+let theButtonForSkippingSpeechInputVocabularyTest = null;
+window.addEventListener('DOMContentLoaded', function() {
 
-  const theButtonForSkippingSpeechInputVocabularyTest = document.getElementById('theTextInsideSkipNextButtonID');
+  theButtonForSkippingSpeechInputVocabularyTest = document.getElementById('theTextInsideSkipNextButtonID');
+  if (theButtonForSkippingSpeechInputVocabularyTest) {
+    window.addEventListener('load', handleGiveUpButton, { once: true });
+  }
+
+}, { once: true });
+// ---
+function handleGiveUpButton() {
   theButtonForSkippingSpeechInputVocabularyTest.innerHTML = skipInUserInterfaceLanguage;
   const filePathForGiveUpButtonInnerHTML = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-give_up_and_skip.txt"; // Seems to be OK without DOMContentLoaded
   const filePathForNextButtonInnerHTML = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-continue_to_next.txt"; // Seems to be OK without DOMContentLoaded
@@ -35,13 +43,6 @@ window.addEventListener('DOMContentLoaded', function(){
     // Glassy sound for touchstart
     // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
     clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
-    /* DEPRECATE
-    if (isApple) { // isApple is copied from the parent window by js_for_all_iframed_lesson_htmls
-      clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click.mp3"]  });
-    } else {
-      clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click.webm"]  });
-    }
-    */
   } else {
     giveUpButtonASIDE.classList.add('glassmorphismOnDesktops'); // See css_for_all_iframed_lesson_htmls.css
     giveUpButtonASIDE.addEventListener("mousedown", giveUpButtonIsClickedFunction, { once: true });
@@ -49,15 +50,6 @@ window.addEventListener('DOMContentLoaded', function(){
     // Glassy sounds for hover and click
     hoverSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_hover."+soundFileFormat]  }); // DESKTOPS ONLY! // See js_for_all_iframed_lesson_htmls to find soundFileFormat
     clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls to find soundFileFormat
-    /* DEPRECATE
-    if (isApple) { // isApple is copied from the parent window by js_for_all_iframed_lesson_htmls
-      hoverSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_hover.mp3"]  }); // DESKTOPS ONLY!
-      clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click.mp3"]  });
-    } else {
-      hoverSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_hover.webm"]  }); // DESKTOPS ONLY!
-      clickSoundForGlassyButtons = new parent.Howl({  src: ["/user_interface/sounds/glass_button_click.webm"]  });
-    }
-    */
   }
   // ---
   function mouseEnterGlassy() {  hoverSoundForGlassyButtons.play();  }
@@ -80,5 +72,5 @@ window.addEventListener('DOMContentLoaded', function(){
     setTimeout(function () { stopListeningAndProceedToNext(); },100); // See each lesson's own js » Might do different things depending on the lesson
     // NOTE THAT typeof might become necessary to detect the existence of variables and functions
   }
-
-}, { once: true });
+}
+// End of handleGiveUpButton

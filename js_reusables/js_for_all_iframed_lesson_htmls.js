@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
 
 // NOTE THAT: THERE ARE 2 EXCEPTIONS where js_for_all_iframed_lesson_htmls is not used: blank.html & user_interface/screens/??/you_are_offline.html
 
@@ -40,9 +40,10 @@ if (deviceDetector.isMobile) { // Let's allow bubbling by omitting event.stopPro
 
 // ---
 let hideCursorTimeout = null;
+// Used by lesson [114 take bread] and [132 there is a fish]
 function hideTheCursorAndHandleAutoUnhideAutoHide() { // Must improve this in case it needs to be cancellable
   hideTheCursor(); //console.log("Will auto-hide the cursor when idle for 3 seconds");
-  function hideTheCursor() { // As soon as or shortly after wavesurfer box is closed
+  function hideTheCursor() { // As soon as or shortly after pronunciation-teacher-box is closed
     main.classList.remove("defaultCursor"); main.classList.add("noCursor"); // Hide the cursor
     setTimeout(function () { main.classList.remove("defaultCursor"); main.classList.add("noCursor"); }, 75); // Double-checking could be necessary
     setTimeout(function () { document.addEventListener("mousemove",showTheCursor,{once:true}); }, 100);
@@ -241,7 +242,7 @@ window.onbeforeunload = function() {
 
   // CAUTION: THESE ARE MAINLY FOR THE CASE WHERE USER NAVIGATES AWAY FROM THE LESSON WITHOUT NEITHER SUCCESS NOR GIVEUPSKIP
   // (like using the HOME button to go to progress chart or browser's back button)
-  // Turn OFF annyang if it was ON
+  // Turn OFF SpeechRecognition if it was ON
   // ISSUE THAT NEEDS SERIOUS CARE: Safari doesn't allow mic permanently; it allows for only 1 listening session and prompts for permission everytime mic restarts
   if (parent.annyang) { // DO NOT OMIT! Firefox and other no-speech browsers need this "if (parent.annyang)" to let the app work without Web Speech API.
     // This is like a "making it double-safe" thing // stopListeningAndProceedToNext() already has parent.annyang.abort();
@@ -253,9 +254,14 @@ window.onbeforeunload = function() {
     }
   }
   // Check if the functions exist in the lessons own js (like bread.js, water.js etc) before trying to call them.
-  if (typeof stopAudioInputVisualization === "function") {
-    stopAudioInputVisualization(); // Stop Wavesurfer and turn off the microphone. See js_for_microphone_input...
+  if (typeof stopStandardAudioInputVisualization === "function") {
+    stopStandardAudioInputVisualization(); // Stop AUDIOMETER and turn off the microphone. See js_for_microphone_input...
   }
+  /* CANCEL
+  if (typeof stopUniqueAudioInputVisualization === "function") {
+    stopUniqueAudioInputVisualization(); // Stop AUDIOMETER and turn off the microphone. See js_for_microphone_input...
+  }
+  */
   if (typeof unloadTheSoundsOfThisLesson === "function") {
     unloadTheSoundsOfThisLesson(); // Every time defined with a different list in the lesson. See the unique js file of each lesson.
   }

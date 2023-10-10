@@ -1,0 +1,207 @@
+canvas {
+  background-color: rgba(0,0,0,0);
+  mix-blend-mode: overlay;
+  /* pointer-events: none; See index.html */
+  position: fixed; /*z-index won't work if left static*/
+  left:0px; top:0px;
+  animation-duration: 6s; animation-fill-mode: forwards;
+}
+@keyframes revealCanvas {  0% {opacity: 0;}  100% {opacity: 1;}  }
+
+.moveUpAndGoBeyondScreenLimit{
+  animation-name: flyAwayUpwards;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+@keyframes flyAwayUpwards { /*See singlesDivID in css_for_photos_and_videos_teach_a_new_word*/
+  0% {transform: translate(-50%,-50%) translateY(0vh);}
+  100% {transform: translate(-50%,-50%) translateY(-100vh);}
+}
+
+.moveUpAndComeToTheCenterOfScreen{
+  animation-name: flyInFromDownwards;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+@keyframes flyInFromDownwards {
+  0% {margin-top: 100vh;}
+  100% {margin-top: 0vh;}
+}
+
+.allOfTheGame{
+  perspective: 1000px; /*Let all 6 cards obey the same vanishing point*/
+  position: fixed;
+  left: 50%; top:50%;
+  transform: translate(-50%,-50%) scale(1.0);
+  margin-top: 100vh; /*Using transform would improve performance on mobile, but then the scale() value would also need to be handled in this «not so straightforward» case*/
+  overflow: visible;
+  cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto;
+}
+.allOfTheGame:hover{ cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto; }
+
+@media (orientation:portrait) {
+  .allOfTheGame{width:360px; height:540px;}
+  @media (max-width: 600px) {  .allOfTheGame{transform: translate(-50%,-50%) scale(0.9);}  }
+  @media (max-width: 500px) {  .allOfTheGame{transform: translate(-50%,-50%) scale(0.8);}  }
+  @media (max-width: 400px) {  .allOfTheGame{transform: translate(-50%,-50%) scale(0.7);}  }
+  @media (max-width: 300px) {  .allOfTheGame{transform: translate(-50%,-50%) scale(0.6);}  }
+}
+@media (orientation:landscape) {
+  .allOfTheGame{height:360px; width:540px;}
+  @media (max-height: 600px) {  .allOfTheGame{transform: translate(-50%,-50%) scale(0.9);}  }
+  @media (max-height: 500px) {  .allOfTheGame{transform: translate(-50%,-50%) scale(0.8);}  }
+  @media (max-height: 400px) {  .allOfTheGame{transform: translate(-50%,-50%) scale(0.7);}  }
+  @media (max-height: 300px) {  .allOfTheGame{transform: translate(-50%,-50%) scale(0.6);}  }
+}
+
+#coverForTheUnchosenOnesID{
+  /* To be able to manipulate z-index correctly this has to stay within allOfTheGame which is already set with position:fixed */
+  /* Consequently, setting position: fixed here introduces buggy behavior » It functions as if it was set absolute » top:0 left:0 is assigned wrt the container div and not the browser window */
+  left: -100vw; top: -100vh; width: 300vw; height:300vh; /*Yes it is H-A-C-K-S-O-M-E but it works*/
+  position: absolute; /*Not certain if it makes a difference in Safari » In Chrome 109.0.x it doesn't*/
+  /*TEST WITH THESE top:-110px; left:-110px; width:30vw; width:30dvw; height: 100%; height: 100dvh; */
+  overflow: hidden;
+}
+
+.containerForOneOfSixPerfectFitPieces{
+  transform-style: preserve-3d; /*Use the perspective of the parent » Let all 6 cards obey the same vanishing point*/
+  overflow: visible;
+  width: 180px; height: 180px;
+  position: absolute;
+  left: calc(50% - 90px);
+  top: calc(50% - 90px);
+  transform: translateX(0vw) translateY(0vh); /*rotateY(45deg)*/
+  transition-property: left, top, transform;
+  transition-duration: 0.6s,0.6s,0.6s;
+  transition-timing-function: ease-out;
+}
+
+.containerForRoundedColorCards{ /*mouseenter mouseleave mousedown*/
+  width:150px; height:150px; margin: 15px;
+  scale: 1;
+  transition: scale 0.3s;
+  border-radius: 26px;
+  box-shadow: rgba(85,119,142, 0.5) 0px 0px 12px;
+  border: 3px solid #e4e8ec;
+  outline: #bcc9d3 4px solid;
+  transform: scale(1);
+  /* transform-style: preserve-3d; */
+  /* We will not use translateZ on roundedColorCards » no need for preserve-3d */
+}
+
+.roundedColorCards{
+  pointer-events: none;
+  width:100%; height:100%;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/*Use flat fill colors in case avif files could not be loaded - Tested, it works*/
+#white{background-color: white;}
+#green{background-color: green;}
+#blue{background-color: blue;}
+#yellow{background-color: yellow;}
+#red{background-color: red;}
+#black{background-color: black;}
+
+
+/* backface-visibility: hidden; */
+/* display: flex; align-items: center; justify-content: center; */
+/* transform-style: preserve-3d; */
+
+.theCardsBackFace{
+  pointer-events: none;
+  width:150px; height:150px;
+  mix-blend-mode: overlay;
+  opacity: 0;
+}
+
+#mobileTouchArea{
+  position: fixed;
+  top:0; left:0; width:100vw; width:100dvw; height: calc(100% - 40px); height: calc(100dvh - 40px);
+  overflow: visible;
+}
+
+.whenFingerIsOnIt{animation: fingerOver 0.15s linear; animation-fill-mode: forwards; border-width: 2px; outline-width: 2px;}
+@keyframes fingerOver {     0% { transform: scale(1); }  100% { transform: scale(1.12); }     }
+.whenFingerIsOffIt{animation: fingerAway 0.15s linear; animation-fill-mode: forwards;}
+@keyframes fingerAway {     0% { transform: scale(1.12); }  100% { transform: scale(1); }     }
+
+.whenItIsTouched{ animation: buttonTouch 0.25s linear; animation-fill-mode: forwards; border-width: 2px; outline-width: 2px; } /*mousedown on containerForRoundedColorCards*/
+@keyframes buttonTouch {
+  0% { transform: scale(1.12);    }
+  50% { transform: scale(0.5); }
+  100% { transform: scale(1.12);  }
+}
+
+.scaleUp{ scale: 1.12; } /*mouseenter mouseleave on containerForRoundedColorCards*/
+
+.whenItIsClicked{ animation: buttonClick 0.2s linear; animation-fill-mode: forwards; border-width: 2px; outline-width: 2px; } /*mousedown on containerForRoundedColorCards*/
+@keyframes buttonClick {
+  0% { transform: scale(1);    }
+  50% { transform: scale(0.5); }
+  100% { transform: scale(1);  }
+}
+
+/*
+ease-in: slow at the beginning, fast/abrupt at the end
+ease-out: fast/abrupt at the beginning, slow at the end
+*/
+
+.whenPairIsFoundDesktop{ animation: pairFoundDesktop 0.9s ease-in; animation-fill-mode: forwards; }
+@keyframes pairFoundDesktop {
+  0% { transform: scale(1) rotateY(180deg); opacity: 1; }
+  20% { opacity: 1; }  80% { opacity: 0.1; }
+  100% { transform: scale(0.1) rotateY(180deg); opacity: 0; }
+}
+.whenPairIsFoundMobile{ animation: pairFoundMobile 0.9s ease-in; animation-fill-mode: forwards; }
+@keyframes pairFoundMobile {
+  0% { transform: scale(1.12) rotateY(180deg); opacity: 1; }
+  20% { opacity: 1; }  80% { opacity: 0.1; }
+  100% { transform: scale(0.1) rotateY(180deg); opacity: 0; }
+}
+
+.colorCardFlipDesktop{ animation: spinDesktop 1.6s ease-in-out; animation-fill-mode: forwards; }
+@keyframes spinDesktop {
+  0% { transform: rotateY(0deg); filter: brightness(1); }
+  50% { filter: brightness(0.75); }
+  100% { transform: rotateY(180deg); filter: brightness(1); }
+}
+.colorCardFlipMobile{ animation: spinMobile 1.6s ease-in-out; animation-fill-mode: forwards; }
+@keyframes spinMobile {
+  0% { transform: rotateY(0deg) scale(1.12); filter: brightness(1); }
+  50% { filter: brightness(0.75); }
+  100% { transform: rotateY(180deg) scale(1.12); filter: brightness(1); }
+}
+
+/*REMEBER: Remove when no longer needed to be able to reset and restart*/
+.appearAtFiftyPercent{ animation: at50percent 1.6s ease-in-out; animation-fill-mode: forwards; }
+@keyframes at50percent {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  51% { opacity: 0.9;}
+  100% { opacity: 1; }
+}
+.disappearAtFiftyPercent{ animation: atFiftyPercent 1.6s ease-in-out; animation-fill-mode: forwards; }
+@keyframes atFiftyPercent {
+  0% { opacity: 1; }
+  50% { opacity: 0.9; }
+  51% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.returnToNormalDesktop{ animation: backToNormalDesktop 1.6s ease-in-out; animation-fill-mode: forwards; }
+@keyframes backToNormalDesktop {
+  0% { transform: rotateY(180deg); filter: brightness(1); }
+  50% { filter: brightness(0.75); }
+  100% { transform: rotateY(0deg); filter: brightness(1); }
+}
+.returnToNormalMobile{ animation: backToNormalMobile 1.6s ease-in-out; animation-fill-mode: forwards; }
+@keyframes backToNormalMobile {
+  0% { transform: rotateY(180deg) scale(1.12); filter: brightness(1); }
+  50% { filter: brightness(0.75); }
+  100% { transform: rotateY(0deg) scale(1); filter: brightness(1); }
+}

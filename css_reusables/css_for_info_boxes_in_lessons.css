@@ -6,7 +6,7 @@
 /*Box type 2*/
 .vocabularyBG:hover{ cursor: url("/user_interface/images/cursor/vibrant_cursor.png") 16 4,auto; }
 .vocabularyRoundedBox:hover{ cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,auto; }
-.buttonsUnderWavesurfer:hover{ cursor: url("/user_interface/images/cursor/glow_cursor.png") 16 4,auto; }
+.buttonsAtTheBottomOfThePronunciationBox:hover{ cursor: url("/user_interface/images/cursor/glow_cursor.png") 16 4,auto; }
 
 /* STANDARD WHITE INFO BOX */
 .notificationBG{
@@ -22,7 +22,7 @@
   border-radius: 2.5vmin;
   box-shadow: rgba(141, 149, 155, 0.48) 0px -5px 16px 0px, rgba(255, 255, 255, 0.8) 0px 5px 16px 0px;
   font-size: 3.5vmin;
-  color: rgb(130,155,173);
+  color: rgb(20,65,99); /*Used to be 130,155,173 until October2023*/
   margin: 5.5vmin; /*Will take effect on very narrow screens only*/
   padding-left: 4vmin; padding-right: 4vmin; padding-top: 5vmin; padding-bottom: 5vmin;
   /* text-align: justify; */ /*Must use justify with latin fonts only - so will set it via script conditionally*/
@@ -40,31 +40,38 @@
   min-width:80px;  min-height:62px;
   padding-left: 14px; padding-right: 14px; padding-top: 12px; padding-bottom: 9px;
   margin-top: 5vmin;
-  background-color: rgb(154,170,182);
+  /* background-color: rgb(154,170,182); old color used until October2023 */
+  background-color: rgb(109,133,152); /*Tried 104,127,145 but better if just a tiny bit brighter*/
   border-radius: 1.5vmin;
-  border: 3px solid rgb(124, 144, 160);
+  /* border: 3px solid rgb(124,144,160); old color used until October2023 */
+  border: 3px solid rgb(65, 92, 116); /*Tried 62,88,111 but better if just a tiny bit brighter*/
   color: white;
   display: flex;  justify-content: center;  align-items: center;
   text-shadow: none;
+  transition-property: background-color, border-color;
+  transition-duration: 0.3s, 0.3s;
 }
 .okButtonUnderNotification:hover{
-  background-color: rgb(93,114,137);
-  border: 3px solid rgb(73, 94, 110);
+  /* background-color: rgb(93,114,137); old color used until October2023 */
+  background-color: rgb(74,102,124);
+  /* border: 3px solid rgb(73, 94, 110); old color used until October2023 */
+  border: 3px solid rgb(25, 54, 84);
 }
+/* The reason for applying :active at parent but not here must be because the whole box scales down and fades away with mousedown */
 /* END OF standard white info box */
 
 
-/*THE WAVESURFER TEACHER BOX*/
+/*THE PRONUNCIATION TEACHER BOX*/
 .vocabularyBG{
   position: fixed; top:0; left:0; width:100vw; width:100dvw; height:100%; height:100dvh; /*height used to be 100vh*/
   background-color: rgba(41,53,64,0.5);
   display: flex; justify-content: center; align-items: center;
   z-index: 200; /* Just a guesstimation */
-  animation-name: vocabularyWavesurferAppearsBG; animation-duration: .5s; animation-fill-mode: forwards;
+  animation-name: vocabularyPronunciationAppearsBG; animation-duration: .5s; animation-fill-mode: forwards;
 }
 
-@keyframes vocabularyWavesurferAppearsBG {  0%{opacity:0;} 100%{opacity:1}  }
-@keyframes vocabularyWavesurferDisappearsBG {  0%{opacity:1;} 100%{opacity:0}  }
+@keyframes vocabularyPronunciationAppearsBG {  0%{opacity:0;} 100%{opacity:1}  }
+@keyframes vocabularyPronunciationDisappearsBG {  0%{opacity:1;} 100%{opacity:0}  }
 .vocabularyRoundedBox{
   display: flex;  justify-content: space-around;  align-items: center;  flex-direction: column;
   min-width: 33vw; max-width: 86vw;  min-height: 42vh;
@@ -91,7 +98,7 @@
 @media (max-width: 400px) , (max-height: 400px) {  .vocabularyRoundedBox {   font-size: 5.3vmin;  }  }
 
 .vocabularyButtonsContainer{ display: flex; gap: 12px; }
-.buttonsUnderWavesurfer{
+.buttonsAtTheBottomOfThePronunciationBox{
   min-width:100px;  min-height:62px;
   padding: 10px;
   margin-top: 3vmin; /*margin-left: 4px; margin-right: 4px;*/
@@ -106,21 +113,30 @@
   transition: transform .1s, background-color .25s, border-color .5s;
 }
 
-@media (min-width:1000px) { /*We don't want hover on phones and tablets*/
-  .buttonsUnderWavesurfer:hover{ /* For desktops (hopefully) */
+.buttonsAtTheBottomOfThePronunciationBoxMOBILE{}
+.buttonsAtTheBottomOfThePronunciationBoxMOBILE:active{ transform: scale(1.1); }
+.buttonsAtTheBottomOfThePronunciationBoxDESKTOP{}
+.buttonsAtTheBottomOfThePronunciationBoxDESKTOP:hover{ transform: scale(1.07); background-color: #0f161e; border: 2px solid black; }
+.buttonsAtTheBottomOfThePronunciationBoxDESKTOP:active{ transform: scale(0.93); }
+/*We don't want hover on phones and tablets*/
+/* 1000px min-width is the way it should NOT be done - NOT GOOD PRACTICE!*/
+/* For desktops (hopefully)
+@media (min-width:1000px) {
+  .buttonsAtTheBottomOfThePronunciationBox:hover{
     transform: scale(1.07);
-    background-color: #0f161e;/*Almost black*/
-    border: 2px solid black; /*#344552*/
+    background-color: #0f161e;
+    border: 2px solid black;
   }
-  .buttonsUnderWavesurfer:active{ /* For desktops (hopefully) */
+  .buttonsAtTheBottomOfThePronunciationBox:active{
     transform: scale(0.93);
   }
-}
-@media (max-width:999px) { /* For tablets and phones (hopefully) */
-  .buttonsUnderWavesurfer:active{
+} */
+/* For tablets and phones (hopefully)
+@media (max-width:999px) {
+  .buttonsAtTheBottomOfThePronunciationBox:active{
     transform: scale(1.1);
   }
-}
+} */
 
 .startButtonUnderWavesurfer{ animation-name: slideAndAppear; animation-duration: 1s; animation-fill-mode: forwards; }
 @keyframes slideAndAppear { 0%{opacity:0; margin-right: -100px;}  100%{opacity:1; margin-right: 0px;} }

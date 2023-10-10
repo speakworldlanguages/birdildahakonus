@@ -39,13 +39,43 @@ nav:hover{ cursor: url("/user_interface/images/cursor/default_cursor.png") 16 4,
 }
 @supports (height: 100dvw) {  .allUnitsInALevelContainer{transform: translateX(0dvw);}  }
 
-/*
-@media (orientation:landscape){
+.sameForBothLeftAndRightButtons{
+  display:block; position:fixed; background-color:rgba(255,255,255,0.2); border-radius: 7px;
+  background-size: 62% 62%; background-position: center; background-repeat: no-repeat;
+  transition-property: background-color, opacity, transform;
+  transition-duration: 0.3s, 1s, 1.4s;
+  width:75px; height:75px; /*When both dimensions are bigger than 800px*/
+}
+@media (max-width: 800px) and (max-height: 800px) { .sameForBothLeftAndRightButtons{width:70px; height:70px;} } /*Both dimensions are smaller than 800px*/
+@media (max-width: 700px) and (max-height: 700px) { .sameForBothLeftAndRightButtons{width:65px; height:65px;} } /*Both dimensions are smaller than 700px*/
+@media (max-width: 600px) and (max-height: 600px) { .sameForBothLeftAndRightButtons{width:60px; height:60px;} } /*Both dimensions are smaller than 600px*/
+@media (max-width: 500px) and (max-height: 500px) { .sameForBothLeftAndRightButtons{width:55px; height:55px;} } /*Both dimensions are smaller than 500px*/
+@media (max-width: 400px) and (max-height: 400px) { .sameForBothLeftAndRightButtons{width:50px; height:50px;} } /*Both dimensions are smaller than 400px*/
 
+.sameForBothLeftAndRightButtons:hover{
+  cursor: url("/user_interface/images/cursor/glow_cursor.png") 16 4,auto;
+  background-color:rgba(255,255,255,0.3);
+}
+
+.toTheRightButton{ background-image: url('/user_interface/images/arrow_right.webp');  }
+.toTheLeftButton{  background-image: url('/user_interface/images/arrow_left.webp'); }
+@media (orientation:landscape){
+  /*Calculate HALF of the height for allLevelsInTheAppContainer*/
+  .toTheRightButton{top:calc(50% - 11vmin + 3vmin); transform: translateY(-50%); right:8vw;}
+  .toTheLeftButton{ top:calc(50% - 11vmin + 3vmin); transform: translateY(-50%); left:8vw; }
+  .resolvePortraitOverlapForRightButton{ animation-name: none; }
+  .resolvePortraitOverlapForLeftButton{ animation-name: none; }
 }
 @media (orientation:portrait){
-
+  .toTheRightButton{bottom: calc(90px + 4vmin); left:50%; transform: translateX(-50%); }
+  .toTheLeftButton{ bottom: calc(90px + 4vmin); left:50%; transform: translateX(-50%);}
+  .resolvePortraitOverlapForRightButton{   transform: translateX(30%);    }
+  .resolvePortraitOverlapForLeftButton{    transform: translateX(-130%);  }
 }
+
+/*
+ease-in: slow at the beginning, fast/abrupt at the end
+ease-out: fast/abrupt at the beginning, slow at the end
 */
 
 .allLessonsInAUnitContainer{

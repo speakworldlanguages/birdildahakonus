@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- ONETWOTHREE -->
-    <title>1-3-4 ☝✌</title>
+    <!-- PRIMARYCOLORS -->
+    <title>1-3-4 🎨</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex" />
     <!-- THIS IS DESIGNED TO BE DISPLAYED VIA AN iFrame; therefore meta viewport and icon are not necessary here as long as the parent html has them. -->
     <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
     <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Disable long-touch on video -->
-    <link rel="stylesheet" href="/css_reusables/css_for_lessons_with_interactables.css"> <!-- Fill MAIN with the right color -->
-    <link rel="stylesheet" href="/css_reusables/css_for_displaying_translation_help.css"> <!-- MOBILES: Draggable man | DESKTOPS: movie subtitle style -->
-    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css"> <!-- Wavesurfer teacher box visual style -->
+    <link rel="stylesheet" href="/css_reusables/css_for_photos_and_videos_teach_a_new_word.css"> <!-- MAIN has gradient background -->
+    <!-- <link rel="stylesheet" href="/css_reusables/css_for_the_glassy_give_up_button.css"> --> <!-- Not needed in this particular lesson -->
+    <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css">
     <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
-    <link rel="stylesheet" href="/lessons_in_iframes/level_1/unit_3/lesson_4/one_two_three.css">
+    <link rel="stylesheet" href="/lessons_in_iframes/level_1/unit_3/lesson_4/colors.css">
     <!-- Empty line 1 -->
-    <!-- Empty line 2 -->
     <script defer src="/js_reusables/js_for_every_single_html.js">/*LET userInterfaceLanguage DEPEND ON DOMAIN NAME, fetch headers, fonts, resetWebp, canVibrate, defaultCursor*/</script>
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
-    <!-- <script defer src="/js_reusables/js_for_displaying_translation_help.js">/*Desktops: Like movie subtitles, Mobiles: Drag the figure down*/</script> -->
+    <script defer src="/js_reusables/js_for_speech_recognition_algorithm.js">/*Common function that enables a promise based solution*/</script>
+    <!-- <script defer src="/js_reusables/js_for_handling_speech_give_up.js">/*Use parent.willUserTalkToSpeechRecognition instead*/</script> -->
+    <script defer src="/js_reusables/js_for_microphone_input_visualization.js">/*Start-stop the audiometer for user's microphone*/</script>
     <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
     <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
-    <!-- We do not need the microphone plugin in this case -->
-    <!-- <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script> -->
     <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
-    <script defer src="/lessons_in_iframes/level_1/unit_3/lesson_4/one_two_three.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
-    <!-- Find the link to worker.js in one_two_three.js -->
-    <!-- Empty line 2 -->
+    <script defer src="/lessons_in_iframes/level_1/unit_3/lesson_4/colors.js">/*Progress handling for this lesson*/</script>
+    <script defer src="/lessons_in_iframes/level_1/unit_3/lesson_4/desktop.js">/*Progress handling for this lesson*/</script>
+    <script defer src="/lessons_in_iframes/level_1/unit_3/lesson_4/mobile.js">/*Progress handling for this lesson*/</script>
+    <!-- Empty line 1 -->
     <!-- Uncomment to use the console on mobiles -->
     <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
@@ -48,56 +48,109 @@
   </head>
 
   <body>
-
-    <!-- MAIN :: Start blurred 8px if there is an info box or wavesurfer listen box -->
-    <main style="filter: blur(0px); transition-property: filter; transition-timing-function: ease;"> <!-- See css_for_lessons_with_interactables -->
-
-      <!-- ENDLESS BACKGROUND GRADIENT --> <!-- Filled with img repeat-x via css background -->
-      <!-- <div class="putThingsAtBottomCenter underTheBackground"></div>  -->
-      <!-- <button type="button" name="button" id="recordButtonID">Start recording</button> -->
-      <!-- <button type="button" name="button" id="stopButtonID">Stop recording</button> -->
-      <!-- <button type="button" name="button" id="playButtonID">Play</button> -->
-      <button type="button" id="oneID">1</button>
-      <button type="button" id="twoID">2</button>
-      <button type="button" id="threeID">3</button>
-
-
-      <!-- <button type="button" id="recID" style="visibility:hidden;">Rec</button> -->
-
-      <div class="" style="position:fixed;top:62%;left:0px;width:100vw;width:100dvw;">
-        <audio id="audioPlayerID" controls></audio>
-        <div id="amplitude-meter" style="border:1px dotted black; width:100%;">
-          <div id="amplitude-bar" style="border:2px solid green; width:100%;"></div>
-        </div>
-	     <div id="monitorID" style="line-height:normal;"></div>
-
-       <div id="meter1ID" style="line-height:normal;"></div>
-       <div id="meter2ID" style="line-height:normal;"></div>
-      </div>
-
+    <!-- MAIN -->
+    <main> <!-- BACKGROUND GRADIENT comes from css_for_photos_and_videos_teach_a_new_word | THE SIZE AND POSITION FIXED is in css_for_every_single_html -->
+      <!-- No photo pairs in this lesson -->
     </main>
     <!-- END OF MAIN -->
 
+    <!-- No videos in this lesson -->
+
+    <!-- Audio input visualization :: Implement unique method for this particular lesson -->
+
+    <!-- Single photos of colored pieces of fabric -->
+    <div id="singlesDivID" class="" style="display:block;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/1.avif"   class="positionAbsoluteImg">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/2.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/3.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/4.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/5.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/6.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+    </div>
+
+
+    <!-- Test and see if this works -->
+    <div id="mobileTouchArea" style="z-index:9; pointer-events:all;"></div>
+
+
+    <div id="allOfTheGameDivID" class="allOfTheGame" style="z-index:10;">
+
+      <div class="containerForOneOfSixPerfectFitPieces" style="z-index:20;">
+        <div class="containerForRoundedColorCards" id="white">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/white.avif');">
+            <img draggable="false" src="" class='theCardsBackFace'>
+          </div>
+        </div>
+      </div>
+      <div class="containerForOneOfSixPerfectFitPieces" style="z-index:21;">
+        <div class="containerForRoundedColorCards" id="green">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/green.avif');">
+            <img draggable="false" src="" class='theCardsBackFace'>
+          </div>
+        </div>
+      </div>
+      <div class="containerForOneOfSixPerfectFitPieces" style="z-index:22;">
+        <div class="containerForRoundedColorCards" id="blue">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/blue.avif');">
+            <img draggable="false" src="" class='theCardsBackFace'>
+          </div>
+        </div>
+      </div>
+      <div class="containerForOneOfSixPerfectFitPieces" style="z-index:23;">
+        <div class="containerForRoundedColorCards" id="yellow">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/yellow.avif');">
+            <img draggable="false" src="" class='theCardsBackFace'>
+          </div>
+        </div>
+      </div>
+      <div class="containerForOneOfSixPerfectFitPieces" style="z-index:24;">
+        <div class="containerForRoundedColorCards" id="red">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/red.avif');">
+            <img draggable="false" src="" class='theCardsBackFace'>
+          </div>
+        </div>
+      </div>
+      <div class="containerForOneOfSixPerfectFitPieces" style="z-index:25;">
+        <div class="containerForRoundedColorCards" id="black">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/black.avif');">
+            <img draggable="false" src="" class='theCardsBackFace'>
+          </div>
+        </div>
+      </div>
+      <!-- Background darkening » See css_for_photos_and_videos_teach_a_new_word -->
+      <div id="coverForTheUnchosenOnesID" style="display:none; z-index:50; pointer-events: none;"> </div>
+
+    </div>
+    <!-- “Now it’s your turn” :: The mic is listening visual -->
+    <!-- <div class="nowYouSayItImgContainer" style="display:none;"> -->
+      <!-- <img draggable="false" id="nowYouSayItImgID" src="/user_interface/images/now_you_say_it_to_speech_recognition.webp"> -->
+    <!-- </div> -->
+    <canvas id="fireworksCanvas" style="z-index:999; display: none; pointer-events: none;"></canvas>
+
+
     <script>
-      window.addEventListener('DOMContentLoaded', whatMustBeDoneAtFirstOnThisDevice, { once: true });
-      function whatMustBeDoneAtFirstOnThisDevice() {
-        // change to RTL image if target language is Arabic or any other right-to-left reading language
-        // const toRTL = document.getElementById('changeToRTL');
-        if (parent.targetLanguageReadsLeftToRightOrRightToLeft == "rtl") {
-          // toRTL.src = "/lessons_in_iframes/level_1/unit_3/lesson_3/???_rtl.webp";
-        }
-        // ---
-        if (deviceDetector.isMobile) {
-          // TABLETS AND PHONES
-
-        } else {
-          // DESKTOPS - DESKTOPS - DESKTOPS
-
-        }
-
-
-      } // END OF whatMustBeDoneAtFirstOnThisDevice()
+    var touchArea = document.getElementById('mobileTouchArea');
+    var containerOfTheWholeGame = document.getElementById('allOfTheGameDivID');
+    // ---
+    window.addEventListener('DOMContentLoaded', whatMustBeDoneAtFirstOnThisDevice, { once: true });
+    function whatMustBeDoneAtFirstOnThisDevice() {
+      if (deviceDetector.isMobile) {
+        touchArea.appendChild(containerOfTheWholeGame);
+      } else {
+        touchArea.remove();
+      }
+    }
+    /* USE AVIF SPRITE
+    window.addEventListener("DOMContentLoaded",function(){ // Wait for js_for_all_iframed_lesson_htmls to get isApple from parser in parent
+      if (isApple) {
+        // Safari animated webp bugfix: Both iOS and MacOS Safari have the bug as of October 2022 Safari16.0
+        const nowYouSayItImg = document.getElementById('nowYouSayItImgID'); nowYouSayItImg.src = "/user_interface/images/now_you_say_it_to_speech_recognition.avif";
+      }
+    },{once:true});
+    */
     </script>
+
+    <!-- NO GIVE UP BUTTON -->
 
   </body>
 </html>

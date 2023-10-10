@@ -1,11 +1,11 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without obtaining permission
+// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without consent
 
 // IMPORTANT: Find countdownForGiveUpSkipOrGoToNext and adjust its value for each lesson depending on the number of c1 c2 c3 ... visuals
 
 /* __ SAVE PROGRESS TO LOCAL STORAGE __ */
-// See js_for_the_parent_all_browsers_all_devices to find how savedProgress.ja savedProgress.zh savedProgress.tr savedProgress.ar savedProgress.en are created
+// See js_for_the_parent_all_browsers_all_devices to find how savedProgress.ja savedProgress.zh savedProgress.tr etc are created
 const studiedLang = parent.langCodeForTeachingFilePaths.substr(0,2); // en_east en_west will use the same save-slot
 // !!! VERY CAREFUL: Watch the lesson name!!!
 parent.savedProgress[studiedLang].lesson_GLASS_IsViewed=true; // Create and add... or overwrite the same thing
@@ -13,7 +13,7 @@ parent.saveJSON = JSON.stringify(parent.savedProgress); // Convert
 localStorage.setItem("memoryCard", parent.saveJSON); // Save
 
 // All settings here will depend on the content of the lesson
-let theNewWordUserIsLearningNowAndPossibleMishaps; // Get this from txt file
+let theNewWordUserIsLearningNowAndPossibleMishaps = null; // Get this from txt file
 // CAUTION: parent.langCodeForTeachingFilePaths variable depends on localStorage data being available. See js_for_the_parent_all_browsers_all_devices.js
 const filePathForTheWordOrPhrase = "/speech_recognition_answer_key/"+parent.langCodeForTeachingFilePaths+"/1-2-1-glass.txt";
 // See js_for_every_single_html.js for the headers setting.
@@ -39,11 +39,11 @@ const whatGlassSoundsLike2 = new parent.Howl({  src: ["/lessons_in_iframes/level
 //4
 //5
 const successTone = new parent.Howl({  src: ["/user_interface/sounds/success1a."+soundFileFormat]  });
-const notificationDingTone = new parent.Howl({  src: ["/user_interface/sounds/ding."+soundFileFormat]  });
+//RELOCATED const notificationDingTone = new parent.Howl({  src: ["/user_interface/sounds/ding."+soundFileFormat]  });
 /* Sound initialization happens on the parent but the consts exist in frame. SEE js_for_all_iframed_lesson_htmls » FIND onbeforeunload. */
 // listOfAllSoundsInThisLesson is also used by pauseTheAppFunction in js_for_the_sliding_navigation_menu
 var listOfAllSoundsInThisLesson = [
-  notificationDingTone,
+  //RELOCATED notificationDingTone,
   //successTone, // EXCEPTION: See unloadThatLastSoundWhichCannotBeUnloadedNormally
   whatGlassSoundsLike2,
   whatGlassSoundsLike1,
@@ -301,7 +301,7 @@ function showSinglesOneByOne() {
 /* ___SPEECH RECOGNITION___ */
 var userHasGivenUp = false;
 var preventGiveUpButtonIfSuccessHappens;
-let aMatchWasFound = false;
+
 function speakToTheMic() {
 
   new SuperTimeout(function () {
@@ -313,8 +313,22 @@ function speakToTheMic() {
   },120);
 
   // setLanguage() for annyang is in /js_reusables/js_for_the_parent_all_browsers_all_devices.js
-  const eachWordArray = theNewWordUserIsLearningNowAndPossibleMishaps.split("|"); // The text files in speech_recognition_answer_key must be written with the | (bar) character as the separator between phrases.
+  let eachWordArray;
+  if (theNewWordUserIsLearningNowAndPossibleMishaps) { // It means fetch did indeed get the file
+    eachWordArray = theNewWordUserIsLearningNowAndPossibleMishaps.split("|"); // The text files in speech_recognition_answer_key must be written with the | (bar) character as the separator between phrases.
+    // Do not apply any time-limits or retry-limits
+    seeIfUserIsAbleToPronounce(eachWordArray).then(stopListeningAndProceedToNext).catch((error) => { parent.console.error(error); }); // See js_for_speech_recognition_algorithm
+    new SuperTimeout(function() {  startStandardAudioInputVisualization();  },2500); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js
+  } else { // fetch has failed to get the file
+    // There must have been a terrible connectivity problem
+    alert("💢 📶 💢 📶 💢 📶 💢 📶 💢"); // Show an international alert
+    parent.ayFreym.src = "/progress_chart/index.html"; // Try to navigate to the progress_chart as the last thing to do
+  }
 
+
+
+
+/* RELOCATED
   if (parent.annyang) { parent.console.log("Starting speech recognition for: "+eachWordArray[0]);
 
     if (!parent.isAndroid) { // See js_for_different_browsers_and_devices
@@ -325,7 +339,7 @@ function speakToTheMic() {
     }
     // Start listening.
     new SuperTimeout(function() {  parent.annyang.start({ autoRestart: true });  },500);
-    new SuperTimeout(function() {  startAudioInputVisualization();  },2500); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js
+    new SuperTimeout(function() {  startStandardAudioInputVisualization();  },2500); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js
     // New method of detecting matches
     parent.annyang.addCallback('result', compareAndSeeIfTheAnswerIsCorrect);
     function compareAndSeeIfTheAnswerIsCorrect(phrasesArray) {
@@ -346,6 +360,12 @@ function speakToTheMic() {
                 if (phrasesArray[k].search(eachWordArray[j]) >= 0) { searchResult = true; }
               }
             }
+            else if (parent.targetLanguageIsWrittenWithoutSpaces) { // Accept an utterance like 我要喝水 as a correct answer
+              // Event though it means we will also accept ミミズ when waiting for 水 !!!
+              if (fromPhraseToSingleWords[z].toLowerCase().search(eachWordArray[j].toLowerCase()) >= 0) { searchResult = true; }
+              // ALSO NOTE THAT: Unfortunately SpeechRecognition can ignore user's speech when the utterance is too short consisting of only one syllable
+              // In that case we show a prompt like "It's OK to skip" » See annyang.js numberOfRestartsDespiteDetectionOfAudioInput » See /user_interface/text/??/0-if_something_is_not_working.txt
+            }
             // -
             if (!aMatchWasFound && searchResult) {
               aMatchWasFound = true; // Using this, we make sure that stopListeningAndProceedToNext fires only and only once
@@ -362,6 +382,7 @@ function speakToTheMic() {
       } // End of for j
     } // END OF compareAndSeeIfTheAnswerIsCorrect
   }
+*/
 
 } /* END OF speakToTheMic */
 
@@ -384,10 +405,10 @@ function stopListeningAndProceedToNext() {
     if (isApple) { parent.annyang.pause(); }
     else { parent.annyang.abort(); }
   }
-  // Stop Wavesurfer microphone: We don't want to wait for "beforeunload" so we call the function immediately even though it will fire one more time with window.onbeforeunload
+  // Stop AUDIOMETER microphone: We don't want to wait for "beforeunload" so we call the function immediately even though it will fire one more time with window.onbeforeunload
   // We cannot disable "beforeunload" BECAUSE if user navigates away in the middle of a mic session we want the mic turned off
   // Yet, we also want to hide the visualization asap when success happens, therefore it has to be armed both in js_for_all_iframed_lesson_htmls and here
-  stopAudioInputVisualization(); // See js_for_microphone_input_visualization
+  stopStandardAudioInputVisualization(); // See js_for_microphone_input_visualization
 
   /* Save progress */
   if (!userHasGivenUp) { // User was successful with speech recognition

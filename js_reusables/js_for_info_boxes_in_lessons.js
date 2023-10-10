@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
 
 /*-----*/
 // TYPE1: Generic info box » Watch how 1 of 2 possible texts is injected into the button
@@ -33,15 +33,6 @@ function loadNotificationType1Sounds() {
   // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
   popUpNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_appear."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
   dismissNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_close."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
-  /* DEPRECATE
-  if (isApple) { // isApple is copied from the parent window by js_for_all_iframed_lesson_htmls
-    popUpNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_appear.mp3"]  });
-    dismissNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_close.mp3"]  });
-  } else {
-    popUpNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_appear.webm"]  });
-    dismissNotificationType1Sound = new parent.Howl({  src: ["/user_interface/sounds/notification1_close.webm"]  });
-  }
-  */
 }
 window.addEventListener("beforeunload",unloadNotificationType1Sounds,{once:true});
 function unloadNotificationType1Sounds() {
@@ -122,7 +113,7 @@ function createAndHandleInfoBoxType1AmidLesson() {
 }
 
 /*-----*/
-// TYPE2 is the [choose input device] thingy.
+// TYPE2 used to be the deprecated [choose input device] thingy.
 /*-----*/
 
 /*-----*/
@@ -159,15 +150,6 @@ function loadVocabularyBoxButtonSounds() {
   // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
   popUpVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_appear."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
   dismissVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_close."+soundFileFormat]  }); // See js_for_all_iframed_lesson_htmls
-  /* DEPRECATE
-  if (isApple) {
-    popUpVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_appear.mp3"]  });
-    dismissVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_close.mp3"]  });
-  } else {
-    popUpVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_appear.webm"]  });
-    dismissVocabularySound = new parent.Howl({  src: ["/user_interface/sounds/notification3_close.webm"]  });
-  }
-  */
 }
 window.addEventListener("beforeunload",unloadVocabularyBoxButtonSounds,{once:true});
 function unloadVocabularyBoxButtonSounds() {
@@ -234,9 +216,16 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio,isLessonOutro) {
   // Try to fix Safari and Firefox as they ignore text align justify although the container div has it in its class
   // putVocabularyTxtIntoThisP1.style.textAlign = "justify"; putVocabularyTxtIntoThisP2.style.textAlign = "justify"; // DIDN'T WORK!
 
-  // buttonsUnderWavesurfer
-  listenButtonOfTheVocabulary.classList.add("buttonsUnderWavesurfer");  listenButtonOfTheVocabulary.innerHTML = "&#128259; &#9658;"; // Default content is a "refresh 🔃 + play ►" mark
-  startButtonToCloseTheVocabulary.classList.add("buttonsUnderWavesurfer");  startButtonToCloseTheVocabulary.innerHTML = "&#127918;"; // Default content is a "gamepad 🎮" mark
+  listenButtonOfTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBox");  listenButtonOfTheVocabulary.innerHTML = "&#128259; &#9658;"; // Default content is a "refresh 🔃 + play ►" mark
+  startButtonToCloseTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBox");  startButtonToCloseTheVocabulary.innerHTML = "&#127918;"; // Default content is a "gamepad 🎮" mark
+  if (deviceDetector.isMobile) {
+    listenButtonOfTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBoxMOBILE");
+    startButtonToCloseTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBoxMOBILE");
+  } else {
+    listenButtonOfTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBoxDESKTOP");
+    startButtonToCloseTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBoxDESKTOP");
+  }
+  // ---
   if (listenButtonTxt) { // If fetch has already finished downloading the txt file
     listenButtonOfTheVocabulary.innerHTML = listenButtonTxt;
     if (!isLessonOutro) { startButtonToCloseTheVocabulary.innerHTML = startButtonTxt; }
@@ -306,7 +295,7 @@ function createAndHandleListenManyTimesBox(filePathOfTheAudio,isLessonOutro) {
     // Use stopPropagation instead of parent.preventTouchConflictWithTheSlidingNavMenu(startButtonToCloseTheVocabulary); // Exists in js_for_the_sliding_navigation_menu
     dismissVocabularySound.play();
     vocabularyBoxItself.style.animationName = "vocabularyWavesurferDisappears";
-    vocabularyBoxContainer.style.animationName = "vocabularyWavesurferDisappearsBG";
+    vocabularyBoxContainer.style.animationName = "vocabularyPronunciationDisappearsBG";
     setTimeout(function(){
       // DEPRECATED document.body.removeChild(vocabularyBoxContainer);
       startButtonToCloseTheVocabulary.remove();

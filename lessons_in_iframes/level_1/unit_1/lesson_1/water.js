@@ -1,11 +1,11 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without obtaining permission
+// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without consent
 
 // IMPORTANT: Find countdownForGiveUpSkipOrGoToNext and adjust its value for each lesson depending on the number of c1 c2 c3 ... visuals
 
 /* __ SAVE PROGRESS TO LOCAL STORAGE __ */
-// See js_for_the_parent_all_browsers_all_devices to find how savedProgress.ja savedProgress.zh savedProgress.tr savedProgress.ar savedProgress.en are created
+// See js_for_the_parent_all_browsers_all_devices to find how savedProgress.ja savedProgress.zh savedProgress.tr etc are created
 const studiedLang = parent.langCodeForTeachingFilePaths.substr(0,2); // en_east en_west will use the same save-slot
 // !!! VERY CAREFUL: Watch the lesson name!!!
 parent.savedProgress[studiedLang].lesson_WATER_IsViewed=true; // Create and add... or overwrite the same thing
@@ -13,7 +13,7 @@ parent.saveJSON = JSON.stringify(parent.savedProgress); // Convert
 localStorage.setItem("memoryCard", parent.saveJSON); // Save
 
 // All settings here will depend on the content of the lesson
-let theNewWordUserIsLearningNowAndPossibleMishaps; // Get this from txt file
+let theNewWordUserIsLearningNowAndPossibleMishaps = null; // Get this from txt file
 // CAUTION: parent.langCodeForTeachingFilePaths variable depends on localStorage data being available. See js_for_the_parent_all_browsers_all_devices.js
 const filePathForTheWordOrPhrase = "/speech_recognition_answer_key/"+parent.langCodeForTeachingFilePaths+"/1-1-1-water.txt";
 // See js_for_every_single_html.js for the headers setting.
@@ -27,13 +27,13 @@ const say4say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFil
 const say6Path     = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_6."+soundFileFormat;
 const say7say8Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_1/water_7-8."+soundFileFormat;
 
-const whatWaterSoundsLike1_filePath = "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_1."+soundFileFormat;
-const whatWaterSoundsLike2_filePath = "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_2."+soundFileFormat;
-const whatWaterSoundsLike3_filePath = "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_3."+soundFileFormat;
-const whatWaterSoundsLike4_filePath = "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_4."+soundFileFormat;
-const whatWaterSoundsLike5_filePath = "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_5."+soundFileFormat;
-const successTone_filePath = "/user_interface/sounds/success1a."+soundFileFormat;
-const notificationDingTone_filePath = "/user_interface/sounds/ding."+soundFileFormat;
+//SHORTEN const whatWaterSoundsLike1_filePath = "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_1."+soundFileFormat;
+//SHORTEN const whatWaterSoundsLike2_filePath = "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_2."+soundFileFormat;
+//SHORTEN const whatWaterSoundsLike3_filePath = "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_3."+soundFileFormat;
+//SHORTEN const whatWaterSoundsLike4_filePath = "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_4."+soundFileFormat;
+//SHORTEN const whatWaterSoundsLike5_filePath = "/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_5."+soundFileFormat;
+//SHORTEN const successTone_filePath = "/user_interface/sounds/success1a."+soundFileFormat;
+//RELOCATED const notificationDingTone_filePath = "/user_interface/sounds/ding."+soundFileFormat;
 
 const sayAB = new parent.Howl({  src: [say1say2Path]  });
 const sayC  = new parent.Howl({  src: [say3Path]      });
@@ -41,17 +41,17 @@ const sayDE = new parent.Howl({  src: [say4say5Path]  });
 const sayF  = new parent.Howl({  src: [say6Path]      });
 const sayGH = new parent.Howl({  src: [say7say8Path]  });
 
-const whatWaterSoundsLike1 = new parent.Howl({  src: [whatWaterSoundsLike1_filePath]  });
-const whatWaterSoundsLike2 = new parent.Howl({  src: [whatWaterSoundsLike2_filePath]  });
-const whatWaterSoundsLike3 = new parent.Howl({  src: [whatWaterSoundsLike3_filePath]  });
-const whatWaterSoundsLike4 = new parent.Howl({  src: [whatWaterSoundsLike4_filePath]  });
-const whatWaterSoundsLike5 = new parent.Howl({  src: [whatWaterSoundsLike5_filePath]  });
-const successTone = new parent.Howl({  src: [successTone_filePath]  });
-const notificationDingTone = new parent.Howl({  src: [notificationDingTone_filePath]  });
+const whatWaterSoundsLike1 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_1."+soundFileFormat]  });
+const whatWaterSoundsLike2 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_2."+soundFileFormat]  });
+const whatWaterSoundsLike3 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_3."+soundFileFormat]  });
+const whatWaterSoundsLike4 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_4."+soundFileFormat]  });
+const whatWaterSoundsLike5 = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_1/lesson_1/what_water_sounds_like_5."+soundFileFormat]  });
+const successTone = new parent.Howl({  src: ["/user_interface/sounds/success1a."+soundFileFormat]  });
+//RELOCATED const notificationDingTone = new parent.Howl({  src: [notificationDingTone_filePath]  });
 /* Sound initialization happens on the parent but the consts exist in frame. SEE js_for_all_iframed_lesson_htmls » FIND onbeforeunload. */
 // listOfAllSoundsInThisLesson is also used by pauseTheAppFunction in js_for_the_sliding_navigation_menu
 var listOfAllSoundsInThisLesson = [
-  notificationDingTone,
+  //RELOCATED notificationDingTone,
   //successTone, // EXCEPTION: See unloadThatLastSoundWhichCannotBeUnloadedNormally
   whatWaterSoundsLike5,
   whatWaterSoundsLike4,
@@ -90,7 +90,7 @@ const nowYouSayIt = document.querySelector('.nowYouSayItImgContainer');
 const containerOfSingles = document.getElementById('singlesDivID');
 
 const giveUpAndContinueButtonASIDE = document.getElementsByTagName('ASIDE')[0];
-let androidSpeechTimingInfoTxt = "…";
+let androidSpeechTimingInfoTxt = null;
 /* ___PROGRESSION___ */
 window.addEventListener("load",function(){   loadingIsCompleteFunction();   }, { once: true });
 // Desktop users can change the speed; mobile users can't. Because the mobile GUI has to stay simple.
@@ -118,15 +118,21 @@ function loadingIsCompleteFunction()
       // createAndHandleInfoBoxType1BeforeLessonStarts() will fire startTheLesson() 1.5 seconds after its OK button is clicked/touched
     });
   }
+  else if (studiedLang == "??") {
+
+  }
   else {
     startTheLesson(); // Call it now if it was not called from within createAndHandleInfoBoxType1BeforeLessonStarts() in js_for_all_iframed_lesson_htmls.js
   }
   //--- By the way: Get the android-speech-timing-notification text ready
-  if (parent.isAndroid) {
+  if (isAndroid) { // See js_for_different_browsers_and_devices AND js_for_all_iframed_lesson_htmls
     const pathOfNotificationAboutAndroidTiming = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-android_speech_timing.txt";
-    fetch(pathOfNotificationAboutAndroidTiming,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
-      androidSpeechTimingInfoTxt = contentOfTheTxtFile;
-    });
+    setTimeout(function () {
+      // Will show for all languages but only on Android
+      fetch(pathOfNotificationAboutAndroidTiming,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+        androidSpeechTimingInfoTxt = contentOfTheTxtFile;
+      });
+    }, 5000);
   }
 }
 // NOTE: The preloader disappears in 500ms » See css_for_preloader_and_orbiting_circles
@@ -279,10 +285,10 @@ function goFromCDtoEF() {
   // ---
   new SuperTimeout(function () {
     // Special situation for Android users when viewing the first lesson (water.js)
-    if (parent.isAndroid) { // Android
+    if (isAndroid && androidSpeechTimingInfoTxt) { // User's device is Android and fetch has successfully got the text from file
       putNotificationTxtIntoThisP2.innerHTML = androidSpeechTimingInfoTxt;
       createAndHandleInfoBoxType1AmidLesson(); // continueLesson() will be fired from within -> See js_for_info_boxes_in_lessons
-    } else { // Not Android
+    } else { // Either not Android or a mishap of 0.01% chance occured and fetch couldn't get the txt file
       continueLesson();
     }
   }, changeTime*500 + proceedTime);
@@ -348,7 +354,7 @@ function showSinglesOneByOne() {
 /* ___SPEECH RECOGNITION___ */
 var userHasGivenUp = false;
 var preventGiveUpButtonIfSuccessHappens;
-let aMatchWasFound = false;
+
 function speakToTheMic() {
 
   new SuperTimeout(function () {
@@ -359,19 +365,23 @@ function speakToTheMic() {
     },countdownForGiveUpSkipOrGoToNext); // This must start ticking only after countdownForGiveUpSkipOrGoToNext is updated.
   },120);
 
-  // setLanguage() for annyang is in /js_reusables/js_for_the_parent_all_browsers_all_devices.js
-  // DEPRECATED var commands = {}; // Let's keep the older code for reference only here to remember how we started out
-  const eachWordArray = theNewWordUserIsLearningNowAndPossibleMishaps.split("|"); // The text files in speech_recognition_answer_key must be written with the | (bar) character as the separator between phrases.
-
-  /* DEPRECATED - Let's keep the older code for reference only here in water.js/bread.js to remember how we started out
-  let i;
-  for(i=0;i<eachWordArray.length;i++)
-  {
-    let oneOfTheWords = eachWordArray[i];
-    commands[oneOfTheWords] = stopListeningAndProceedToNext;
+  // setLanguage() for annyang|SpeechRecognition is in /js_reusables/js_for_the_parent_all_browsers_all_devices.js
+  let eachWordArray;
+  if (theNewWordUserIsLearningNowAndPossibleMishaps) { // It means fetch did indeed get the file
+    eachWordArray = theNewWordUserIsLearningNowAndPossibleMishaps.split("|"); // The text files in speech_recognition_answer_key must be written with the | (bar) character as the separator between phrases.
+    // Do not apply any time-limits or retry-limits
+    seeIfUserIsAbleToPronounce(eachWordArray).then(stopListeningAndProceedToNext).catch((error) => { parent.console.error(error); }); // See js_for_speech_recognition_algorithm
+    new SuperTimeout(function() {  startStandardAudioInputVisualization();  },2500); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js
+  } else { // fetch has failed to get the file
+    // There must have been a terrible connectivity problem
+    alert("💢 📶 💢 📶 💢 📶 💢 📶 💢"); // Show an international alert
+    parent.ayFreym.src = "/progress_chart/index.html"; // Try to navigate to the progress_chart as the last thing to do
   }
-  */
 
+
+
+
+/* MOVE INTO js_for_speech_recognition_algorithm
   // Notes about handling non-English string characters
   // BULGULAR: toLowerCase() Windows'ta büyük Ş yi küçük ş ye çeviriyor ama Mac OS üzerinde çevirmiyor
   // Onun yerine toLocaleLowerCase() kullanılırsa büyük I İngilizcedeki gibi küçük i ye dönüşmek yerine küçük ı ya dönüşüyor
@@ -386,25 +396,20 @@ function speakToTheMic() {
         notificationDingTone.play(); // Android has its native DING tone. So let this DING tone play on desktops and iOS devices.
     }
     if (parent.isAndroid) {
-      if (parent.annyang.isListening()) {        parent.annyang.abort();      }
+      if (parent.annyang.isListening()) {      parent.annyang.abort();     } // Try to avoid the «SpeechRecognition is already listening» error
     }
     // Start listening.
     new SuperTimeout(function() {  parent.annyang.start({ autoRestart: true });  },500); // NOTE: annyang.resume() equals annyang.start()
-    new SuperTimeout(function() {  startAudioInputVisualization();  },2500); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js
+    new SuperTimeout(function() {  startStandardAudioInputVisualization();  },2500); // Will work only on devices that can handle it. See js_for_microphone_input_visualization.js
     // New method of detecting matches
     parent.annyang.addCallback('result', compareAndSeeIfTheAnswerIsCorrect);
     function compareAndSeeIfTheAnswerIsCorrect(phrasesArray) {
-      parent.console.log('Speech recognized. Possibly said: '+phrasesArray);
+      parent.console.log('Speech recognized. Possibly said: '+phrasesArray); // SpeechRecognition actually returns a confidence value for each of its guessed-catches but we as of October2023 there is no use for it in the app
       // Check if there is a match
       let j;
       for(j=0;j<eachWordArray.length;j++) {
-
-        // NOTE THAT: There is also the option of using includes() to perform phrase to phrase comparison
+        // NOTE THAT: There is also the option of using includes() to perform phrase to phrase comparison // Remember that it's not contains() » It's includes()
         // BUT we want to split phrases into words and perform word to word comparison
-        /*
-        if (array.includes(searchString)) {            console.log(`${searchString} exists in the array.`);
-        } else {            console.log(`${searchString} does not exist in the array.`);        }
-        */
         let k;
         for (k = 0; k < phrasesArray.length; k++) {
           // Which method is better?
@@ -412,13 +417,7 @@ function speakToTheMic() {
           // if (phrasesArray[k].toLowerCase() == eachWordArray[j].toLowerCase()) // Only with interimResults TURNED ON, this will return true if user utters 'Water is the liquid form of H2O' but false for 'underwater' and also false for 'under water'
           // if (phrasesArray[k].toLowerCase().search(eachWordArray[j].toLowerCase()) == 0) // Accept user's utterance if it starts with the "correct word or phrase" even if interimResults option is turned off like 'watermelon'.
           // To accept 'under water' while rejecting 'underwater' we need to extract individual words from phrases
-          /* If we wanted to accept 我要喝水 we could do something like
-          if (parent.targetLanguageIsWrittenWithoutSpaces) { //
-            if (fromPhraseToSingleWords[z].toLowerCase().search(eachWordArray[j].toLowerCase()) >= 0) { searchResult = true; }
-          } else {
-            if (fromPhraseToSingleWords[z].toLowerCase() == eachWordArray[j].toLowerCase()) { searchResult = true; }
-          }
-          But we don't want to do that because we don't want to accept ミミズ when waiting for 水 */
+
           const fromPhraseToSingleWords = phrasesArray[k].split(" "); // Note that in "spaceless" languages like Renmen-Hito phrases will not be split into words
           let z;
           for (z = 0; z < fromPhraseToSingleWords.length; z++) {
@@ -432,9 +431,15 @@ function speakToTheMic() {
                 if (phrasesArray[k].search(eachWordArray[j]) >= 0) { searchResult = true; }
               }
             }
+            else if (parent.targetLanguageIsWrittenWithoutSpaces) { // Accept an utterance like 我要喝水 as a correct answer
+              // Event though it means we will also accept ミミズ when waiting for 水 !!!
+              if (fromPhraseToSingleWords[z].toLowerCase().search(eachWordArray[j].toLowerCase()) >= 0) { searchResult = true; }
+              // ALSO NOTE THAT: Unfortunately SpeechRecognition can ignore user's speech when the utterance is too short consisting of only one syllable
+              // In that case we show a prompt like "It's OK to skip" » See annyang.js numberOfRestartsDespiteDetectionOfAudioInput » See /user_interface/text/??/0-if_something_is_not_working.txt
+            }
             // -
             if (!aMatchWasFound && searchResult) {
-              aMatchWasFound = true; // Using this, we make sure that stopListeningAndProceedToNext fires only and only once
+              aMatchWasFound = true; // By using this, we make sure that stopListeningAndProceedToNext will fire only and only once
               if (parent.annyang.getSpeechRecognizer().interimResults) { parent.console.log("Correct answer detected with interimResults enabled");
                 setTimeout(function () { stopListeningAndProceedToNext(); }, 250); // Interim results is or can be too quick (especially on Windows)
               } else { parent.console.log("Correct answer detected without interimResults");
@@ -445,11 +450,10 @@ function speakToTheMic() {
             }
           } // End of for z
         } // End of for k
-
-
       } // End of for j
     } // END OF compareAndSeeIfTheAnswerIsCorrect
   } // END OF if parent.annyang
+*/
 
 } /* END OF speakToTheMic */
 
@@ -471,10 +475,10 @@ function stopListeningAndProceedToNext() {
     if (isApple) { parent.annyang.pause(); }
     else { parent.annyang.abort(); }
   }
-  // Stop Wavesurfer microphone: We don't want to wait for "beforeunload" so we call the function immediately even though it will fire one more time with window.onbeforeunload
+  // Stop AUDIOMETER microphone: We don't want to wait for "beforeunload" so we call the function immediately even though it will fire one more time with window.onbeforeunload
   // We cannot disable "beforeunload" BECAUSE if user navigates away in the middle of a mic session we want the mic turned off
   // Yet, we also want to hide the visualization asap when success happens, therefore it has to be armed both in js_for_all_iframed_lesson_htmls and here
-  stopAudioInputVisualization(); // See js_for_microphone_input_visualization
+  stopStandardAudioInputVisualization(); // See js_for_microphone_input_visualization
 
   /* Save progress */
   if (!userHasGivenUp) { // User was successful with speech recognition

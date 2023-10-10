@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
 
 let canvasContext;
 let initialX=0,differenceX=0;
@@ -15,7 +15,7 @@ function checkIfThereIsOverflow() {
   if (leftArea.scrollHeight > leftArea.clientHeight) {
     rightArea.children[0].style.opacity = "1"; rightArea.children[2].style.opacity = "1"; // Show the rotate left-right arrows
   } else {
-    rightArea.children[0].style.opacity = "0"; rightArea.children[2].style.opacity = "0"; // Hide the rotate left-right arrows
+    rightArea.children[0].style.opacity = "0"; rightArea.children[2].style.opacity = "0"; // Hide the rotate left-right arrows (only possible if user's screen is HUGE or if there are very few languages available)
   }
 }
 // --
@@ -62,7 +62,7 @@ window.addEventListener('load', function(){
     // BY THE WAY: pointerleave DOES NOT replace mouseleave for touchscreens because it doesn't fire until finger is lifted.
   } else { // DESKTOPS
     // Left side
-    leftArea.addEventListener("wheel", function(event){  event.preventDefault(); }); /* Disables mouse wheel scrolling */
+    leftArea.addEventListener("wheel", function(event){ event.preventDefault(); }); // Disable the default mouse wheel scrolling to enforce custom scrolling » Here we let it propagate
     // Right side
     rightArea.addEventListener("mousedown", function(event){
       theCanvas.classList.add("zoomGlobeDesktop");
@@ -71,12 +71,44 @@ window.addEventListener('load', function(){
     });
     rightArea.addEventListener("mouseup",cancelRotationDesktop);
     rightArea.addEventListener("mouseleave",cancelRotationDesktop);
+    // --
+    changeBrightnessMain.addEventListener("wheel",customScroller);
+
   } // END OF deviceDetector ...
 
 
 }, { once: true });
 
 
+let speedLimitForScrollingAllowsIt = true;
+let howMuchShouldOneWheelMovementPush = 4; // This can be improved by making the value depend on screen height and number of buttons inside or scrollHeight etc
+function customScroller(event) { event.preventDefault(); event.stopPropagation();
+  // --
+  if (speedLimitForScrollingAllowsIt) {
+    if (event.deltaY > 0) { //console.log("down"); // Works OK
+      frameCounter++;
+      leftArea.scrollTop += howMuchShouldOneWheelMovementPush; // Scrolling of language buttons » browser auto handles it when the code tries to go beyond limits
+    }
+    else { //console.log("up"); // Works OK
+      frameCounter--;
+      leftArea.scrollTop -= howMuchShouldOneWheelMovementPush; // Scrolling of language buttons » browser auto handles it when the code tries to go beyond limits
+    }
+    // Rotation of the globe
+    mod80 = Math.abs(frameCounter%80);
+    canvasContext.clearRect(0, 0, 250, 250);
+    canvasContext.drawImage(frames[mod80], 0, 0);
+    // Limit wheeling speed especially for MacOS (touchpad gesture)
+    speedLimitForScrollingAllowsIt = false;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          speedLimitForScrollingAllowsIt = true; // Remove the blocker after 2 (~= 33ms) or 3 (=50ms) RAF frames
+        });
+      });
+    });
+  } // End of if speedLimitForScrollingAllowsIt
+  // --
+} // End of customScroller
 
 
 let frameCounter=8000;
@@ -84,11 +116,12 @@ let mod80 = 0;
 function rotateTheGlobeDesktop(event) {
   differenceX = event.clientX - initialX;
   initialX = event.clientX;
+  // Rotation of the globe
   frameCounter += differenceX;
   mod80 = Math.abs(frameCounter%80);
   canvasContext.clearRect(0, 0, 250, 250);
   canvasContext.drawImage(frames[mod80], 0, 0);
-  // scrolling
+  // Scrolling of language buttons » browser auto handles it when the code tries to go beyond limits
   leftArea.scrollTop += differenceX;
 }
 function cancelRotationDesktop() {
@@ -99,13 +132,14 @@ function cancelRotationDesktop() {
 function rotateTheGlobeMobile(event) {
   differenceX = Math.round(event.touches[0].clientX) - initialX;
   initialX = Math.round(event.touches[0].clientX);
+  // Rotation of the globe
   frameCounter += differenceX;
   mod80 = Math.abs(frameCounter%80);
   canvasContext.clearRect(0, 0, 250, 250);
   canvasContext.drawImage(frames[mod80], 0, 0);
-  // scrolling
+  // Scrolling of language buttons » browser auto handles it when the code tries to go beyond limits
   leftArea.scrollTop += differenceX;
-  // vibration is extremely expensive in terms of battery usage
+  // vibration is extremely expensive in terms of battery usage, so we avoid using it
 }
 function cancelRotationMobile() {
   rightArea.removeEventListener("touchmove",rotateTheGlobeMobile);

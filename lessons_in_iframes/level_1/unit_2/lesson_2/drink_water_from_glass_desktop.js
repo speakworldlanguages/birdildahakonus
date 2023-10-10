@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without obtaining permission
+// UNAUTHORIZED MODIFICATION IS PROHIBITED: You may not change this file without consent
 
 let frameNumber = 0;
 let directionIsDown;
@@ -17,11 +17,13 @@ function resetSpeedLimitTimer() { //event.preventDefault();
     speedLimitAllowsItToMove = false;
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
-        speedLimitAllowsItToMove = true; // Remove the blocker after 2 RAF frames ~= 33ms
+        requestAnimationFrame(function () {
+          speedLimitAllowsItToMove = true; // Remove the blocker after 2 (~= 33ms) or 3 (=50ms) RAF frames 
+        });
       });
     });
   }
-  // Not accurate enough: setTimeout(function () { speedLimitAllowsItToMove = true; }, 25); // Adjust speed limit here 80ms means 12,5fps is max
+  // Tested and this was not accurate enough: setTimeout(function () { speedLimitForScrollingAllowsIt = true; }, 25); // Adjust speed limit here 80ms means 12,5fps is max
 }
 
 
@@ -31,7 +33,7 @@ function updateGlassTiltDesktopUntilFirstGulp(event) { // fires with every mouse
   // A: We invent some shenaniganly workarounds
   if (!firstMovementDetected) {
     firstMovementDetected = true;
-    window.addEventListener("wheel",resetSpeedLimitTimer);
+    window.addEventListener("wheel",resetSpeedLimitTimer); // Note that: Wheeling on «main» will call different functions at different times
     if (isApple) {
       // If the very first movement is downwards then let downwards movement rotate the glass downwards
       // If the very first movement is mathematically upwards then let mathematically upwards movement rotate the glass downwards (MacOS)

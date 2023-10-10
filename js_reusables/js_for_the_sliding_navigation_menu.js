@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
 
 // NOTE: Do not use “const” for things that need to be accessible from elsewhere. Only use “var” for such variables.
 // The buttons have 4 (webp img) states : A, B, C and D. If we use one variable and only change the src it works but it is very glitchy.
@@ -659,7 +659,7 @@ window.addEventListener("load",function() {
     clickToFinanceDiv.addEventListener("mousedown", function () {      navMenuClickSound.play(); setTimeout(openFinancialMethodsPageFunction,30); }   );
   }
 
-  // REMEMBER: The task of unloading sounds and stopping annyang has been moved to js_for_all_iframed_lesson_htmls.js to be handled with window onbeforeunload
+  // REMEMBER: The task of unloading sounds and stopping annyang|SpeechRecognition has been moved to js_for_all_iframed_lesson_htmls.js to be handled with window onbeforeunload
 
   function goToPreviousFunction() { // The button only appears if user views information screen before starting lessons
     // In this case there is no need to check if the device is online or not as the MAIN in parent is already loaded and ready » We are only unhiding it
@@ -764,16 +764,22 @@ function pauseTheAppFunction(reasonWhy) { // As of September 2023 reasonWhy is e
         if (isApple) { annyang.pause(); }
         else { annyang.abort(); }
       }
-      // Note that: No problem if abort() fires when annyang wasn't listening.
+      // Note that: No problem if abort() fires when annyang|SpeechRecognition wasn't listening.
     }
 
-    // STOP WAVESURFER
-    let audioMeterWasListeningWhenUserPaused = false;
+    // STOP AUDIOMETER
+    let standardAudiometerWasListeningWhenUserPaused = false;
+    // CANCEL let uniqueAudiometerWasListeningWhenUserPaused = false;
     // See js_for_microphone_input_visualization
-    if (iFrameWindowInPauseTheAppFunction.audioMeterIsListening) { iFrameWindowInPauseTheAppFunction.stopAudioInputVisualization(); audioMeterWasListeningWhenUserPaused = true; }
+    if (iFrameWindowInPauseTheAppFunction.standardAudiometerIsListening) {
+      iFrameWindowInPauseTheAppFunction.stopStandardAudioInputVisualization(); standardAudiometerWasListeningWhenUserPaused = true;
+    }
+    /* CANCEL else if (iFrameWindowInPauseTheAppFunction.uniqueAudiometerIsListening) {
+      iFrameWindowInPauseTheAppFunction.stopUniqueAudioInputVisualization(); uniqueAudiometerWasListeningWhenUserPaused = true;
+    }*/
     else {
-      // DO NOTHING CASE 1: wavesurfer mic does not exist because it's not used in this lesson
-      // DO NOTHING CASE 2: wavesurfer mic exists but it was not started yet
+      // DO NOTHING CASE 1: audiometer mic does not exist because it's not used in this lesson
+      // DO NOTHING CASE 2: audiometer mic exists but it was not started yet
     }
 
     // PAUSE ALL TIMERS
@@ -802,7 +808,7 @@ function pauseTheAppFunction(reasonWhy) { // As of September 2023 reasonWhy is e
       }
     }
     else {  console.warn("listOfAllSoundsInThisLesson doesn't exist???");   }
-    // SHOULD WE ALSO TURN OFF WAVESURFER MIC???
+    // SHOULD WE ALSO TURN OFF AUDIOMETER MIC???
 
     // ---
     if (typeof iFrameWindowInPauseTheAppFunction.pauseCSSAnimations === "function") { // If there exists such a function » example 1-3-2 [there is a fish]
@@ -839,9 +845,11 @@ function pauseTheAppFunction(reasonWhy) { // As of September 2023 reasonWhy is e
       if (speechRecognitionWasListeningWhenUserPaused) {
         setTimeout(function() {         if (annyang){ annyang.resume(); }         },50); // annyang.resume() works both with .abort() and .pause()
       }
-      if (audioMeterWasListeningWhenUserPaused) {
-        setTimeout(function () { iFrameWindowInPauseTheAppFunction.startAudioInputVisualization(); }, 100);
-      }
+      if (standardAudiometerWasListeningWhenUserPaused) {
+        setTimeout(function () { iFrameWindowInPauseTheAppFunction.startStandardAudioInputVisualization(); }, 100);
+      }/* CANCEL else if (uniqueAudiometerWasListeningWhenUserPaused) {
+        setTimeout(function () { iFrameWindowInPauseTheAppFunction.startUniqueAudioInputVisualization(); }, 100);
+      }*/
 
       // ---
       theAppIsPaused = false;

@@ -1,11 +1,11 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED by unauthorized people = This file may be modified by AUTHORIZED PEOPLE ONLY
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
 
 // DYNAMIC WINDOW SIZE: Needed by game levels
-var lastRecordedWindowWidth = window.innerWidth; var lastRecordedWindowHeight = window.innerHeight;
-var lastRecordedScreenWidth = window.screen.width; var lastRecordedScreenHeight = window.screen.height;
-window.addEventListener('resize', updateWindowProperties);
+var lastRecordedWindowWidth = window.innerWidth; var lastRecordedWindowHeight = window.innerHeight; // Dimensions of the browser's display area
+var lastRecordedScreenWidth = window.screen.width; var lastRecordedScreenHeight = window.screen.height; // Dimensions of the USER'S desktop
+setTimeout(function () { window.addEventListener('resize', updateWindowProperties); }, 1000);
 function updateWindowProperties() {
   lastRecordedWindowWidth = window.innerWidth; lastRecordedWindowHeight = window.innerHeight; // Update the values
   lastRecordedScreenWidth = window.screen.width; lastRecordedScreenHeight = window.screen.height; // Update the values
@@ -17,7 +17,17 @@ function updateWindowProperties() {
 
 // See js_for_all_iframed_lesson_htmls AND blank.html
 var userIsOrWasJustViewing = "welcome-screen"; // First time users will stay at welcome-screen,,, continuing user's will teleport to progress-chart
-//
+
+// See » https://developer.mozilla.org/en-US/docs/Web/API/StorageManager/persist
+if (navigator.storage && navigator.storage.persist) {
+  navigator.storage.persist().then((persistent) => {
+    if (persistent) {
+      console.log("Storage persistence is allowed » data will not be cleared except by explicit user action");
+    } else {
+      console.warn("Storage persistence is NOT ALLOWED » data may be cleared by the UA under storage pressure.");
+    }
+  });
+}
 
 /*________________LOAD/SAVE___________________*/
 var savedProgress; // This used to be in js_for_every_single_html BUT it made two DANGEROUS DUPLICATE vars exist [1- container parent level] [2- iframed lesson level] // LET'S avoid trouble
@@ -85,9 +95,11 @@ window.addEventListener("load",function () {
     // See openFirstLesson() below in this js file to find the first storage of theLanguageUserIsLearningNow...
     langCodeForTeachingFilePaths = localStorage.theLanguageUserWasLearningLastTimeToSetFilePaths; // This will certainly exist as long as there has been a "memory card" save.
     langCodeForAnnyang = localStorage.theLanguageUserWasLearningLastTimeToSetAnnyang; // Same situation.
-    targetLanguageReadsLeftToRightOrRightToLeft = localStorage.theLanguageUserWasLearningReadsLTRorRTL; // Same situation.
-    // CANCELLED targetLanguageIsWrittenWithoutSpaces = localStorage.theLanguageUserWasLearningIsWrittenWithoutSpaces;
     setSpeechRecognitionLanguage(langCodeForAnnyang);
+    targetLanguageReadsLeftToRightOrRightToLeft = localStorage.theLanguageUserWasLearningReadsLTRorRTL; // Same situation.
+    if (localStorage.theLanguageUserWasLearningIsWrittenWithoutSpaces == "true") { targetLanguageIsWrittenWithoutSpaces = true; }
+    else { targetLanguageIsWrittenWithoutSpaces = false; }
+
 
     if (localStorage.genderOfTheUserSavedToLocalStorage) { // Retrieve
         genderOfTheUser = localStorage.genderOfTheUserSavedToLocalStorage;
@@ -250,7 +262,9 @@ var userIsFemaleSoUseFemaleConjugation = false;
 var langCodeForTeachingFilePaths = undefined; // Called by various pieces of script that runs within the iframe // Will be undefined until setLangCodeForFilePathsAndCacheTheFirstTeachingAssets() is called
 var langCodeForAnnyang;
 var targetLanguageReadsLeftToRightOrRightToLeft; // Without setting a default here we must make sure it is set in every related function
-// CANCELLED var targetLanguageIsWrittenWithoutSpaces = false;
+var targetLanguageIsWrittenWithoutSpaces = false; // Set it  to «true» ONLY for Renmen-Chinese, for Hito-Japanese and for Saram-Korean even though it is only partially true for Saram-Korean
+// NOTE THAT: According to C-h-a-t-G-P-T other spaceless languages are Thai,Lao,Khmer,Burmese,Tibetan,Mongolian(traditional),Georgian,Armenian,Sinhala(Sri Lanka)
+// ---
 // Looks like we don't have to wrap this in DOMContentLoaded thanks to defer, no?
 var ayFreym = document.getElementsByTagName('IFRAME')[0]; // Used to be getElementById('theIdOfTheIframe'); // Access to ayFreym from » progress.js, js_for_different_browsers_and_devices, js_for_the_sliding_navigation_menu
 var ayFreymWindow = ayFreym.contentWindow; // Used in js_for_different_browsers_and_devices AND js_for_the_sliding_navigation_menu
@@ -325,6 +339,7 @@ femalesIcon.src = "/user_interface/images/gender_ladies.webp"; // Only 1,5KB
 /* JA - Hito */
 function letTheIFrameTeachJapanese(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "ltr"; // See openFirstLesson() to find how this is saved to localStorage
+  targetLanguageIsWrittenWithoutSpaces = true;
   // MOVED THIS INTO letUserChooseAnAccentOrDialect »»» langCodeForAnnyang = "ja";
   if (!savedProgress.ja) { // if it doesn't exist
     savedProgress.ja = {}; console.log("Create a new save slot for "+langCodeForTeachingFilePaths.substring(0,2)); // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
@@ -338,6 +353,7 @@ function letTheIFrameTeachJapanese(){ // Called from within startTeaching()
 /* KO - Saram */
 function letTheIFrameTeachKorean(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "ltr"; // See openFirstLesson() to find how this is saved to localStorage
+  targetLanguageIsWrittenWithoutSpaces = true; // Even if it is only partially true
   // MOVED THIS INTO letUserChooseAnAccentOrDialect »»» langCodeForAnnyang = "ko";
   if (!savedProgress.ko) { // if it doesn't exist
     savedProgress.ko = {}; console.log("Create a new save slot for "+langCodeForTeachingFilePaths.substring(0,2)); // Create an object to fill and save later ,,, Will exist AT PARENT LEVEL unless passed and shared via localStorage!
@@ -351,6 +367,7 @@ function letTheIFrameTeachKorean(){ // Called from within startTeaching()
 /* ZH - Renmen */
 function letTheIFrameTeachChinese(){ // Called from within startTeaching()
   targetLanguageReadsLeftToRightOrRightToLeft = "ltr"; // See openFirstLesson() to find how this is saved to localStorage
+  targetLanguageIsWrittenWithoutSpaces = true;
   // MOVED THIS INTO letUserChooseAnAccentOrDialect »»» langCodeForAnnyang = "zh"; // "zh" alone works on Android. UNCERTAIN: Would it still be better with "zh-CN" or "zh-TW" or vice-versa on Android and Windows? Because Android turns the mic on and off too quickly in some less supported languages even though we want longer listens.
   // Mac Safari works with zh only // Does not work with "zh-Hans"!
   if (!savedProgress.zh) { // if it doesn't exist
@@ -513,7 +530,7 @@ function openFirstLesson(freshNewOrReturning) {
   localStorage.theLanguageUserWasLearningLastTimeToSetFilePaths = langCodeForTeachingFilePaths;
   localStorage.theLanguageUserWasLearningLastTimeToSetAnnyang = langCodeForAnnyang;
   localStorage.theLanguageUserWasLearningReadsLTRorRTL = targetLanguageReadsLeftToRightOrRightToLeft;
-  // CANCELLED localStorage.theLanguageUserWasLearningIsWrittenWithoutSpaces = targetLanguageIsWrittenWithoutSpaces;
+  localStorage.theLanguageUserWasLearningIsWrittenWithoutSpaces = String(targetLanguageIsWrittenWithoutSpaces);
 
   setTimeout(function() {
     // Hide the welcome screen ( <<choose the language you want to learn>> screen's menu-div)

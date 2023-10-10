@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// May NOT BE MODIFIED by UNAUTHORIZED PEOPLE
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
 
 const allNavElements = document.getElementsByTagName('NAV');
 // -
@@ -12,20 +12,21 @@ window.addEventListener("DOMContentLoaded",function () { // ACTUALLY: We don't n
   // soundFileFormat exists in js_for_all_iframed_lesson_htmls and is copied from js_for_different_browsers_and_devices which is at the parent level
   hoverProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_hover."+soundFileFormat]  });
   clickProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_click."+soundFileFormat]  });
-  /* DEPRECATE
-  if (isApple) { // isApple is copied from the parent window by js_for_all_iframed_lesson_htmls
-    hoverProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_hover.mp3"]  });
-    clickProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_click.mp3"]  });
-  } else {
-    hoverProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_hover.webm"]  });
-    clickProgress = new parent.Howl({  src: ["/user_interface/sounds/progress_chart_click.webm"]  });
-  }
-  */
   //
   listOfAllSoundsInThisLesson = [
     hoverProgress,
     //clickProgress // EXCEPTION: See unloadThatLastSoundWhichCannotBeUnloadedNormally
   ];
+
+  // Unload sounds » Same method with every lesson's own js
+  function unloadTheSoundsOfThisLesson() { // See onbeforeunload in js_for_all_iframed_lesson_htmls
+    for (let i = 0; i < listOfAllSoundsInThisLesson.length; i++) {
+        const snd = listOfAllSoundsInThisLesson[i]; snd.unload();
+        // As of August 2023 there is only one sound but that may change when [SHOW NEXT/PREVIOUS SCREEN] buttons are added
+    }
+    parent.unloadThatLastSoundWhichCannotBeUnloadedNormally(clickProgress); // Exists in js_for_navigation_handling,,, unloads the sound after 5s
+  }
+
   // HANDLE ALL SOUNDS
   let local_i_in_progress; // var i was already or could be declared somewhere else
   for (local_i_in_progress = 0; local_i_in_progress < allNavElements.length; local_i_in_progress++)
@@ -39,11 +40,16 @@ window.addEventListener("DOMContentLoaded",function () { // ACTUALLY: We don't n
     }
   }
   // HANDLE ALL NAVIGATIONS
+
+
   if (deviceDetector.isMobile) {
-    handleAllNavigationsByTOUCHENDs();
+    //handleAllNavigationsByTOUCHENDs(); // Deprecate?
+    handleAllNavigationToLessons("touchend");
   } else {
-    handleAllNavigationsByMOUSEUPs();
+    //handleAllNavigationsByMOUSEUPs(); // Deprecate?
+    handleAllNavigationToLessons("mouseup");
   }
+
   // -
 },{once:true});
 
@@ -54,15 +60,6 @@ function touchStartProgressF(event) { event.preventDefault(); // See stopPropaga
 } // Use mouseenter sound for touchstart
 function touchEndProgressF(event)   { event.preventDefault(); // See stopPropagation INLINE
   clickProgress.play();
-}
-
-// Unload sounds » Same method with every lesson's own js
-function unloadTheSoundsOfThisLesson() { // See onbeforeunload in js_for_all_iframed_lesson_htmls
-  for (let i = 0; i < listOfAllSoundsInThisLesson.length; i++) {
-      const snd = listOfAllSoundsInThisLesson[i]; snd.unload();
-      // As of August 2023 there is only one sound but that may change when [SHOW NEXT/PREVIOUS SCREEN] buttons are added
-  }
-  parent.unloadThatLastSoundWhichCannotBeUnloadedNormally(clickProgress); // Exists in js_for_navigation_handling,,, unloads the sound after 5s
 }
 
 /* ___ Viewing the progress_chart RESETS difficulty adjustment for whatever game user was trying to win ___ */
@@ -83,7 +80,7 @@ const lesson131 = document.getElementById('1_3_1');
 const lesson132 = document.getElementById('1_3_2');
 const lesson133 = document.getElementById('1_3_3');
 const lesson134 = document.getElementById('1_3_4');
-/*
+
 const lesson211 = document.getElementById('2_1_1');
 const lesson212 = document.getElementById('2_1_2');
 const lesson213 = document.getElementById('2_1_3');
@@ -96,7 +93,20 @@ const lesson231 = document.getElementById('2_3_1');
 const lesson232 = document.getElementById('2_3_2');
 const lesson233 = document.getElementById('2_3_3');
 const lesson234 = document.getElementById('2_3_4');
-*/
+
+const lesson311 = document.getElementById('3_1_1');
+const lesson312 = document.getElementById('3_1_2');
+const lesson313 = document.getElementById('3_1_3');
+const lesson314 = document.getElementById('3_1_4');
+const lesson321 = document.getElementById('3_2_1');
+const lesson322 = document.getElementById('3_2_2');
+const lesson323 = document.getElementById('3_2_3');
+const lesson324 = document.getElementById('3_2_4');
+const lesson331 = document.getElementById('3_3_1');
+const lesson332 = document.getElementById('3_3_2');
+const lesson333 = document.getElementById('3_3_3');
+const lesson334 = document.getElementById('3_3_4');
+
 if (parent.savedProgress[studiedLangCode].lesson_WATER_IsViewed) {  lesson111.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_WATER_IsCompleted) {  lesson111.classList.add("thisLessonHasBeenCompleted");  } // Override background-color
 if (parent.savedProgress[studiedLangCode].lesson_GIVEMEWATER_IsViewed) {  lesson112.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
@@ -119,8 +129,8 @@ if (parent.savedProgress[studiedLangCode].lesson_THEREISAFISHINTHEWATER_IsViewed
 if (parent.savedProgress[studiedLangCode].lesson_THEREISAFISHINTHEWATER_IsCompleted) {  lesson132.classList.add("thisLessonHasBeenCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_TREE_IsViewed) {  lesson133.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_TREE_IsCompleted) {  lesson133.classList.add("thisLessonHasBeenCompleted");  }
-if (parent.savedProgress[studiedLangCode].lesson_ONETWOTHREE_IsViewed) {  lesson134.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
-if (parent.savedProgress[studiedLangCode].lesson_ONETWOTHREE_IsCompleted) {  lesson134.classList.add("thisLessonHasBeenCompleted");  }
+if (parent.savedProgress[studiedLangCode].lesson_PRIMARYCOLORS_IsViewed) {  lesson134.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
+if (parent.savedProgress[studiedLangCode].lesson_PRIMARYCOLORS_IsCompleted) {  lesson134.classList.add("thisLessonHasBeenCompleted");  }
 // --------
 
 // handleFadingAndNavigation exists in js_for_the_parent_all_browsers_all_devices
@@ -128,18 +138,24 @@ if (parent.savedProgress[studiedLangCode].lesson_ONETWOTHREE_IsCompleted) {  les
 let lessonCodes = [
   111,112,113,114,
   121,122,123,124,
-  131,132,133,134//,
-  // 211,212,213,214,
-  // 221,222,223,224,
-  // 231,232,233,234
+  131,132,133,134,
+  211,212,213,214,
+  221,222,223,224,
+  231,232,233,234,
+  311,312,313,314,
+  321,322,323,324,
+  331,332,333,334
 ];
 let lessonsAndTheirReadinessForOffline = {
   111:false, 112:false, 113:false, 114:false,
   121:false, 122:false, 123:false, 124:false,
-  131:false, 132:false, 133:false, 134:false//,
-  // 211:false, 212:false, 213:false, 214:false,
-  // 221:false, 222:false, 223:false, 224:false,
-  // 231:false, 232:false, 233:false, 234:false
+  131:false, 132:false, 133:false, 134:false,
+  211:false, 212:false, 213:false, 214:false,
+  221:false, 222:false, 223:false, 224:false,
+  231:false, 232:false, 233:false, 234:false,
+  311:false, 312:false, 313:false, 314:false,
+  321:false, 322:false, 323:false, 324:false,
+  331:false, 332:false, 333:false, 334:false
 };
 
 // Check each lessons readiness for offline
@@ -154,7 +170,55 @@ if (localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) 
 }
 
 /*__Handle Mobile and Desktop separately__*/
-
+function handleAllNavigationToLessons(touchend_or_mouseup) {
+  lesson111.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_1/index.html",lessonsAndTheirReadinessForOffline[111]); });
+  lesson112.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html",lessonsAndTheirReadinessForOffline[112]); });
+  lesson113.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_3/index.html",lessonsAndTheirReadinessForOffline[113]); });
+  lesson114.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_4/index.html",lessonsAndTheirReadinessForOffline[114]); });
+  // -
+  lesson121.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_1/index.html",lessonsAndTheirReadinessForOffline[121]); });
+  lesson122.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_2/index.html",lessonsAndTheirReadinessForOffline[122]); });
+  lesson123.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_3/index.html",lessonsAndTheirReadinessForOffline[123]); });
+  lesson124.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_4/index.html",lessonsAndTheirReadinessForOffline[124]); });
+  // -
+  lesson131.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_1/index.html",lessonsAndTheirReadinessForOffline[131]); });
+  lesson132.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_2/index.html",lessonsAndTheirReadinessForOffline[132]); });
+  lesson133.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_3/index.html",lessonsAndTheirReadinessForOffline[133]); });
+  lesson134.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_4/index.html",lessonsAndTheirReadinessForOffline[134]); });
+  // -----
+  lesson211.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[211]); });
+  lesson212.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[212]); });
+  lesson213.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[213]); });
+  lesson214.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[214]); });
+  // -
+  lesson221.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[221]); });
+  lesson222.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[222]); });
+  lesson223.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[223]); });
+  lesson224.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[224]); });
+  // -
+  lesson231.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[231]); });
+  lesson232.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[232]); });
+  lesson233.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[233]); });
+  lesson234.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[234]); });
+  // -----
+  lesson311.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[311]); });
+  lesson312.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[312]); });
+  lesson313.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[313]); });
+  lesson314.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[314]); });
+  // -
+  lesson321.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[321]); });
+  lesson322.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[322]); });
+  lesson323.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[323]); });
+  lesson324.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[324]); });
+  // -
+  lesson331.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[331]); });
+  lesson332.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[332]); });
+  lesson333.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[333]); });
+  lesson334.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[334]); });
+}
+/* try to shorten the code
+//Works in Chrome
+//DEPRECATE if touchend_or_mouseup works on Safari too
 function handleAllNavigationsByTOUCHENDs() {
   lesson111.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_1/index.html",lessonsAndTheirReadinessForOffline[111]); });
   lesson112.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html",lessonsAndTheirReadinessForOffline[112]); });
@@ -168,7 +232,9 @@ function handleAllNavigationsByTOUCHENDs() {
   lesson132.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_2/index.html",lessonsAndTheirReadinessForOffline[132]); });
   lesson133.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_3/index.html",lessonsAndTheirReadinessForOffline[133]); });
   lesson134.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_4/index.html",lessonsAndTheirReadinessForOffline[134]); });
+  lesson211.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[211]); });
 }
+
 function handleAllNavigationsByMOUSEUPs() {
   lesson111.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_1/index.html",lessonsAndTheirReadinessForOffline[111]); });
   lesson112.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html",lessonsAndTheirReadinessForOffline[112]); });
@@ -183,3 +249,4 @@ function handleAllNavigationsByMOUSEUPs() {
   lesson133.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_3/index.html",lessonsAndTheirReadinessForOffline[133]); });
   lesson134.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_4/index.html",lessonsAndTheirReadinessForOffline[134]); });
 }
+*/

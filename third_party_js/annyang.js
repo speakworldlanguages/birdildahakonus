@@ -1,7 +1,8 @@
-// NOTE THAT: Some modifications were applied to the original annyang.js file (in speakworldlanguages.app)
+// NOTE THAT: Some modifications were applied to the original annyang.js file for speakworldlanguages.app
 // 1 - Comments were removed to reduce the file size!
 // 2 - Added link to https://webreflection.medium.com/taming-the-web-speech-api-ef64f5a245e1
 // 3 - Added code to enable interimResults
+// 4 - Added code to notify the user when SpeechRecognition fails to catch words despite the existence of valid audio input
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -18,7 +19,8 @@ var annyangRestartDelayTime = 100; // Better if this is increased on Android » 
 var annyangBetterIfInterimResultsAreDisabled = false;
 let restartTimeout = null;
 let silenceWasBroken = false;
-let numberOfRestartsDespiteDetectionOfAudioInput = 0;
+let numberOfRestartsDespiteDetectionOfAudioInput = 0; // To handle «not being able to catch any words» on all devices
+var numberOfStartsAndRestartsRegardlessOfAudioInput = 0; // ON ANDROID we make the game go back to its initial state after a certain number of retries » See js_for_speech_recognition_algorithm
 
 (function (root, factory) {
   'use strict';
@@ -164,7 +166,7 @@ let numberOfRestartsDespiteDetectionOfAudioInput = 0;
 
       // THE LINES FOR interimResults IS NOT PART OF ORIGINAL ANNYANG.JS
       // Maybe it's better if we turn off interimResults for all Android devices and not only on Samsung Browser
-      if (annyangBetterIfInterimResultsAreDisabled) {
+      if (annyangBetterIfInterimResultsAreDisabled) { // See js_for_different_browsers_and_devices
         // Do nothing since interimResults are turned off by default
         console.log("ANDROID: interimResults will not be activated");
       } else {
@@ -189,6 +191,15 @@ let numberOfRestartsDespiteDetectionOfAudioInput = 0;
       recognition.onstart = function () { //console.log("annyang.js » Speech Recognition START event fired");
         _isListening = true;
         invokeCallbacks(callbacks.start);
+        // Custom code for speakworldlanguages.app
+        if (isAndroid && microphoneOnOffVisualIndicator) { // See js_for_different_browsers_and_devices
+          document.body.appendChild(microphoneOnOffVisualIndicator);
+
+          // WARNING: On Android there seems to be a time gap after onstart fires where Speech Recognition HAS NOT ACTUALLY started !!!
+
+        }
+        // Count the number of all starts
+        numberOfStartsAndRestartsRegardlessOfAudioInput++;
       };
 
       // Ideally the events must fire in the following order start » audiostart » soundstart » speechstart » speechend » soundend » audioend » result » end
@@ -230,6 +241,11 @@ let numberOfRestartsDespiteDetectionOfAudioInput = 0;
 
         _isListening = false;
         invokeCallbacks(callbacks.end);
+        // Custom code for speakworldlanguages.app
+        if (isAndroid && microphoneOnOffVisualIndicator) { // See js_for_different_browsers_and_devices
+          document.body.removeChild(microphoneOnOffVisualIndicator);
+        }
+
         // annyang will auto restart if it is closed automatically and not by user action.
         if (autoRestart) {
           // play nicely with the browser, and never restart annyang automatically more than once per second
@@ -243,7 +259,7 @@ let numberOfRestartsDespiteDetectionOfAudioInput = 0;
             // 1 - User is trying but speech recognition won't function nicely (It happens on Android and Windows when there is only one very short word like "Ki" in Hito)
             // 2 - User is away from the device and the mic hears nothing but silence
             // 3 - In Safari we try not to abort annyang and pause it instead which means auto-Restart-Count will never be reset
-            // IDEA: We could try and see if 1 is happening and tell the user that it's not their fault but is a technical issue » [... Please skip ahead]
+            // DECISION: We will try and see if 1 is happening and tell the user that it's not their fault but is a technical issue » [... Please skip ahead]
           }
           // Try to handle case 1: On Windows & Android user tries to pronounce but SpeechRecognition fails even though it perhaps shouldn't have.
           if (silenceWasBroken) {
@@ -331,14 +347,15 @@ let numberOfRestartsDespiteDetectionOfAudioInput = 0;
     abort: function abort() {
       // Start of MODIFICATION for SWL
       if (restartTimeout) {      clearTimeout(restartTimeout);      }
+      numberOfStartsAndRestartsRegardlessOfAudioInput = 0; // Reset back to initial value
       numberOfRestartsDespiteDetectionOfAudioInput = 0; // Reset back to initial value
       // End of MODIFICATION for SWL
       autoRestart = false;
       autoRestartCount = 0;
       if (isInitialized()) {
-        recognition.abort(); console.log("annyang.js » recognition.abort() was successful");
+        recognition.abort(); console.log("annyang.js » recognition.abort() was successful"); // Modification applied for SWL
       } else {
-         console.warn("CANNOT abort because annyang isInitialized returned false");
+         console.warn("CANNOT abort because annyang isInitialized returned false"); // Modification applied for SWL
       }
     },
 

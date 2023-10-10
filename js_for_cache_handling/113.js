@@ -85,12 +85,7 @@ async function cacheLesson113AssetsForTheTargetLanguage() {
     "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_3/bread_7-8."+soundFileFormat,
     "/speech_recognition_answer_key/"+parent.langCodeForTeachingFilePaths+"/1-1-3-bread.txt"
   ];
-  /* DEPRECATE and use soundFileFormat from js_for_all_iframed_lesson_htmls which copies it from js_for_different_browsers_and_devices
-  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
-  if (isApple) {
-    listOfFilesForTargetLanguage_1_1_3 = listOfFilesForTargetLanguage_1_1_3.map(filepath => filepath.replace(".webm", ".mp3"));
-  }
-  */
+
   const u = "/user_interface/text/"+userInterfaceLanguage; // See js_for_every_single_html
   switch (parent.langCodeForTeachingFilePaths.substring(0,2)) { // Using substring, we trim "tr_istanbul" to "tr", "zh_putonghua" to "zh" etc
     case "ja":
