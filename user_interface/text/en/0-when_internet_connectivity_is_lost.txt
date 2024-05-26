@@ -1,0 +1,3 @@
+﻿The app needs a stable internet connection to be able to perform speech recognition.
+|Internet connection seems to be restored.
+|Great, let's continue

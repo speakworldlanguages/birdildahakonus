@@ -5,8 +5,15 @@ let theSilentSpeechOfTheAuthor;
 let windowLoadFiredAlready = false;
 
 window.addEventListener('DOMContentLoaded', function(){
-  clonedButtons0 = document.getElementsByTagName('SECTION')[0];
-  clonedButtons1 = document.getElementsByTagName('SECTION')[1];
+  clonedButtons0 = document.getElementsByClassName("goToNextLessonButton")[0];
+  clonedButtons1 = document.getElementsByClassName("goToNextLessonButton")[1];
+  if (needLatinFonts) {
+    clonedButtons0.style.fontFamily = '"Oxanium SemiBold", sans-serif'; // Font loaded via js_for_every_single_html
+    clonedButtons1.style.fontFamily = '"Oxanium SemiBold", sans-serif'; // Font loaded via js_for_every_single_html
+  }
+  if (needHitoicJapaneseFonts) {
+    // The text is short: Don't need line break rules
+  }
 
   const filePathForAuthorsMessage = "/user_interface/text/"+userInterfaceLanguage+"/1-3-notice_author_says.txt";
   const filePathForWhatToPutIntoTheButton = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-continue_to_next.txt";
@@ -25,7 +32,15 @@ window.addEventListener('DOMContentLoaded', function(){
 }, { once: true });
 
 let bgmSound, hoverSound, clickSound;
-window.addEventListener('load', function(){
+window.addEventListener('load',checkIfAppIsPaused, { once: true });
+function checkIfAppIsPaused() {
+  if (parent.theAppIsPaused) { // See js_for_the_sliding_navigation_menu
+    parent.pleaseAllowSound.play(); // Let the wandering user know that the lesson is now ready // See js_for_different_browsers_and_devices
+    let unpauseDetector = setInterval(() => {    if (!parent.theAppIsPaused) { clearInterval(unpauseDetector); loadingIsCompleteFunction(); }    }, 500); // NEVER use a SuperInterval here!
+  } else { loadingIsCompleteFunction(); }
+}
+
+function loadingIsCompleteFunction() {
   // --
   theSilentSpeechOfTheAuthor = document.querySelector('.speechBubble');
   if (userReadsLeftToRightOrRightToLeft == "rtl") { // js_for_every_single_html
@@ -40,8 +55,8 @@ window.addEventListener('load', function(){
     setTimeout(function () {   bgmSound.play(); bgmSound.fade(0,0.6,15000);   }, 4000);
     setTimeout(function () {   bgmSound.fade(0.6,0,15000);   }, 27000);
   });
-  hoverSound = new parent.Howl({  src: ["/user_interface/sounds/section_as_button_hover."+soundFileFormat]  });
-  clickSound = new parent.Howl({  src: ["/user_interface/sounds/section_as_button_click."+soundFileFormat]  });
+  hoverSound = new parent.Howl({  src: ["/user_interface/sounds/authors_notice_next_button_hover."+soundFileFormat]  });
+  clickSound = new parent.Howl({  src: ["/user_interface/sounds/authors_notice_next_button_click."+soundFileFormat]  });
   // --
   if (deviceDetector.isMobile) {
     clonedButtons0.addEventListener("touchstart",function (event) { event.preventDefault(); event.stopPropagation(); hoverSound.play(); });
@@ -62,7 +77,8 @@ window.addEventListener('load', function(){
     // In this case let fetch() fire startPrintingLetters() when it hopefully gets the text
   }
   // --
-}, { once: true });
+}
+
 
 // ANIMATE TEXT
 let letterCounter = 1;
@@ -91,11 +107,20 @@ function continueWithTheNextLesson(event) { event.preventDefault(); event.stopPr
     clonedButtons0.classList.add("addThisToAButtonForPlayStationStyleClick");
     clonedButtons1.classList.add("addThisToAButtonForPlayStationStyleClick");
   }, 50);
-
+  // It should be fine without SuperTimeouts as the next lesson will start paused even if user clicks PAUSE within 2900ms
   setTimeout(function () {
     showGlobyPreloaderBeforeExit(); // 1500ms » See js_for_all_iframed_lesson_htmls AND See css_for_preloader_and_orbiting_circles
+    // REMEMBER: iframe.src change makes window.onbeforeunload fire in js_for_all_iframed_lesson_htmls.js which then calls unloadTheSoundsOfThisLesson();
     parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost = "/lessons_in_iframes/level_2/unit_1/lesson_1/index.html"; // See js_for_online_and_offline_modes
-    setTimeout(function () {   parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost;   }, 1500);
+    // ---
+    if (parent.internetConnectivityIsNiceAndUsable) { // See js_for_online_and_offline_modes.js
+      setTimeout(function () {   parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost;   }, 1500);
+    } else { parent.console.warn("THE DEVICE IS OFFLINE (detected at the end of notice");
+      const isCached = checkIfNextLessonIsCachedAndRedirectIfNot(211); // See js_for_all_iframed_lesson_htmls
+      if (isCached) { parent.console.warn("WILL TRY TO CONTINUE OFFLINE");
+        setTimeout(function() { parent.ayFreym.src = parent.pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; }, 1500);
+      }
+    }
   },1400); // Let the button disappear completely before preloader starts appearing
 }
 

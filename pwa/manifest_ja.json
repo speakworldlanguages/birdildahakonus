@@ -1,0 +1,18 @@
+﻿{
+  "lang": "ja",
+  "name": "話せるといいよね",
+  "short_name": "話せるといいよね",
+  "author": "土本智一勇夫剛志",
+  "description": "語学学習のアプリで新しい言葉を聴いてマイクに発音して練習しましょう",
+  "icons": [{
+    "src": "/pwa/homescreen_icon/icon_for_pwa_ja.png",    "sizes": "512x512",    "type": "image/png"
+    }],
+  "start_url": "index.html?homescreen",
+  "id": "SWL_APP_IN_HITO_USER_INTERFACE",
+  "display": "fullscreen",
+  "background_color": "#adbbc4",
+  "theme_color": "#4d606f",
+  "screenshots": [
+    {      "src": "/pwa/screenshot.jpg",      "type": "image/jpg",      "sizes": "512x512"    }
+  ]
+}

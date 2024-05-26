@@ -19,13 +19,13 @@ let explanationB = "…"; // Warning: Without an initial value it returns UNDEFI
 fetch(explanationPathA,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ explanationA = contentOfTheTxtFile; });
 fetch(explanationPathB,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ explanationB = contentOfTheTxtFile; });
 /* __ TEXT TO BE INJECTED INTO NOTIFICATION BOX AT THE END __ */
-let couldYouFigureOutHowToSayEat = null; // Will be displayed for all languages // See window-load below
+// DEPRECATE let couldYouFigureOutHowToSayEat = null; // Will be displayed for all languages // See window-load below
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
 // Find soundFileFormat in js_for_all_iframed_lesson_htmls
 let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_1_normal."+soundFileFormat;
-let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_1_slow."+soundFileFormat;
-let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_2_normal."+soundFileFormat;
+let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_2_normal."+soundFileFormat;
+let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_1_slow."+soundFileFormat;
 let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_bread_2_slow."+soundFileFormat;
 let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_normal."+soundFileFormat;
 let say6Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_bread_normal."+soundFileFormat;
@@ -90,15 +90,22 @@ let skip_b_and_c = false;
 const antigoofingDiv = document.getElementById("antigoofingID");
 const dimmer = document.querySelector(".dimmer");
 // ---
-let isParentBlurred = true; // Clicking on iframe blurs the parent,,, so start blurred
-let isFrameBlurred = false; //
+// DEPRECATE: let isParentBlurred = null; // CAUTION: Clicking on iframe blurs the parent AND vice versa
+let isFrameBlurred = null; // CAUTION: Clicking on iframe blurs the parent AND vice versa
 // ---
 // See index.html for aGreaterTouchStartArea aBetterClickArea swipeInstructionPart1 swipeInstructionPart2 pinchInstruction aGreaterTouchMoveArea thePinchArea handCursor upperTeeth lowerTeeth keyboardInstructionPart1 keyboardInstructionPart2
 
 // See js_for_the_parent_all_browsers_all_devices for lastRecordedWindowWidth lastRecordedWindowHeight
 
 /* SET OFF */
-window.addEventListener('load', loadingIsCompleteFunction, { once: true });
+window.addEventListener('load',checkIfAppIsPaused, { once: true });
+function checkIfAppIsPaused() {
+  if (parent.theAppIsPaused) { // See js_for_the_sliding_navigation_menu
+    parent.pleaseAllowSound.play(); // Let the wandering user know that the lesson is now ready // See js_for_different_browsers_and_devices
+    let unpauseDetector = setInterval(() => {    if (!parent.theAppIsPaused) { clearInterval(unpauseDetector); loadingIsCompleteFunction(); }    }, 500); // NEVER use a SuperInterval here!
+  } else { loadingIsCompleteFunction(); }
+}
+
 function loadingIsCompleteFunction() {
   if (studiedLang == "zh") { // Display note about the importance of intonation in RENMEN.
     const pathOfNotificationAboutIntonation = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_ren_attention_to_intonation.txt";
@@ -111,29 +118,36 @@ function loadingIsCompleteFunction() {
 
   }
   else {
-    startTheLesson(); // Call it now if it was not to be called from within createAndHandleInfoBoxType1BeforeLessonStarts() in js_for_all_iframed_lesson_htmls.js
+    startTheLesson(); // Call it now if it was not to be called from within createAndHandleInfoBoxType1BeforeLessonStarts() in js_for_info_boxes_in_lessons.js
   }
-  //--- By the way: Get the end of lesson text ready
-  const noteAtTheEndOfLessonPath = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_end_of_lesson.txt"; // Could you figure out how to say eat
-  setTimeout(function () {
+  //---
+  // By the way: Get the end of lesson text ready
+  /* DEPRECATE
+  setTimeout(function () { // We don't want a SuperTimeout in this case
     // Will show for all languages
+    const noteAtTheEndOfLessonPath = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_end_of_lesson.txt"; // Could you figure out how to say eat
     fetch(noteAtTheEndOfLessonPath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ couldYouFigureOutHowToSayEat = contentOfTheTxtFile; });
   }, 5000);
+  */
 }
 
 function startTheLesson() {
   // User must listen to pronunciation-teacher vocabulary box no matter what language he/she is studying
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox."+soundFileFormat;  // In case of "ar" pronunciation-teacher-box will play the verb root in male conjugation even if the user is female
-  const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
-  fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
+  // In case of "ar" pronunciation-teacher-box will play the verb root in male conjugation even if the user is female
+  const filePathOfTheAudio1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox_1."+soundFileFormat;
+  const filePathOfTheAudio2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox_2."+soundFileFormat;
+  const filePathOfTheAudio3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox_3."+soundFileFormat;
+  const filePathOfLipSyncJSON1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox_1.json";
+  const filePathOfLipSyncJSON2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox_2.json";
+  const filePathOfLipSyncJSON3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/take_listenbox_3.json";
+  // NOTE: The lip-sync json file names better be THE SAME with the audio file names that will be played in the listen-many-times box » See js_for_info_boxes_in_lessons
+  const listenBoxP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
+  fetch(listenBoxP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
   // See js_for_info_boxes_in_lessons » iframe-lesson level
-  new SuperTimeout(function(){    createAndHandleListenManyTimesBox(filePathOfTheAudioFile);    },501); // Wait for preloader to disappear or give a brief break after notification
+  new SuperTimeout(function(){    createAndHandleListenManyTimesBox(filePathOfTheAudio1,filePathOfLipSyncJSON1,filePathOfTheAudio2,filePathOfLipSyncJSON2,filePathOfTheAudio3,filePathOfLipSyncJSON3);    },501); // Wait for preloader to disappear or give a brief break after notification
 }
 
 function vocabularyBoxIsClosed(x,y) { // Will fire from within createAndHandleListenManyTimesBox with touch/click coordinate values passed » vocabularyBoxIsClosed(lastPointerX,lastPointerY)
-  // --
-  isParentBlurred = true; // Clicking on iframe blurs the parent,,, so start blurred
-  isFrameBlurred = false; //
   // --
   let unblurTime;  switch (parent.speedAdjustmentSetting) {  case "slow": unblurTime = 2.0; break;  case "fast": unblurTime = 0.5; break;  default: unblurTime = 0.9;  }
   main.style.transitionDuration = String(unblurTime)+"s";
@@ -177,6 +191,38 @@ function vocabularyBoxIsClosed(x,y) { // Will fire from within createAndHandleLi
     }
     function handCursorDisappear() { handCursor.style.opacity = "0"; }
     function handCursorReappear() { handCursor.style.opacity = "1";  }
+    // -
+    // Detect if keyboard is active(usable) or not
+    if (document.hasFocus()) { isFrameBlurred = false; console.log("frame has focus"); }
+    else { isFrameBlurred = true; console.log("frame is blurred,,, BUT HOW???"); main.classList.add("grayAway"); }
+    // DEPRECATE: if (parent.document.hasFocus()) { isParentBlurred = false; console.log("parent has focus"); } else { isParentBlurred = true; console.log("parent is blurred"); }
+    // Since clicking on vocabulary box will definitely bring focus to the frame
+    // isFrameBlurred = false; isParentBlurred = true; // Initialize
+    window.addEventListener("blur",frameIsBlurred);
+    window.addEventListener("focus",frameIsFocused);
+    // DEPRECATE: parent.window.addEventListener("blur",parentIsBlurred);
+    // DEPRECATE: parent.window.addEventListener("focus",parentIsFocused);
+    function frameIsBlurred() {   isFrameBlurred = true;   console.log("frame lost focus");     main.classList.remove("colorBack"); main.classList.add("grayAway");    } // css_for_every_single_html
+    function frameIsFocused() {   isFrameBlurred = false;  console.log("frame regained focus"); main.classList.remove("grayAway");  main.classList.add("colorBack");   } // css_for_every_single_html
+    // DEPRECATE: function parentIsBlurred() {  isParentBlurred = true;  console.log("parent lost focus");  checkBothBlurs();  }
+    // DEPRECATE: function parentIsFocused() {  isParentBlurred = false; console.log("parent regained focus"); checkBothBlurs();  }
+    /*
+    function checkBlurFocus() {
+      if (!win2HasHappened) {
+        new SuperTimeout(function () {
+          if (isFrameBlurred) { // grey out if both are blurred // DEPRECATE: if (isParentBlurred && isFrameBlurred)
+            main.classList.remove("colorBack"); main.classList.add("grayAway"); // css_for_every_single_html
+            // DEPRECATE: NO BIG DEAL WITHOUT: parent.containerDivOfTheNavigationMenu.classList.remove("colorBack"); parent.containerDivOfTheNavigationMenu.classList.add("grayAway");
+            // UNNECESSARY WITH THE NEW METHOD main.classList.remove("noCursor");  main.classList.add("defaultCursor");
+          } else { // color back in all other cases
+            main.classList.remove("grayAway");  main.classList.add("colorBack"); // css_for_every_single_html
+            // DEPRECATE: NO BIG DEAL WITHOUT: parent.containerDivOfTheNavigationMenu.classList.remove("grayAway"); parent.containerDivOfTheNavigationMenu.classList.add("colorBack");
+          }
+        }, 30);
+      }
+    }
+    */
+    // -
   }
 
 }
@@ -186,106 +232,128 @@ let to1,ticker1,ticker2,to2,to3,to4,to5,to6,to7,toDisplayHowToSwipe,to8,to9,to10
 let loopCounter=1; let waitTime = 0;
 function playPictogramLoop() { // Fires when blur has 55% cleared towards focus to open the scene
   let changeTime;  switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 2700; break;  case "fast": changeTime = 1200; break;  default: changeTime = 1900;  }
-  to1 = new SuperTimeout(function(){
+  to1 = new SuperTimeout(proceedToNext_1,(changeTime+500)); // Rotate the head & arm does its first pointing movement
+  function proceedToNext_1(){
     movingEyesDiv.style.left = "3.0%"; movingEyesDiv.style.top = "0.5%"; // Moving the eyes looks like rotating the head
     // NOTE: Element.children includes only element nodes (i.e. skips comments).
-    to2 = new SuperTimeout(function(){
-      if (!skip_b_and_c) {
-        pictogramDiv.children[0].style.display = "none"; // a- Natural standing
-        pictogramDiv.children[1].style.display = "block"; // b- Pointing hand 1
-        pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
-        let pointCounter = 1;
-        ticker1 = new SuperInterval(function () {
-          if (pointCounter%3 != 0) {
+    switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 2700; break;  case "fast": changeTime = 1200; break;  default: changeTime = 1900;  }
+    to2 = new SuperTimeout(proceedToNext_2,(changeTime+100)); // Arm does its second pointing movement
+  }
+  function proceedToNext_2(){
+    if (!skip_b_and_c) {
+      pictogramDiv.children[0].style.display = "none"; // a- Natural standing
+      pictogramDiv.children[1].style.display = "block"; // b- Pointing hand 1
+      pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
+      let pointCounter = 1;
+      ticker1 = new SuperInterval(function () {
+        if (pointCounter%3 != 0) {
+          pictogramDiv.children[0].style.display = "none"; // a- Natural standing
+          pictogramDiv.children[1].style.display = "block"; // b- Pointing hand 1
+          pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
+        }
+      }, changeTime/5);
+      ticker2 = new SuperInterval(function () {
+        to3 = new SuperTimeout(function () {
+          if (pointCounter%4 != 0) {
             pictogramDiv.children[0].style.display = "none"; // a- Natural standing
-            pictogramDiv.children[1].style.display = "block"; // b- Pointing hand 1
-            pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
+            pictogramDiv.children[1].style.display = "none"; // b- Pointing hand 1
+            pictogramDiv.children[2].style.display = "block"; // c- Pointing hand 2
           }
-        }, changeTime/5);
-        ticker2 = new SuperInterval(function () {
-          to3 = new SuperTimeout(function () {
-            if (pointCounter%4 != 0) {
-              pictogramDiv.children[0].style.display = "none"; // a- Natural standing
-              pictogramDiv.children[1].style.display = "none"; // b- Pointing hand 1
-              pictogramDiv.children[2].style.display = "block"; // c- Pointing hand 2
-            }
-          }, changeTime/12);
-          pointCounter++;
-        }, changeTime/5);
-        new SuperTimeout(function () {
-          if (ticker1) { ticker1.clear(); } // clearInterval(ticker1);
-          if (ticker2) { ticker2.clear(); } // clearInterval(ticker2);
-        }, changeTime*1.6);
-      } else {
-        pictogramDiv.children[0].style.display = "block"; // a- Natural standing
-        pictogramDiv.children[1].style.display = "none"; // b- Pointing hand 1
-        pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
-      }
-      to4 = new SuperTimeout(function(){
-        movingEyesDiv.style.left = "0%"; movingEyesDiv.style.top = "0%"; // Look at the camera again
-        to5 = new SuperTimeout(function(){
-          pictogramDiv.children[3].classList.add("fadeIn"); to6 = new SuperTimeout(function(){ pictogramDiv.children[3].classList.remove("fadeIn"); },601); // Speech bubble 1 appears
-          pictogramDiv.children[3].style.display = "block"; // speech bubble with bread+hand
-          injectTextIntoTheHelpBoxP.innerHTML = explanationA;
-          to7 = new SuperTimeout(talk1,1000);
-          function talk1() { if (isNowSayingTheSecondSet) {  say3.play();  } else {  say1.play();  } }
+        }, changeTime/12);
+        pointCounter++;
+      }, changeTime/5);
+      new SuperTimeout(function () {
+        if (ticker1) { ticker1.clear(); } // clearInterval(ticker1);
+        if (ticker2) { ticker2.clear(); } // clearInterval(ticker2);
+      }, changeTime*1.6);
+    } else {
+      pictogramDiv.children[0].style.display = "block"; // a- Natural standing
+      pictogramDiv.children[1].style.display = "none"; // b- Pointing hand 1
+      pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
+    }
+    // -
+    switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 2700; break;  case "fast": changeTime = 1200; break;  default: changeTime = 1900;  }
+    to4 = new SuperTimeout(proceedToNext_3,(changeTime-100)); // Look at the camera again
+  } // END OF proceedToNext_2
+  // -
+  function proceedToNext_3(){
+    movingEyesDiv.style.left = "0%"; movingEyesDiv.style.top = "0%"; // Look at the camera again
+    switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 2700; break;  case "fast": changeTime = 1200; break;  default: changeTime = 1900;  }
+    to5 = new SuperTimeout(proceedToNext_4,(changeTime-300)); // Bubble 1 appears
+  }
+  // -
+  function proceedToNext_4(){
+    pictogramDiv.children[3].classList.add("fadeIn"); to6 = new SuperTimeout(function(){ pictogramDiv.children[3].classList.remove("fadeIn"); },601); // Speech bubble 1 appears
+    pictogramDiv.children[3].style.display = "block"; // speech bubble with bread+hand
+    injectTextIntoTheHelpBoxP.innerHTML = explanationA;
+    to7 = new SuperTimeout(talk1,750);
+    function talk1() { if (isNowSayingTheSecondSet) {  say3.play();  } else {  say1.play();  } }
 
-          // Show how to do SWIPE-DOWN gesture to mobile user » Only once in a session!
-          if (deviceDetector.isMobile) {
-            if (loopCounter >= 4) { sessionStorage.level114SwipeInstructionHasBeenDisplayedThreeTimes = "yes"; }
+    // Show how to do SWIPE-DOWN gesture to mobile user » Only once in a session!
+    if (deviceDetector.isMobile) {
+      if (loopCounter >= 4) { sessionStorage.level114SwipeInstructionHasBeenDisplayedThreeTimes = "yes"; }
 
-            if (sessionStorage.level114SwipeInstructionHasBeenDisplayedThreeTimes) { waitTime = 0; } // No instructions and no waiting » 4th lap and on
-            else { // First three laps
-              if (!userAlreadyKnowsHowToSwipe) { // Sets to true as soon as ~=75px swipe is accomplished
-                toDisplayHowToSwipe = new SuperTimeout(displaySwipeInstruction, 4500); // After first say ,,, timeout clears if win1 happens
-                function displaySwipeInstruction() {
-                  document.body.appendChild(swipeInstructionPart1); // 9x50ms + 1x900ms + 4x350 + 1x99999 = 2750 + 99999
-                  new SuperTimeout(function () {
-                    document.body.removeChild(swipeInstructionPart1); resetWebp(swipeInstructionPart1); // resetWebp() is in js_for_every_single_html
-                    document.body.appendChild(swipeInstructionPart2); //50ms x 14 frames = 700ms
-                    new SuperTimeout(function () {
-                      swipeInstructionPart2.classList.add("itDisappears"); //1500 ms
-                      new SuperTimeout(function () { document.body.removeChild(swipeInstructionPart2); swipeInstructionPart2.classList.remove("itDisappears"); resetWebp(swipeInstructionPart2); }, 1501); // resetWebp() is in js_for_every_single_html
-                    }, changeTime+550);
-                  }, changeTime+1600); // Just in case we decide that speedAdjustmentSetting should be available in mobile too (in the future) Until then it's 1900+1600=3500 fixed,,, 3500-2750=750ms stay time
-                }
-                //---
-                if (loopCounter == 1) { waitTime = 5500 + changeTime/5; } // Make teacher wait during the first lap
-                else { waitTime = 0; } // Let teacher speak normally without waiting but still show the swipe instruction on lap 2 and 3
-                //---
-              } else { waitTime = 0; } // No instructions and no waiting if user figured out how to swipe
-            } // END OF what to do on first three laps
-          } else { waitTime = 0; } // Desktops show no drag instructions
+      if (sessionStorage.level114SwipeInstructionHasBeenDisplayedThreeTimes) { waitTime = 0; } // No instructions and no waiting » 4th lap and on
+      else { // First three laps
+        if (!userAlreadyKnowsHowToSwipe) { // Sets to true as soon as ~=75px swipe is accomplished
+          toDisplayHowToSwipe = new SuperTimeout(displaySwipeInstruction, 4500); // After first say ,,, timeout clears if win1 happens
+          function displaySwipeInstruction() {
+            document.body.appendChild(swipeInstructionPart1); // 9x50ms + 1x900ms + 4x350 + 1x99999 = 2750 + 99999
+            new SuperTimeout(function () {
+              document.body.removeChild(swipeInstructionPart1); resetWebp(swipeInstructionPart1); // resetWebp() is in js_for_every_single_html
+              document.body.appendChild(swipeInstructionPart2); //50ms x 14 frames = 700ms
+              new SuperTimeout(function () {
+                swipeInstructionPart2.classList.add("itDisappears"); //1500 ms
+                new SuperTimeout(function () { document.body.removeChild(swipeInstructionPart2); swipeInstructionPart2.classList.remove("itDisappears"); resetWebp(swipeInstructionPart2); }, 1501); // resetWebp() is in js_for_every_single_html
+              }, changeTime+550);
+            }, changeTime+1600); // Just in case we decide that speedAdjustmentSetting should be available in mobile too (in the future) Until then it's 1900+1600=3500 fixed,,, 3500-2750=750ms stay time
+          }
+          //---
+          if (loopCounter == 1) { waitTime = 5500 + changeTime/5; } // Make teacher wait during the first lap
+          else { waitTime = 0; } // Let teacher speak normally without waiting but still show the swipe instruction on lap 2 and 3
+          //---
+        } else { waitTime = 0; } // No instructions and no waiting if user figured out how to swipe
+      } // END OF what to do on first three laps
+    } else { waitTime = 0; } // Desktops show no drag instructions
+    // -
+    switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 2700; break;  case "fast": changeTime = 1200; break;  default: changeTime = 1900;  }
+    to8 = new SuperTimeout(proceedToNext_5,(changeTime+4900+waitTime)); // From bubble 1 to bubble 2
+  } // END OF proceedToNext_4
+  // -
+  function proceedToNext_5(){
+    pictogramDiv.children[3].style.display = "none"; // speech bubble with bread+hand
+    resetWebp(pictogramDiv.children[3]); // js_for_every_single_html
+    pictogramDiv.children[4].style.display = "block"; // speech bubble with bread+[pull]arrow
 
-          to8 = new SuperTimeout(function(){
-            pictogramDiv.children[3].style.display = "none"; // speech bubble with bread+hand
-            resetWebp(pictogramDiv.children[3]); // js_for_every_single_html
-            pictogramDiv.children[4].style.display = "block"; // speech bubble with bread+[pull]arrow
+    to9 = new SuperTimeout(talk2,1250);
+    function talk2() {   if (isNowSayingTheSecondSet) {  say4.play();  } else {  say2.play();  }   }
 
-            to9 = new SuperTimeout(talk2,1250);
-            function talk2() {   if (isNowSayingTheSecondSet) {  say4.play();  } else {  say2.play();  }   }
-
-            to10 = new SuperTimeout(function(){
-              pictogramDiv.children[4].classList.add("fadeOut"); // speech bubble disappears
-              to11 = new SuperTimeout(function(){ pictogramDiv.children[4].classList.remove("fadeOut"); pictogramDiv.children[4].style.display = "none"; resetWebp(pictogramDiv.children[4]); },601);
-              //---
-              to12 = new SuperTimeout(function(){
-                pictogramDiv.children[0].style.display = "block"; // a- Natural standing
-                pictogramDiv.children[1].style.display = "none"; // b- Pointing hand 1
-                pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
-                injectTextIntoTheHelpBoxP.innerHTML = "…";
-                to13 = new SuperTimeout(function(){
-                  isNowSayingTheSecondSet = !isNowSayingTheSecondSet; // Toggle between first set of says and second set of says
-                  if (loopCounter<4) { playPictogramLoop(); } // Repeat limit: 4 times max
-                  loopCounter++;
-                },(changeTime-400)); // back to start
-              },(changeTime-600)); // Back to initial pose
-            },(changeTime+3000)); // Bubble disappears
-          },(changeTime+4900+waitTime)); // From bubble 1 to bubble 2
-        },(changeTime-300)); // Bubble 1 appears
-      },(changeTime-100)); // Look at the camera again
-    },(changeTime+100)); // Arm does its second pointing movement
-  },(changeTime+500)); // Rotate the head & arm does its first pointing movement
+    switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 2700; break;  case "fast": changeTime = 1200; break;  default: changeTime = 1900;  }
+    to10 = new SuperTimeout(proceedToNext_6,(changeTime+3000)); // Bubble disappears
+  }
+  // -
+  function proceedToNext_6(){
+    pictogramDiv.children[4].classList.add("fadeOut"); // speech bubble disappears
+    to11 = new SuperTimeout(function(){ pictogramDiv.children[4].classList.remove("fadeOut"); pictogramDiv.children[4].style.display = "none"; resetWebp(pictogramDiv.children[4]); },601);
+    //---
+    switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 2700; break;  case "fast": changeTime = 1200; break;  default: changeTime = 1900;  }
+    to12 = new SuperTimeout(proceedToNext_7,(changeTime-600)); // Back to initial pose
+  }
+  // -
+  function proceedToNext_7(){
+    pictogramDiv.children[0].style.display = "block"; // a- Natural standing
+    pictogramDiv.children[1].style.display = "none"; // b- Pointing hand 1
+    pictogramDiv.children[2].style.display = "none"; // c- Pointing hand 2
+    injectTextIntoTheHelpBoxP.innerHTML = "…";
+    switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 2700; break;  case "fast": changeTime = 1200; break;  default: changeTime = 1900;  }
+    to13 = new SuperTimeout(proceedToNext_8,(changeTime-400)); // back to start
+  }
+  // -
+  function proceedToNext_8(){
+    isNowSayingTheSecondSet = !isNowSayingTheSecondSet; // Toggle between first set of says and second set of says
+    if (loopCounter<4) { playPictogramLoop(); } // Repeat limit: 4 times max
+    loopCounter++;
+  }
 } // End of function playPictogramLoop()
 
 
@@ -537,23 +605,24 @@ function whatToDoWhenBreadIsTaken() {
   function startTalkingAgain() {
     if (lapNumberOfLoop>3) {    return;   } // Stop talking after 3 laps
     switch (parent.speedAdjustmentSetting) {  case "slow": changeTime = 6000; break;  case "fast": changeTime = 3000; break;  default: changeTime = 4500;  } // In case desktop user moves the slider to adjust speed setting
-    to15 = new SuperTimeout(function () { say5.play(); },1000); // Eat
-    to16 = new SuperTimeout(function () { say6.play(); },1000+changeTime); // Eat bread
+    to15 = new SuperTimeout(function () { say5.play(); console.log("Says «eat»"); },1000); // Eat
+    to16 = new SuperTimeout(function () { say6.play(); console.log("Says «eat bread»"); },1000+changeTime); // Eat bread
+
     if (lapNumberOfLoop == 1) { // First lap
       to19 = new SuperTimeout(function () { showHowToBite(); },1500+changeTime*1.5); // Show how to play BITE game » About 9s
-      to17 = new SuperTimeout(function () { say7.play(); },6000+changeTime*2); // Eat (slow)
-      to18 = new SuperTimeout(function () { say8.play(); },6000+changeTime*3); // Eat bread (slow)
-      to20 = new SuperTimeout(function () { startTalkingAgain(); },6000+changeTime*4); // and restart
+      to17 = new SuperTimeout(function () { say7.play(); console.log("Slower «eat» 1"); },6000+changeTime*2); // Eat (slow)
+      to18 = new SuperTimeout(function () { say8.play(); console.log("Slower «eat bread» 1"); },6000+changeTime*3); // Eat bread (slow)
+      to20 = new SuperTimeout(function () { startTalkingAgain(); console.log("Restart talk cycle 1"); },8000+changeTime*4); // and restart
     } else if(lapNumberOfLoop == 2) { // Second lap
-      to19 = new SuperTimeout(function () { showHowToBite(); },1000+changeTime*1.5); // Show how to play BITE game » About 9s
-      to17 = new SuperTimeout(function () { say7.play(); },1000+changeTime*2); // Eat (slow)
-      to18 = new SuperTimeout(function () { say8.play(); },1000+changeTime*3); // Eat bread (slow)
-      to20 = new SuperTimeout(function () { startTalkingAgain(); },1000+changeTime*4); // Restart
+      // to19 = new SuperTimeout(function () { showHowToBite(); },1500+changeTime*1.5); // Show how to play BITE game » About 9s
+      to17 = new SuperTimeout(function () { say7.play(); console.log("Slower «eat» 2"); },2000+changeTime*2); // Eat (slow)
+      to18 = new SuperTimeout(function () { say8.play(); console.log("Slower «eat bread» 2"); },2000+changeTime*3); // Eat bread (slow)
+      to20 = new SuperTimeout(function () { startTalkingAgain(); console.log("Restart talk cycle 2"); },4000+changeTime*4); // Restart
     } else { // Third (final) lap
-      to19 = new SuperTimeout(function () { showHowToBite(); },1000+changeTime*1.5); // Show how to play BITE game » About 9s
-      to17 = new SuperTimeout(function () { say7.play(); },1000+changeTime*2); // Eat (slow)
-      to18 = new SuperTimeout(function () { say8.play(); },1000+changeTime*3); // Eat bread (slow)
-      to20 = new SuperTimeout(function () { startTalkingAgain(); },1000+changeTime*4); // Restart
+      to19 = new SuperTimeout(function () { showHowToBite(); },1500+changeTime*1.5); // Show how to play BITE game » About 9s
+      to17 = new SuperTimeout(function () { say7.play(); console.log("Slower «eat» 3"); },6000+changeTime*2); // Eat (slow)
+      to18 = new SuperTimeout(function () { say8.play(); console.log("Slower «eat bread» 3"); },6000+changeTime*3); // Eat bread (slow)
+      to20 = new SuperTimeout(function () { startTalkingAgain(); console.log("Restart talk cycle 3"); },8000+changeTime*4); // Restart
     }
     lapNumberOfLoop++;
   }
@@ -610,21 +679,16 @@ let countDownToValidifyTheBite;
 let win2HasHappened = false;
 let howManyBitesNow = 0;
 function activateInteractionDESKTOP() {
-  // Get ready to detect if keyboard is active(usable) or not
-  window.addEventListener("blur",frameIsBlurred);
-  window.addEventListener("focus",frameIsFocused);
-  parent.window.addEventListener("blur",parentIsBlurred);
-  parent.window.addEventListener("focus",parentIsFocused);
   // CAREFUL: keyboard must be listened at both parent and frame level! So we cannot use {once:true} method to avoid turbo firing when key is held down
-  parent.window.addEventListener("keydown",aKeyWasPressed);
+  // DEPRECATE: parent.window.addEventListener("keydown",aKeyWasPressed);
   window.addEventListener("keydown",aKeyWasPressed);
-  parent.window.addEventListener("keyup",aKeyWasReleased);
+  // DEPRECATE: parent.window.addEventListener("keyup",aKeyWasReleased);
   window.addEventListener("keyup",aKeyWasReleased);
   // DEPRECATE let countDownUntilCursorReappear;
   function aKeyWasPressed(event) { event.preventDefault(); // We need this to prevent volume range slider movement
     // event.key respects OS keyboard type settings ,,, event.code ignores OS and returns QWERTY
     if (!downArrowIsAlreadyPressed && !parent.theAppIsPaused) { // See js_for_the_sliding_navigation_menu
-      if (event.key == "ArrowDown" || event.code == "ArrowDown") {
+      if (event.key == "ArrowDown" || event.code == "ArrowDown") { // No need to check if event.keyCode is 40 as keyCode is for veeery old browsers
         main.classList.remove("defaultCursor"); main.classList.add("noCursor"); // Immediately hide cursor in case it was visible due to hideTheCursorAndHandleAutoUnhideAutoHide
         /* DEPRECATE
         if (countDownUntilCursorReappear) { countDownUntilCursorReappear.clear(); } // Reset timer // clearTimeout(countDownUntilCursorReappear);
@@ -648,7 +712,7 @@ function activateInteractionDESKTOP() {
   }
   function aKeyWasReleased(event) { event.preventDefault(); // We need this to prevent volume range slider movement
     if (downArrowIsAlreadyPressed && !parent.theAppIsPaused) { // See js_for_the_sliding_navigation_menu
-      if (event.key == "ArrowDown" || event.code == "ArrowDown") {
+      if (event.key == "ArrowDown" || event.code == "ArrowDown") { // No need to check if event.keyCode is 40 as keyCode is for veeery old browsers
         downArrowIsAlreadyPressed = false;
         countDownToValidifyTheBite.clear(); // clearTimeout(countDownToValidifyTheBite);
         reopenTheMouth();
@@ -661,31 +725,16 @@ function activateInteractionDESKTOP() {
       }
     }
   }
+
   function removeKeyboardListeners() {
-    parent.window.removeEventListener("keydown",aKeyWasPressed);
+    // DEPRECATE: parent.window.removeEventListener("keydown",aKeyWasPressed);
     window.removeEventListener("keydown",aKeyWasPressed);
-    parent.window.removeEventListener("keyup",aKeyWasReleased);
+    // DEPRECATE: parent.window.removeEventListener("keyup",aKeyWasReleased);
     window.removeEventListener("keyup",aKeyWasReleased);
   }
 
-  function frameIsBlurred() {   isFrameBlurred = true;   checkBothBlurs();  }
-  function frameIsFocused() {   isFrameBlurred = false;  checkBothBlurs();  }
-  function parentIsBlurred() {  isParentBlurred = true;  checkBothBlurs();  }
-  function parentIsFocused() {  isParentBlurred = false; checkBothBlurs();  }
-  function checkBothBlurs() {
-    if (!win2HasHappened) {
-      new SuperTimeout(function () {
-        if (isParentBlurred && isFrameBlurred) { // grey out if both are blurred
-          main.classList.remove("colorBack"); main.classList.add("grayAway"); // css_for_every_single_html
-          parent.containerDivOfTheNavigationMenu.classList.remove("colorBack"); parent.containerDivOfTheNavigationMenu.classList.add("grayAway");
-          // UNNECESSARY WITH THE NEW METHOD main.classList.remove("noCursor");  main.classList.add("defaultCursor");
-        } else { // color back in all other cases
-          main.classList.remove("grayAway");  main.classList.add("colorBack"); // css_for_every_single_html
-          parent.containerDivOfTheNavigationMenu.classList.remove("grayAway"); parent.containerDivOfTheNavigationMenu.classList.add("colorBack");
-        }
-      }, 30);
-    }
-  }
+  // -
+
 
 } // END OF activateInteractionDESKTOP
 
@@ -884,21 +933,55 @@ function whenWin2happens() {
   let proceedTime;
   switch (parent.speedAdjustmentSetting) { case "slow": proceedTime = 8500; break;    case "fast": proceedTime = 5500; break;    default: proceedTime = 7000; }
   new SuperTimeout(function () {
+    /* DEPRECATE
     if (couldYouFigureOutHowToSayEat) { // This means fetch successfully got the text
       createAndHandleInfoBoxType1AmidLesson(); putNotificationTxtIntoThisP2.innerHTML = couldYouFigureOutHowToSayEat; // Will show for all languages
       // continueLesson() will be fired from within createAndHandleInfoBoxType1AmidLesson()
     } else {
       continueLesson();
     }
+    */
+    display_OUTRO_listenBox();
   }, proceedTime);
 }
 
-function continueLesson() { // In this case, it means exiting the lesson as there is nothing left to do
+function display_OUTRO_listenBox() {
+  // Display pronunciation-teacher-box to play how to say "thank you"
+  const filePathOfTheAudio1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_listenbox_1."+soundFileFormat;
+  const filePathOfTheAudio2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_listenbox_2."+soundFileFormat;
+  const filePathOfTheAudio3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_listenbox_3."+soundFileFormat;
+  const filePathOfLipSyncJSON1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_listenbox_1.json";
+  const filePathOfLipSyncJSON2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_listenbox_2.json";
+  const filePathOfLipSyncJSON3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_4/eat_listenbox_3.json";
+  // NOTE: The lip-sync json file names better be THE SAME with the audio file names that will be played in the listen-many-times box » See js_for_info_boxes_in_lessons
+  const listenBoxP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-1-4_vocabulary_outro_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
+  fetch(listenBoxP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+    handleP1P2ActualTextOUTRO(contentOfTheTxtFile); // CAUTION: It's outro
+  });
+  // See js_for_info_boxes_in_lessons » iframe-lesson level
+  new SuperTimeout(function(){
+    createAndHandleListenManyTimesBox(filePathOfTheAudio1,filePathOfLipSyncJSON1,filePathOfTheAudio2,filePathOfLipSyncJSON2,filePathOfTheAudio3,filePathOfLipSyncJSON3,true); // true as seventh parameter turns it into an outro box
+  },501); // If fetch cannot get the file within 501 ms the default content of the box (with emojis icons etc) will be visible until fetch gets the file
+}
 
+function vocabularyBoxIsClosed_LESSON_OUTRO() {
   /* Save progress */
   parent.savedProgress[studiedLang].lesson_TAKEBREAD_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
   parent.saveJSON = JSON.stringify(parent.savedProgress); // Convert
   localStorage.setItem("memoryCard", parent.saveJSON); // Save
+  // -
+  // Not used: new SuperTimeout(displayNoteAtTheEndOfLesson,1000);
+  new SuperTimeout(continueLesson,1000);
+}
+
+/* Not used:
+function displayNoteAtTheEndOfLesson() {
+  // Is this still NECESSARY?
+}
+*/
+
+
+function continueLesson() { // In this case, it means exiting the lesson as there is nothing left to do
   // ---
   let endTime;
   switch (parent.speedAdjustmentSetting) { case "slow": endTime = 2500; break;    case "fast": endTime = 500; break;    default: endTime = 1500; }

@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT i.e. OFFICIAL AUTHORIZATION
 
 // NOTE: Do not use “const” for things that need to be accessible from elsewhere. Only use “var” for such variables.
 // The buttons have 4 (webp img) states : A, B, C and D. If we use one variable and only change the src it works but it is very glitchy.
@@ -140,7 +140,7 @@ var speedAdjustmentSetting = "normal"; // SLOW, NORMAL, FAST // REMEMBER: This i
 // Variables for detecting the swipe
 var swipeNavMenuIsLocked = false; // information.js:162 information.js:176 ,,, User for permanently locking swipe menu while reading Good People's License // Unlocking also exists in js_for_all_iframed_lesson_htmls as a precaution
 let touchStartY=0, newYCoord=0, newMarginBottom=0, swipeDifferenceY=0;
-var navMenuIsUpAndVisible = true; // Nav menu is visible at first when the app starts. // Also see information.js bigSlideTowardsLeft()
+var navMenuIsUpAndVisible = true; // Nav menu is visible at first when the app starts. // Also see information.js bigSlideTowardsLeft() & js_for_proceed_buttons
 let preventAutoDisappear;
 var topContainerDivOfTheSlidingNavMenuForMobiles = document.createElement("DIV"); // Use in inline script in parent index.html - Android only
 
@@ -231,15 +231,6 @@ window.addEventListener("load",function() {
   // Do not access soundFileFormat before DOMContentLoaded fires in js_for_different_browsers_and_devices
   navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
   navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click."+soundFileFormat]  }); // See js_for_different_browsers_and_devices
-  /* DEPRECATE
-  if (isApple) { // Do not access isApple before DOMContentLoaded in js_for_different_browsers_and_devices
-    navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover.mp3"]  });
-    navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click.mp3"]  });
-  } else {
-    navMenuHoverSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_hover.webm"]  });
-    navMenuClickSound = new Howl({  src: ["/user_interface/sounds/ceramic_button_click.webm"]  });
-  }
-  */
   // What to do on MOBILE DEVICES
   // Use ayFreym from js_for_the_parent_all_browsers_all_devices
   // What to do on MOBILES
@@ -681,7 +672,7 @@ window.addEventListener("load",function() {
     let result = searchAndDetectLocation.search("progress_chart");
     if (result < 0) { // iFrame was showing a lesson or the goodbye screen, etc » it was not showing the progress_chart
       if (!internetConnectivityIsNiceAndUsable) { console.warn("Navigation attempt to PROGRESS CHART despite being OFFLINE"); // No internet
-        if (localStorage.getItem("progressChartShouldBeOfflineCompatibleNow") && localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) {
+        if (localStorage.getItem("progressChartShouldBeAlmostOrFullyOfflineCompatibleNow") && localStorage.getItem("commonFilesForAllLessonsCachedSuccessfully")) {
           console.warn("All assets for progress chart are cached and READY! Therefore, will try to proceed"); //No internet but the cache is ready, so let service-worker do its offline magic
         } else {
           console.warn("But files for progress chart are NOT CACHED!"); // And no cached files available
@@ -746,7 +737,7 @@ window.addEventListener("load",function() {
 },{ once: true });
 // END OF "window load" event
 
-var theAppIsPaused = false;
+var theAppIsPaused = false; // See js_for_navigation_handling AND js_for_speech_recognition_algorithm ALSO USED IN 1-1-4, 1-3-2
 function pauseTheAppFunction(reasonWhy) { // As of September 2023 reasonWhy is either becauseUserNavigatedAwayFromTheApp or becauseUserPressedTheStopButton
 
     // Pause the app
@@ -761,8 +752,11 @@ function pauseTheAppFunction(reasonWhy) { // As of September 2023 reasonWhy is e
     if (annyang) {
       speechRecognitionWasListeningWhenUserPaused = annyang.isListening();
       if (speechRecognitionWasListeningWhenUserPaused) {
-        if (isApple) { annyang.pause(); }
+        /* DEPRECATE: Looks like we cannot avoid Safari's repeating "allow mic" annoyance by pausing annyang instead of turning it off.
+        if (isApple) { annyang.pause(); } // BESIDES: CPU demand is somewhat too high when MIC is ON. So we want to turn it off whenever it is not in use.
         else { annyang.abort(); }
+        */
+        annyang.abort(); // Better if we tell or let Safari user figure out how to "permanently allow mic"
       }
       // Note that: No problem if abort() fires when annyang|SpeechRecognition wasn't listening.
     }

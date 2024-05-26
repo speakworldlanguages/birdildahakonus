@@ -2,35 +2,102 @@
 let initialDistanceToLeft = 0; let initialDistanceToTop = 0;
 let touchmoveDistanceX = 0; let touchmoveDistanceY = 0;
 let tooEarlyToPickUpAgain = false;
-let isHoldingTheSpoon = false;
+let isHoldingTheSpoon = false; // Which means isBeingDragged
 
+//-
+let currentTouchPositionX = 0; let currentTouchPositionY = 0;
+let initialTouchRadiusX = 1; let initialTouchRadiusY = 1;
 // For this game it is OK to go without calling lockOrientation()
 
 // Prevent swipe menu if user touches somewhere near the plate
 document.addEventListener('readystatechange', (e) => {
   if (e.target.readyState === 'complete') {
-    preventSwipeMenuOnMobiles.addEventListener("touchstart",function (event) { event.stopPropagation(); }); // No need for event.preventDefault();
-    // Better without? Probably yes: plateHoverAreaOnMobiles.addEventListener("touchstart",function (event) {   event.stopPropagation(); }); // No need for event.preventDefault();
-    plateHoverAreaOnDesktops.addEventListener("touchstart",function (event) {  event.stopPropagation(); }); // No need for event.preventDefault();
+
+    // WHAT WE WANT IS: Let the chain of functions be triggered ONLY and ONLY if the touch is within the precise curved shape that exists inside the svg
+    // WE CAN achieve that easily by getting the path and adding a touchstart listener to it, (not to the svg that contains the path but the path itself)
+    // PROBLEM IS: We need to get finger coordinates via touchmove wherever the finger might be.
+    // In Chrome we tested and saw that touchmove keeps firing even if finger leaves the boundaries of the element that it has the listener
+    // BUT according to ChatGPT, Safari does not do that and no more firing of touchmove once finger leaves the element
+    // ACTUAL TEXT from ChatGPT: Safari on iOS is more strict about touch events and typically stops firing touchmove events once the finger leaves the boundaries of the element that initially received the touchstart event.
+
+    // CASE 1 - fullTouchAreaOfTheGame does not contain the svg and the elliptical div
+    // THE PROBLEM IS THAT: If we add touchstart events to elements that are layered on top of fullTouchAreaOfTheGame
+    // HOPING THAT if those smaller elements let propagation they will allow fullTouchAreaOfTheGame to catch the touch
+    // BUT INSTEAD what they do is they create TOUCH HOLES that will allow touches to pass through fullTouchAreaOfTheGame
+    // EVEN IF fullTouchAreaOfTheGame has stopPropagation which means stopPropagation does not honor z-index
+    // AND YET: If we do stopPropagation for smaller elements then fullTouchAreaOfTheGame CANNOT RECEIVE THE TOUCH so touchmove won't work
+    // Adding event listeners to smaller elements WON'T WORK IN EITHER CASE » With or without stopPropagation
+
+    // CASE 2 - fullTouchAreaOfTheGame contains the svg and the elliptical div
+    // As of May 2024 this case is not tested. Question: Could any scenario work with it? Answer: UNCERTAIN
+
+    // QUESTION: Will elementFromPoint work with the precise curved path inside the svg?
+    // ANSWER: NO. Too bad we cannot use elementFromPoint directly for the accurate PATH » It returns the svg itself not the path inside svg
+
+    // THE SOLUTION THAT IS THE TRICKIEST: https://developer.mozilla.org/en-US/docs/Web/API/SVGGeometryElement/isPointInFill
+    // Use isPointInFill() without coordinates being broken by css when width and height in pixels are overridden by values in vmins
+
+    // May 2024 UPDATE: Will try using mobileTouchAreaID (fullTouchAreaOfTheGame) div for RECEIVING AND HANDLING ALL TOUCHES ALONE as well as the prevention of sliding navigation menu
+    // THEREFORE: ALL LAYERS ABOVE fullTouchAreaOfTheGame must have pointer events set to NONE to let fullTouchAreaOfTheGame get all the touches
+    // fullTouchAreaOfTheGame.addEventListener("touchstart",function (event) { event.preventDefault(); event.stopPropagation(); });
+    // QUESTION: Is stopping propagation for touchstart enough to prevent sliding navigation menu or do we have to handle touchmove too?
+    // ANSWER: touchstart is enough,,, no need to stop propagation for touchmove
+
   }
 });
 
 // NOTE THAT as of 2023 WE CANNOT REPLACE all touchmove events with pointerrawupdate events due to lack of browser support
 // THE USAGE must be like a BONUS FEATURE that works if is available and the app should still be perfectly usable without it
 function getReadyToStartTheGameOnMobiles() {
-  spoonFatTouchAreaOnMobiles.addEventListener("touchstart",whatToDoWhenSpoonIsTouched);
-  if ('onpointerrawupdate' in window) {    window.addEventListener("pointerrawupdate",getFingerPressure);  }
+
+  if ('onpointerrawupdate' in window) {    window.addEventListener("pointerrawupdate",getFingerPressure);  } // NOTE: pointerrawupdate fires more frequently than touchmove
   else { /* DO NOTHING as pointerrawupdate is not supported in user's current browser */ }
   // ---
-  // iOS sensor permission can only be triggered with a touchend i.e. touchstart won't work
+  // CAREFUL!!! iOS sensor permission can only be triggered with a touchend i.e. touchstart won't work
   // ---
+
+  fullTouchAreaOfTheGame.addEventListener("touchstart",checkIfSpoonIsTouched); // Will be removed when finger enters HIT AREA then will be added again after animations play
+  fullTouchAreaOfTheGame.addEventListener("touchmove",updateTouchCoordinatesDueToTOUCHMOVE); // Will NOT be removed!
+  fullTouchAreaOfTheGame.addEventListener("touchend",updateTouchCoordinatesDueToTOUCHEND); // Will NOT be removed!
 }
+function updateTouchCoordinatesDueToTOUCHMOVE(event) { event.preventDefault(); event.stopPropagation();
+  let touch = event.touches[0]; currentTouchPositionX = touch.clientX; currentTouchPositionY = touch.clientY;
+  if (isHoldingTheSpoon) {
+    whatToDoWhenSpoonIsDragged();
+  }
+}
+function updateTouchCoordinatesDueToTOUCHEND(event) { event.preventDefault(); event.stopPropagation();
+  let touch = event.changedTouches[0]; currentTouchPositionX = touch.clientX; currentTouchPositionY = touch.clientY;
+}
+
+function checkIfSpoonIsTouched(event) { event.preventDefault(); event.stopPropagation();
+  let touch = event.touches[0]; currentTouchPositionX = touch.clientX; currentTouchPositionY = touch.clientY; // updateTouchCoordinates due to touchstart
+  initialTouchRadiusX= event.targetTouches[0].radiusX; initialTouchRadiusY= event.targetTouches[0].radiusY; // Get the initial value to normalize it
+  // -
+  // Magic calculation that can do shape perfect detection which is what elementFromPoint cannot do
+  let rect = svgMobileShapeForSpoon.getBoundingClientRect();
+  let x = (currentTouchPositionX - rect.left) * (svgMobileShapeForSpoon.width.baseVal.value / rect.width);
+  let y = (currentTouchPositionY - rect.top) * (svgMobileShapeForSpoon.height.baseVal.value / rect.height);
+  if (isPointInsideSpoonPath(x, y)) {        // console.log('Touch inside the path!');
+      whatToDoWhenSpoonIsTouched(); // If was necessary: We could send|pass the event as it is to the next function
+  } else {        // console.log('Touch outside the path.');
+  }
+}
+// -
+function isPointInsideSpoonPath(x, y) {
+    let pt = svgMobileShapeForSpoon.createSVGPoint(); // See index.html
+    pt.x = x;
+    pt.y = y;
+    return spoonFatTouchAreaOnMobiles.isPointInFill(pt); // See eat_with_spoon.js
+}
+
+
 // Copied from touch-normalizer.js
 function normalizeTouchDiameter(touchWidth,touchHeight) {
   return (touchWidth*touchHeight*1000000000)/Math.pow(screen.width*screen.height,2.2);
 }
 
-function getFingerPressure(event) { event.preventDefault(); event.stopPropagation();
+function getFingerPressure(event) { event.preventDefault(); //event.stopPropagation(); // Let it propagate ???
   let usefulNumber = normalizeTouchDiameter(event.width,event.height); // Range is approximately from 0 to 5 on Sony Experia and 0 to 3 on Asus Nexus
   if (isHoldingTheSpoon) {
     theLongSpoonContainerDivWithStates.style.scale = (1+usefulNumber/15).toFixed(3);
@@ -39,16 +106,26 @@ function getFingerPressure(event) { event.preventDefault(); event.stopPropagatio
 }
 
 let measureSpoonHoldTimeInterval = null; let heldMilliseconds = 0;
-function whatToDoWhenSpoonIsTouched(event) { event.preventDefault(); event.stopPropagation();
+
+function whatToDoWhenSpoonIsTouched() { // event.preventDefault(); event.stopPropagation();
+  // May 2024 UPDATE: event handling relocated to checkIfSpoonIsTouched  » so it should be OK to remove "event"
   // --
   if (!tooEarlyToPickUpAgain) {
     isHoldingTheSpoon = true; measureSpoonHoldTimeInterval = new SuperInterval(function () { heldMilliseconds += 10; }, 10);
     mouseEnterTouchStartSound.play();
     if (canVibrate) { navigator.vibrate(12); }
+    /* deprecate and use currentTouchPosition live values
     initialDistanceToLeft = event.targetTouches[0].clientX; // Record coordinates to calculate distance in touchmove
     initialDistanceToTop = event.targetTouches[0].clientY; // Record coordinates to calculate distance in touchmove
+    */
+    initialDistanceToLeft = currentTouchPositionX;
+    initialDistanceToTop = currentTouchPositionY;
+
     theSquareSpoonContainerDiv.style.transition = "none"; // Reset to none BECAUSE it was set, by touchend, to "margin-left ?.??s, margin-top ?.??s"
-    main.addEventListener("touchmove",whatToDoWhenSpoonIsDragged);
+    parent.console.log("READY FOR TOUCHMOVE");
+    /* Deprecate and use is-Being-Dragged i.e. isHoldingTheSpoon
+    fullTouchAreaOfTheGame.addEventListener("touchmove",whatToDoWhenSpoonIsDragged);
+    */
     theLongSpoonContainerDivWithStates.style.transform = "rotate(-90deg) translate(100%,-50%)"; // See eat_with_spoon.css to find the constant transition settings
     // Looks like getBoundingClientRect yields different results on different screens for SVG area
     // let ooo = event.target.getBoundingClientRect();
@@ -60,20 +137,25 @@ function whatToDoWhenSpoonIsTouched(event) { event.preventDefault(); event.stopP
     theLongSpoonContainerDivWithStates.style.marginLeft = (initialDistanceToLeft - iii.x - iii.width*0.775).toFixed(1) +"px"; // Accroding to photoshop center of spoon is at 77.5%
     theLongSpoonContainerDivWithStates.style.marginTop = (initialDistanceToTop - iii.y - iii.height*0.545).toFixed(1) + "px"; // Accroding to photoshop center of spoon is at 54.5%
     // ---
-    spoonFatTouchAreaOnMobiles.addEventListener("touchend",whatToDoWhenSpoonTouchIsReleased,{once:true});
+
+    fullTouchAreaOfTheGame.addEventListener("touchend",whatToDoWhenSpoonTouchIsReleased,{once:true});
+
     // Respond to touch radius/touch diameter
-    let usefulNumber = normalizeTouchDiameter(event.targetTouches[0].radiusX*2,event.targetTouches[0].radiusY*2); // Range is approximately from 0 to 5
+    let usefulNumber = normalizeTouchDiameter(initialTouchRadiusX*2,initialTouchRadiusY*2); // Range is approximately from 0 to 5
     theLongSpoonContainerDivWithStates.style.scale = (1+usefulNumber/15).toFixed(3);
     theLongSpoonContainerDivWithStates.style.translate = (usefulNumber/2).toFixed(3) + "vmin 0 0";
     // ---
   }
 }
-function whatToDoWhenSpoonTouchIsReleased(event) { event.preventDefault(); event.stopPropagation();
+function whatToDoWhenSpoonTouchIsReleased() { //event.preventDefault(); //event.stopPropagation();
+  // May 2024 UPDATE: event handling done above
   // --
   isHoldingTheSpoon = false;
   mouseDownTouchEndSound.play();
   if (canVibrate) { navigator.vibrate(12); }
-  main.removeEventListener("touchmove",whatToDoWhenSpoonIsDragged);
+  /* deprecate and use is-Being-Dragged i.e. isHoldingTheSpoon
+  fullTouchAreaOfTheGame.removeEventListener("touchmove",whatToDoWhenSpoonIsDragged);
+  */
   theLongSpoonContainerDivWithStates.style.transform = "rotate(-0deg) translate(0%,-0%)";//translateY(-0%) // Reset back to initial rotation and remove finger offset
   theLongSpoonContainerDivWithStates.style.marginLeft = "0px"; // Reset back to initial position
   theLongSpoonContainerDivWithStates.style.marginTop = "0px"; // Reset back to initial position
@@ -87,7 +169,8 @@ function whatToDoWhenSpoonTouchIsReleased(event) { event.preventDefault(); event
   else {  new SuperTimeout(function () { tooEarlyToPickUpAgain = false; }, heldMilliseconds);  }
   heldMilliseconds = 0;
   if (measureSpoonHoldTimeInterval) { measureSpoonHoldTimeInterval.clear(); } //clearInterval(measureSpoonHoldTimeInterval);
-  // Will be using {once:true} instead of executing spoonFatTouchAreaOnMobiles.removeEventListener("touchend",whatToDoWhenSpoonTouchIsReleased);
+
+  // Use {once:true} instead of fullTouchAreaOfTheGame.removeEventListener("touchend",whatToDoWhenSpoonTouchIsReleased);
   // ---
   theLongSpoonContainerDivWithStates.style.scale = "1"; // Reset appearance that was changed by touch pressure
   theLongSpoonContainerDivWithStates.style.translate = "0 0 0"; // Reset appearance that was changed by touch pressure
@@ -98,9 +181,15 @@ function whatToDoWhenSpoonTouchIsReleased(event) { event.preventDefault(); event
 let plateSoundIsUnleashed = true;
 let elementFromPoint;
 
-function whatToDoWhenSpoonIsDragged(event) { event.preventDefault(); event.stopPropagation();
+function whatToDoWhenSpoonIsDragged(event) { // event.preventDefault(); //event.stopPropagation(); // May 2024: Let it propagate ???
+  // May 2024 UPDATE: Let's use currentTouchPosition values and not pass the event here
+  parent.console.log("-::DRAGGING::-");
+  /* deprecate and use currentTouchPosition values
   touchmoveDistanceX = event.changedTouches[0].clientX - initialDistanceToLeft;
   touchmoveDistanceY = event.changedTouches[0].clientY - initialDistanceToTop;
+  */
+  touchmoveDistanceX = currentTouchPositionX - initialDistanceToLeft;
+  touchmoveDistanceY = currentTouchPositionY - initialDistanceToTop;
   // --
   theSquareSpoonContainerDiv.style.marginLeft = touchmoveDistanceX + "px";
   theSquareSpoonContainerDiv.style.marginTop = touchmoveDistanceY + "px";
@@ -108,17 +197,44 @@ function whatToDoWhenSpoonIsDragged(event) { event.preventDefault(); event.stopP
   if (plateSoundIsUnleashed) { // This will happen only once with the very first tiny (or not so tiny) finger movement
     spoonOnPlateSound.play(); plateSoundIsUnleashed = false;
     // TRIED AND QUIT: Used to introduce a temporary transition to make the initial movement smoother until touchmove starts firing continuously
-    new SuperTimeout(function () {     canLoadTheSpoonNow = true;    }, 2400);
+    new SuperTimeout(function () {     canLoadTheSpoonNow = true;    }, 1800); // Until May 2024 this used to be 2400ms » Was there a solid reason for that number or was it a guesstimation?
   }
 
   // ---
+  /* deprecate and use currentTouchPosition values
   elementFromPoint = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
+  */
+  // ATTENTION: elementFromPoint will ignore those that are pointer-events:none
+  /* deprecate MAY2024 use isPointInFill with getBoundingClientRect instead of elementFromPoint so that all touches are listened on ONE SINGLE element
+  elementFromPoint = document.elementFromPoint(currentTouchPositionX, currentTouchPositionY);
+  parent.console.log(elementFromPoint.id);
+  */
+  let rect = svgMobileShapeForPlate.getBoundingClientRect();
+  let x = (currentTouchPositionX - rect.left) * (svgMobileShapeForPlate.width.baseVal.value / rect.width);
+  let y = (currentTouchPositionY - rect.top) * (svgMobileShapeForPlate.height.baseVal.value / rect.height);
+  if (isPointInsidePlatePath(x, y)) {        // console.log('Touch inside the path!');
+      whatToDoWhenPlateIsHit(); // If was necessary: We could send|pass the event as it is to the next function
+  } else {        // console.log('Touch outside the path.');
+  }
+  // -
+  function isPointInsidePlatePath(x, y) {
+      let pt = svgMobileShapeForPlate.createSVGPoint(); // See index.html
+      pt.x = x;
+      pt.y = y;
+      return plateTouchHitAreaOnMobiles.isPointInFill(pt); // See eat_with_spoon.js
+  }
+  // -
+  function whatToDoWhenPlateIsHit() {        if (canLoadTheSpoonNow) {    getReadyToSwallow();    }        } // HIT DETECTED
   // THE POINT OF NO RETURN
-  if (elementFromPoint.id == "plateHoverAreaMobileID" && canLoadTheSpoonNow) { // HIT DETECTED
+  /* deprecated as of May 2024
+  if (elementFromPoint.id == "plateHoverAreaMobileID" && canLoadTheSpoonNow)
+  */
+  function getReadyToSwallow() { // Proceed with the scooping
       // Feels like it is better without if (canVibrate) { navigator.vibrate(12); }
-      main.removeEventListener("touchmove",whatToDoWhenSpoonIsDragged);
-      spoonFatTouchAreaOnMobiles.removeEventListener("touchstart",whatToDoWhenSpoonIsTouched);
-      spoonFatTouchAreaOnMobiles.removeEventListener("touchend",whatToDoWhenSpoonTouchIsReleased);
+
+      fullTouchAreaOfTheGame.removeEventListener("touchstart",checkIfSpoonIsTouched); // Do not allow touch interaction during animation play
+      fullTouchAreaOfTheGame.removeEventListener("touchend",whatToDoWhenSpoonTouchIsReleased); // UNCERTAIN: Do we have to remove the listener even if {once:true} is applied
+
       // Since touchend won't fire, we must do all the resetting here
       isHoldingTheSpoon = false; // Set it to false now because whatToDoWhenSpoonTouchIsReleased() won't fire
       plateSoundIsUnleashed = true; // Reset so that it can play in the next round after swallowing this one
@@ -150,15 +266,14 @@ function whatToDoWhenSpoonIsDragged(event) { event.preventDefault(); event.stopP
 
       // ---
       if (yumNumber == 1) {
-        main.addEventListener("touchend",handleSensorPermissions,{once:true});
-        main.addEventListener("touchstart",onlyToPreventSwipeMenu); // Block the swipe menu pop-up until that task is transferred to getTouchesAndCheck() in showHowToMoveTheSpoonInOrderToSwallow()
+        fullTouchAreaOfTheGame.addEventListener("touchend",handleSensorPermissions,{once:true});
       }
       else {
         // yumNumber 2 and 3
         if (motionIsNotAvailableSoWillPlayWithTouchmove) {
-          main.addEventListener("touchstart",getTouchesAndCheck);
-          main.addEventListener("touchmove",getTouchesAndCheck);
-          main.addEventListener("touchend",getTouchesAndCheck);
+          fullTouchAreaOfTheGame.addEventListener("touchstart",getTouchesAndCheck);
+          fullTouchAreaOfTheGame.addEventListener("touchmove",getTouchesAndCheck);
+          fullTouchAreaOfTheGame.addEventListener("touchend",getTouchesAndCheck);
         } else {
           window.addEventListener("devicemotion",getAccelerationDataAndCheck);
         }
@@ -168,7 +283,7 @@ function whatToDoWhenSpoonIsDragged(event) { event.preventDefault(); event.stopP
   } // END OF elementFromPoint HIT DETECTED
 } // END OF whatToDoWhenSpoonIsDragged
 
-function onlyToPreventSwipeMenu(event) { event.preventDefault(); event.stopPropagation(); parent.console.log("Swipe menu was prevented"); }
+
 // ---
 let hideInstructionTimeout = null;
 function hideTabletInstruction() {  showHowTablet.classList.remove("appearQuickly"); showHowTablet.classList.add("disappearSlowly"); hideInstructionTimeout = null; }
@@ -188,8 +303,8 @@ function scoop() {
 
 // ---
 let motionIsNotAvailableSoWillPlayWithTouchmove = false;
-function handleSensorPermissions(event) { event.preventDefault(); event.stopPropagation();
-  // By using {once:true} we eliminate the need to execute main.removeEventListener("touchend",handleSensorPermissions);
+function handleSensorPermissions(event) { event.preventDefault(); //event.stopPropagation(); // May 2024: Let it propagate ??? - This fires with a touchend
+  // By using {once:true} we eliminate the need to execute fullTouchAreaOfTheGame.removeEventListener("touchend",handleSensorPermissions);
   // Feature detect
   parent.console.log("Check if DeviceMotionEvent.requestPermission exists");
   if (typeof DeviceMotionEvent.requestPermission === 'function') {
@@ -275,10 +390,9 @@ function showHowToMoveTheSpoonInOrderToSwallow(devicemotionDidNotWorkIsTrueOrFal
     //---
     parent.console.log("can not use devicemotion,,, will play with touch-unpinch");
     new SuperTimeout(function () {
-      main.removeEventListener("touchstart",onlyToPreventSwipeMenu);
-      main.addEventListener("touchstart",getTouchesAndCheck);
-      main.addEventListener("touchmove",getTouchesAndCheck);
-      main.addEventListener("touchend",getTouchesAndCheck);
+      fullTouchAreaOfTheGame.addEventListener("touchstart",getTouchesAndCheck);
+      fullTouchAreaOfTheGame.addEventListener("touchmove",getTouchesAndCheck);
+      fullTouchAreaOfTheGame.addEventListener("touchend",getTouchesAndCheck);
     }, 300);
   } else {
     // Show how to use acceleration webp
@@ -300,7 +414,6 @@ function showHowToMoveTheSpoonInOrderToSwallow(devicemotionDidNotWorkIsTrueOrFal
     // ---
     parent.console.log("devicemotion is available,,, will play with movement-acceleration");
     new SuperTimeout(function () {
-      main.removeEventListener("touchstart",onlyToPreventSwipeMenu);
       window.addEventListener("devicemotion",getAccelerationDataAndCheck);
     }, 300);
   }
@@ -442,7 +555,7 @@ function bringTheSpoonWithArmMovement() {
       new SuperTimeout(function () { winHappenedOnMobile(); }, 2500);
     } else {
       new SuperTimeout(function () {
-        spoonFatTouchAreaOnMobiles.addEventListener("touchstart",whatToDoWhenSpoonIsTouched); // Start the next round by repicking the spoon
+        fullTouchAreaOfTheGame.addEventListener("touchstart",checkIfSpoonIsTouched); // Ready to repick the spoon
       }, 3000);
     }
     // ---
@@ -466,9 +579,7 @@ let initialX1 = 0; let initialY1 = 0; let initialX2 = 1; let initialY2 = 1;
 let initialDistanceBetweenTwoFingers = 0; let currentDistanceBetweenTwoFingers = 0;
 let twoFingersDetected = false;
 let loadFoodSoundIsUnleashed = true;
-function getTouchesAndCheck(event) {
-  event.preventDefault();
-  event.stopPropagation(); // Disable swipe menu
+function getTouchesAndCheck(event) {  event.preventDefault(); event.stopPropagation();
   if (event.touches.length == 2) {
     // TWO FINGER GESTURE
     if (!twoFingersDetected) { // Save the initial coordinates of both fingers
@@ -502,9 +613,9 @@ function getTouchesAndCheck(event) {
       }
     } else { // Threshold is passed
       // No more firings
-      main.removeEventListener("touchstart",getTouchesAndCheck);
-      main.removeEventListener("touchmove",getTouchesAndCheck);
-      main.removeEventListener("touchend",getTouchesAndCheck);
+      fullTouchAreaOfTheGame.removeEventListener("touchstart",getTouchesAndCheck);
+      fullTouchAreaOfTheGame.removeEventListener("touchmove",getTouchesAndCheck);
+      fullTouchAreaOfTheGame.removeEventListener("touchend",getTouchesAndCheck);
       parent.console.log("Swipe menu should be released now");
       // Make teacher stop talking
       /*clearTimeout(to1); clearTimeout(to2); clearTimeout(to3); clearTimeout(to4);*/
@@ -543,7 +654,7 @@ function swallowWithTheUnpinchGesture() {
     new SuperTimeout(function () { winHappenedOnMobile(); }, 2500);
   } else {
     new SuperTimeout(function () {
-      spoonFatTouchAreaOnMobiles.addEventListener("touchstart",whatToDoWhenSpoonIsTouched); // Start the next round by repicking the spoon
+      fullTouchAreaOfTheGame.addEventListener("touchstart",checkIfSpoonIsTouched); // Ready to repick the spoon
     }, 3000);
   }
   // ---

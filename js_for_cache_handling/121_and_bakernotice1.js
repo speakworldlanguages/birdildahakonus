@@ -10,6 +10,7 @@ if (localStorage.getItem("lesson121FilesFor-"+parent.langCodeForTeachingFilePath
 else { cacheLesson121AssetsForTheTargetLanguage(); }
 
 // ---
+let triesForNotice1Assets = 0;
 async function cacheAuthorsNotice1Assets() {
   const cacheSlot = await caches.open('assets-for-bakernotice1-August2023');
   const list = [
@@ -19,10 +20,10 @@ async function cacheAuthorsNotice1Assets() {
     "/lessons_in_iframes/level_1/unit_1/notice_1/notice.css",
     "/lessons_in_iframes/level_1/unit_1/notice_1/notice.js",
     "/user_interface/text/"+userInterfaceLanguage+"/1-1-notice_author_says.txt"
-    // FOLLOWING FILES ARE ALSO USED IN notice1 but cached by cacheCommonJSandCSSfilesForAllLessons() in js_for_cache_handling/0_parent_initial_load_and_111
+    // FOLLOWING FILES ARE ALSO USED IN notice1 but cached by cacheCommonFilesForAllLessons() in js_for_cache_handling/0_parent_initial_load_and_111
     // "/user_interface/sounds/looping_bgm_stereo_therapy."+soundFileFormat
-    // "/user_interface/sounds/section_as_button_hover."+soundFileFormat
-    // "/user_interface/sounds/section_as_button_click."+soundFileFormat
+    // "/user_interface/sounds/authors_notice_next_button_hover."+soundFileFormat
+    // "/user_interface/sounds/authors_notice_next_button_click."+soundFileFormat
   ];
   // ---
   let errorHappened = false;
@@ -35,13 +36,17 @@ async function cacheAuthorsNotice1Assets() {
     if (!errorHappened) {
       localStorage.setItem("authorsNotice1FilesCachedSuccessfully", "beautiful");
     } else {
-      // Try again
-      setTimeout(function () {  cacheAuthorsNotice1Assets();  }, 4000);
+      triesForNotice1Assets++;
+      // Try again if the number of maximum retries is not reached
+      // «maximumRetries» and «delayTimeBeforeTryingAgain» exists in 0_parent_initial_load_and_111.js
+      if (triesForNotice1Assets<=parent.maximumRetries) {   setTimeout(function () {  cacheAuthorsNotice1Assets();  }, parent.delayTimeBeforeTryingAgain);   }
+      else {   parent.console.warn("Gave up on trying to cache: cacheAuthorsNotice1Assets");   }
     }
   } // End of try-catch-finally
-}
+} // END OF cacheAuthorsNotice1Assets
 
 // ---
+let triesFor121CommonAssets = 0;
 async function cacheLesson121CommonAssetsForAllLanguages() {
   const cacheForAllLanguages_1_2_1 = await caches.open('1-2-1-assets-for-all-languages-August2023');
   // ---
@@ -69,12 +74,6 @@ async function cacheLesson121CommonAssetsForAllLanguages() {
   ];
   // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
 
-  /* DEPRECATE and use soundFileFormat from js_for_all_iframed_lesson_htmls which copies it from js_for_different_browsers_and_devices
-  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
-  if (isApple) {
-    listOfFilesForAllLanguages_1_2_1 = listOfFilesForAllLanguages_1_2_1.map(filepath => filepath.replace(".webm", ".mp3"));
-  }
-  */
   if (isApple || isFirefox) { // See js_for_all_iframed_lesson_htmls and then js_for_different_browsers_and_devices
     listOfFilesForAllLanguages_1_2_1.push(
       "/lessons_in_iframes/level_1/unit_2/lesson_1/v1_h264.mp4",
@@ -99,14 +98,19 @@ async function cacheLesson121CommonAssetsForAllLanguages() {
       parent.console.log("... and common files for 1-2-1 are ready");
       localStorage.setItem("lesson121CommonFilesCachedSuccessfully", "freshmint");
     } else {
-      // Try again
-      setTimeout(function () {  cacheLesson121CommonAssetsForAllLanguages();  }, 4000);
+      triesFor121CommonAssets++;
+      // Try again if the number of maximum retries is not reached
+      // «maximumRetries» and «delayTimeBeforeTryingAgain» exists in 0_parent_initial_load_and_111.js
+      if (triesFor121CommonAssets<=parent.maximumRetries) {   setTimeout(function () {  cacheLesson121CommonAssetsForAllLanguages();  }, parent.delayTimeBeforeTryingAgain);   }
+      else {   parent.console.warn("Gave up on trying to cache: cacheLesson121CommonAssetsForAllLanguages");   }
     }
   } // End of try-catch-finally
 
 } // END OF cacheLesson121CommonAssetsForAllLanguages
 
+
 // ---
+let triesFor121TargetLangAssets = 0;
 async function cacheLesson121AssetsForTheTargetLanguage() {
   const cacheForTargetLanguage_1_2_1 = await caches.open('1-2-1-assets-for-'+parent.langCodeForTeachingFilePaths+'-August2023');
   // ---
@@ -119,21 +123,31 @@ async function cacheLesson121AssetsForTheTargetLanguage() {
     "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/glass_7-8."+soundFileFormat,
     "/speech_recognition_answer_key/"+parent.langCodeForTeachingFilePaths+"/1-2-1-glass.txt"
   ];
-  /* DEPRECATE and use soundFileFormat from js_for_all_iframed_lesson_htmls which copies it from js_for_different_browsers_and_devices
-  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
-  if (isApple) {
-    listOfFilesForTargetLanguage_1_2_1 = listOfFilesForTargetLanguage_1_2_1.map(filepath => filepath.replace(".webm", ".mp3"));
-  }
-  */
-  /*
+
+
   const u = "/user_interface/text/"+userInterfaceLanguage; // See js_for_every_single_html
   switch (parent.langCodeForTeachingFilePaths.substring(0,2)) { // Using substring, we trim "tr_istanbul" to "tr", "zh_putonghua" to "zh" etc
-    case "??":
-      listOfFilesForTargetLanguage_1_2_1.push(u+"/1-2-1_???.txt");
+    case "ar":
+      listOfFilesForTargetLanguage_1_2_1.push(u+"/1-2-1_vocabulary_p1_p2_ar.txt");
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/kaas_listenbox_1."+soundFileFormat);
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/kaas_listenbox_2."+soundFileFormat);
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/kaas_listenbox_3."+soundFileFormat);
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/kaas_listenbox_1.json");
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/kaas_listenbox_2.json");
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/kaas_listenbox_3.json");
+      break;
+    case "ko":
+      listOfFilesForTargetLanguage_1_2_1.push(u+"/1-2-1_vocabulary_p1_p2_ko.txt");
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/jan_listenbox_1."+soundFileFormat);
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/jan_listenbox_2."+soundFileFormat);
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/jan_listenbox_3."+soundFileFormat);
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/jan_listenbox_1.json");
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/jan_listenbox_2.json");
+      listOfFilesForTargetLanguage_1_2_1.push("/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_2/lesson_1/jan_listenbox_3.json");
       break;
     default: // Nothing
   }
-  */
+
 
   // ---
   let errorHappened = false;
@@ -148,8 +162,11 @@ async function cacheLesson121AssetsForTheTargetLanguage() {
       parent.console.log("... and files for 1-2-1 "+parent.langCodeForTeachingFilePaths+" are ready");
       localStorage.setItem("lesson121FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully", "brilliant");
     } else {
-      // Try again
-      setTimeout(function () {  cacheLesson121AssetsForTheTargetLanguage();  }, 4000);
+      triesFor121TargetLangAssets++;
+      // Try again if the number of maximum retries is not reached
+      // «maximumRetries» and «delayTimeBeforeTryingAgain» exists in 0_parent_initial_load_and_111.js
+      if (triesFor121TargetLangAssets<=parent.maximumRetries) {   setTimeout(function () {  cacheLesson121AssetsForTheTargetLanguage();  }, parent.delayTimeBeforeTryingAgain);   }
+      else {   parent.console.warn("Gave up on trying to cache: cacheLesson121AssetsForTheTargetLanguage");   }
     }
   } // End of try-catch-finally
 

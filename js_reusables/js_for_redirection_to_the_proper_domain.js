@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT i.e. OFFICIAL AUTHORIZATION
 
 /*______*/
 // Check if the domain and browser language is different
@@ -44,7 +44,7 @@ function whatIfUserInterfaceLangAndBrowserLangAreDifferent() {
 */
 
       default:
-        // A clone in user's browser language is not available yet
+        // In this case, a SWL clone in user's browser language is not available yet
         // OPTION1: Do nothing and stay
         // OPTION2: Ask if user would like to view the app in English unless userInterfaceLanguage is already English
         // Example someone whose browserLanguage is "zz" is trying to view birdildahakonus.com

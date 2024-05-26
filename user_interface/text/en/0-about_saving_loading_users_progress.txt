@@ -1,1 +1,1 @@
-﻿Your progress will be saved on this device, for this user and in this browser <span style="white-space:nowrap;">(if possible)</span>|Your previous progress has been loaded
+﻿Your progress will be saved on this device and in this browser <span style="white-space:nowrap;">(if possible)</span>|Your previous progress has been loaded

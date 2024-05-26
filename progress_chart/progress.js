@@ -1,6 +1,10 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT i.e. OFFICIAL AUTHORIZATION
+
+// CAUTION: REMEMBER TO UPDATE
+// welcomeScreenCacheHandling_proceed0 AND cacheProgressChartCommonFiles
+// found in 0_parent_initial_load_and_111.js WHENEVER A NEW LESSON BECOMES AVAILABLE
 
 const allNavElements = document.getElementsByTagName('NAV');
 // -
@@ -43,11 +47,9 @@ window.addEventListener("DOMContentLoaded",function () { // ACTUALLY: We don't n
 
 
   if (deviceDetector.isMobile) {
-    //handleAllNavigationsByTOUCHENDs(); // Deprecate?
-    handleAllNavigationToLessons("touchend");
+    handleAllNavigationToLessons("touchend"); // Neatly done
   } else {
-    //handleAllNavigationsByMOUSEUPs(); // Deprecate?
-    handleAllNavigationToLessons("mouseup");
+    handleAllNavigationToLessons("mouseup"); // Neatly done
   }
 
   // -
@@ -131,6 +133,8 @@ if (parent.savedProgress[studiedLangCode].lesson_TREE_IsViewed) {  lesson133.cla
 if (parent.savedProgress[studiedLangCode].lesson_TREE_IsCompleted) {  lesson133.classList.add("thisLessonHasBeenCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_PRIMARYCOLORS_IsViewed) {  lesson134.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
 if (parent.savedProgress[studiedLangCode].lesson_PRIMARYCOLORS_IsCompleted) {  lesson134.classList.add("thisLessonHasBeenCompleted");  }
+if (parent.savedProgress[studiedLangCode].lesson_BIRD_IsViewed) {  lesson211.classList.add("thisLessonHasBeenViewedButNotCompleted");  }
+if (parent.savedProgress[studiedLangCode].lesson_BIRD_IsCompleted) {  lesson211.classList.add("thisLessonHasBeenCompleted");  }
 // --------
 
 // handleFadingAndNavigation exists in js_for_the_parent_all_browsers_all_devices
@@ -159,7 +163,7 @@ let lessonsAndTheirReadinessForOffline = {
 };
 
 // Check each lessons readiness for offline
-if (localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) {
+if (localStorage.getItem("commonFilesForAllLessonsCachedSuccessfully")) {
   for (let i = 0; i < lessonCodes.length; i++) {
     if (localStorage.getItem("lesson"+lessonCodes[i]+"CommonFilesCachedSuccessfully")) {
       if (localStorage.getItem("lesson"+lessonCodes[i]+"FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully")) {
@@ -186,7 +190,7 @@ function handleAllNavigationToLessons(touchend_or_mouseup) {
   lesson133.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_3/index.html",lessonsAndTheirReadinessForOffline[133]); });
   lesson134.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_4/index.html",lessonsAndTheirReadinessForOffline[134]); });
   // -----
-  lesson211.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[211]); });
+  lesson211.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_2/unit_1/lesson_1/index.html",lessonsAndTheirReadinessForOffline[211]); });
   lesson212.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[212]); });
   lesson213.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[213]); });
   lesson214.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[214]); });
@@ -216,37 +220,3 @@ function handleAllNavigationToLessons(touchend_or_mouseup) {
   lesson333.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[333]); });
   lesson334.addEventListener(touchend_or_mouseup,function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[334]); });
 }
-/* try to shorten the code
-//Works in Chrome
-//DEPRECATE if touchend_or_mouseup works on Safari too
-function handleAllNavigationsByTOUCHENDs() {
-  lesson111.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_1/index.html",lessonsAndTheirReadinessForOffline[111]); });
-  lesson112.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html",lessonsAndTheirReadinessForOffline[112]); });
-  lesson113.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_3/index.html",lessonsAndTheirReadinessForOffline[113]); });
-  lesson114.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_4/index.html",lessonsAndTheirReadinessForOffline[114]); });
-  lesson121.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_1/index.html",lessonsAndTheirReadinessForOffline[121]); });
-  lesson122.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_2/index.html",lessonsAndTheirReadinessForOffline[122]); });
-  lesson123.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_3/index.html",lessonsAndTheirReadinessForOffline[123]); });
-  lesson124.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_4/index.html",lessonsAndTheirReadinessForOffline[124]); });
-  lesson131.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_1/index.html",lessonsAndTheirReadinessForOffline[131]); });
-  lesson132.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_2/index.html",lessonsAndTheirReadinessForOffline[132]); });
-  lesson133.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_3/index.html",lessonsAndTheirReadinessForOffline[133]); });
-  lesson134.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_4/index.html",lessonsAndTheirReadinessForOffline[134]); });
-  lesson211.addEventListener("touchend",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/we_are_working_for_new_levels/index.html",lessonsAndTheirReadinessForOffline[211]); });
-}
-
-function handleAllNavigationsByMOUSEUPs() {
-  lesson111.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_1/index.html",lessonsAndTheirReadinessForOffline[111]); });
-  lesson112.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_2/index.html",lessonsAndTheirReadinessForOffline[112]); });
-  lesson113.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_3/index.html",lessonsAndTheirReadinessForOffline[113]); });
-  lesson114.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_1/lesson_4/index.html",lessonsAndTheirReadinessForOffline[114]); });
-  lesson121.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_1/index.html",lessonsAndTheirReadinessForOffline[121]); });
-  lesson122.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_2/index.html",lessonsAndTheirReadinessForOffline[122]); });
-  lesson123.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_3/index.html",lessonsAndTheirReadinessForOffline[123]); });
-  lesson124.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_2/lesson_4/index.html",lessonsAndTheirReadinessForOffline[124]); });
-  lesson131.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_1/index.html",lessonsAndTheirReadinessForOffline[131]); });
-  lesson132.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_2/index.html",lessonsAndTheirReadinessForOffline[132]); });
-  lesson133.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_3/index.html",lessonsAndTheirReadinessForOffline[133]); });
-  lesson134.addEventListener("mouseup",function () { window.parent.handleFadingAndNavigation("/lessons_in_iframes/level_1/unit_3/lesson_4/index.html",lessonsAndTheirReadinessForOffline[134]); });
-}
-*/

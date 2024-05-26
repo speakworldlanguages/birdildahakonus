@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT i.e. OFFICIAL AUTHORIZATION
 
 /*
 function preventIconAndTitleAnimation() { // Usable in case it becomes necessary
@@ -14,9 +14,11 @@ var iFrameInTitleAnimation = document.getElementsByTagName('IFRAME')[0]; // Used
 var iFrameDocumentInTitleAnimation = iFrameInTitleAnimation.contentDocument;
 
 // Dynamic titles are cool!
-window.addEventListener("load",dynamicTitleF,{once:true});
 let theTickerThatChangesTheTitle;
 const theParentHtmlTitle = document.title;
+
+window.addEventListener("load",dynamicTitleF,{once:true});
+
 function dynamicTitleF() {
   theTickerThatChangesTheTitle = setInterval( function ()
   {

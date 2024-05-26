@@ -230,18 +230,30 @@ footer{
 
 .youMustAllowMicrophone{
   z-index: 3333; /*main is 999, sliding nav is 1111, saveloadbox is 2222*/
-  position: fixed; min-width:330px; max-width:100vmin; height:90px; top:-100px; left:50vw; transform: translateX(-50%);
+  position: fixed; min-width:330px; max-width:90vw; min-height:90px;
+  top:50vh; left:50vw; left:50dvw; transform: translate(-50%,calc(-200% + -50vh)); /*Hidden slightly above screen-top*/
+  /* margin-top:-100vh; */
   border-radius: 10px 10px 10px 10px;
   background-color: white; border: 2px solid #ebf2fa;
   font-size: 19px; color: #b0cdd1; font-weight: bold;
   display: flex; justify-content: center;  align-items: center; padding: 10px;
   animation-name: flashBlink; animation-duration: .6s; animation-iteration-count: infinite; animation-direction: alternate;
-  transition: margin-top 1.5s; transition-timing-function: ease;
+  transition: transform 1.5s; transition-timing-function: ease;
   box-shadow: rgba(255, 255, 255, 0.4) 0px 0px 12px 0px;
 }
-.letYouMustAllowMicrophoneDialogAppearMobile{margin-top:90px;}
-.letYouMustAllowMicrophoneDialogAppearDesktop{margin-top: calc(50vh + 50px);}
-.letYouMustAllowMicrophoneDialogDisappear{margin-top:-222px;}
+.letYouMustAllowMicrophoneDialogAppearMobile{
+  /* margin-top: calc(-50vh + 10vmin + 10px); */
+  transform: translate(-50%,calc(3vmin + 8px + -50vh)); /*With just a little space between the box and top of screen*/
+  /*Older phones will not recognize dvh so we try to handle the situation without it*/
+}
+.letYouMustAllowMicrophoneDialogAppearDesktop{
+  /* margin-top: calc(0vh + 50px); */
+  transform: translate(-50%,calc(-50% + 50px)); /* Move 50px downwards after centering it » Desktop Chrome's hanging prompt box is about 50px high*/
+}
+.letYouMustAllowMicrophoneDialogDisappear{
+  /* margin-top:-100vh;  */
+  transform: translate(-50%,calc(-200% + -50vh));
+}
 @keyframes flashBlink {  0%{ filter: contrast(1); } 45%{ filter: contrast(1); } 55%{ filter: contrast(1.25); } 100%{ filter: contrast(1.25); }  }
 
 /* Darken the background » used for PLEASE DISCLOSE YOUR GENDER_ */
@@ -266,13 +278,17 @@ footer{
 }
 @keyframes fadeInAndCoverEverything {  0%{ opacity:0; } 100%{ opacity:1; }  }
 
-.toIndicateThatSpeechRecognitionIsON { /*See js_for_different_browsers_and_devices.js*/
-  position: fixed; left: 0; top: 0; width: 100vw; width: 100dvw; height: 100%; height: 100dvh; pointer-events: none;
+.toIndicateThatSpeechRecognitionIsON { /*See js_for_different_browsers_and_devices.js z-index not necessary as it will be added and removed as the very last child*/
+  pointer-events: none;
+  position: fixed; left: 0; top: 0; width: 100vw; width: 100dvw; height: 100%; height: 100dvh;
   background-color: rgba(255, 255, 255, 0);
-  background-image: linear-gradient(   0deg, rgba(225,255,255,0.25), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   ),
-                    linear-gradient(  90deg, rgba(225,255,255,0.25), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   ),
-                    linear-gradient( 180deg, rgba(225,255,255,0.25), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   ),
-                    linear-gradient( -90deg, rgba(225,255,255,0.25), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   );
+  box-shadow: inset 0 0 4px 3px white, inset 0 0 14px 0 rgba(255,255,255,0.5), inset 0 0 8vmin 0 rgba(255,255,255,0.1);
+  /* Deprecate
+  background-image: linear-gradient(   0deg, rgba(225,255,255,0.11), rgba(225,255,255,0.01), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   ),
+                    linear-gradient(  90deg, rgba(225,255,255,0.11), rgba(225,255,255,0.01), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   ),
+                    linear-gradient( 180deg, rgba(225,255,255,0.11), rgba(225,255,255,0.01), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   ),
+                    linear-gradient( -90deg, rgba(225,255,255,0.11), rgba(225,255,255,0.01), rgba(225,255,255,0),rgba(0,0,0,0),rgba(0,0,0,0),rgba(0,0,0,0)   );
+  */
   mix-blend-mode: normal;
 }
 

@@ -1,0 +1,2 @@
+﻿Safari’de mikrofon iznini kalıcı hale getirmek için mikrofon simgesini bulup [Her zaman izin ver]i seçmelisin
+|Safari’de mikrofon iznini kalıcı hale getirmek için tercihleri bulup seçimi [Sor] yerine [İzin ver]e ayarlamalısın

@@ -28,8 +28,8 @@ let noteToBeDisplayedAtTheEndOfThisLesson = null; // See what follows after wind
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
 // Find soundFileFormat in js_for_all_iframed_lesson_htmls
-let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water."+soundFileFormat;
-let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water_slow."+soundFileFormat;
+let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water_1."+soundFileFormat;
+let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water_2."+soundFileFormat;
 let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/huh."+soundFileFormat;
 let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/it_is_a_fish."+soundFileFormat;
 let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_a_fish_in_the_water."+soundFileFormat;
@@ -111,8 +111,14 @@ const startingPositionOfTheFish = 18; // vmin
 // ---
 
 /* SET OFF */
-window.addEventListener('load', loadingIsCompleteFunction, { once: true });
-// NOTE THAT: In this case the grammar [info box] must appear after the pronunciation-teacher-box [listen box]
+window.addEventListener('load',checkIfAppIsPaused, { once: true });
+function checkIfAppIsPaused() {
+  if (parent.theAppIsPaused) { // See js_for_the_sliding_navigation_menu
+    parent.pleaseAllowSound.play(); // Let the wandering user know that the lesson is now ready // See js_for_different_browsers_and_devices
+    let unpauseDetector = setInterval(() => {    if (!parent.theAppIsPaused) { clearInterval(unpauseDetector); loadingIsCompleteFunction(); }    }, 500); // NEVER use a SuperInterval here!
+  } else { loadingIsCompleteFunction(); }
+}
+// NOTE THAT: In this case the grammar [info box] must appear BEFORE the pronunciation-teacher-box [listen box]
 function loadingIsCompleteFunction() {
   swimmingFishContainer.style.transform = "translateX("+(0+startingPositionOfTheFish).toFixed(3)+"vmin)";
   // --
@@ -137,13 +143,13 @@ function loadingIsCompleteFunction() {
 
   }
   else {
-    startTheLesson(); // Call it now if it was not to be called from within createAndHandleInfoBoxType1BeforeLessonStarts() in js_for_all_iframed_lesson_htmls.js
+    startTheLesson(); // Call it now if it was not to be called from within createAndHandleInfoBoxType1BeforeLessonStarts() in js_for_info_boxes_in_lessons.js
   }
   //---
   // By the way: Get the end of lesson texts ready
-  setTimeout(function () {
-    const noteAtTheEndOfLessonPath = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_arabic_ma_shayunma.txt"; // ONLY 1 KB
+  setTimeout(function () { // We don't want a SuperTimeout in this case
     if (studiedLang == "ar") {
+      const noteAtTheEndOfLessonPath = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_arabic_ma_shayunma.txt"; // ONLY 1 KB
       fetch(noteAtTheEndOfLessonPath,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ noteToBeDisplayedAtTheEndOfThisLesson = contentOfTheTxtFile; });
     } else if (studiedLang == "??") {
 
@@ -155,20 +161,36 @@ function loadingIsCompleteFunction() {
 
 function startTheLesson() {
   // User must listen to pronunciation-teacher vocabulary box no matter what language he/she is studying
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox."+soundFileFormat;
-  const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
-  fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
+  const filePathOfTheAudio1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_1."+soundFileFormat;
+  const filePathOfTheAudio2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_2."+soundFileFormat;
+  const filePathOfTheAudio3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_3."+soundFileFormat;
+  const filePathOfLipSyncJSON1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_1.json";
+  const filePathOfLipSyncJSON2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_2.json";
+  const filePathOfLipSyncJSON3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_3.json";
+  // NOTE: The lip-sync json file names better be THE SAME with the audio file names that will be played in the listen-many-times box » See js_for_info_boxes_in_lessons
+  const listenBoxP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
+  fetch(listenBoxP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
   // See js_for_info_boxes_in_lessons » iframe-lesson level
-  new SuperTimeout(function(){    createAndHandleListenManyTimesBox(filePathOfTheAudioFile);    },501); // Wait for preloader to disappear or give a brief break after notification
+  new SuperTimeout(function(){    createAndHandleListenManyTimesBox(filePathOfTheAudio1,filePathOfLipSyncJSON1,filePathOfTheAudio2,filePathOfLipSyncJSON2,filePathOfTheAudio3,filePathOfLipSyncJSON3);    },501); // Wait for preloader to disappear or give a brief break after notification
 }
 
-let isParentBlurred = true; // Clicking on iframe blurs/deselects the parent,,, so start blurred as the only way to proceed is to click the buttons of the wavesurfer box
-let isFrameBlurred = false; // Clicking on iframe brings-focus-to/selects the frame,,, so start focused
+// DEPRECATE: let isParentBlurred; // Clicking on iframe blurs/deselects the parent,,, so start blurred as the only way to proceed is to click the buttons of the listen-many-times-box
+let isFrameBlurred = null; // Clicking on iframe brings-focus-to/selects the frame,,, so start focused
 function vocabularyBoxIsClosed(x,y) { // Will fire from within createAndHandleListenManyTimesBox with touch/click coordinate values passed » vocabularyBoxIsClosed(lastPointerX,lastPointerY)
   // console.log("lesson intro listenbox is closed");
   // No use for last mouse or touch coordinates: x, y
-  isParentBlurred = true; // Clicking on iframe blurs the parent,,, so start blurred
-  isFrameBlurred = false; //
+  // DEPRECATE: isParentBlurred = true; // Clicking on iframe blurs the parent,,, so start blurred
+  // Detect if keyboard is active(usable) or not
+  // ATTENTION
+  // zoomCamera animation is already applied to main
+  // We cannot apply a second animation to main
+  // So we do it without fading
+  if (document.hasFocus()) { isFrameBlurred = false; console.log("frame has focus"); }
+  else { isFrameBlurred = true; console.log("frame is blurred,,, BUT HOW???"); main.style.filter = "grayscale(100%)"; }
+  window.addEventListener("blur",frameIsBlurred);
+  window.addEventListener("focus",frameIsFocused);
+  function frameIsBlurred() {   isFrameBlurred = true;   console.log("frame lost focus");     main.style.filter = "grayscale(100%)";    }
+  function frameIsFocused() {   isFrameBlurred = false;  console.log("frame regained focus"); main.style.filter = "grayscale(0%)";      }
   // --
   firstCloud.style.animationPlayState = "running"; secondCloud.style.animationPlayState = "running";
   // --
@@ -199,7 +221,6 @@ function unblurAndZoomIn() {
     handleInputForPlayingTheFishGameWithTouchscreen();
     new SuperTimeout(function () { showHowToSwimMOBILE(); }, 8750); // Zoom takes 8.75s See there_is_a_fish.css » startZoomingIn
   } else {
-
     //window.requestAnimationFrame(updateTheScene);
     // Both the movement of the clouds and the fish will be done with R.A.F. as well as the dynamic eye movement of the pictograms
     // DEPRECATE: Use united function window.requestAnimationFrame(updateTheSceneDESKTOP); // set-Interval appears to be slightly less CPU intensive than requestAnimationFrame BUT can give an unsmooth result
@@ -447,12 +468,12 @@ function makeTheFishJumpOutOfWater() {
     pictogramStates.children[4].style.display = "block"; // 7 x 70ms = 490ms
     new SuperTimeout(function () {
       // Play Huh? surprise sound like plants vs zombies squash
-      say3.play(); parent.console.log("Huh? What's that?");
+      new SuperTimeout( ()=> { say3.play(); parent.console.log("Says «Huh? --- What's that?»"); }, 200 );
       // Make both pictograms look at the fish
       pictogramStates.children[4].style.display = "none"; resetWebp(pictogramStates.children[4]);
       pictogramStates.children[0].style.display = "block";
       elderEyes.style.visibility = "visible"; youngerEyes.style.visibility = "visible";
-    },1100);
+    },900);
     let reactionTime;  switch (parent.speedAdjustmentSetting) {  case "slow": reactionTime = 5250; break;  case "fast": reactionTime = 3250; break;  default: reactionTime = 4250;  }
     new SuperTimeout(function () {
       // Make pictograms look at each other
@@ -522,20 +543,27 @@ function makeTheFishJumpOutOfWater() {
 let anOutroBoxIsNowShowing = false; // 1 - To block keyboard input when needed 2 - To exit RAF loop
 function handleWinning() {
   // Display pronunciation-teacher-box about the meaning of "a thing" or "something"
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox."+soundFileFormat;
-  const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_vocabulary_outro_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
-  fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+  const filePathOfTheAudio1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_1."+soundFileFormat;
+  const filePathOfTheAudio2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_2."+soundFileFormat;
+  const filePathOfTheAudio3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_3."+soundFileFormat;
+
+  const filePathOfLipSyncJSON1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_1.json";
+  const filePathOfLipSyncJSON2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_2.json";
+  const filePathOfLipSyncJSON3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_3.json";
+  // NOTE: The lip-sync json file names better be THE SAME with the audio file names that will be played in the listen-many-times box » See js_for_info_boxes_in_lessons
+  const listenBoxP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-3-2_vocabulary_outro_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
+  fetch(listenBoxP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
     handleP1P2ActualTextOUTRO(contentOfTheTxtFile); // CAUTION: It's outro
   });
   // See js_for_info_boxes_in_lessons » iframe-lesson level
   new SuperTimeout(function(){
-    createAndHandleListenManyTimesBox(filePathOfTheAudioFile,true); // true as second parameter turns it into an outro box
+    createAndHandleListenManyTimesBox(filePathOfTheAudio1,filePathOfLipSyncJSON1,filePathOfTheAudio2,filePathOfLipSyncJSON2,filePathOfTheAudio3,filePathOfLipSyncJSON3,true); // true as seventh parameter turns it into an outro box
     anOutroBoxIsNowShowing = true; // Disable keyboard and quit RAF
     winHasHappened = true;
     // ---
     // ---
     let cloudOpacity = 1;
-    let makeCloudsDisappearInterval = setInterval(function () {
+    let makeCloudsDisappearInterval = setInterval(function () { // No big deal if this is not a pausable SuperInterval
       if (cloudOpacity>=0.05) { cloudOpacity -= 0.05; firstCloud.parentNode.style.opacity = String(cloudOpacity); }
       else {   cloudOpacity=0; firstCloud.remove(); secondCloud.remove(); clearInterval(makeCloudsDisappearInterval);  }
     }, 250);
@@ -604,14 +632,7 @@ function goToTheNextLesson() { parent.console.log("Proceeding to the next lesson
 let leftArrowIsAlreadyPressed = false; let rightArrowIsAlreadyPressed = false; let upArrowIsAlreadyPressed = false;
 function handleInputForPlayingTheFishGameWithTheKeyboard() {
   // The focus will start with being ON the frame as user clicks the button inside vocabularyBox
-  window.addEventListener("blur",frameIsBlurred);
-  window.addEventListener("focus",frameIsFocused);
-  parent.window.addEventListener("blur",parentIsBlurred);
-  parent.window.addEventListener("focus",parentIsFocused);
-  // CAREFUL: keyboard must be listened at both parent and frame level! So we cannot use {once:true} method to avoid turbo firing when key is held down
-  parent.window.addEventListener("keydown",aKeyWasPressed);
   window.addEventListener("keydown",aKeyWasPressed);
-  parent.window.addEventListener("keyup",aKeyWasReleased);
   window.addEventListener("keyup",aKeyWasReleased);
   // --
   function aKeyWasPressed(event) { event.preventDefault(); // We need this to prevent volume range slider movement
@@ -668,33 +689,6 @@ function handleInputForPlayingTheFishGameWithTheKeyboard() {
     if (!leftArrowIsAlreadyPressed && !rightArrowIsAlreadyPressed && fishIsHearing && !anOutroBoxIsNowShowing) { changeSoundToWaterfall(); }
   }
   // --
-  function frameIsBlurred() {   isFrameBlurred = true;   checkBothBlurs(); console.log("blur was detected over frame");  }
-  function frameIsFocused() {   isFrameBlurred = false;  checkBothBlurs(); console.log("focus was detected over frame");  }
-  function parentIsBlurred() {  isParentBlurred = true;  checkBothBlurs(); console.log("blur was detected over parent");  }
-  function parentIsFocused() {  isParentBlurred = false; checkBothBlurs(); console.log("focus was detected over parent");  }
-  function checkBothBlurs() {
-    if (true) { // or !winHasHappened
-      setTimeout(function () {
-        if (isParentBlurred && isFrameBlurred) { // grey out if both are blurred
-          //console.log("Both the frame and the parent are blurred");
-          // zoomCamera animation is already applied to main
-          // We cannot apply a second animation to main
-          // main.parentNode.classList.remove("colorBack"); main.parentNode.classList.add("grayAway"); // css_for_every_single_html
-          // So we do it without fading
-          main.style.filter = "grayscale(100%)";
-          parent.containerDivOfTheNavigationMenu.classList.remove("colorBack"); parent.containerDivOfTheNavigationMenu.classList.add("grayAway");
-          // UNNECESSARY WITH THE NEW METHOD main.classList.remove("noCursor");  main.classList.add("defaultCursor"); // css_for_every_single_html
-        } else { // color back in all other cases
-          //console.log("Either one of parent and frame is focused"); // IMPOSSIBLE: parent and frame cannot share focus
-          // main.parentNode.classList.remove("grayAway");  main.parentNode.classList.add("colorBack"); // css_for_every_single_html
-          // So we do it without fading
-          main.style.filter = "grayscale(0%)";
-          parent.containerDivOfTheNavigationMenu.classList.remove("grayAway"); parent.containerDivOfTheNavigationMenu.classList.add("colorBack");
-        }
-      }, 60);
-    }
-  } // End of checkBothBlurs
-
 } // END OF handleInputForPlayingTheFishGameWithTheKeyboard()
 // --
 /* NOT USABLE

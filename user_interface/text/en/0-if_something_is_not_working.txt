@@ -1,4 +1,4 @@
 ﻿Speech recognition is not working.
 Try using Chrome on Windows or Android.
-|You may need to update your browser or try using Chrome on Windows or Android to view this app.
-|If speech recognition is not functioning properly please skip it. It might happen when the answer is very short like a single syllable. Note that if this seems to be the case, you could also try saying it "twice and quickly".
+|You may need to update your browser or try using Chrome on Windows or Android to run this app.
+|Speech recognition may not function properly when voice input is too short. If this seems to be the case, you can try saying it TWICE QUICKLY.

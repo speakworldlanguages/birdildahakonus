@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT i.e. OFFICIAL AUTHORIZATION
 
 const leftText1 = document.getElementById('leftText1pID'); const rightText1 = document.getElementById('rightText1pID');
 
@@ -9,29 +9,31 @@ if (needHitoicJapaneseFonts) {
   rightText1.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
 }
 
-let leftTextWithoutInteraction;
+// According to ChatGPT: If a fetch() is fired before window load happens it will not prevent the window load from firing even if it takes way too long to get the file
+let leftTextWithoutInteraction = "…";
 const filePathForLeftTextWithoutInteraction = "/user_interface/text/"+userInterfaceLanguage+"/0-you_are_learning_"+parent.langCodeForTeachingFilePaths.substr(0,2)+".txt";
 fetch(filePathForLeftTextWithoutInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
   leftTextWithoutInteraction = contentOfTheTxtFile;
   leftText1.innerHTML = leftTextWithoutInteraction;
 });// See js_for_every_single_html.js for the headers thingy.
 
-let rightTextWithoutInteraction;
+let rightTextWithoutInteraction = "…";
 const filePathForRightTextWithoutInteraction = "/user_interface/text/"+parent.langCodeForTeachingFilePaths.substr(0,2)+"/0-you_are_learning_"+parent.langCodeForTeachingFilePaths.substr(0,2)+".txt";
 fetch(filePathForRightTextWithoutInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
   rightTextWithoutInteraction = contentOfTheTxtFile;
   rightText1.innerHTML = rightTextWithoutInteraction;
 });
 
-let leftTextUponInteraction;
+let leftTextUponInteraction = "︙";
 const filePathForLeftTextUponInteraction = "/user_interface/text/"+userInterfaceLanguage+"/0-learn_another_language.txt";
 fetch(filePathForLeftTextUponInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ leftTextUponInteraction = contentOfTheTxtFile; });
 
-let rightTextUponInteraction;
+let rightTextUponInteraction = "︙";
 const filePathForRightTextUponInteraction = "/user_interface/text/"+parent.langCodeForTeachingFilePaths.substr(0,2)+"/0-learn_another_language.txt";
 fetch(filePathForRightTextUponInteraction,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ rightTextUponInteraction = contentOfTheTxtFile; });
 
-let sleepAdviceA, sleepAdviceB;
+let sleepAdviceA = "😴"; // Sleepy face icon
+let sleepAdviceB = "🛏 ☾️"; // Bed icon and crescent html
 const filePathForsleepAdviceA = "/user_interface/text/"+userInterfaceLanguage+"/0-author_gives_sleep_advice.txt";
 const filePathForsleepAdviceB = "/user_interface/text/"+parent.langCodeForTeachingFilePaths.substr(0,2)+"/0-author_gives_sleep_advice.txt";
 fetch(filePathForsleepAdviceA,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ sleepAdviceA = contentOfTheTxtFile; });

@@ -4,8 +4,19 @@ video{
   pointer-events: none; /*Disable long touch context menu*/ /*Note: pointer-events none has no effect on custom cursor*/
 }
 
-/* p{ */
-  /* line-height: 125%; */ /*Wouldn't it be better if this is set by js_for_every_single_html?*/
-/* } */
+
+/*All headers get baiJamjuree font dictated by js_for_every_single_html*/
+/*header used for the first time in lesson 1-3-4 */
+/*IN THE FUTURE: We can cut and paste SOME OF the following rules into color.css in «1-3-4» to make them lesson specific*/
+header{
+ white-space: pre-wrap;
+ line-height: normal;
+
+
+ font-size: calc(11px+4.2vmin;); /* Looks good in lesson 1-3-4 */
+ color: rgb(109, 133, 152); /* Looks good in lesson 1-3-4 */
+ margin: calc(22px+2.2vmin); /* Looks good in lesson 1-3-4 */
+}
+
 
 /* REMEMBER: <aside> elements, <section> elements and <address> elements are used as other types of buttons. */

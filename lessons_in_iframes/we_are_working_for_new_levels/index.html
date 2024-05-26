@@ -14,7 +14,7 @@
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
     <script defer src="/js_reusables/js_for_proceed_buttons.js">/*Set hover|touchstart sounds*/</script>
 
-    <!-- Uncomment to use the console on mobiles -->
+    <!-- EITHER uncomment to use the mobile console within iframe OR consider using parent.console.log -->
     <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
@@ -80,7 +80,9 @@
       }, { once: true });
 
       function navigateToInformation() {
-        setTimeout(function () {          parent.ayFreym.src = "/information/index.html";        }, 500);
+        // Better if this does not navigate away before addThisToAButtonForPlayStationStyleClick in css_for_every_single_html completes » 600ms
+        // clickSoundForAddressElementAsButton should also complete » 470ms
+        setTimeout(function () {          parent.ayFreym.src = "/information/index.html";        }, 700);
       }
     </script>
   </head>
@@ -106,7 +108,8 @@
         <p id="messageAfterTheLastLessonP" class="" style="color:#476175; font-size:170%; letter-spacing: -0.1vmin; white-space: pre;">...</p>
       </div>
       <img id="particularZoomOnPhonesB" src="/lessons_in_iframes/we_are_working_for_new_levels/we_are_working.webp" alt="" style="height:38vh; pointer-events:none;" draggable="false">
-      <address id="goToInfoPageButton" style="" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">...</address>
+      <!-- See js_for_proceed_buttons for stopPropagation -->
+      <address id="goToInfoPageButton" style="">...</address>
     </div>
 
   </body>

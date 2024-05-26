@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT i.e. OFFICIAL AUTHORIZATION
 
 // DYNAMIC WINDOW SIZE: Needed by game levels
 var lastRecordedWindowWidth = window.innerWidth; var lastRecordedWindowHeight = window.innerHeight; // Dimensions of the browser's display area
@@ -20,6 +20,10 @@ var userIsOrWasJustViewing = "welcome-screen"; // First time users will stay at 
 
 // See » https://developer.mozilla.org/en-US/docs/Web/API/StorageManager/persist
 if (navigator.storage && navigator.storage.persist) {
+  /*
+  //FACT: WE CAN ACTIVATE THIS TO MAKE localStorage PROTECTED
+  //UNCERTAIN: WILL IT CAUSE say for example the cached stale version of index.html unupdateable?
+  //CONSIDER: service-worker intervention for all fetch requests
   navigator.storage.persist().then((persistent) => {
     if (persistent) {
       console.log("Storage persistence is allowed » data will not be cleared except by explicit user action");
@@ -27,6 +31,7 @@ if (navigator.storage && navigator.storage.persist) {
       console.warn("Storage persistence is NOT ALLOWED » data may be cleared by the UA under storage pressure.");
     }
   });
+  */
 }
 
 /*________________LOAD/SAVE___________________*/
@@ -53,7 +58,6 @@ var firstUserGestureHasUnleashedAudio = false; // Used in js_for_the_sliding_nav
 // NOTE: Chrome does not count an alert box click as a user gesture. Only the first element click or touch will unlock sound. Must be silent until then.
 // _________________
 
-// DEPRECATED let dismissNotificationSound1;
 let clickSound; //BETTER WITHOUT: hoverSound
 window.addEventListener("load",function () {
 
@@ -77,16 +81,6 @@ window.addEventListener("load",function () {
   }
   // illuminant_button_click SOUND ALSO «ACTS AS-COVERS-CONNECTS TO» THE POPPING SOUND OF [Go back] [Ok, let's start] BOX // See js_for_info_boxes_in_parent
   clickSound = new Howl({  src: ["/user_interface/sounds/illuminant_button_click."+soundFileFormat]  }); // See js_for_different_browsers_and_devices to find soundFileFormat
-  /* DEPRECATE
-  if (isApple) { // DO NOT ACCESS isApple BEFORE DOMContentLoaded IN js_for_different_browsers_and_devices
-    // DEPRECATED dismissNotificationSound1 = new Howl({  src: ["/user_interface/sounds/notification1_close.mp3"]  }); // notification1_close ALSO USED AS dismissNotificationType1Sound IN js_for_info_boxes_in_lessons
-    clickSound = new Howl({  src: ["/user_interface/sounds/illuminant_button_click.mp3"]  });
-  } else {
-    // DEPRECATED dismissNotificationSound1 = new Howl({  src: ["/user_interface/sounds/notification1_close.webm"]  }); // notification1_close ALSO USED AS dismissNotificationType1Sound IN js_for_info_boxes_in_lessons
-    clickSound = new Howl({  src: ["/user_interface/sounds/illuminant_button_click.webm"]  });
-  }
-  */
-  // ---
 
   // ---
 
@@ -235,6 +229,7 @@ function setLangCodeForFilePathsAndCacheTheFirstTeachingAssets(nameOfFolderThatW
   console.log("The folder name for audio files will be »»» "+nameOfFolderThatWasPassedHere);
   langCodeForTeachingFilePaths = nameOfFolderThatWasPassedHere; // MUST NOT USE substring(0,2) here
   if (typeof cacheLesson111AssetsForTheTargetLanguage === "function") { cacheLesson111AssetsForTheTargetLanguage(); }
+  else { console.warn("SOMETHING MUST BE BROKEN: cacheLesson111AssetsForTheTargetLanguage seems to not exist???"); }
   // User will spend at least 10 seconds or so through the [allow microphone] procedure. That should be enough to cache all teaching-speech files
   // So we cache the audio files that contain the teacher's voice for the very first lesson » See js_for_cache_handling/0_parent_initial_load_and_111
 }
@@ -253,6 +248,9 @@ function setSpeechRecognitionLanguage(input) {
       setTimeout(function () { annyang.abort();  }, 450); //Try to force update
     */
     //}
+
+    // REMEMBER: Looks like we cannot avoid Safari's repeating "allow mic" annoyance by pausing annyang instead of turning it off.
+    // Better if we tell or let Safari user figure out how to "permanently allow mic"
   }
 }
 
@@ -298,7 +296,7 @@ function goToProgressChart() { // Called either from within openFirstLesson() or
   if (internetConnectivityIsNiceAndUsable) {
     ayFreym.src = pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; // Load immediately; don't wait for [Ok, that's good] being touched/clicked in the dialog/info-box
   } else { console.warn("The device seems to be OFFLINE");
-    if (localStorage.getItem("progressChartShouldBeOfflineCompatibleNow") && localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) {
+    if (localStorage.getItem("progressChartShouldBeAlmostOrFullyOfflineCompatibleNow") && localStorage.getItem("commonFilesForAllLessonsCachedSuccessfully")) {
       console.warn("But all necessities of the PROGRESS CHART are cached, therefore will try to display");
       ayFreym.src = pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; // Let service-worker do its offline magic
     } else {
@@ -546,7 +544,7 @@ function openFirstLesson(freshNewOrReturning) {
       if (internetConnectivityIsNiceAndUsable) {
         ayFreym.src = pathOfWhatWillBeDisplayedUnlessInternetConnectivityIsLost; // Load immediately; don't wait for [Ok, that's good] being touched/clicked in the dialog/info-box
       } else { console.warn("Navigation attempt to LESSON111 despite being OFFLINE (detected by openFirstLesson)");
-        if (localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) { // See js_for_cache_handling/0_parent_initial_load_and_111
+        if (localStorage.getItem("commonFilesForAllLessonsCachedSuccessfully")) { // See js_for_cache_handling/0_parent_initial_load_and_111
           if (localStorage.getItem("lesson111CommonFilesCachedSuccessfully")) { // See js_for_cache_handling/0_parent_initial_load_and_111
             if (localStorage.getItem("lesson111FilesFor-"+langCodeForTeachingFilePaths+"-CachedSuccessfully")) { // See js_for_cache_handling/0_parent_initial_load_and_111
               console.warn("All assets for lesson 111 are cached and READY! Therefore, will try to proceed");
@@ -557,21 +555,6 @@ function openFirstLesson(freshNewOrReturning) {
         // --
         function goToSorryPage() { ayFreym.src = "/user_interface/screens/"+userInterfaceLanguage+"/you_are_offline.html"; }
       }
-
-
-
-      /* DEPRECATE or not?
-      if (isSafari && !localStorage.safariHowToPermanentlyAllowMicAlertIsAlreadyDisplayed) {
-        // HANDLE LATER: When iPhone user runs the app from his homescreen THERE IS NO ADDRESS BAR and it's FULLSCREEN
-        // So THE MESSAGE MUST NOT be about specific single web site mic allow method
-        // Another way to permanently allow mic is by going to iPhone device settings->Safari settings->Microphone and allowing mic for all web sites BUT THAT'S TROUBLESOME
-        alert(safariHowToPermanentlyAllowMicP.innerHTML); // See js_for_info_boxes_in_parent
-        localStorage.safariHowToPermanentlyAllowMicAlertIsAlreadyDisplayed = "yes";
-        ayFreym.src = "/lessons_in_iframes/level_1/unit_1/lesson_1/index.html";
-      } else {
-        ayFreym.src = "/lessons_in_iframes/level_1/unit_1/lesson_1/index.html";
-      }
-      */
     }
   },50); // Unnoticable tiny delay
 

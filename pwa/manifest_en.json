@@ -1,0 +1,18 @@
+{
+  "lang": "en",
+  "name": "Speak World Languages",
+  "short_name": "Speak World Languages",
+  "author": "Manheart Earthman",
+  "description": "Play games with voice commands as you acquire a new language!",
+  "icons": [{
+    "src": "/pwa/homescreen_icon/icon_for_pwa_en.png",    "sizes": "512x512",    "type": "image/png"
+    }],
+  "start_url": "index.html?homescreen",
+  "id": "SWL_APP_IN_ENGLISH_USER_INTERFACE",
+  "display": "fullscreen",
+  "background_color": "#adbbc4",
+  "theme_color": "#4d606f",
+  "screenshots": [
+    {      "src": "/pwa/screenshot.jpg",      "type": "image/jpg",      "sizes": "512x512"    }
+  ]
+}

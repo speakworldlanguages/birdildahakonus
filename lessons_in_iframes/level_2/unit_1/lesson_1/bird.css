@@ -1,0 +1,7 @@
+@media (orientation: portrait) {
+  video{  width: 115vw;  }
+}
+@media (orientation: landscape){
+  video{    height: 75vh;    }
+  @media (max-height: 600px){  video{    height: 85vh;    }  }
+}

@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT i.e. OFFICIAL AUTHORIZATION
 
 // IMPORTANT! Everything below will run in PARALLEL both on PARENT and iFRAME.
 // CAUTION: Mind the duplication!
@@ -33,7 +33,7 @@ function setUserInterfaceLanguage() {
     userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullanmak yerine txt dosyalarını dönüştürücü ile ters çevirmek daha mantıklı mı?
     needLatinFonts = true;
   } else {
-    // EN // Unlike teaching-files' paths we can go without implementing the american vs british difference and display a united user interface or can we?
+    // EN // Unlike teaching-files' paths perhaps we can go without implementing the american vs british difference and display a united user interface or can we?
     userInterfaceLanguage = "en"; //console.log("Set user-interface-language to EN due to URL: " + full_URL_ofTheClone);
     userReadsLeftToRightOrRightToLeft = "ltr";
     needLatinFonts = true;
@@ -126,7 +126,7 @@ if (needLatinFonts) {
   /* Done seperately both in parent and iframe */
   document.body.style.fontFamily = '"Titillium Web Light", sans-serif'; // Default font for everything like FOOTER tag etc
 
-  let allHeaders = document.getElementsByTagName("HEADER");
+  let allHeaders = document.getElementsByTagName("HEADER"); // NOTE: THE HTML header ELEMENT HAS NOTHING TO DO WITH THE fetch() headers
   let k;
   for (k = 0; k < allHeaders.length; k++) {  allHeaders[k].style.fontFamily = 'baiJamjuree, sans-serif'; allHeaders[k].style.fontWeight = '200'; }
   /* - */

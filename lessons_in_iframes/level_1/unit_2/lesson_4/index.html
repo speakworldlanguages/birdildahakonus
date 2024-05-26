@@ -21,12 +21,12 @@
     <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
     <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
     <!-- We do not need the microphone plugin in this case -->
-    <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script>
+    <!-- DEPRECATED: <script defer src="/third_party_js/wavesurfer.min.js">/*Audio visualization. Github: katspaugh*/</script> -->
     <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
     <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_4/eat_with_spoon.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
     <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_4/eat_with_spoon_desktop.js">/* MUST BE DEFERRED: Code for gameplay on desktops */</script>
     <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_4/eat_with_spoon_mobile.js">/* MUST BE DEFERRED: Code for gameplay on mobiles */</script>
-    <!-- Uncomment to use the console on mobiles -->
+    <!-- EITHER uncomment to use the mobile console within iframe OR consider using parent.console.log -->
     <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
@@ -50,6 +50,7 @@
   <body>
     <!-- MAIN :: Start blurred 8px -->
     <main style="filter: blur(8px); transition-property: filter; transition-timing-function: ease;"> <!-- See css_for_lessons_with_interactables -->
+      <!-- Use stopPropagation where finger shall not trigger the swipe gesture for sliding navigation menu -->
 
       <!-- THE PLATE WITH FOOD IN IT -->
       <div class="containerOfThePlate" id="thePlateStatesDivID">
@@ -84,21 +85,28 @@
           	c0.915,10.457,1.616,21.045,2.294,31.284c1.283,19.396,2.61,39.454,5.444,59.13c1.438,9.99-1.045,16.384-7.381,19.003
           	C784.085,798.983,780.544,799.627,776.943,799.627z"/>
       </svg>
-      <!-- HOVER AREA OF THE PLATE ON MOBILES -->
-      <div id="mobileHoverID" class="containerOfThePlate" style="width:100vmin; height:100vmin; pointer-events:none; z-index:1550;">
-        <div id="preventSwipeMenuMobileID" style="pointer-events:all; z-index:1551; border-radius:20%; background-color:rgba(111,0,222,0.0); width:45vmin; height:45vmin; position: absolute; left:40%; top:63%; transform: translate(-50%,-50%)">&nbsp;</div>
-        <div id="plateHoverAreaMobileID"   style="pointer-events:all; z-index:1552; border-radius:50%; background-color:rgba(101,255,0,0.0); width:15vmin; height:11vmin; position: absolute; left:62vmin; top:66vmin;">&nbsp;</div>
-      </div>
-      <!-- HOVER AREA OF THE SPOON ON MOBILES -->
-      <svg id="mobileSvgID" version="1.2" baseProfile="tiny" class="squareContainerOfTheLongSpoonContainer" style="opacity:0.0; z-index:1600; pointer-events:none;"
+
+      <div id="mobileTouchAreaID" style="pointer-events:all; z-index: 1500;"></div>
+
+      <!-- ACCEPTED TOUCH AREA OF THE SPOON ON MOBILES, for collision detection | SET OPACITY BACK TO 0.0 AFTER TESTING -->
+      <svg id="spoonSvgID" version="1.2" baseProfile="tiny" class="squareContainerOfTheLongSpoonContainer" style="opacity:0.0; z-index:1600; pointer-events:none;"
       	  x="0px" y="0px" width="1000px" height="1000px" viewBox="0 0 1000 1000" xml:space="preserve">
-          <!-- FAT HOVER AREA FOR FINGER -->
-          <path id="niceFatTouchAreaForMobileID" style="pointer-events:all; z-index:1601;" fill-rule="evenodd" d="M776.943,829.627c-7.34,0-14.564-1.341-20.893-3.877c-7.196-2.886-24.635-9.25-18.895-44.65
+          <!-- BIGGER THAN SPOON, SHOE-LIKE AREA FOR FINGER -->
+          <path id="shoeLikeTouchAreaForSpoonID" style="pointer-events:none; z-index:1601;" fill-rule="evenodd" d="M776.943,829.627c-7.34,0-14.564-1.341-20.893-3.877c-7.196-2.886-24.635-9.25-18.895-44.65
           	c1.719-10.6,9.172-24.124,7.844-60.767c-1-27.583-16.804-48.173-25-70.333c-18-48.667-19.088-75.345-19.699-88.802
           	c-1.456-31.896,6.72-64.408,24.302-88.738c17.302-23.944,39.38-27.52,49.808-27.52c10.406,0,35.392,4.544,52.318,28.282
           	c20.432,28.655,24.002,63.678,24.002,98.704c0,52.073-0.744,152.407-0.744,202.609c0,28.416-25.576,44.788-40.613,51.005
           	C802.893,828.216,784.487,829.627,776.943,829.627z"/>
       </svg>
+      <!-- NEW: ACCEPTED TOUCH AREA OF THE PLATE ON MOBILES, for collision detection via svg isPointInFill + getBoundingClientRect -->
+      <svg id="plateSvgID" version="1.2" baseProfile="tiny" class="squareContainerOfTheLongSpoonContainer" style="opacity:0.0; z-index:1700; pointer-events:none;"
+      	  x="0px" y="0px" width="1000px" height="1000px" viewBox="0 0 1000 1000" xml:space="preserve">
+          <!-- BIGGER THAN SPOON, SHOE-LIKE AREA FOR FINGER -->
+          <path id="ellipticalTouchAreaForPlateID" style="pointer-events:none; z-index:1701;" fill-rule="evenodd" d="M742.998,720.333c-0.837-23.094-12.05-41.285-20.488-59.601c-9.134-2.938-19.157-4.565-29.677-4.565
+	          c-42.525,0-76,14.415-76,59.23c0,45.181,33.475,63.231,76,63.231c17.699,0,33.992-8.605,46.997-16.327
+	          C741.916,752.847,743.707,739.88,742.998,720.333z"/>
+      </svg>
+
 
       <!-- MOUSE WHEEL INSTRUCTION ON DESKTOPS -->
       <div class="instruction" style="display:none;">
@@ -106,11 +114,11 @@
       </div>
       <!-- DEVICE MOVEMENT INSTRUCTION ON MOBILES -->
       <!-- Better if it is just a bit smaller on tablets -->
-      <div class="instruction" style="display:none; width:100vmin; height:100vmin;">
+      <div class="instruction" style="display:none; width:100vmin; height:100vmin; pointer-events:none;">
         <img draggable="false" src="" style="width:80vmin; display:none; position:absolute; top:10vmin; left:10vmin;">
         <img draggable="false" src="" style="width:80vmin; display:none; position:absolute; top:10vmin; left:10vmin;">
       </div>
-      <div class="instruction" style="display:none;">
+      <div class="instruction" style="display:none; pointer-events:none;">
         <img draggable="false" src="" style="width:100vmin; display:none;">
         <img draggable="false" src="" style="width:100vmin; display:none;">
       </div>
@@ -123,35 +131,37 @@
       var showHowPhone = document.querySelectorAll('.instruction')[2];
       var theLongSpoonContainerDivWithStates = document.querySelector('.theLongSpoonContainer');
       const svgDesktop = document.getElementById('desktopSvgID');
-      var svgMobile = document.getElementById('mobileSvgID');
+      var svgMobileShapeForSpoon = document.getElementById('spoonSvgID'); // See eat_with_spoon_mobile.js
+      var svgMobileShapeForPlate = document.getElementById('plateSvgID'); // See eat_with_spoon_mobile.js
       const hoverAreaDesktop = document.getElementById('desktopHoverID');
-      const hoverAreaMobile = document.getElementById('mobileHoverID');
+      var fullTouchAreaOfTheGame = document.getElementById('mobileTouchAreaID');
       // ---
       window.addEventListener('DOMContentLoaded', whatMustBeDoneAtFirstOnThisDevice, { once: true });
       function whatMustBeDoneAtFirstOnThisDevice() {
         if (deviceDetector.device == "desktop") {
           theLongSpoonContainerDivWithStates.classList.add("theLongSpoonContainerInitialRotationOnDesktops");
-          showHowTablet.parentNode.removeChild(showHowTablet);
-          showHowPhone.parentNode.removeChild(showHowPhone);
-          svgMobile.parentNode.removeChild(svgMobile);
+          showHowTablet.remove();
+          showHowPhone.remove();
+          svgMobileShapeForSpoon.remove();
           showHowDesktop.children[0].src = "/lessons_in_iframes/level_1/unit_2/lesson_4/mousewheel_show_how.webp";
-          hoverAreaMobile.parentNode.removeChild(hoverAreaMobile);
+          svgMobileShapeForPlate.remove();
+          fullTouchAreaOfTheGame.remove();
         } else if (deviceDetector.device == "tablet") {
           theLongSpoonContainerDivWithStates.classList.add("theLongSpoonContainerTransitionSettingsOnMobiles");
-          showHowDesktop.parentNode.removeChild(showHowDesktop);
-          showHowPhone.parentNode.removeChild(showHowPhone);
-          svgDesktop.parentNode.removeChild(svgDesktop);
+          showHowDesktop.remove();
+          showHowPhone.remove();
+          svgDesktop.remove();
           showHowTablet.children[0].src = "/lessons_in_iframes/level_1/unit_2/lesson_4/tablet_unpinch_show_how.webp";
           showHowTablet.children[1].src = "/lessons_in_iframes/level_1/unit_2/lesson_4/tablet_move_show_how.webp";
-          hoverAreaDesktop.parentNode.removeChild(hoverAreaDesktop);
+          hoverAreaDesktop.remove();
         } else { // phone
           theLongSpoonContainerDivWithStates.classList.add("theLongSpoonContainerTransitionSettingsOnMobiles");
-          showHowTablet.parentNode.removeChild(showHowTablet);
-          showHowDesktop.parentNode.removeChild(showHowDesktop);
-          svgDesktop.parentNode.removeChild(svgDesktop);
+          showHowTablet.remove();
+          showHowDesktop.remove();
+          svgDesktop.remove();
           showHowPhone.children[0].src = "/lessons_in_iframes/level_1/unit_2/lesson_4/phone_unpinch_show_how.webp";
           showHowPhone.children[1].src = "/lessons_in_iframes/level_1/unit_2/lesson_4/phone_move_show_how.webp";
-          hoverAreaDesktop.parentNode.removeChild(hoverAreaDesktop);
+          hoverAreaDesktop.remove();
         }
       }
     </script>

@@ -81,7 +81,14 @@ const niceLeftArrowImg = document.getElementById("niceLeftArrowImgID");
 // See js_for_the_parent_all_browsers_all_devices for lastRecordedWindowWidth lastRecordedWindowHeight
 
 /* SET OFF */
-window.addEventListener('load', loadingIsCompleteFunction, { once: true });
+window.addEventListener('load',checkIfAppIsPaused, { once: true });
+function checkIfAppIsPaused() {
+  if (parent.theAppIsPaused) { // See js_for_the_sliding_navigation_menu
+    parent.pleaseAllowSound.play(); // Let the wandering user know that the lesson is now ready // See js_for_different_browsers_and_devices
+    let unpauseDetector = setInterval(() => {    if (!parent.theAppIsPaused) { clearInterval(unpauseDetector); loadingIsCompleteFunction(); }    }, 500); // NEVER use a SuperInterval here!
+  } else { loadingIsCompleteFunction(); }
+}
+
 function loadingIsCompleteFunction() {
   if (studiedLang == "ar") { // Display an info box about gender difference in Arabic.
     const pathOfNotificationAboutMaleFemaleCommand = "/user_interface/text/"+userInterfaceLanguage+"/1-1-2_arabic_male_female.txt";
@@ -101,12 +108,12 @@ function loadingIsCompleteFunction() {
 
   }
   else {
-    startTheLesson(); // Call it now if it was not to be called from within createAndHandleInfoBoxType1BeforeLessonStarts() in js_for_all_iframed_lesson_htmls.js
+    startTheLesson(); // Call it now if it was not to be called from within createAndHandleInfoBoxType1BeforeLessonStarts() in js_for_info_boxes_in_lessons.js
   }
   //--- By the way: Get the goodbye text ready
-  const pathOfLessonNoteAboutExpressingGratitude = "/user_interface/text/"+userInterfaceLanguage+"/1-1-2_end_of_lesson_note.txt";
-  setTimeout(function () {
+  setTimeout(function () { // We don't want a SuperTimeout in this case
     // Will show for all languages
+    const pathOfLessonNoteAboutExpressingGratitude = "/user_interface/text/"+userInterfaceLanguage+"/1-1-2_end_of_lesson_note.txt";
     fetch(pathOfLessonNoteAboutExpressingGratitude,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
       goodByeMessage = contentOfTheTxtFile;
     });
@@ -115,11 +122,19 @@ function loadingIsCompleteFunction() {
 
 function startTheLesson() {
   // User must listen to pronunciation-teacher vocabulary box no matter what language he/she is studying
-  const filePathOfTheAudioFile = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_listenbox."+soundFileFormat; // In case of "ar" pronunciation-teacher-box will play the verb root in male conjugation even if the user is female
-  const wavesurferP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-1-2_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
-  fetch(wavesurferP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
+  // In case of "ar" pronunciation-teacher-box will play the verb root in male conjugation even if the user is female
+  // Unloading of these sounds will be done by createAndHandleListenManyTimesBox in js_for_info_boxes_in_lessons
+  const filePathOfTheAudio1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_listenbox_1."+soundFileFormat;
+  const filePathOfTheAudio2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_listenbox_2."+soundFileFormat;
+  const filePathOfTheAudio3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_listenbox_3."+soundFileFormat;
+  const filePathOfLipSyncJSON1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_listenbox_1.json";
+  const filePathOfLipSyncJSON2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_listenbox_2.json";
+  const filePathOfLipSyncJSON3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_listenbox_3.json";
+  // NOTE: The lip-sync json file names better be THE SAME with the audio file names that will be played in the listen-many-times box » See js_for_info_boxes_in_lessons
+  const listenBoxP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-1-2_vocabulary_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
+  fetch(listenBoxP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleP1P2ActualText(contentOfTheTxtFile);  });
   // See js_for_info_boxes_in_lessons » iframe-lesson level
-  new SuperTimeout(function(){    createAndHandleListenManyTimesBox(filePathOfTheAudioFile);    },501); // Wait for preloader to disappear or give a brief break after notification
+  new SuperTimeout(function(){    createAndHandleListenManyTimesBox(filePathOfTheAudio1,filePathOfLipSyncJSON1,filePathOfTheAudio2,filePathOfLipSyncJSON2,filePathOfTheAudio3,filePathOfLipSyncJSON3);    },501); // Wait for preloader to disappear or give a brief break after notification
 }
 
 function vocabularyBoxIsClosed(x,y) { // Will fire from within createAndHandleListenManyTimesBox with touch/click coordinate values passed » vocabularyBoxIsClosed(lastPointerX,lastPointerY)
@@ -484,21 +499,45 @@ function whatToDoWhenWinHappens() {
   }
 
   new SuperTimeout(function () {  main.classList.remove("noCursor");  main.classList.add("defaultCursor");  }, proceedTime+1500);  // Back to normal cursor
-  new SuperTimeout(displayNoteAtTheEndOfLesson,proceedTime*1.5+5000);
-  function displayNoteAtTheEndOfLesson() { // All languages
-    if (goodByeMessage) { // Check if fetch has indeed got the txt file
-      putNotificationTxtIntoThisP2.innerHTML = goodByeMessage;
-      // Will show for all languages
-      createAndHandleInfoBoxType1AmidLesson(); // Needs the function called continueLesson() that will fire when OK button is clicked or touched
-    } else {
-      continueLesson(); // Keep going even if fetch couldn't get the file » what will hopefully not happen 99.99% of the time
-    }
+  new SuperTimeout(display_OUTRO_listenBox,proceedTime*1.4+4000);
+  function display_OUTRO_listenBox() {
+    // Display pronunciation-teacher-box to play how to say "thank you"
+    const filePathOfTheAudio1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/thank_you_listenbox_1."+soundFileFormat;
+    const filePathOfTheAudio2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/thank_you_listenbox_2."+soundFileFormat;
+    const filePathOfTheAudio3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/thank_you_listenbox_3."+soundFileFormat;
+    const filePathOfLipSyncJSON1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/thank_you_listenbox_1.json";
+    const filePathOfLipSyncJSON2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/thank_you_listenbox_2.json";
+    const filePathOfLipSyncJSON3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/thank_you_listenbox_3.json";
+    // NOTE: The lip-sync json file names better be THE SAME with the audio file names that will be played in the listen-many-times box » See js_for_info_boxes_in_lessons
+    const listenBoxP1P2Path = "/user_interface/text/"+userInterfaceLanguage+"/1-1-2_vocabulary_outro_p1_p2.txt"; // UI lang depends on domain (hostname) » See js_for_every_single_html
+    fetch(listenBoxP1P2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+      handleP1P2ActualTextOUTRO(contentOfTheTxtFile); // CAUTION: It's outro
+    });
+    // See js_for_info_boxes_in_lessons » iframe-lesson level
+    new SuperTimeout(function(){
+      createAndHandleListenManyTimesBox(filePathOfTheAudio1,filePathOfLipSyncJSON1,filePathOfTheAudio2,filePathOfLipSyncJSON2,filePathOfTheAudio3,filePathOfLipSyncJSON3,true); // true as seventh parameter turns it into an outro box
+    },501); // If fetch cannot get the file within 501 ms the default content of the box (with emojis icons etc) will be visible until fetch gets the file
   }
 
+}
+
+function vocabularyBoxIsClosed_LESSON_OUTRO() { // Called from createAndHandleListenManyTimesBox with outro enabled by second parameter
   /* Save progress */
   parent.savedProgress[studiedLang].lesson_GIVEMEWATER_IsCompleted=true; // WATCH THE NAME OF THE LESSON!!!
   parent.saveJSON = JSON.stringify(parent.savedProgress); // Convert
   localStorage.setItem("memoryCard", parent.saveJSON); // Save
+  // -
+  new SuperTimeout(displayNoteAtTheEndOfLesson,1000);
+} // End of vocabularyBoxIsClosed_LESSON_OUTRO
+
+function displayNoteAtTheEndOfLesson() { // All languages
+  if (goodByeMessage) { // Check if fetch has indeed got the txt file
+    putNotificationTxtIntoThisP2.innerHTML = goodByeMessage;
+    // Will show for all languages
+    createAndHandleInfoBoxType1AmidLesson(); // Needs the function called continueLesson() that will fire when OK button is clicked or touched
+  } else {
+    continueLesson(); // Keep going even if fetch couldn't get the file » what will hopefully not happen 99.99% of the time
+  }
 }
 
 function continueLesson() {      goToTheNextLesson();      } // Do not omit continueLesson() » a possible case for createAndHandleInfoBoxType1AmidLesson could emerge

@@ -1,0 +1,3 @@
+﻿Konuşmanızın uygulama tarafından algılanabilmesi için kesintisiz internet bağlantısı gerek.
+|İnternet bağlantısı artık düzgün çalışıyor.
+|Derse dön

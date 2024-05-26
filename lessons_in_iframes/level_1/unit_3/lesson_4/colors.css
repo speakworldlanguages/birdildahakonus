@@ -8,24 +8,59 @@ canvas {
 }
 @keyframes revealCanvas {  0% {opacity: 0;}  100% {opacity: 1;}  }
 
-.moveUpAndGoBeyondScreenLimit{
-  animation-name: flyAwayUpwards;
-  animation-duration: 2s;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
+/*Find singlesDivCLASS in css_for_photos_and_videos_teach_a_new_word*/
+.moveUpAndGoAboveScreenLimit{
+  animation-name: flyAwayUpwards; animation-duration: 2s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;
 }
-@keyframes flyAwayUpwards { /*See singlesDivID in css_for_photos_and_videos_teach_a_new_word*/
+@keyframes flyAwayUpwards {
   0% {transform: translate(-50%,-50%) translateY(0vh);}
   100% {transform: translate(-50%,-50%) translateY(-100vh);}
 }
 
-.moveUpAndComeToTheCenterOfScreen{
-  animation-name: flyInFromDownwards;
-  animation-duration: 2s;
+/*Find singlesDivCLASS in css_for_photos_and_videos_teach_a_new_word*/
+.initialPositionBelowTheScreen{  transform: translate(-50%,-50%) translateY(100vh);  }
+.moveUpFromBelowScreenToCenter{
+  animation-name: flyInUpwards; animation-duration: 2s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;
+}
+@keyframes flyInUpwards { /*See singlesDivCLASS in css_for_photos_and_videos_teach_a_new_word*/
+  0% {transform: translate(-50%,-50%) translateY(100vh);}
+  100% {transform: translate(-50%,-50%) translateY(0vh);}
+}
+.moveDownFromCenterToBelowScreen{
+  animation-name: flyOutDownwards; animation-duration: 2s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;
+}
+@keyframes flyOutDownwards { /*See singlesDivCLASS in css_for_photos_and_videos_teach_a_new_word*/
+  0% {transform: translate(-50%,-50%) translateY(0vh);}
+  100% {transform: translate(-50%,-50%) translateY(100vh);}
+}
+.moveDownFromAboveScreenToCenter{
+  animation-name: flyInDownwards; animation-duration: 2s; animation-fill-mode: forwards; animation-timing-function: ease-in-out;
+}
+@keyframes flyInDownwards { /*See singlesDivCLASS in css_for_photos_and_videos_teach_a_new_word*/
+  0% {transform: translate(-50%,-50%) translateY(-100vh);}
+  100% {transform: translate(-50%,-50%) translateY(0vh);}
+}
+
+.areYouReadyBox{ pointer-events: none;
+  position: fixed;
+  width: 86vmin; height: 86vmin; /*Will always be a perfect square so no need for object-fit*/
+  left: 50%; top:50%;
+  transform: translate(-50%,-50%) translateY(100vh); /*Not contained by a flexbox container*/
+  display:flex;  justify-content: center;  align-items: center; flex-direction: column;
+}
+
+/*See css_for_proceed_buttons to find the rules for the container of the IMGs*/
+.rotateArrowUp{   pointer-events: none; width: calc(15px + 2vmin); margin: calc(3px + 2vmin); transform: rotate(-90deg); }
+.rotateArrowDown{ pointer-events: none; width: calc(15px + 2vmin); margin: calc(3px + 2vmin); transform: rotate(90deg); }
+
+
+.moveUpAndComeToTheCenterOfScreenNORETURN{
+  animation-name: flyInFromDownwardsNoReturn;
+  animation-duration: 3.5s;
   animation-fill-mode: forwards;
   animation-timing-function: ease-in-out;
 }
-@keyframes flyInFromDownwards {
+@keyframes flyInFromDownwardsNoReturn {
   0% {margin-top: 100vh;}
   100% {margin-top: 0vh;}
 }
@@ -119,9 +154,9 @@ canvas {
   opacity: 0;
 }
 
-#mobileTouchArea{
+#mobileTouchAreaID{
   position: fixed;
-  top:0; left:0; width:100vw; width:100dvw; height: calc(100% - 40px); height: calc(100dvh - 40px);
+  top:0; left:0; width:100vw; width:100dvw; height: calc(100% - 40px - 2vh); height: calc(100dvh - 40px - 2dvh);
   overflow: visible;
 }
 

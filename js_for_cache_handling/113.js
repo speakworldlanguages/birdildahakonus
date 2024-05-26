@@ -6,7 +6,7 @@ else { cacheLesson113CommonAssetsForAllLanguages(); }
 if (localStorage.getItem("lesson113FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully")) { parent.console.log("Files for "+parent.langCodeForTeachingFilePaths+" 113 already cached"); }
 else { cacheLesson113AssetsForTheTargetLanguage(); }
 
-
+let triesFor113CommonAssets = 0;
 async function cacheLesson113CommonAssetsForAllLanguages() {
   const cacheForAllLanguages_1_1_3 = await caches.open('1-1-3-assets-for-all-languages-August2023');
   // ---
@@ -34,12 +34,6 @@ async function cacheLesson113CommonAssetsForAllLanguages() {
   ];
   // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
 
-  /* DEPRECATE and use soundFileFormat from js_for_all_iframed_lesson_htmls which copies it from js_for_different_browsers_and_devices
-  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
-  if (isApple) {
-    listOfFilesForAllLanguages_1_1_3 = listOfFilesForAllLanguages_1_1_3.map(filepath => filepath.replace(".webm", ".mp3"));
-  }
-  */
   //--
   if (isApple || isFirefox) { // See js_for_all_iframed_lesson_htmls and then js_for_different_browsers_and_devices
     listOfFilesForAllLanguages_1_1_3.push(
@@ -65,14 +59,19 @@ async function cacheLesson113CommonAssetsForAllLanguages() {
       parent.console.log("... and common files for 1-1-3 are ready");
       localStorage.setItem("lesson113CommonFilesCachedSuccessfully", "excellent");
     } else {
-      // Try again
-      setTimeout(function () {  cacheLesson113CommonAssetsForAllLanguages();  }, 4000);
+      triesFor113CommonAssets++;
+      // Try again if the number of maximum retries is not reached
+      // «maximumRetries» and «delayTimeBeforeTryingAgain» exists in 0_parent_initial_load_and_111.js
+      if (triesFor113CommonAssets<=parent.maximumRetries) {   setTimeout(function () {  cacheLesson113CommonAssetsForAllLanguages();  }, parent.delayTimeBeforeTryingAgain);   }
+      else {   parent.console.warn("Gave up on trying to cache: cacheLesson113CommonAssetsForAllLanguages");   }
     }
   } // End of try-catch-finally
 
 } // END OF cacheLesson113CommonAssetsForAllLanguages
 
 
+// ---
+let triesFor113TargetLangAssets = 0;
 async function cacheLesson113AssetsForTheTargetLanguage() {
   const cacheForTargetLanguage_1_1_3 = await caches.open('1-1-3-assets-for-'+parent.langCodeForTeachingFilePaths+'-August2023');
   // ---
@@ -106,8 +105,11 @@ async function cacheLesson113AssetsForTheTargetLanguage() {
       parent.console.log("... and files for 1-1-3 "+parent.langCodeForTeachingFilePaths+" are ready");
       localStorage.setItem("lesson113FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully", "nice");
     } else {
-      // Try again
-      setTimeout(function () {  cacheLesson113AssetsForTheTargetLanguage();  }, 4000);
+      triesFor113TargetLangAssets++;
+      // Try again if the number of maximum retries is not reached
+      // «maximumRetries» and «delayTimeBeforeTryingAgain» exists in 0_parent_initial_load_and_111.js
+      if (triesFor113TargetLangAssets<=parent.maximumRetries) {   setTimeout(function () {  cacheLesson113AssetsForTheTargetLanguage();  }, parent.delayTimeBeforeTryingAgain);   }
+      else {   parent.console.warn("Gave up on trying to cache: cacheLesson113AssetsForTheTargetLanguage");   }
     }
   } // End of try-catch-finally
 

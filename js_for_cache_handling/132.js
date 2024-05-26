@@ -6,7 +6,7 @@ else { cacheLesson132CommonAssetsForAllLanguages(); }
 if (localStorage.getItem("lesson132FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully")) { parent.console.log("Files for "+parent.langCodeForTeachingFilePaths+" 132 already cached"); }
 else { cacheLesson132AssetsForTheTargetLanguage(); }
 
-
+let triesFor132CommonAssets = 0;
 async function cacheLesson132CommonAssetsForAllLanguages() {
   const cacheForAllLanguages_1_3_2 = await caches.open('1-3-2-assets-for-all-languages-August2023');
   // ---
@@ -46,12 +46,6 @@ async function cacheLesson132CommonAssetsForAllLanguages() {
   ];
   // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
 
-  /* DEPRECATE and use soundFileFormat from js_for_all_iframed_lesson_htmls which copies it from js_for_different_browsers_and_devices
-  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
-  if (isApple) {
-    listOfFilesForAllLanguages_1_3_2 = listOfFilesForAllLanguages_1_3_2.map(filepath => filepath.replace(".webm", ".mp3"));
-  }
-  */
   // -
   if (deviceDetector.isMobile) {
     listOfFilesForAllLanguages_1_3_2.push(
@@ -89,25 +83,40 @@ async function cacheLesson132CommonAssetsForAllLanguages() {
       parent.console.log("... and common files for 1-3-2 are ready");
       localStorage.setItem("lesson132CommonFilesCachedSuccessfully", "astounding");
     } else {
-      // Try again
-      setTimeout(function () {  cacheLesson132CommonAssetsForAllLanguages();  }, 4000);
+      triesFor132CommonAssets++;
+      // Try again if the number of maximum retries is not reached
+      // «maximumRetries» and «delayTimeBeforeTryingAgain» exists in 0_parent_initial_load_and_111.js
+      if (triesFor132CommonAssets<=parent.maximumRetries) {   setTimeout(function () {  cacheLesson132CommonAssetsForAllLanguages();  }, parent.delayTimeBeforeTryingAgain);   }
+      else {   parent.console.warn("Gave up on trying to cache: cacheLesson132CommonAssetsForAllLanguages");   }
     }
   } // End of try-catch-finally
 
 } // END OF cacheLesson132CommonAssetsForAllLanguages
 
 
+// ---
+let triesFor132TargetLangAssets = 0;
 async function cacheLesson132AssetsForTheTargetLanguage() {
   const cacheForTargetLanguage_1_3_2 = await caches.open('1-3-2-assets-for-'+parent.langCodeForTeachingFilePaths+'-August2023');
   // ---
   // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
-  let itemA = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox."+soundFileFormat;
-  let item1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water."+soundFileFormat;
-  let item2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water_slow."+soundFileFormat;
-  let item3 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/huh."+soundFileFormat;
-  let item4 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/it_is_a_fish."+soundFileFormat;
-  let item5 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_a_fish_in_the_water."+soundFileFormat;
-  let itemZ = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox."+soundFileFormat;
+  let itemA  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_1."+soundFileFormat;
+  let itemAj = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_1.json";
+  let itemB  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_2."+soundFileFormat;
+  let itemBj = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_2.json";
+  let itemC  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_3."+soundFileFormat;
+  let itemCj = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_listenbox_3.json";
+  let item1  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water_1."+soundFileFormat;
+  let item2  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_something_in_the_water_2."+soundFileFormat;
+  let item3  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/huh."+soundFileFormat;
+  let item4  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/it_is_a_fish."+soundFileFormat;
+  let item5  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/there_is_a_fish_in_the_water."+soundFileFormat;
+  let itemX  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_1."+soundFileFormat;
+  let itemXj = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_1.json";
+  let itemY  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_2."+soundFileFormat;
+  let itemYj = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_2.json";
+  let itemZ  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_3."+soundFileFormat;
+  let itemZj = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_2/something_listenbox_3.json";
   /* No commands given to user in this lesson
   if (parent.userIsFemaleSoUseFemaleConjugation) { // See js_for_the_parent_all_browsers_all_devices
     item1 = item1.split(".")[0] + "_tofemale."+soundFileFormat;
@@ -118,16 +127,11 @@ async function cacheLesson132AssetsForTheTargetLanguage() {
   }
   */
   let listOfFilesForTargetLanguage_1_3_2 = [
-    itemA,
+    itemA, itemAj, itemB, itemBj, itemC, itemCj,
     item1,    item2,    item3,    item4,    item5,
-    itemZ
+    itemX,  itemXj,  itemY,  itemYj,  itemZ,  itemZj
   ];
-  /* DEPRECATE and use soundFileFormat from js_for_all_iframed_lesson_htmls which copies it from js_for_different_browsers_and_devices
-  // CAREFUL: All webm sounds shall change into mp3 on Apple. Make sure webm videos are excluded from change mapping.
-  if (isApple) {
-    listOfFilesForTargetLanguage_1_3_2 = listOfFilesForTargetLanguage_1_3_2.map(filepath => filepath.replace(".webm", ".mp3"));
-  }
-  */
+
   const u = "/user_interface/text/"+userInterfaceLanguage; // Works without "parent." notation » See js_for_every_single_html
   switch (parent.langCodeForTeachingFilePaths.substring(0,2)) { // Using substring, we trim "tr_istanbul" to "tr", "zh_putonghua" to "zh" etc
     case "ar":
@@ -154,8 +158,11 @@ async function cacheLesson132AssetsForTheTargetLanguage() {
       parent.console.log("... and files for 1-3-2 "+parent.langCodeForTeachingFilePaths+" are ready");
       localStorage.setItem("lesson132FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully", "superb");
     } else {
-      // Try again
-      setTimeout(function () {  cacheLesson132AssetsForTheTargetLanguage();  }, 4000);
+      triesFor132TargetLangAssets++;
+      // Try again if the number of maximum retries is not reached
+      // «maximumRetries» and «delayTimeBeforeTryingAgain» exists in 0_parent_initial_load_and_111.js
+      if (triesFor132TargetLangAssets<=parent.maximumRetries) {   setTimeout(function () {  cacheLesson132AssetsForTheTargetLanguage();  }, parent.delayTimeBeforeTryingAgain);   }
+      else {   parent.console.warn("Gave up on trying to cache: cacheLesson132AssetsForTheTargetLanguage");   }
     }
   } // End of try-catch-finally
 

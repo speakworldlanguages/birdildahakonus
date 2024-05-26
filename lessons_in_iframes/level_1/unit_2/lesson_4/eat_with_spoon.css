@@ -1,3 +1,9 @@
+#mobileTouchAreaID{
+  position: fixed;
+  top:0; left:0; width:100vw; width:100dvw; height: calc(100% - 40px - 15vh); height: calc(100dvh - 40px - 15dvh);
+  overflow: visible;
+}
+
 .containerOfThePlate{
   position: fixed; left: 50%; top:50%; transform: translate(-50%,-50%);
 }

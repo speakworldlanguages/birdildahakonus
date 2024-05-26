@@ -141,7 +141,7 @@ main{
   border: 1vmin solid rgb(80, 96, 113);
   /*scale: 1;*/
 }
-#singlesDivID{
+.singlesDivCLASS{
   position: fixed; pointer-events: none;
   width: 86vmin; height: 86vmin; /*Will always be a perfect square so no need for object-fit*/
   left: 50%; top:50%;

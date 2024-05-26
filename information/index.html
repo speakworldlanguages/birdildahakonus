@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="icon" type="image/png" href="/user_interface/html_icon/animated_globe_icon_39.png" id="icon" sizes="32x32">
-
+    <!-- INFO SCREEN -->
     <title>⚖</title> <!-- The title will depend on UI language. See information.js -->
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex" />
+    <!-- IF THIS IS DISPLAYED THROUGH AN IFRAME VIEWPORT IS UNNECESSARY, NO? -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"> -->
+    <!-- NOR AN ICON -->
+    <!-- <link rel="icon" type="image/png" href="/user_interface/html_icon/animated_globe_icon_39.png" id="icon" sizes="32x32"> -->
 
     <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css">
     <link rel="stylesheet" href="/css_reusables/css_for_the_container_parent_html.css"> <!-- Not using css_for_all_iframed_lesson_htmls.css -->
@@ -15,7 +18,7 @@
     <script defer src="/js_reusables/js_for_all_iframed_lesson_htmls.js">/*Handle preloader, detect location, handle nav menu buttons, handle unloading*/</script>
     <script defer src="/information/information.js">/*What to do here*/</script>
 
-    <!-- Uncomment the following to be able to use the browser console on mobile devices -->
+    <!-- EITHER uncomment to use the mobile console within iframe OR consider using parent.console.log instead of console.log -->
     <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
@@ -96,6 +99,26 @@
 
     </div>
     <!-- End of contents for desktops -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- FOR TABLETS -->
     <div id="thisDivContainsEverythingThatWillBeDisplayedOnTablets" class="displayNone" style="position: relative; /*z-index:2;*/"> <!-- Use remove() or removeChild() on desktops and phones -->
@@ -218,13 +241,23 @@
     <!-- The script that must be executed immediately without any js file download delay -->
     <script>
       const desktopDisplay = document.getElementById('thisDivContainsEverythingThatWillBeDisplayedOnDesktops');
+
+
+
+
+
+
       const tabletDisplay = document.getElementById('thisDivContainsEverythingThatWillBeDisplayedOnTablets');
       const phoneDisplay = document.getElementById('thisDivContainsEverythingThatWillBeDisplayedOnPhones');
-      /*
+
+
+
+      // CERTAIN: At this point, by using parent.deviceDetector (instead of just deviceDetector) WE CAN MAKE SURE THAT DOMContentLoaded is not too early
+      // UNCERTAIN: js_for_all_iframed_lesson_htmls is deferred so when exactly will deviceDetector be copied to frame level from js_for_different_browsers_and_devices at parent level ???
       window.addEventListener('DOMContentLoaded', function(){
-        // DOMContentLoaded is (or can be) too early for deviceDetector
+
       }, { once: true });
-      */
+
       window.addEventListener('load', function(){
         if (deviceDetector.device == "tablet") {
             desktopDisplay.parentNode.removeChild(desktopDisplay);

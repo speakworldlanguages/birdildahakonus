@@ -1,0 +1,18 @@
+﻿{
+  "lang": "tr",
+  "name": "Dil Öğren Herkesle Konuş",
+  "short_name": "Dil Öğren",
+  "author": "Beytekin Alper Bilgekılınç Topraksoy",
+  "description": "Dil Öğren Ki Yeryüzünün Yabancısı Değil Yerlisi Ol",
+  "icons": [{
+    "src": "/pwa/homescreen_icon/icon_for_pwa_tr.png",    "sizes": "512x512",    "type": "image/png"
+    }],
+  "start_url": "index.html?homescreen",
+  "id": "SWL_APP_IN_KISHI_USER_INTERFACE",
+  "display": "fullscreen",
+  "background_color": "#adbbc4",
+  "theme_color": "#4d606f",
+  "screenshots": [
+    {      "src": "/pwa/screenshot.jpg",      "type": "image/jpg",      "sizes": "512x512"    }
+  ]
+}

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable = no"> <!-- For mobile device screens to display things properly. As of 2022 Safari ignores this. -->
     <title>BİR DİL DAHA KONUŞ: Yeryüzünün Yabancısı Değil Yerlisi Ol</title>
     <meta name="description" content="Sesli komut vererek oyunlar oyna! Öğrendiklerini hemen kullan ki aklında kalsın!">
-    <meta name="author" content="Beykağan Alper Bilgekılınç Topraksoy">
+    <meta name="author" content="Beytekin Alper Bilgekılınç Topraksoy">
 
     <!-- https://pedro.agency/digital-marketing/how-to-stop-google-ignoring-your-meta-descriptions/ --> <!-- https://ahrefs.com/blog/meta-robots/ -->
 
@@ -48,26 +48,29 @@
     <!-- <script defer src="/js_reusables/js_for_pwa.js">/*IN THE FUTURE: Progressive Web App - Handle installation*/</script> -->
     <!--  -->
     <!-- Firebase : WARN-ING Code is outdated -->
-    <!-- <script type="module" src="notify_tr.js"></script> -->
+    <!-- <script type="module" src="/pwa/notify_tr.js"></script> -->
     <!--  -->
     <!-- SOLVED: THERE USED TO BE A CONFLICT between eruda and the canvas element, probably because they both used "ctx" as the variable name -->
     <!-- Uncomment the following to be able to use the browser console on mobile devices -->
-    <script src="/third_party_js/eruda.js"></script>
-    <script>eruda.init();</script>
+    <!-- <script src="/third_party_js/eruda.js"></script> -->
+    <!-- <script>eruda.init();</script> -->
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script>
-    /*
-      window.addEventListener("load",function(){   startTracking();   }, { once: true });
+
+      window.addEventListener("load",startTracking,{once:true});
       function startTracking() {
-        setTimeout(function () { const delayedScript = document.createElement("script"); delayedScript.type = "text/javascript"; delayedScript.src = "https://www.googletagmanager.com/gtag/js?id=G-8FWCR3LS62"; document.body.appendChild(delayedScript); },6000);
+        // Get the array ready
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-8FWCR3LS62');
+        setTimeout(function () {
+          const delayedScript = document.createElement("script"); delayedScript.async = true; delayedScript.src = "https://www.googletagmanager.com/gtag/js?id=G-8FWCR3LS62"; document.body.appendChild(delayedScript);
+        },3000);
       }
-    */
+
     </script>
 
     <!-- PWA -->
@@ -75,8 +78,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Bir Dil Daha Konuş">
     <meta name="apple-mobile-web-app-status-bar-style" content="#4d606f">
-    <link rel="apple-touch-icon" href="/user_interface/homescreen_icon/icon_for_pwa_tr.png">
-    <link rel="manifest" href="manifest_tr.json">
+    <link rel="apple-touch-icon" href="/pwa/homescreen_icon/icon_for_pwa_tr.png">
+    <link rel="manifest" href="/pwa/manifest_tr.json">
     <script>
       if ("serviceWorker" in navigator) {  window.addEventListener("DOMContentLoaded",()=>{  navigator.serviceWorker.register("service-worker.js");  });  } // Takes too long compared to window load (almost a second)
     </script>
@@ -130,6 +133,7 @@
       <img src="/user_interface/images/microphone.webp" style="width:50px;" alt="Please allow microphone" draggable="false">
       <p data-nosnippet>?</p>
       <!-- VERY IMPORTANT: p element must be the second child in the div so that it can be selected with children[1],,, See js_for_different_browsers_and_devices -->
+      <!-- In Safari there will be another P element injected here,,, See js_for_different_browsers_and_devices -->
     </div>
 
     <!-- THE MAIN MENU -->
@@ -143,12 +147,15 @@
             <!-- See js_for_the_parent_all_browsers_all_devices.js and find mouseDownMenuButtonF touchEndMenuButtonF -->
             <!-- Observe what names and ids do -->
             <!-- If more than one dialect|accent is available, better if we prompt and ask which one user wants to hear -->
-            <button name="ja"  id="">Hito Dili (Japonca)</button>
-            <!-- <button name="ko"  id="">Saram Language (Korean)</button> -->
-            <button name="zh"  id="">Renmen Dili (Çince)</button> <!-- As of 2023 putongnua dialect chosen automatically -->
-            <button name="tr"  id="">Kişi Dili (Türkçe)</button> <!-- As of 2023 istanbul dialect chosen automatically -->
-            <button name="ar"  id="">Ennaas Dili (Arapça)</button>
-            <!-- <button name="de"  id="">Loyte Dili (Almanca)</button> -->
+            <button name="ja"  id="">Hitoca Dili (Japonca)</button>
+            <button name="ko"  id="" style="opacity:0.55; pointer-events:none;">Korece Dili (yakında)</button> <!-- Saramdılca Dili (Korece) -->
+            <!-- As of 2023 putonghua dialect chosen automatically -->
+            <button name="zh"  id="" style="opacity:0.55; pointer-events:none;">Çince Dili (yakında)</button> <!-- Renmence Dili (Çince) -->
+            <!-- As of 2023 istanbul dialect chosen automatically -->
+            <!-- <button name="tr"  id="">Kişi Dili (Türkçe)</button>-->
+            <!-- <button name="ar"  id="">Ennaas Dili (Arapça)</button> -->
+            <!-- Loyte Dili (Almanca) -->
+            <!-- <button name="de"  id="" style="opacity:0.55; pointer-events:none;">Almanca Dili (yakında)</button> -->
             <!-- <button name="fr"  id="">Jon Dili (Fransızca)</button> -->
             <!-- <button name="en"  id="">Doğu ya da Batı İngilizcesi</button> -->
             <!-- WHEN NEW BUTTONS ARE ADDED -->
@@ -220,7 +227,7 @@
           b2.classList.add("layerB2_mobile");
           canvas.classList.add("canvasPhoneOrTablet");
           let i; for (i = 0; i < buttons.length; i++) { buttons[i].classList.add("buttonMobile"); }
-          footer.classList.add("footerPhoneOrTablet");
+          footer.classList.add("footerPhoneOrTablet"); // See css_for_the_container_parent_html
           if (!isApple) { // Android
             topContainerDivOfTheSlidingNavMenuForMobiles.appendChild(footer);
             footer.style.position = "absolute";
@@ -233,11 +240,13 @@
     </script>
 
     <!-- WHAT TO DISPLAY DURING APP MAINTENANCE :: UNCOMMENT WHEN NECESSARY -->
+    <!--
     <div data-nosnippet id="removeThisID" onmouseup="adminAccess()" style="position: fixed; z-index:50000; width:100vw; height:100vh; background-color:white; display:flex; align-items:center; justify-content:center; flex-direction: column;">
       <img data-nosnippet src="/user_interface/images/maintenance.png" alt="...">
       <p data-nosnippet style="color:#040a17;">Şu anda hizmet veremiyoruz<br>Çünkü bakım yapıyoruz</p>
     </div>
     <script>let secretCounter=0; function adminAccess() { secretCounter++; if (secretCounter>4) { document.body.removeChild(document.getElementById('removeThisID')); } }</script>
+    -->
     <!-- END OF WHAT TO DISPLAY DURING APP MAINTENANCE -->
 
   </body>

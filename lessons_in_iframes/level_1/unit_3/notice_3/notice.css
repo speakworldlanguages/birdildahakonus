@@ -21,10 +21,10 @@
   .upperDarkness{ animation: upperDarknessHeightAnimationLandScape 3s forwards; }
   .cinematicViewport{bottom:calc(20vh - 5vw); height: calc(60vh + 10vw); flex-direction: row; justify-content: center; gap:1vw; align-items: stretch;}
   .lowerDarkness{ animation: lowerDarknessHeightAnimationLandScape 3s forwards; }
-  .rightOrUpperDivision section{display: block;}
+  .rightOrUpperDivision .goToNextLessonButton{display: block;}
   .landscapeBread{display: block; width:56vmin; height: 56vmin; position: relative; top: 4.6vh; opacity:0; animation: breadMovesUpwardsToMakeSpaceForButton 6s forwards; animation-delay: 5s;}
   .portraitBread{display: none;}
-  .upperDarkness section{display:none;}
+  .upperDarkness .goToNextLessonButton{display:none;}
   .speechBubble{width:72vmin; bottom: 58vmin; font-size: calc(1.77vh + 0.47vw);}
   #arrow_under_speech_bubble {top:9.5vh;}
   .leftOrLowerDivision img {width:62vmin; margin-left: 5vmin; margin-right: 5vmin;}
@@ -37,15 +37,15 @@
   .upperDarkness{ animation: upperDarknessHeightAnimationPortrait 3s forwards; }
   .cinematicViewport{bottom:3vh; height: 65vh; flex-direction: column-reverse; justify-content: space-between; gap:0px; align-items: center;}
   .lowerDarkness{ animation: lowerDarknessHeightAnimationPortrait 3s forwards; }
-  .rightOrUpperDivision section{display: none;}
-  .upperDarkness section{display:block;}
+  .rightOrUpperDivision .goToNextLessonButton{display: none;}
+  .upperDarkness .goToNextLessonButton{display:block;}
   .portraitBread{display: block; width: 27vh; height: 27vh; position: relative; left: 17vw; opacity:0; animation: breadMovesTowardsLeftToMakeSpaceForButton 7s forwards; animation-delay: 4s;}
   .landscapeBread{display: none;}
   .speechBubble{width:90vmin; bottom: 45.4vh; font-size: calc(1.3vh + 1.5vw);}
   #arrow_under_speech_bubble {top:7.3vh;}
   .leftOrLowerDivision img {width:48vh;}
   #antigoof{width:48vh;height:48vh;}
-  section{ padding: 20px;}
+  .goToNextLessonButton{ padding: 20px;}
 }
 @keyframes breadMovesTowardsLeftToMakeSpaceForButton {  0%{ left: 17vw; opacity: 0;} 33%{ opacity: 1; } 100%{ left: 0vw; opacity: 1; } }
 @keyframes breadMovesUpwardsToMakeSpaceForButton {  0%{ top: 4.6vh; opacity: 0;} 33%{ opacity: 1; } 100%{ top: 0vh; opacity: 1; } }
@@ -58,5 +58,25 @@
 #arrow_under_speech_bubble { opacity:0; animation: fadeInElementsOnNoticeScreen 2s forwards; animation-delay: 2s; }
 @keyframes fadeInElementsOnNoticeScreen { 0%{ opacity: 0; visibility: visible; }  100%{ opacity: 1; visibility: visible; } }
 
+.goToNextLessonButton{
+  border-radius: 5px;
+  padding: 10px; margin: 7px;
+  background-image: linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.6));
+  background-color: #5caccc;
+  border: 3px solid rgba(255, 255, 255, 0.65);
+  color: white;
+  font-size: 25px;
+  transition: all 0.15s;
+  white-space: pre; line-height: normal;
+}
+.goToNextLessonButton:hover{
+  background-color: #439cbf;
+  transform: scale(1.025);
+  text-shadow: 0px 0px 1.5px white;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  cursor: url("/user_interface/images/cursor/button_cursor.png") 16 4,auto;
+}
+.goToNextLessonButton:active{ background-color: #267899; }
+.goToNextLessonButton:focus{outline:0;}
 .startHidden{visibility: hidden;}
 .revealButton{animation: fadeInElementsOnNoticeScreen 1.5s forwards;}

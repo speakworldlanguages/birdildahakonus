@@ -1,10 +1,10 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT i.e. OFFICIAL AUTHORIZATION
 
 // NOTE THAT: THERE ARE 2 EXCEPTIONS where js_for_all_iframed_lesson_htmls is not used: blank.html & user_interface/screens/??/you_are_offline.html
 
-if (parent.langCodeForTeachingFilePaths) { // Safety overkill?
+if (parent.langCodeForTeachingFilePaths) {
   if (parent.langCodeForTeachingFilePaths.substring(0,2)=="tr") { // See js_for_the_parent_all_browsers_all_devices
     myHeaders.append('Content-Type','text/plain; charset=iso-8859-9'); // See js_for_every_single_html
     // NOT CERTAIN IF NECESSARY: By using set() rather than append() we could make sure that previous values get overwritten instead of creating a duplicate
@@ -12,7 +12,7 @@ if (parent.langCodeForTeachingFilePaths) { // Safety overkill?
   }
 }
 
-// ___
+// DETECT USAGE OF native android back button or browser's back button
 if (window.location.href == parent.ayFreym.src) {
   //console.log("EXPECTED NORMAL NAVIGATION");
 } else {
@@ -92,8 +92,8 @@ function showGlobyPreloaderBeforeExit() { // Call this at the end of every lesso
   parent.preloadHandlingDiv.classList.add("addThisClassToRevealThePreloader"); // 1500 ms » See css_for_preloader_and_orbiting_circles
 }
 
-let slowNetworkWarningText = "💢 📶 💢"; // To be overwritten by fetch
-let slowNetworkWarningMustBeDisplayedAsSoonAsFetchGetsTheFile = false;
+// See js_for_info_boxes_in_parent to find slowNetworkWarningText
+// DEPRECATE: let slowNetworkWarningMustBeDisplayedASAP = false;
 // ---
 window.addEventListener('DOMContentLoaded', function(){
 
@@ -104,27 +104,26 @@ window.addEventListener('DOMContentLoaded', function(){
       if (sessionStorage.internetIsTooSlowNotificationHasBeenDisplayed) {
         // Do nothing. Connection is still slow but the user has already been notified.
       } else {
-        // See code below to find fetch » Get txt in userInterfaceLanguage and display it with an alert box
-        slowNetworkWarningMustBeDisplayedAsSoonAsFetchGetsTheFile = true;
+        // See js_for_info_boxes_in_parent to find how the text is loaded at parent level
+        // DEPRECATE: slowNetworkWarningMustBeDisplayedASAP = true;
+        if (parent.internetConnectivityIsNiceAndUsable) { // Internet connection actually exists
+          warnUserAboutSlowNetwork(); // Works OK. It's nice to have it handled with a simple notification even though for most of the world it should rarely happen.
+        }
       }
     }
   } else {  } // Firefox, Safari » No information about network speed ,,, NetworkInformation API is not supported
 
+  // For navigation handling » Second measure: see if native Android BACK button or browser's BACK button was used » See blank.html
+  // See above code to find how iframe.src is checked against window.location.href
   const whereAreWe = window.location.pathname;
   if (whereAreWe.search("progress_chart") != -1) { parent.userIsOrWasJustViewing = "progress-chart"; } // See blank.html
   else if (whereAreWe.search("information") != -1) { parent.userIsOrWasJustViewing = "info-screen"; } // See blank.html
   else { parent.userIsOrWasJustViewing = "some-lesson"; } // See blank.html
-  // --- Get the text file ready
-  const filePathForHeyYourConnectionIsTooSlow = "/user_interface/text/"+userInterfaceLanguage+"/0-network_connection_too_slow.txt";
-  fetch(filePathForHeyYourConnectionIsTooSlow,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
-    slowNetworkWarningText = contentOfTheTxtFile;
-    if (slowNetworkWarningMustBeDisplayedAsSoonAsFetchGetsTheFile) {    warnUserAboutSlowNetwork();   }
-  });
 
 }, { once: true }); // END OF DOMContentLoaded
 // ___
-function warnUserAboutSlowNetwork() { // Can be called from lessons if necessary
-  alert(slowNetworkWarningText); sessionStorage.internetIsTooSlowNotificationHasBeenDisplayed = "yes"; // Prevent all alerts from now on.
+function warnUserAboutSlowNetwork() { // Before April 2024 this used to be called from lessons. In April 2024 createAndHandleInternetConnectivityIsLostBox undertook the handling of total disconnection. See js_for_info_boxes_in_parent and js_for_speech_recognition_algorithm
+  alert(parent.slowNetworkWarningText); sessionStorage.internetIsTooSlowNotificationHasBeenDisplayed = "yes"; // Prevent all alerts from now on.
 }
 // ___
 window.onload = function() { // DANGER: Do not use window.onload anywhere else. Use addEventListener "load" instead in order to avoid overwriting.
@@ -237,7 +236,7 @@ if (parent.thisIsTheParentWhichContainsAllIFramedLessons == "yes") {
 
 // HANDLE PAGE UNLOAD IF THE BROWSER'S “BACK” BUTTON IS USED
 // WARNING: onbeforeunload doesn't fire when src of the iframe changes nor does hashchange on mobile chrome (or are we misunderstanding something?)
-window.onbeforeunload = function() {
+window.addEventListener('beforeunload', function () {
   // parent.console.log("iframe onbeforeunload has been fired -> js_for_all_iframed_lesson_htmls");
 
   // CAUTION: THESE ARE MAINLY FOR THE CASE WHERE USER NAVIGATES AWAY FROM THE LESSON WITHOUT NEITHER SUCCESS NOR GIVEUPSKIP
@@ -246,11 +245,16 @@ window.onbeforeunload = function() {
   // ISSUE THAT NEEDS SERIOUS CARE: Safari doesn't allow mic permanently; it allows for only 1 listening session and prompts for permission everytime mic restarts
   if (parent.annyang) { // DO NOT OMIT! Firefox and other no-speech browsers need this "if (parent.annyang)" to let the app work without Web Speech API.
     // This is like a "making it double-safe" thing // stopListeningAndProceedToNext() already has parent.annyang.abort();
-    if (parent.annyang.isListening()) { // DANGER! It looks like this doesn't always fire correctly. Will try to remedy by adding it to progress/index.html
-      console.warn("__SpeechRecognition was still listening as the frame window got unloaded__");
+
+    // NOTE THAT User may want to navigate from a lesson to the progress_chart in the middle of a SpeechRecognition session
+    // Here we can attempt ending the session so that the mic will be turned off (and Android won't DING) as user views progress_chart
+    // REMEMBER: annyang continuously turns SpeechRecognition back on everytime it is timed out by the browser and turned off » this causes a problem
+    // PROBLEM: annyang.isListening will misreturn false between "onend" and "onstart" where it should theoretically return true
+    // WE TRY to remedy that by setting a setInterval inspection in progress/index.html » TESTED: Looks good
+    if (parent.annyang.isListening()) { // CHECK! progress/index.html
+      parent.console.warn("__SpeechRecognition was still listening as the frame window got unloaded!__\n---");
       parent.annyang.removeCallback();
-      if (isApple) { parent.annyang.pause(); }
-      else { parent.annyang.abort(); }
+      parent.annyang.abort(); // Better if we tell or let Safari user figure out how to "permanently allow mic"
     }
   }
   // Check if the functions exist in the lessons own js (like bread.js, water.js etc) before trying to call them.
@@ -264,6 +268,7 @@ window.onbeforeunload = function() {
   */
   if (typeof unloadTheSoundsOfThisLesson === "function") {
     unloadTheSoundsOfThisLesson(); // Every time defined with a different list in the lesson. See the unique js file of each lesson.
+    // Note: Standardized SECTION button and ADDRESS button sounds get unloaded via js_for_proceed_buttons
   }
 
   // Unlock swipe menu in case it was locked
@@ -282,22 +287,22 @@ window.onbeforeunload = function() {
     // See js_for_navigation_handling
     parent.startTheTimerToSeeIfNextLessonLoadsFastEnough(); // Also fires via openFirstLesson() which is located in js_for_the_parent_all_browsers_all_devices
   }
+}); // End of BEFOREUNLOAD
 
-};
 
 // ________
 function checkIfNextLessonIsCachedAndRedirectIfNot(lessonCode) { // Called at the end of each lesson
 
-  if (localStorage.getItem("commonJSandCSSfilesForAllLessonsCachedSuccessfully")) {
-    if (localStorage.getItem("lesson"+String(lessonCode)+"CommonFilesCachedSuccessfully")) {
-      if (localStorage.getItem("lesson"+String(lessonCode)+"FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully")) {
+  if (localStorage.getItem("commonFilesForAllLessonsCachedSuccessfully")) { // Find the naming pattern in 0_parent_initial_load_and_111.js
+    if (localStorage.getItem("lesson"+String(lessonCode)+"CommonFilesCachedSuccessfully")) { // Find the naming pattern in 0_parent_initial_load_and_111.js
+      if (localStorage.getItem("lesson"+String(lessonCode)+"FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully")) { // Find the naming pattern in 0_parent_initial_load_and_111.js
         // Let the service-worker do the magic and show the user new content despite being offline
         // Probably it's better without a box like "YOU ARE OFFLINE but the app will try to continue"
         parent.console.log("BUT NOW THAT CACHES FOR "+String(lessonCode)+" ARE READY");
         return true;
         // NOTE THAT: In case user is leaving lesson 114 and the device is offline
-        // there is one more condition » if (localStorage.getItem("authorsNotice1FilesCachedSuccessfully")) {  }
-        // BUT: 99.999 percent of the time that will be true as long as if (localStorage.getItem("lesson121CommonFilesCachedSuccessfully")) and the other one are both true
+        // there could be one more condition » if (localStorage.getItem("authorsNotice1FilesCachedSuccessfully")) {  }
+        // BUT: 99.999 percent of the time that will be true as long as if (localStorage.getItem("lesson121CommonFilesCachedSuccessfully")) and the other ones are both true
         // THEREFORE: We let the app try to display bakernotice1 by doing nothing here and leaving things to service-worker
         // See js_for_cache_handling/121_and_bakernotice1.js
       } else { goToSorryPage(); return false; }
@@ -306,7 +311,8 @@ function checkIfNextLessonIsCachedAndRedirectIfNot(lessonCode) { // Called at th
   // --
   function goToSorryPage() {
     parent.console.warn("ONE OR MORE CACHES FOR "+String(lessonCode)+" ARE MISSING\nWill redirect to you_are_offline screen");
-    parent.ayFreym.src = "/user_interface/screens/"+userInterfaceLanguage+"/you_are_offline.html";
+    // HOPEFULLY you_are_offline.html will be cached by cacheCommonFilesForAllLessons in 0_parent_initial_load_and_111 » Looks like most of the time it performs well
+    parent.ayFreym.src = "/user_interface/screens/"+userInterfaceLanguage+"/you_are_offline.html"; // Will be served by service-worker OFFLINE magic instead of remote host
   }
 
 }

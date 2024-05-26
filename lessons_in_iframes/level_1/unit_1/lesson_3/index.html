@@ -24,7 +24,7 @@
     <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
     <script defer src="/lessons_in_iframes/level_1/unit_1/lesson_3/bread.js">/*Progress handling for this lesson*/</script>
     <!-- Empty line 1 -->
-    <!-- Uncomment to use the console on mobiles -->
+    <!-- EITHER uncomment to use the mobile console within iframe OR consider using parent.console.log -->
     <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
@@ -67,14 +67,17 @@
 
     <!-- Videos -->
     <div id="containerOfVideosDivID" style="display:none;">
-      <video src="/lessons_in_iframes/level_1/unit_1/lesson_3/v1_vp9.webm" id="video1" playsinline muted></video>
-      <video src="/lessons_in_iframes/level_1/unit_1/lesson_3/v2_vp9.webm" id="video2" playsinline muted style="display:none;"></video>
+      <video src="/lessons_in_iframes/level_1/unit_1/lesson_3/v1_vp9.webm" id="video1" preload="none" playsinline muted></video>
+      <video src="/lessons_in_iframes/level_1/unit_1/lesson_3/v2_vp9.webm" id="video2" preload="none" playsinline muted style="display:none;"></video>
       <script>
         window.addEventListener("DOMContentLoaded",function(){
+          const v1 = document.getElementById('video1'); const v2 = document.getElementById('video2');
           if (isApple || isFirefox) { // Override webm,,, force mp4
-            const v1 = document.getElementById('video1'); v1.src = "/lessons_in_iframes/level_1/unit_1/lesson_3/v1_h264.mp4"; // Cannot rely on <source>
-            const v2 = document.getElementById('video2'); v2.src = "/lessons_in_iframes/level_1/unit_1/lesson_3/v2_h264.mp4"; // Cannot rely on <source>
-          } // UNCERTAIN: Probably cannot save load time by using else to set the src to webm files and start the video with an empty src, no?
+            v1.src = "/lessons_in_iframes/level_1/unit_1/lesson_3/v1_h264.mp4"; // Cannot rely on <source>
+            v2.src = "/lessons_in_iframes/level_1/unit_1/lesson_3/v2_h264.mp4"; // Cannot rely on <source>
+          }
+          // Get as many bytes as possible depending on the browser policy
+          v1.preload = "auto"; v2.preload = "auto";
         },{ once: true });
       </script>
     </div>
@@ -86,7 +89,7 @@
     <div id="audioMeterID" style="display:none;"> </div>
 
     <!-- Single photos looping -->
-    <div id="singlesDivID" class="" style="display:none;">
+    <div id="singlesDivID" class="singlesDivCLASS" style="display:none;">
         <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_3/1a_c1.avif" class="positionAbsoluteImg">
         <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_3/c2.avif"    class="positionAbsoluteImg" style="visibility:hidden;">
         <img draggable="false" src="/lessons_in_iframes/level_1/unit_1/lesson_3/c3.avif"    class="positionAbsoluteImg" style="visibility:hidden;">

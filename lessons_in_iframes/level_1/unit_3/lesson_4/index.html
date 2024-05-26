@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css_reusables/css_for_every_single_html.css"> <!-- Basically the global margin:0 padding:0 and box-sizing thing -->
     <link rel="stylesheet" href="/css_reusables/css_for_all_iframed_lesson_htmls.css"> <!-- Disable long-touch on video -->
     <link rel="stylesheet" href="/css_reusables/css_for_photos_and_videos_teach_a_new_word.css"> <!-- MAIN has gradient background -->
+    <link rel="stylesheet" href="/css_reusables/css_for_proceed_buttons.css"> <!-- [Listen again] button and [Start the game] button to be created from section elements -->
     <!-- <link rel="stylesheet" href="/css_reusables/css_for_the_glassy_give_up_button.css"> --> <!-- Not needed in this particular lesson -->
     <link rel="stylesheet" href="/css_reusables/css_for_info_boxes_in_lessons.css">
     <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
@@ -20,13 +21,14 @@
     <!-- <script defer src="/js_reusables/js_for_handling_speech_give_up.js">/*Use parent.willUserTalkToSpeechRecognition instead*/</script> -->
     <script defer src="/js_reusables/js_for_microphone_input_visualization.js">/*Start-stop the audiometer for user's microphone*/</script>
     <script defer src="/js_reusables/js_for_info_boxes_in_lessons.js">/*Includes fetch so it must come after character encoding*/</script>
+    <script defer src="/js_reusables/js_for_proceed_buttons.js">/*Handles section element being used as a button*/</script>
     <script defer src="/js_reusables/supertimeout.js">/*Pausable timeouts and intervals*/</script>
     <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
     <script defer src="/lessons_in_iframes/level_1/unit_3/lesson_4/colors.js">/*Progress handling for this lesson*/</script>
     <script defer src="/lessons_in_iframes/level_1/unit_3/lesson_4/desktop.js">/*Progress handling for this lesson*/</script>
     <script defer src="/lessons_in_iframes/level_1/unit_3/lesson_4/mobile.js">/*Progress handling for this lesson*/</script>
     <!-- Empty line 1 -->
-    <!-- Uncomment to use the console on mobiles -->
+    <!-- EITHER uncomment to use the mobile console within iframe OR consider using parent.console.log -->
     <!-- <script src="/third_party_js/eruda.js"></script> -->
     <!-- <script>eruda.init();</script> -->
 
@@ -59,60 +61,107 @@
     <!-- Audio input visualization :: Implement unique method for this particular lesson -->
 
     <!-- Single photos of colored pieces of fabric -->
-    <div id="singlesDivID" class="" style="display:block;">
-        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/1.avif"   class="positionAbsoluteImg">
-        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/2.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/3.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/4.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/5.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
-        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/6.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+    <div id="singlesDiv1ID" class="singlesDivCLASS" style="display:block;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/1.avif"   class="positionAbsoluteImg">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/2.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/3.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/4.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/5.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/6.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
     </div>
 
+    <!-- Single photos of 3D pictograms as painters -->
+    <div id="singlesDiv2ID" class="singlesDivCLASS initialPositionBelowTheScreen" style="display:block;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a1.avif"   class="positionAbsoluteImg">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a2.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a3.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a4.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a5.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a6.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b1.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b2.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b3.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b4.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b5.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+        <img draggable="false" src="/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b6.avif"   class="positionAbsoluteImg" style="visibility:hidden;">
+    </div>
 
-    <!-- Test and see if this works -->
-    <div id="mobileTouchArea" style="z-index:9; pointer-events:all;"></div>
+    <!-- Do you want to repeat or are you ready for the game choice -->
+    <!-- NOTE: Cannot use button element because js_for_every_single_html dictates that all button elements shall use PATUA font for latin -->
+    <!-- When UI is in Latin » ASIDE, SECTION and ADRESS elements get OXANIUM font via js_for_every_single_html -->
+    <!-- For ASIDE » See css_for_the_glassy_give_up_button -->
+    <!-- For SECTION and ADRESS » See css_for_proceed_buttons -->
+    <div id="chooseRepeatOrPlayDivID" class="areYouReadyBox">
+        <!-- Between two arrows pointing up: LISTEN AGAIN -->
+        <section id="listenAgainButtonID"> <!-- See colors.js and css_for_proceed_buttons -->
+          <img class="rotateArrowUp" src="/user_interface/images/arrow_right.webp"> <!-- See colors.css -->
+          <p id="p1ID">…</p>
+          <img class="rotateArrowUp" src="/user_interface/images/arrow_right.webp"> <!-- See colors.css -->
+        </section>
+        <!-- Sandwiched message: MAKE SURE YOU REMEMBER ALL THE COLORS BEFORE PROCEEDING TO THE GAME -->
+        <div style="pointer-events:none;">
+          <!-- As of April 2024, all header fonts for Latin UI is set in js_for_every_single_html to baiJamjuree -->
+          <!-- All other rules for header (as of April 2024) exist in css_for_all_iframed_lesson_htmls -->
+          <!-- NOTE: Any header rule can be RELOCATED from css_for_all_iframed_lesson_htmls to color.css to make it lesson specific -->
+          <header>⌛</header>
+        </div>
+        <!-- Between two arrows pointing down: START THE GAME -->
+        <section id="playTheGameButtonID"> <!-- See colors.js and css_for_proceed_buttons -->
+          <img class="rotateArrowDown" src="/user_interface/images/arrow_right.webp"> <!-- See colors.css -->
+          <p id="p2ID">…</p>
+          <img class="rotateArrowDown" src="/user_interface/images/arrow_right.webp"> <!-- See colors.css -->
+        </section>
+    </div>
+    <!-- See colors.js to find compareAndAdjustWidths -->
+
+
+    <!-- On desktops this will immediately be removed -->
+    <!-- On mobile we want to prevent conflict with the sliding navigation menu -->
+    <!-- SOLUTION: Keep using stopPropagation but do not occupy the whole viewport so that user can still access the sliding navigation menu with a swipe -->
+    <!-- In colors.js must set the display to block before the game is visible -->
+    <div id="mobileTouchAreaID" style="z-index:9; pointer-events:all; display:none;"></div>
 
 
     <div id="allOfTheGameDivID" class="allOfTheGame" style="z-index:10;">
 
       <div class="containerForOneOfSixPerfectFitPieces" style="z-index:20;">
         <div class="containerForRoundedColorCards" id="white">
-          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/white.avif');">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/white.avif');">
             <img draggable="false" src="" class='theCardsBackFace'>
           </div>
         </div>
       </div>
       <div class="containerForOneOfSixPerfectFitPieces" style="z-index:21;">
         <div class="containerForRoundedColorCards" id="green">
-          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/green.avif');">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/green.avif');">
             <img draggable="false" src="" class='theCardsBackFace'>
           </div>
         </div>
       </div>
       <div class="containerForOneOfSixPerfectFitPieces" style="z-index:22;">
         <div class="containerForRoundedColorCards" id="blue">
-          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/blue.avif');">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/blue.avif');">
             <img draggable="false" src="" class='theCardsBackFace'>
           </div>
         </div>
       </div>
       <div class="containerForOneOfSixPerfectFitPieces" style="z-index:23;">
         <div class="containerForRoundedColorCards" id="yellow">
-          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/yellow.avif');">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/yellow.avif');">
             <img draggable="false" src="" class='theCardsBackFace'>
           </div>
         </div>
       </div>
       <div class="containerForOneOfSixPerfectFitPieces" style="z-index:24;">
         <div class="containerForRoundedColorCards" id="red">
-          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/red.avif');">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/red.avif');">
             <img draggable="false" src="" class='theCardsBackFace'>
           </div>
         </div>
       </div>
       <div class="containerForOneOfSixPerfectFitPieces" style="z-index:25;">
         <div class="containerForRoundedColorCards" id="black">
-          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/black.avif');">
+          <div class="roundedColorCards" style="background-image: url('/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/black.avif');">
             <img draggable="false" src="" class='theCardsBackFace'>
           </div>
         </div>
@@ -129,17 +178,23 @@
 
 
     <script>
-    var touchArea = document.getElementById('mobileTouchArea');
+    var touchArea = document.getElementById('mobileTouchAreaID');
     var containerOfTheWholeGame = document.getElementById('allOfTheGameDivID');
     // ---
     window.addEventListener('DOMContentLoaded', whatMustBeDoneAtFirstOnThisDevice, { once: true });
     function whatMustBeDoneAtFirstOnThisDevice() {
+
       if (deviceDetector.isMobile) {
         touchArea.appendChild(containerOfTheWholeGame);
       } else {
         touchArea.remove();
       }
+      // -
+
+
     }
+
+    // Hitonokaochan is not displayed in this lesson
     /* USE AVIF SPRITE
     window.addEventListener("DOMContentLoaded",function(){ // Wait for js_for_all_iframed_lesson_htmls to get isApple from parser in parent
       if (isApple) {

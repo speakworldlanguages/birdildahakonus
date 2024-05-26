@@ -1,6 +1,6 @@
 "use strict";
 // Code written by Manheart Earthman=B. A. Bilgekılınç Topraksoy=土本 智一勇夫剛志
-// This file MAY NOT BE MODIFIED WITHOUT CONSENT VIA OFFICIAL AUTHORIZATION
+// This file MAY NOT BE MODIFIED WITHOUT CONSENT i.e. OFFICIAL AUTHORIZATION
 
 let canvasContext;
 let initialX=0,differenceX=0;
@@ -28,25 +28,34 @@ window.addEventListener('load', function(){
   // --
   // NOTE: DOMContentLoaded is or can be too early for deviceDetector at parent level
   let elementFromPoint;
+  let previousButtonViaEFP = document.createElement("button"); previousButtonViaEFP.name = "??"; // Start with a dummy button to prevent errors
+
   if (deviceDetector.isMobile) { // PHONES AND TABLETS
     // Left side - or listed languages
     leftArea.addEventListener("touchstart", function(event){  event.preventDefault(); /* CAN THIS: Disable context menu via long touch?*/
-      if (event.target.tagName.toLowerCase() == "button") {
+      if (event.target.tagName.toLowerCase() == "button" && event.touches.length == 1) { // Possibility of second finger triggering a visual conflict is prevented with touches.length
         event.target.classList.add("simulatedHover");
       }
+      // Let touching an empty area also dim the background by leaving it unconditional here
       changeBrightnessMain.classList.add("mainChangeBrightness"); // css_for_the_container_parent_html
     });
     leftArea.addEventListener("touchmove", function(event){  event.preventDefault(); /* Disables finger scrolling */
-      let touch = event.touches[0];
+      let touch = event.touches[0]; // Already ignoring all added fingers and reacting ONLY to the very first finger with touches[0]
       elementFromPoint = document.elementFromPoint(touch.clientX, touch.clientY); // DON'T NEED: touch.pageX - window.pageXOffset, touch.pageY - window.pageYOffset // because there is no scrolling in window or body
-      if(elementFromPoint.tagName.toLowerCase() == "button" ) {
+      if(elementFromPoint.tagName.toLowerCase() == "button") {
         elementFromPoint.className="simulatedHover";
+        // See if finger jumped from one button to the next without triggering removal of simulatedHover from all buttons
+        if (elementFromPoint.name != previousButtonViaEFP.name) { // ATTENTION: All buttons must have names in our app!
+          console.log("Jump detected!");
+          previousButtonViaEFP.className=" "; // Remove by setting to a string of nothing but space
+        }
+        previousButtonViaEFP = elementFromPoint; // Should we reset previousButtonViaEFP back to its initial state at touchend moment or not? TESTED: Works fine without it.
       }
       else { // Try to detect finger-leave when it is in-between buttons > TEST RESULT: Nice enough
         let i; for (i = 0; i < buttonsInLinkedJS.length; i++) { buttonsInLinkedJS[i].classList.remove("simulatedHover"); }
       }
     });
-
+    // NOTE: See js_for_the_parent_all_browsers_all_devices to find touchEndMenuButtonF which features elementFromPoint with changedTouches to get the actual button
     leftArea.addEventListener("touchend", function(event){  event.preventDefault(); /* Just to be safe */
       let i; for (i = 0; i < buttonsInLinkedJS.length; i++) { buttonsInLinkedJS[i].classList.remove("simulatedHover"); }
       changeBrightnessMain.classList.remove("mainChangeBrightness"); // css_for_the_container_parent_html

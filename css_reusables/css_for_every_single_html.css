@@ -33,6 +33,12 @@ main{
 p{
   line-height: normal;
   letter-spacing: normal;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none;    /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 
 .textAlignJustifyLTR{ text-align: justify; text-align-last: start; }

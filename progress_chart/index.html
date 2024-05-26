@@ -54,11 +54,12 @@
 
         <!-- !!! webps must be 120x120 !!! -->
         <!-- DO NOT FORGET TO UPDATE js_for_cache_handling/0_parent_initial_load_and_111.js » listOfEverythingInProgressChart -->
+        <!-- ALSO REMEMBER THAT older caches MUST BE DELETED by welcomeScreenCacheHandling_proceed0 in 0_parent_initial_load_and_111.js -->
 
         <div class="allUnitsInALevelContainer" id="level_2_ID">
 
           <div class="allLessonsInAUnitContainer" ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
-            <nav class="oneParticularLesson" id="2_1_1"><img alt="2-1-1" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
+            <nav class="oneParticularLesson" id="2_1_1"><img alt="2-1-1" src="/progress_chart/images/2_1_1_bird.webp" class="eachWebp"></nav>
             <nav class="oneParticularLesson" id="2_1_2"><img alt="2-1-2" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
             <nav class="oneParticularLesson" id="2_1_3"><img alt="2-1-3" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
             <nav class="oneParticularLesson" id="2_1_4"><img alt="2-1-4" src="/progress_chart/images/not_published_yet.webp" class="eachWebp"></nav>
@@ -81,6 +82,7 @@
 
         <!-- !!! webps must be 120x120 !!! -->
         <!-- DO NOT FORGET TO UPDATE js_for_cache_handling/0_parent_initial_load_and_111.js » listOfEverythingInProgressChart -->
+        <!-- ALSO REMEMBER THAT older caches MUST BE DELETED by welcomeScreenCacheHandling_proceed0 in 0_parent_initial_load_and_111.js -->
 
 
         <div class="allUnitsInALevelContainer" id="level_3_ID">
@@ -107,7 +109,33 @@
         </div>
 
 
+        <!-- !!! webps must be 120x120 !!! -->
+        <!-- DO NOT FORGET TO UPDATE js_for_cache_handling/0_parent_initial_load_and_111.js » listOfEverythingInProgressChart -->
+        <!-- ALSO REMEMBER THAT older caches MUST BE DELETED by welcomeScreenCacheHandling_proceed0 in 0_parent_initial_load_and_111.js -->
+
+
         <!-- add the level 4 screen here -->
+
+
+        <!-- !!! webps must be 120x120 !!! -->
+        <!-- DO NOT FORGET TO UPDATE js_for_cache_handling/0_parent_initial_load_and_111.js » listOfEverythingInProgressChart -->
+        <!-- ALSO REMEMBER THAT older caches MUST BE DELETED by welcomeScreenCacheHandling_proceed0 in 0_parent_initial_load_and_111.js -->
+
+
+        <!-- add the level 5 screen here -->
+
+
+        <!-- !!! webps must be 120x120 !!! -->
+        <!-- DO NOT FORGET TO UPDATE js_for_cache_handling/0_parent_initial_load_and_111.js » listOfEverythingInProgressChart -->
+        <!-- ALSO REMEMBER THAT older caches MUST BE DELETED by welcomeScreenCacheHandling_proceed0 in 0_parent_initial_load_and_111.js -->
+
+
+        <!-- add the level 6 screen here -->
+
+
+        <!-- !!! webps must be 120x120 !!! -->
+        <!-- DO NOT FORGET TO UPDATE js_for_cache_handling/0_parent_initial_load_and_111.js » listOfEverythingInProgressChart -->
+        <!-- ALSO REMEMBER THAT older caches MUST BE DELETED by welcomeScreenCacheHandling_proceed0 in 0_parent_initial_load_and_111.js -->
 
 
       </div>
@@ -135,12 +163,19 @@
     // ISSUE THAT NEEDS SERIOUS CARE: Safari doesn't allow mic permanently; it allows for only 1 listening session and prompts for permission everytime mic restarts
 
     if (parent.annyang) { // DO NOT OMIT! Firefox and other no-speech browsers need this "if (parent.annyang)" to let the app work without Web Speech API.
-      if (parent.annyang.isListening()) { // DANGER! It looks like this doesn't always fire correctly. Will try to remedy by adding it to progress/index.html
-        console.warn("__ Annyang was force stopped by script in progress_chart/index.html __");
+      // NECESSARY EXTRA SAFETY: Since SpeechRecognition continuously turns on and off there is a chance (especially in Android) that annyang.isListening will misreturn false
+      // EVEN THOUGH the Speech Recognition session is not over yet
+      // NORMALLY js_for_all_iframed_lesson_htmls checks if annyang was listening when beforeunload fires and aborts accordingly
+      // BUT if beforeunload fires during the small interval between onend and onstart Speech Recognition will not be aborted where it should
+      // SINCE we cannot start a setInterval check inside beforeunload we have to do it here in progress_chart
+      let inspector = setInterval(checkSpeechRecognition, 100); // Tested: WORKS!
+      function checkSpeechRecognition() {        if (parent.annyang.isListening()) {    stopSpeechRecognition();    }        }
+      function stopSpeechRecognition() {
+        parent.console.warn("__ Annyang was force stopped by script in progress_chart/index.html __\n---");
         parent.annyang.removeCallback();
-        if (isApple) { parent.annyang.pause(); }
-        else { parent.annyang.abort(); }
+        parent.annyang.abort(); // Better if we tell or let Safari user figure out how to "permanently allow mic"
       }
+      setTimeout(function () { clearInterval(inspector); }, 5000); // Will check 50 times in 5 seconds to make sure
     }
 
     // PROBABLY: No need to call stopStandardAudioInputVisualization which exists in js_for_microphone_input_visualization

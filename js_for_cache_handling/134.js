@@ -6,45 +6,62 @@ else { cacheLesson134CommonAssetsForAllLanguages(); }
 if (localStorage.getItem("lesson134FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully")) { parent.console.log("Files for "+parent.langCodeForTeachingFilePaths+" 134 already cached"); }
 else { cacheLesson134AssetsForTheTargetLanguage(); }
 
+let triesFor134CommonAssets = 0;
 async function cacheLesson134CommonAssetsForAllLanguages() {
-  const cacheForAllLanguages_1_3_4 = await caches.open('1-3-4-assets-for-all-languages-October2023');
+  const cacheForAllLanguages_1_3_4 = await caches.open('1-3-4-assets-for-all-languages-April2024');
   // ---
   let listOfFilesForAllLanguages_1_3_4 = [
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/1.avif",
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/2.avif",
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/3.avif",
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/4.avif",
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/5.avif",
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/6.avif",
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/bird.avif",
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/black.avif",
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/blue.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/1.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/2.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/3.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/4.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/5.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/fabric/6.avif",
+
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a1.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a2.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a3.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a4.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a5.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/a6.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b1.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b2.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b3.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b4.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b5.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/painter/b6.avif",
+    
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/bird.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/black.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/blue.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/fish.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/green.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/red.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/water.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/white.avif",
+    "/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/yellow.avif",
     "/lessons_in_iframes/level_1/unit_3/lesson_4/colors.css",
     "/lessons_in_iframes/level_1/unit_3/lesson_4/colors.js",
     "/lessons_in_iframes/level_1/unit_3/lesson_4/desktop.js",
     "/lessons_in_iframes/level_1/unit_3/lesson_4/explosion."+soundFileFormat,
     "/lessons_in_iframes/level_1/unit_3/lesson_4/fail."+soundFileFormat,
     "/lessons_in_iframes/level_1/unit_3/lesson_4/find."+soundFileFormat,
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/fish.avif",
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/green.avif",
     "/lessons_in_iframes/level_1/unit_3/lesson_4/index.html",
     "/lessons_in_iframes/level_1/unit_3/lesson_4/mobile.js",
     "/lessons_in_iframes/level_1/unit_3/lesson_4/mousedown_touchend."+soundFileFormat,
     "/lessons_in_iframes/level_1/unit_3/lesson_4/mouseenter_touchstart."+soundFileFormat,
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/red.avif",
     "/lessons_in_iframes/level_1/unit_3/lesson_4/set_off_1."+soundFileFormat,
     "/lessons_in_iframes/level_1/unit_3/lesson_4/set_off_2."+soundFileFormat,
     "/lessons_in_iframes/level_1/unit_3/lesson_4/set_off_3."+soundFileFormat,
     "/lessons_in_iframes/level_1/unit_3/lesson_4/turn."+soundFileFormat,
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/water.avif",
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/white.avif",
     "/lessons_in_iframes/level_1/unit_3/lesson_4/win."+soundFileFormat,
-    "/lessons_in_iframes/level_1/unit_3/lesson_4/yellow.avif"
+    // There is no «translation help box» in 1-3-4 BUT IN THIS CASE the txt is for in-lesson-navigation elements
+    "/user_interface/text/"+userInterfaceLanguage+"/1-3-4.txt" // See js_for_every_single_html to find userInterfaceLanguage
 
-    /* THESE DO NOT EXIST because «translation help box» is not used in this lesson
-    "/user_interface/text/"+userInterfaceLanguage+"/1-3-4.txt", // See js_for_every_single_html to find userInterfaceLanguage
+    /* THIS DOES NOT EXIST because «translation help box» is not used in this lesson
     "/user_interface/text/"+userInterfaceLanguage+"/1-3-4_vocabulary_p1_p2.txt"
     */
+
   ];
   // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
 
@@ -77,22 +94,26 @@ async function cacheLesson134CommonAssetsForAllLanguages() {
       parent.console.log("... and common files for 1-3-4 are ready");
       localStorage.setItem("lesson134CommonFilesCachedSuccessfully", "glorious");
     } else {
-      // Try again
-      setTimeout(function () {  cacheLesson134CommonAssetsForAllLanguages();  }, 4000);
+      triesFor134CommonAssets++;
+      // Try again if the number of maximum retries is not reached
+      // «maximumRetries» and «delayTimeBeforeTryingAgain» exists in 0_parent_initial_load_and_111.js
+      if (triesFor134CommonAssets<=parent.maximumRetries) {   setTimeout(function () {  cacheLesson134CommonAssetsForAllLanguages();  }, parent.delayTimeBeforeTryingAgain);   }
+      else {   parent.console.warn("Gave up on trying to cache: cacheLesson134CommonAssetsForAllLanguages");   }
     }
   } // End of try-catch-finally
 
 } // END OF cacheLesson134CommonAssetsForAllLanguages
 
 
-
+// ---
+let triesFor134TargetLangAssets = 0;
 async function cacheLesson134AssetsForTheTargetLanguage() {
   const cacheForTargetLanguage_1_3_4 = await caches.open('1-3-4-assets-for-'+parent.langCodeForTeachingFilePaths+'-October2023');
   // ---
   // soundFileFormat exists in js_for_all_iframed_lesson_htmls where it is copied from the parent in js_for_different_browsers_and_devices
 
   /* No listenbox in this lesson
-  let itemA = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/with_listenbox."+soundFileFormat;
+  let itemA = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/???_listenbox."+soundFileFormat;
   */
   let item1 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_1."+soundFileFormat;
   let item2 = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_2."+soundFileFormat;
@@ -158,8 +179,11 @@ async function cacheLesson134AssetsForTheTargetLanguage() {
       parent.console.log("... and files for 1-3-4 "+parent.langCodeForTeachingFilePaths+" are ready");
       localStorage.setItem("lesson134FilesFor-"+parent.langCodeForTeachingFilePaths+"-CachedSuccessfully", "tremendous");
     } else {
-      // Try again
-      setTimeout(function () {  cacheLesson134AssetsForTheTargetLanguage();  }, 4000);
+      triesFor134TargetLangAssets++;
+      // Try again if the number of maximum retries is not reached
+      // «maximumRetries» and «delayTimeBeforeTryingAgain» exists in 0_parent_initial_load_and_111.js
+      if (triesFor134TargetLangAssets<=parent.maximumRetries) {   setTimeout(function () {  cacheLesson134AssetsForTheTargetLanguage();  }, parent.delayTimeBeforeTryingAgain);   }
+      else {   parent.console.warn("Gave up on trying to cache: cacheLesson134AssetsForTheTargetLanguage");   }
     }
   } // End of try-catch-finally
 

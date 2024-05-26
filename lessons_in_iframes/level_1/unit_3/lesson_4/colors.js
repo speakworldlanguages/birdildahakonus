@@ -66,6 +66,19 @@ const sayYellow2 = new parent.Howl({ src: [sayYellow2Path] });
 const sayRed2    = new parent.Howl({ src: [sayRed2Path]    });
 const sayBlack2  = new parent.Howl({ src: [sayBlack2Path]  });
 
+const sayWhite3Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/white_3."+soundFileFormat;
+const sayGreen3Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/green_3."+soundFileFormat;
+const sayBlue3Path   = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/blue_3."+soundFileFormat;
+const sayYellow3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/yellow_3."+soundFileFormat;
+const sayRed3Path    = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/red_3."+soundFileFormat;
+const sayBlack3Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_3."+soundFileFormat;
+const sayWhite3  = new parent.Howl({ src: [sayWhite3Path]  });
+const sayGreen3  = new parent.Howl({ src: [sayGreen3Path]  });
+const sayBlue3   = new parent.Howl({ src: [sayBlue3Path]   });
+const sayYellow3 = new parent.Howl({ src: [sayYellow3Path] });
+const sayRed3    = new parent.Howl({ src: [sayRed3Path]    });
+const sayBlack3  = new parent.Howl({ src: [sayBlack3Path]  });
+
 const mouseEnterTouchStartSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_4/mouseenter_touchstart."+soundFileFormat]  });
 const mouseDownTouchEndSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_4/mousedown_touchend."+soundFileFormat]  });
 const turnSound = new parent.Howl({  src: ["/lessons_in_iframes/level_1/unit_3/lesson_4/turn."+soundFileFormat]  });
@@ -83,8 +96,10 @@ var listOfAllSoundsInThisLesson = [
   //finalWinSound, // EXCEPTION: See unloadThatLastSoundWhichCannotBeUnloadedNormally
   setOffSound3,setOffSound2,setOffSound1,explodeSound,findSound,failSound,turnSound,
   mouseDownTouchEndSound,mouseEnterTouchStartSound,
+  sayBlack3,sayRed3,sayYellow3,sayBlue3,sayGreen3,sayWhite3,
   sayBlack2,sayRed2,sayYellow2,sayBlue2,sayGreen2,sayWhite2,
-  sayBlack1,sayRed1,sayYellow1,sayBlue1,sayGreen1,sayWhite1,
+  sayBlack1,sayRed1,sayYellow1,sayBlue1,sayGreen1,sayWhite1
+
 ];
 function unloadTheSoundsOfThisLesson() { // See onbeforeunload in js_for_all_iframed_lesson_htmls
   for (let i = 0; i < listOfAllSoundsInThisLesson.length; i++) {
@@ -95,20 +110,29 @@ function unloadTheSoundsOfThisLesson() { // See onbeforeunload in js_for_all_ifr
 
 // List of backside visuals
 const imageFiles = [
-  '/lessons_in_iframes/level_1/unit_3/lesson_4/fish.avif',
-  '/lessons_in_iframes/level_1/unit_3/lesson_4/bird.avif',
-  '/lessons_in_iframes/level_1/unit_3/lesson_4/water.avif',
-  '/lessons_in_iframes/level_1/unit_3/lesson_4/fish.avif',
-  '/lessons_in_iframes/level_1/unit_3/lesson_4/bird.avif',
-  '/lessons_in_iframes/level_1/unit_3/lesson_4/water.avif'
+  '/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/fish.avif',
+  '/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/bird.avif',
+  '/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/water.avif',
+  '/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/fish.avif',
+  '/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/bird.avif',
+  '/lessons_in_iframes/level_1/unit_3/lesson_4/gamecard/water.avif'
 ];
 
 /* __CONTAINER DIVS__ */
 // const main = document.getElementsByTagName('MAIN')[0]; // Cannot use touchstart touchmove listeners with main
-// See index.html » const touchArea = document.getElementById('mobileTouchArea');
+// See index.html » const touchArea = document.getElementById('mobileTouchAreaID');
 const fullVpDarkBlue = document.getElementById('coverForTheUnchosenOnesID');
-const containerOfSingles = document.getElementById('singlesDivID');
-const allSingles = containerOfSingles.children; // Use children instead of childNodes to ignore HTML comments
+const containerOfSingles_A = document.getElementById('singlesDiv1ID');
+const containerOfSingles_B = document.getElementById('singlesDiv2ID');
+const allSinglesOfFirstSet = containerOfSingles_A.children; // Use children instead of childNodes to ignore HTML comments
+const allSinglesOfSecondSet = containerOfSingles_B.children; // Use children instead of childNodes to ignore HTML comments
+const theTwoOptions = document.getElementById('chooseRepeatOrPlayDivID');
+const listenAgainButton = document.getElementsByTagName('SECTION')[0];
+const playTheGameButton = document.getElementsByTagName('SECTION')[1];
+const listenAgainTextP = document.getElementById('p1ID');
+const areYouSureTextH = document.getElementsByTagName('HEADER')[0];
+const playTheGameTextP = document.getElementById('p2ID');
+
 // See index.html » const containerOfTheWholeGame = document.getElementById('allOfTheGameDivID');
 const allSixPerfectFitSquares = document.querySelectorAll(".containerForOneOfSixPerfectFitPieces");
 const allBackFaces = document.querySelectorAll(".theCardsBackFace");
@@ -133,10 +157,16 @@ function assignVisualsFunction() {
 }
 
 /* ___PROGRESSION___ */
-window.addEventListener("load",function(){   loadingIsCompleteFunction();   }, { once: true });
 // Desktop users can change the speed; mobile users can't. Because the mobile GUI has to stay simple.
-function loadingIsCompleteFunction()
-{
+window.addEventListener("load",checkIfAppIsPaused, { once: true });
+function checkIfAppIsPaused() {
+  if (parent.theAppIsPaused) { // See js_for_the_sliding_navigation_menu
+    parent.pleaseAllowSound.play(); // Let the wandering user know that the lesson is now ready // See js_for_different_browsers_and_devices
+    let unpauseDetector = setInterval(() => {    if (!parent.theAppIsPaused) { clearInterval(unpauseDetector); loadingIsCompleteFunction(); }    }, 500); // NEVER use a SuperInterval here!
+  } else { loadingIsCompleteFunction(); }
+}
+
+function loadingIsCompleteFunction() {
   if (studiedLang == "ar") { // Display the note about adjectives' GENDER in Arabic.
     const pathOfNotificationAboutGender = "/user_interface/text/"+userInterfaceLanguage+"/1-3-4_arabic_gender.txt";
     fetch(pathOfNotificationAboutGender,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
@@ -155,8 +185,37 @@ function loadingIsCompleteFunction()
     startTheLesson(); // Call it now if it was not called from within createAndHandleInfoBoxType1BeforeLessonStarts() in js_for_info_boxes_in_lessons.js
   }
   // ---
-  // By the way: Get the end-of-lesson texts ready
+  // Get the lesson navigation texts ready ,,, Note: THESE WILL BE VISIBLE WAY AFTER window load
   setTimeout(function () {
+    // listenAgainTextP    // areYouSureTextH    // playTheGameTextP
+    const pathOfLessonNavigationTexts = "/user_interface/text/"+userInterfaceLanguage+"/1-3-4.txt";
+    fetch(pathOfLessonNavigationTexts,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+      listenAgainTextP.innerHTML = contentOfTheTxtFile.split("|")[0];
+      areYouSureTextH.innerHTML = contentOfTheTxtFile.split("|")[1];
+      playTheGameTextP.innerHTML = contentOfTheTxtFile.split("|")[2];
+      if (needHitoicJapaneseFonts) {
+        areYouSureTextH.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
+      }
+      // Function to compare and adjust widths of paragraphs to make the buttons equal in size
+      function compareAndAdjustWidths() {
+          const paragraph1 = listenAgainTextP; const paragraph1Width = paragraph1.clientWidth;
+          const paragraph2 = playTheGameTextP; const paragraph2Width = paragraph2.clientWidth;
+          // Compare the widths
+          if (paragraph1Width > paragraph2Width) {
+              paragraph2.style.width = paragraph1Width + 'px'; // Set width of paragraph2 to match paragraph1
+          } else if (paragraph1Width < paragraph2Width) {
+              paragraph1.style.width = paragraph2Width + 'px'; // Set width of paragraph1 to match paragraph2
+          } else {
+              // They are the same already! Wow!
+          }
+      }
+      requestAnimationFrame(compareAndAdjustWidths); // Call the function initially // with RAF it is delayed by one frame-moment
+      window.addEventListener('resize', compareAndAdjustWidths); // Call the function when window is resized
+    });
+  }, 3000);
+  // ---
+  // By the way: Get the end-of-lesson texts ready
+  setTimeout(function () { // We don't want a SuperTimeout in this case
     if (studiedLang == "ja") {
       const pathOfLessonEndingNoteAboutColors = "/user_interface/text/"+userInterfaceLanguage+"/1-3-4_on_spectrum_of_colors_ja.txt";
       fetch(pathOfLessonEndingNoteAboutColors,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
@@ -170,94 +229,259 @@ function loadingIsCompleteFunction()
   }, 5000);
 }
 
-function startTheLesson()
-{
+function hideThemAllWithTheExceptionOf(array,whoseTurn) {
+  for (let i = 0; i < array.length; i++) {   array[i].style.visibility = "hidden";   }
+  array[whoseTurn].style.visibility = "visible";
+}
+
+let displayingFirstSet = true;
+let nowShowingTheSecondSixInsideSecondSet = false;
+function startTheLesson() {
   // White is the first color then comes green » blue » yellow » red » black
   // Give time to the preloader to clear
   let sayTime; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 5000; proceedTime = 11000; break;
-    case "fast": sayTime = 2000; proceedTime = 6000;  break;
-    default:     sayTime = 3500; proceedTime = 8500;
+    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
+    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
+    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
   }
-  new SuperTimeout(function () { sayWhite1.play(); }, sayTime/5);
-  new SuperTimeout(showGreen, proceedTime/5); // Uncomment after tests
-  // sendTheCardsToTheirNewPositions(); // Delete or comment out after tests » Can skip the single photos during testing
-  // setTimeout(bringTheGameToTheScene, proceedTime/5); // Delete or comment out after tests » Can skip the single photos during testing
+  // -
+  if (displayingFirstSet) {
+    // NO NEED TO HIDE/UNHIDE as fabrics i.e. the-first-set will never be visible again ,,, first image already visible in index.html
+    new SuperTimeout(function () { sayWhite1.play(); }, sayTime);
+  }
+  else {
+    if (!nowShowingTheSecondSixInsideSecondSet) {
+      // See listenAgainFunction to find HIDE/UNHIDE algorithm
+      new SuperTimeout(function () { sayWhite2.play(); }, sayTime);
+    } else {
+      // See listenAgainFunction to find HIDE/UNHIDE algorithm
+      new SuperTimeout(function () { sayWhite3.play(); }, sayTime);
+    }
+  }
+  // -
+  // UNCOMMENT AFTER TESTS new SuperTimeout(showGreen, proceedTime);
+  new SuperTimeout(showGreen, proceedTime);
+  // new SuperTimeout(showBlack, proceedTime); //allSinglesOfFirstSet[0].style.visibility = "hidden"; // DELETE AFTER TESTS
 }
 
 function showGreen() {
-  allSingles[0].style.visibility = "hidden";
-  allSingles[1].style.visibility = "visible"; // Sudden change actually looks good in this case
+
   let sayTime; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 4000; proceedTime = 10000; break;
-    case "fast": sayTime = 1000; proceedTime = 5000;  break;
-    default:     sayTime = 2500; proceedTime = 7500;
+    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
+    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
+    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
   }
-  new SuperTimeout(function () { sayGreen1.play(); }, sayTime/5);
-  new SuperTimeout(showBlue, proceedTime/5);
+  // -
+  if (displayingFirstSet) {
+    hideThemAllWithTheExceptionOf(allSinglesOfFirstSet,1);
+    new SuperTimeout(function () { sayGreen1.play(); }, sayTime);
+  }
+  else {
+
+    if (!nowShowingTheSecondSixInsideSecondSet) {
+      hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,1);
+      new SuperTimeout(function () { sayGreen2.play(); }, sayTime);
+    } else {
+      hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,7);
+      new SuperTimeout(function () { sayGreen3.play(); }, sayTime);
+    }
+  }
+  // -
+  new SuperTimeout(showBlue, proceedTime);
 }
 
 function showBlue() {
-  allSingles[1].style.visibility = "hidden";
-  allSingles[2].style.visibility = "visible"; // Sudden change actually looks good in this case
+
   let sayTime; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 4000; proceedTime = 10000; break;
-    case "fast": sayTime = 1000; proceedTime = 5000;  break;
-    default:     sayTime = 2500; proceedTime = 7500;
+    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
+    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
+    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
   }
-  new SuperTimeout(function () { sayBlue1.play(); }, sayTime/5);
-  new SuperTimeout(showYellow, proceedTime/5);
+  // -
+  if (displayingFirstSet) {
+    hideThemAllWithTheExceptionOf(allSinglesOfFirstSet,2);
+    new SuperTimeout(function () { sayBlue1.play(); }, sayTime);
+  }
+  else {
+
+    if (!nowShowingTheSecondSixInsideSecondSet) {
+      hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,2);
+      new SuperTimeout(function () { sayBlue2.play(); }, sayTime);
+    } else {
+      hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,8);
+      new SuperTimeout(function () { sayBlue3.play(); }, sayTime);
+    }
+  }
+  // -
+  new SuperTimeout(showYellow, proceedTime);
 }
 
 function showYellow() {
-  allSingles[2].style.visibility = "hidden";
-  allSingles[3].style.visibility = "visible"; // Sudden change actually looks good in this case
+
   let sayTime; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 4000; proceedTime = 10000; break;
-    case "fast": sayTime = 1000; proceedTime = 5000;  break;
-    default:     sayTime = 2500; proceedTime = 7500;
+    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
+    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
+    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
   }
-  new SuperTimeout(function () { sayYellow1.play(); }, sayTime/5);
-  new SuperTimeout(showRed, proceedTime/5);
+  // -
+  if (displayingFirstSet) {
+    hideThemAllWithTheExceptionOf(allSinglesOfFirstSet,3);
+    new SuperTimeout(function () { sayYellow1.play(); }, sayTime);
+  }
+  else {
+
+    if (!nowShowingTheSecondSixInsideSecondSet) {
+      hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,3);
+      new SuperTimeout(function () { sayYellow2.play(); }, sayTime);
+    } else {
+      hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,9);
+      new SuperTimeout(function () { sayYellow3.play(); }, sayTime);
+    }
+  }
+  // -
+  new SuperTimeout(showRed, proceedTime);
 }
 
 function showRed() {
-  allSingles[3].style.visibility = "hidden";
-  allSingles[4].style.visibility = "visible"; // Sudden change actually looks good in this case
+
   let sayTime; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 4000; proceedTime = 10000; break;
-    case "fast": sayTime = 1000; proceedTime = 5000;  break;
-    default:     sayTime = 2500; proceedTime = 7500;
+    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
+    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
+    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
   }
-  new SuperTimeout(function () { sayRed1.play(); }, sayTime/5);
-  new SuperTimeout(showBlack, proceedTime/5);
+  // -
+  if (displayingFirstSet) {
+    hideThemAllWithTheExceptionOf(allSinglesOfFirstSet,4);
+    new SuperTimeout(function () { sayRed1.play(); }, sayTime);
+  }
+  else {
+
+    if (!nowShowingTheSecondSixInsideSecondSet) {
+      hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,4);
+      new SuperTimeout(function () { sayRed2.play(); }, sayTime);
+    } else {
+      hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,10);
+      new SuperTimeout(function () { sayRed3.play(); }, sayTime);
+    }
+  }
+  // -
+  new SuperTimeout(showBlack, proceedTime);
 }
 
 function showBlack() {
-  allSingles[4].style.visibility = "hidden";
-  allSingles[5].style.visibility = "visible"; // Sudden change actually looks good in this case
+
   let sayTime; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 4000; proceedTime = 10000; break;
-    case "fast": sayTime = 1000; proceedTime = 5000;  break;
-    default:     sayTime = 2500; proceedTime = 7500;
+    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
+    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
+    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
   }
-  new SuperTimeout(function () { sayBlack1.play(); }, sayTime/5);
-  new SuperTimeout(sendTheCardsToTheirNewPositions, proceedTime/5-900);
-  new SuperTimeout(bringTheGameToTheScene, proceedTime/5);
+  // -
+  if (displayingFirstSet) {
+    hideThemAllWithTheExceptionOf(allSinglesOfFirstSet,5);
+    new SuperTimeout(function () { sayBlack1.play(); }, sayTime);
+    new SuperTimeout(startDisplayingTheSecondSet, proceedTime+1000);
+  }
+  else {
+
+    if (!nowShowingTheSecondSixInsideSecondSet) {
+      hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,5);
+      new SuperTimeout(function () { sayBlack2.play(); }, sayTime);
+    } else {
+      hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,11);
+      new SuperTimeout(function () { sayBlack3.play(); }, sayTime);
+    }
+    new SuperTimeout(goToRepeatOrPlayTheGameChoice, proceedTime+1000);
+  }
+  // -
 }
 
+function startDisplayingTheSecondSet() {
+  displayingFirstSet = false;
+  containerOfSingles_A.classList.add("moveUpAndGoAboveScreenLimit"); // Standard 2s animation » See colors.css
+  containerOfSingles_B.classList.add("moveUpFromBelowScreenToCenter"); // Standard 2s animation » See colors.css
+  // ??? remove ??? initialPositionBelowTheScreen
+  new SuperTimeout(startTheLesson, 2000); // Now that displayingFirstSet is set to false it will display the second set (with white painter)
+}
+let userHasChosenToListenAgain = false;
+let desktopEventListenersAlreadyAdded = false;
+function goToRepeatOrPlayTheGameChoice() {
+  if (!userHasChosenToListenAgain) {
+    containerOfSingles_B.classList.remove("moveUpFromBelowScreenToCenter");
+  } else {
+    containerOfSingles_B.classList.remove("moveDownFromAboveScreenToCenter");
+    theTwoOptions.classList.remove("moveDownFromCenterToBelowScreen");
+  }
+  containerOfSingles_B.classList.add("moveUpAndGoAboveScreenLimit"); // Standard 2s animation » See colors.css
+  theTwoOptions.classList.add("moveUpFromBelowScreenToCenter"); // Standard 2s animation » See colors.css
+
+  if (deviceDetector.isMobile) {
+    document.addEventListener('touchend',seeIfFingerLiftWasOnSectionButton);
+    function seeIfFingerLiftWasOnSectionButton(event) { event.preventDefault(); // let it propagate
+      // parent.console.log("----A finger lift happened----");
+      // touches[0] won't work with touchend » ChatGPT says try using changedTouches[0] instead
+      // Could easily detect if a section-as-button was hovered or not by checking its classList IF IT WASN'T TOO LATE FOR THAT at the moment of touchend
+      const touchX = event.changedTouches[0].clientX;
+      const touchY = event.changedTouches[0].clientY;
+      const fingerLiftHappenedOnWhateverThisIs = document.elementFromPoint(touchX, touchY);
+      // parent.console.log(fingerLiftHappenedOnWhateverThisIs.id + " was the last thing finger touched");
+      if (fingerLiftHappenedOnWhateverThisIs.id == "listenAgainButtonID") {
+        document.removeEventListener('touchend',seeIfFingerLiftWasOnSectionButton);
+        setTimeout(()=> {  listenAgainFunction();  }, 555);
+      }
+      else if (fingerLiftHappenedOnWhateverThisIs.id == "playTheGameButtonID") {
+        document.removeEventListener('touchend',seeIfFingerLiftWasOnSectionButton);
+        setTimeout(()=> {  playTheGameFunction();  }, 555);
+      }
+      else {  } // Do nothing
+    }
+  } else { // Desktop
+    if (!desktopEventListenersAlreadyAdded) { // Fix: Wrap it into a condition block
+      listenAgainButton.addEventListener("mouseup", listenAgainFunction); // Bug: Even with once:true it double fires as it keeps adding new instances of the event listener
+      playTheGameButton.addEventListener("mouseup", playTheGameFunction,{once:true}); // Bug: Even with once:true it double fires as it keeps adding new instances of the event listener
+      desktopEventListenersAlreadyAdded = true;
+    }
+  }
+  // If user clicks|touches REPEAT
+  function listenAgainFunction() { // e.stopPropagation(); e.preventDefault(); » Handled in js_for_proceed_buttons
+    userHasChosenToListenAgain = true;
+    theTwoOptions.classList.remove("moveUpFromBelowScreenToCenter");
+    theTwoOptions.classList.add("moveDownFromCenterToBelowScreen"); // 2s animation
+    containerOfSingles_B.classList.remove("moveUpAndGoAboveScreenLimit");
+    containerOfSingles_B.classList.add("moveDownFromAboveScreenToCenter"); // 2s animation
+    // Leave displayingFirstSet unchanged i.e. let it remain false
+    // allSinglesOfSecondSet[5].style.visibility = "hidden"; // Reset back from "black" to "white"
+    // allSinglesOfSecondSet[0].style.visibility = "visible"; // Reset back from "black" to "white"
+    parent.console.log("nowShowingTheSecondSixInsideSecondSet was " + nowShowingTheSecondSixInsideSecondSet);
+    nowShowingTheSecondSixInsideSecondSet = !nowShowingTheSecondSixInsideSecondSet; // flip
+    parent.console.log("nowShowingTheSecondSixInsideSecondSet is " + nowShowingTheSecondSixInsideSecondSet);
+    if (nowShowingTheSecondSixInsideSecondSet) { hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,6); }
+    else { hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,0); }
+
+    new SuperTimeout(startTheLesson, 2000);
+  }
+  // containerOfSingles_A will never be seen again in this session
+
+  // If user clicks|touches PLAY
+  function playTheGameFunction() { // e.stopPropagation(); e.preventDefault(); » Handled in js_for_proceed_buttons
+    theTwoOptions.classList.remove("moveUpFromBelowScreenToCenter");
+    theTwoOptions.classList.add("moveUpAndGoAboveScreenLimit");// 2s animation
+    if (document.body.contains(touchArea)) {    touchArea.style.display = "block";    } // MOBILES
+    parent.console.log("Get ready to start...");
+    sendTheCardsToTheirNewPositions();
+    new SuperTimeout(bringTheGameToTheScene, 900);
+  }
+}
 
 function bringTheGameToTheScene() {
-  containerOfSingles.classList.add("moveUpAndGoBeyondScreenLimit"); // Standard 2s animation » See colors.css
-  containerOfTheWholeGame.classList.add("moveUpAndComeToTheCenterOfScreen"); // Standard 2s animation » See colors.css
-
-   // setTimeout(function () { sendTheCardsToTheirNewPositions(); }, 2000); // ONLY FOR TESTING
+  parent.console.log("...the game");
+  // Note: On mobiles containerOfTheWholeGame will be contained by touchArea » On desktops it will be a direct child of document.body
+  containerOfTheWholeGame.classList.add("moveUpAndComeToTheCenterOfScreenNORETURN"); // NON-STANDARD 3.5s animation » See colors.css
 
   if (deviceDetector.isMobile) { // Phones and tablets
     acceptAndHandleScreenTouches(); // See mobile.js
@@ -272,7 +496,9 @@ function updateUniqueGraphicsWithNumbersRangingFromZeroToTwenty(useThisToSetRota
   // Initial value in css is transform: translateX(0vw) translateY(0vh)
   // TESTED TO SEE if transitionDuration should be decreased » initial value in css is 0.6s // RESULT: Looks OK on Windows-Chrome
   // WATCH THE FUNCTIONS disperse & undoTheDispersion
-  driveTheRotationOfThisWithMicVolume.style.transform = "rotateY("+(useThisToSetRotateY*4).toFixed(2)+"deg)";
+  if (driveTheRotationOfThisWithMicVolume) { // Prevent console error if the function fires too early
+    driveTheRotationOfThisWithMicVolume.style.transform = "rotateY("+(useThisToSetRotateY*4).toFixed(2)+"deg)";
+  }
 }
 
 
@@ -666,7 +892,7 @@ class Firework {
             if (canVibrate) { navigator.vibrate([250,60,12,70,11,85,10,105,9,130,8,160,7]); }
 
             if (!clearanceAdjustmentInterval) {
-              clearanceAdjustmentInterval = setInterval(increaseClearance,500);
+              clearanceAdjustmentInterval = setInterval(increaseClearance,500); // A SuperInterval is not necessary here, no?
             }
         }
     }
