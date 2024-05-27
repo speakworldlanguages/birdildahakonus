@@ -279,7 +279,7 @@ function stopLoopingAndGetToNewPosition() {
       glassContainerBeforeGame.style.display = "none";
       // DEPRECATE glassContainerDuringGameGulp0.style.display = "block"; // Use opacity instead
       // DEPRECATE glassContainerDuringGameGulp0.style.visibility = "visible"; // Use opacity instead
-      glassContainerDuringGameGulp0.style.opacity = "1"; // MAY26th2024: Cannot remember why opacity but it works
+      glassContainerDuringGameGulp0.style.opacity = "1"; // See if using "opacity" instead of "block" or "visible" solves the skipping problem in Safari
     }, newPositionTime*1000+100);
   }, 100);
   // -
