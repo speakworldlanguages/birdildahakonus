@@ -180,16 +180,6 @@ function handleNavigationToPatreon() {
   if (needHitoicJapaneseFonts) { firstLine.style.fontFamily = 'DFKai-SB, dfkai, serif'; secondLine.style.fontFamily = 'DFKai-SB, dfkai, serif'; } // If kaiu.ttf exists in windows fonts try to use it (DFKai-SB),,, otherwise hope that it is loaded from /user_interface/fonts/ (dfkai:almost 5MB)
   //---
   setTimeout(function(){ markContainerDIV.appendChild(firstLine); markContainerDIV.appendChild(secondLine); },4000);
-  // message_to_possible_donor
-  let clearIfSpeechPlayIsSuccessful = setTimeout(function () { nowGoToTheDonationHandlerThirdParty(); }, 15000);
-  authorSaysToPotentialDonor.once('end', function(){    clearTimeout(clearIfSpeechPlayIsSuccessful); nowGoToTheDonationHandlerThirdParty();   });
-  function nowGoToTheDonationHandlerThirdParty() {
-    parent.isLeavingTheAppToViewFinancialThirdParty = true; // Avoid triggering the browser's native confirmation box that reads "Changes may not be saved. Are you sure you want to leave?"// See js_for_navigation_handling
-    // EXIT FULLSCREEN IF WAS FULLSCREEN
-    setTimeout(function () {  if (parent.hasGoneFullscreen) {    parent.closeFullscreen();    }  },2000);
-    // Using "_top" instead of "_parent" could be necessary if the parent lives in a masking domain name container frame
-    setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },3000); // WARNING: Cannot open patreon in a new tab using _blank because Chrome blocks it considering as POP-UP
-  }
   setTimeout(function(){ firstLine.style.opacity = "1";  },4600);
   setTimeout(function () { authorSaysToPotentialDonor.play(); }, 4700);
   setTimeout(function(){ secondLine.style.opacity = "1";  },6400);
@@ -198,7 +188,18 @@ function handleNavigationToPatreon() {
     //DEPRECATED secondLine.style.textAlign = "justify";
     secondLine.classList.add("textAlignJustifyLTR"); // See css_for_every_single_html
   }
-
+  // message_to_possible_donor
+  let clearIfSpeechPlayIsSuccessful = setTimeout(function () { nowGoToTheDonationHandlerThirdParty(); }, 15000);
+  authorSaysToPotentialDonor.once('end', function(){    clearTimeout(clearIfSpeechPlayIsSuccessful); nowGoToTheDonationHandlerThirdParty();   });
+  function nowGoToTheDonationHandlerThirdParty() {
+    parent.isLeavingTheAppToViewFinancialThirdParty = true; // Avoid triggering the browser's native confirmation box that reads "Changes may not be saved. Are you sure you want to leave?"// See js_for_navigation_handling
+    firstLine.style.opacity = "0"; secondLine.style.opacity = "0";
+    // EXIT FULLSCREEN IF WAS FULLSCREEN
+    setTimeout(function () {  if (parent.hasGoneFullscreen) {    parent.closeFullscreen();    }  },100);
+    // Using "_top" instead of "_parent" could be necessary if the parent lives in a masking domain name container frame
+    setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },1200); // WARNING: Cannot open patreon in a new tab using _blank because Chrome blocks it considering as POP-UP
+  }
+  // -
 }
 
 /* ___ MAKE ARROW BUTTONS FUNCTION - SWITCHING SCREENS ___ */
