@@ -12,7 +12,10 @@
 if (browserLanguage == userInterfaceLanguage) { // SEE js_for_every_single_html
   // Nothing to handle; UI language and browser language are the same
 } else {
-  window.addEventListener("load",whatIfUserInterfaceLangAndBrowserLangAreDifferent,{once:true});
+  window.addEventListener("load",checkIfRedirectionShouldBeOffered,{once:true});
+  function checkIfRedirectionShouldBeOffered() {
+    setTimeout(whatIfUserInterfaceLangAndBrowserLangAreDifferent, 250); // Small delay to let the welcome menu become visible
+  }
 }
 // ---
 function whatIfUserInterfaceLangAndBrowserLangAreDifferent() {
