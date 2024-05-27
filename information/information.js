@@ -184,6 +184,7 @@ function handleNavigationToPatreon() {
   let clearIfSpeechPlayIsSuccessful = setTimeout(function () { nowGoToTheDonationHandlerThirdParty(); }, 15000);
   authorSaysToPotentialDonor.once('end', function(){    clearTimeout(clearIfSpeechPlayIsSuccessful); nowGoToTheDonationHandlerThirdParty();   });
   function nowGoToTheDonationHandlerThirdParty() {
+    isLeavingTheAppToViewFinancialThirdParty = true; // Do not trigger the browser's native confirmation box that reads "Changes may not be saved. Are you sure you want to leave?"// See js_for_navigation_handling
     // EXIT FULLSCREEN IF WAS FULLSCREEN
     setTimeout(function () {  if (parent.hasGoneFullscreen) {    parent.closeFullscreen();    }  },2000);
     setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },3000); // WARNING: Cannot open patreon in a new tab using _blank because Chrome blocks it considering as POP-UP

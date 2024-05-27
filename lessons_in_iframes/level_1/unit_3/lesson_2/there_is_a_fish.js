@@ -294,7 +294,7 @@ function updateTheScene(timestamp) {
     } // Face left
     else {    } // No change
     // --
-    // First threshold at -5 » START EYE MOVEMENT
+    // First threshold at set value » START EYE MOVEMENT
     if (thePositionDifferenceOfTheFish<-1.5 && !firstThresholdIsPassed) {
       firstThresholdIsPassed = true; // The point of no-return
       // Move with transition only once and then remove transition to switch to live update
@@ -303,8 +303,8 @@ function updateTheScene(timestamp) {
       new SuperTimeout(function () { fourEyes.classList.remove("ezMuv"); eyesMayFollowTheFish = true; }, 1000);
     }
     if (firstThresholdIsPassed && eyesMayFollowTheFish) { letTheEyesFollowTheFish(); }
-    // Second threshold at -8 » START POINTING FINGER
-    if (thePositionDifferenceOfTheFish<-12 && !secondThresholdIsPassed) {
+    // Second threshold at set value » START POINTING FINGER
+    if (thePositionDifferenceOfTheFish<-9 && !secondThresholdIsPassed) {
       secondThresholdIsPassed = true; // The point of no-return
       letThePictogramStartTalking();
     }
@@ -340,25 +340,39 @@ function hideAllStatesOfPictograms() {
 let repeatSay2Timeout = null; let keyboardTimeout3 = null; let keyboardTimeout4 = null;
 let theFishMayJumpNow = false;
 function letThePictogramStartTalking() {
-  let nextImageTime;  switch (parent.speedAdjustmentSetting) {  case "slow": nextImageTime = 5000; break;  case "fast": nextImageTime = 3000; break;  default: nextImageTime = 4000;  }
+  let nextImageTime; updateTimingConstant();
+  function updateTimingConstant() {  switch (parent.speedAdjustmentSetting) {  case "slow": nextImageTime = 5000; break;  case "fast": nextImageTime = 3000; break;  default: nextImageTime = 4000;  }  }
   pictogramStates.children[0].style.display = "none"; elderEyes.style.visibility = "hidden"; // DO NOT USE display none because position:relative top:100vmin
   pictogramStates.children[1].style.display = "block"; // Points his finger to water // 7 x 70ms = 490ms
-  new SuperTimeout(function () { say1.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; parent.console.log("Says..."); }, nextImageTime/5); // This is the quicker say
-  new SuperTimeout(function () { parent.console.log("Younger one stops watching the fish");
+  proceed_1(); //Better without any delay //new SuperTimeout(proceed_1, nextImageTime/10); // This is the quicker say
+  function proceed_1() {
+    say1.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; parent.console.log("Says... «there is something...»");
+    updateTimingConstant(); new SuperTimeout(proceed_2, nextImageTime/2);
+  }
+  function proceed_2() { parent.console.log("Younger one stops watching the fish");
     pictogramStates.children[1].style.display = "none"; resetWebp(pictogramStates.children[1]); youngerEyes.style.visibility = "hidden";
     pictogramStates.children[2].style.display = "block"; // Younger one turns his head
-  }, nextImageTime*1.6);
-  new SuperTimeout(function () { parent.console.log("Says again...");
+    updateTimingConstant(); new SuperTimeout(proceed_3, nextImageTime);
+  }
+  function proceed_3() { parent.console.log("Says again...");
     pictogramStates.children[2].style.display = "none"; // Static webp » no animation
     pictogramStates.children[3].style.display = "block"; // Fish to question mark <-> Question mark back to fish
     say2.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; // This is the slower say
-  }, nextImageTime*2);
-  if (deviceDetector.isMobile) {
-    new SuperTimeout(function () { showHowToJumpMOBILE("normal_blink"); theFishMayJumpNow = true; }, nextImageTime*4.1);
-  } else {
-    keyboardTimeout3 = new SuperTimeout(function () { showHowToJumpDESKTOP(); console.log("Arrow keys appear"); theFishMayJumpNow = true; }, nextImageTime*4.1);
+    // -
+    updateTimingConstant();
+    if (deviceDetector.isMobile) {   new SuperTimeout(proceed_4Mobile, nextImageTime+1000);   }
+    else {   keyboardTimeout3 = new SuperTimeout(proceed_4Desktop, nextImageTime+1000);   }
+    // -
   }
-  repeatSay2Timeout = new SuperTimeout(function () { say2.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; parent.console.log("Says again one last time..."); }, nextImageTime*6.3);
+  // -
+  function proceed_4Mobile() { showHowToJumpMOBILE("normal_blink"); theFishMayJumpNow = true; lastSay(); }
+  function proceed_4Desktop() { showHowToJumpDESKTOP(); console.log("Arrow keys appear"); theFishMayJumpNow = true; lastSay(); }
+  function lastSay() {
+    updateTimingConstant();
+    repeatSay2Timeout = new SuperTimeout(proceed_5, nextImageTime+4000);
+  }
+  // -
+  function proceed_5() { say2.play(); injectTextIntoTheHelpBoxP.innerHTML = translation1; parent.console.log("Says again one last time..."); }
 }
 // ---
 function showHowToSwimMOBILE() {

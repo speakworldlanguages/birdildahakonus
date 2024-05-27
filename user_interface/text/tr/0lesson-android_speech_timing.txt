@@ -1,1 +1,1 @@
-﻿Android kullanıcıları mikrofon zamanlamasını gözeterek konuşmalıdır.
+﻿Android kullanıcıları, mikrofon zamanlaması için cihaz dinleme aralığını gözeterek konuşmalıdır.

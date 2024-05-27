@@ -1,1 +1,1 @@
-﻿Yükleme biraz uzun sürüyor...<br>Yine de bekleyebilir ya da yeniden başlatmayı deneyebilirsin|Bekle|Yeniden başlat|Gerek kalmadı<br>Yükleme tamam
+﻿Yükleme biraz uzun sürüyor...<br>Yine de bekleyebilir ya da uygulamayı yeniden başlatmayı deneyebilirsin|Bekle|Yeniden başlat|Gerek kalmadı<br>Yükleme tamam

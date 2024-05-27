@@ -113,8 +113,9 @@ function unloadThatLastSoundWhichCannotBeUnloadedNormally(passItToMe) { // Used 
 /*___PREVENT IMMEDIATE NAVIGATION TO EMPTY BROWSER TAB___*/
 // This makes Chrome show a default prompt: "Leave site? Changes that you made may not be saved [Cancel] [Leave]"
 // ...which is better for UX
+var isLeavingTheAppToViewFinancialThirdParty = false; // See information.js
 window.addEventListener('beforeunload', (event) => { // See » https://stackoverflow.com/questions/821011/prevent-a-webpage-from-navigating-away-using-javascript
-  if (itIsAlreadyCertainThatUserWantsToReload) { // See index.html and js_for_info_boxes_in_parent
+  if (itIsAlreadyCertainThatUserWantsToReload || isLeavingTheAppToViewFinancialThirdParty) { // See index.html and js_for_info_boxes_in_parent
     // Proceed normally
   } else {
     // Cancel the event as stated by the standard.
