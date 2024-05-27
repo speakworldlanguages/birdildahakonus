@@ -164,6 +164,7 @@ function unloadVocabularyBoxButtonSounds() {
 // IN THE PAST WE SAID: IN THE FUTURE WE WILL HOPEFULLY USE RHUBARB LIP-SYNC TO PLAY AN ANIMATED MOUTH ILLUSTRATION ALONG WITH WAVESURFER
 // AND NOW THIS IS APRIL 2024: We have deprecated wavesurfer entirely and have replaced it with Hitonokaochan
 // See » https://github.com/DanielSWolf/rhubarb-lip-sync
+
 function createAndHandleListenManyTimesBox(pathToTheAudio1,pathToJSON1,pathToTheAudio2,pathToJSON2,pathToTheAudio3,pathToJSON3,isLessonOutro) {
   popUpVocabularySound.play();
   const vocabularyBoxContainer = document.createElement("DIV"); // Maybe a dark theme will look nice
@@ -242,6 +243,7 @@ function createAndHandleListenManyTimesBox(pathToTheAudio1,pathToJSON1,pathToThe
   //INSTEAD OF STARTING HIDDEN let's show an animated «loading» text
   pseudoDeactivationOfPlayButton(); //Same as » listenButtonOfTheVocabulary.style.opacity = "0.4"; // Low opacity until fetch gets json // Here used to be listenButtonOfTheVocabulary.style.visibility = "hidden"; // Its class is added down below
   // NOTE THAT: Nothing will happen if user clicks|touches the button before the sounds are loaded because the playintroVocabulary functions will check if sound is loaded before trying to play
+  let to1,to2,to3,to4,to5,to6;
   function getJSON(jsonFilePath,whichOne) { // Will fire only if the sound has successfully loaded
     fetch(jsonFilePath).then(response => {  if (!response.ok) { throw new Error('Network response was not ok'); }  return response.json();  })
     .then(data => {
@@ -372,7 +374,7 @@ function createAndHandleListenManyTimesBox(pathToTheAudio1,pathToJSON1,pathToThe
   // putVocabularyTxtIntoThisP1.style.textAlign = "justify"; putVocabularyTxtIntoThisP2.style.textAlign = "justify"; // DIDN'T WORK!
 
   listenButtonOfTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBox"); loadingAnimation(); // &#128259; is a "refresh 🔃" mark
-  let to1,to2,to3,to4,to5,to6;
+
   function loadingAnimation() {
     listenButtonOfTheVocabulary.innerHTML = "...::...";
     to1 = setTimeout(function () { listenButtonOfTheVocabulary.innerHTML = "..:··:..";  }, 100);
