@@ -139,7 +139,10 @@ function vocabularyBoxIsClosed(x,y) { // Will fire from within createAndHandleLi
 let isFirstTimeLooping = true;
 let to1,to2,to3,to4,to5,to6,to7,to8,to9,to10,to11,to12,to13,to14,to15;
 function playPictogramLoop1() {
-  let proceedTime;  switch (parent.speedAdjustmentSetting) {  case "slow": proceedTime = 3600; break;  case "fast": proceedTime = 1200; break;  default: proceedTime = 2400;  }
+  let proceedTime;
+  function updateTimeConstant() {
+    switch (parent.speedAdjustmentSetting) {  case "slow": proceedTime = 3600; break;  case "fast": proceedTime = 1200; break;  default: proceedTime = 2400;  }
+  }
   pictogramContainer.children[0].style.display = "none"; // To be never seen again » Do not remove() because the function will fire more than once
   glassContainerBeforeGame.children[0].style.display = "none"; // Will be seen again with touchstart mousedown
 
@@ -148,18 +151,21 @@ function playPictogramLoop1() {
 
   glassContainerBeforeGame.children[3].style.display = "none"; resetWebp(glassContainerBeforeGame.children[3]); // In case of returning from Loop2
   glassContainerBeforeGame.children[1].style.display = "block"; // GLASS from focus to blur
+  updateTimeConstant();
   to1 = new SuperTimeout(function () { // Drink!
     console.log("Teacher says: Drink!");
     injectTextIntoTheHelpBoxP.innerHTML = translation1;
-    if (isNowSayingTheSecondSet) {      say2.play(); proceedTime = proceedTime + 1000;   } else {      say1.play();    }
+    if (isNowSayingTheSecondSet) {     say2.play(); proceedTime += 1000;     } else {     say1.play();     }
+    updateTimeConstant();
     to2 = new SuperTimeout(andThen1, 1000 + proceedTime);
-  }, proceedTime);
+  }, proceedTime/10);
   function andThen1() {
     pictogramContainer.children[1].style.display = "none"; resetWebp(pictogramContainer.children[1]);
     pictogramContainer.children[2].style.display = "block";
     glassContainerBeforeGame.children[1].style.display = "none"; resetWebp(glassContainerBeforeGame.children[1]);
     glassContainerBeforeGame.children[2].style.display = "block"; // GLASS from blur to focus
     if (!isFirstTimeLooping) {
+      updateTimeConstant();
       to13 = new SuperTimeout(function () {
         glassContainerBeforeGame.children[2].style.display = "none"; resetWebp(glassContainerBeforeGame.children[2]);
         glassContainerBeforeGame.children[3].style.display = "block"; // GLASS flashing
@@ -168,10 +174,12 @@ function playPictogramLoop1() {
       preciseTouchClickArea.addEventListener("mousemove",function () {   handleHoveringON();   },{ once:true });
       waitForFirstTouchOrClickOnGlass(); // Start waiting for a click or touch
     }
+    updateTimeConstant();
     to3 = new SuperTimeout(function () { // Drink water!
       console.log("Teacher says: Drink water!");
       injectTextIntoTheHelpBoxP.innerHTML = translation2;
       if (isNowSayingTheSecondSet) {      say4.play(); proceedTime = proceedTime + 1500;   } else {      say3.play();    }
+      updateTimeConstant();
       to4 = new SuperTimeout(andThen2, 2000 + proceedTime);
     }, proceedTime);
   }
@@ -181,10 +189,12 @@ function playPictogramLoop1() {
     glassContainerBeforeGame.children[3].style.display = "none"; resetWebp(glassContainerBeforeGame.children[3]); // Even though it loops forever
     glassContainerBeforeGame.children[2].style.display = "none"; resetWebp(glassContainerBeforeGame.children[2]); // Only for the "First Time Of Looping"
     glassContainerBeforeGame.children[1].style.display = "block";
+    updateTimeConstant();
     to5 = new SuperTimeout(function () { // Drink water from the glass!
       console.log("Teacher says: Drink water from the glass!");
       injectTextIntoTheHelpBoxP.innerHTML = translation3;
       if (isNowSayingTheSecondSet) {      say6.play(); proceedTime = proceedTime + 2000;   } else {      say5.play();    }
+      updateTimeConstant();
       to6 = new SuperTimeout(andThen3, 3000 + proceedTime);
     }, proceedTime);
   }
@@ -193,22 +203,28 @@ function playPictogramLoop1() {
     isFirstTimeLooping = false;
     playPictogramLoop2();
   }
-}
+} // END OF playPictogramLoop1
 
 function playPictogramLoop2() {
-  let proceedTime;  switch (parent.speedAdjustmentSetting) {  case "slow": proceedTime = 3600; break;  case "fast": proceedTime = 1200; break;  default: proceedTime = 2400;  }
+  let proceedTime;
+  function updateTimeConstant() {
+    switch (parent.speedAdjustmentSetting) {  case "slow": proceedTime = 3600; break;  case "fast": proceedTime = 1200; break;  default: proceedTime = 2400;  }
+  }
   pictogramContainer.children[1].style.display = "none"; resetWebp(pictogramContainer.children[1]);
   pictogramContainer.children[2].style.display = "block";
   glassContainerBeforeGame.children[1].style.display = "none"; resetWebp(glassContainerBeforeGame.children[1]);
   glassContainerBeforeGame.children[2].style.display = "block";
+  updateTimeConstant();
   to14 = new SuperTimeout(function () {
     glassContainerBeforeGame.children[2].style.display = "none"; resetWebp(glassContainerBeforeGame.children[2]);
     glassContainerBeforeGame.children[3].style.display = "block";
   }, 1000);
+  updateTimeConstant();
   to7 = new SuperTimeout(function () { // Drink!
     console.log("Teacher says: Drink!!!");
     injectTextIntoTheHelpBoxP.innerHTML = translation1;
     if (isNowSayingTheSecondSet) {      say2.play(); proceedTime = proceedTime + 1000;   } else {      say1.play();    }
+    updateTimeConstant();
     to8 = new SuperTimeout(andThen1, 1000 + proceedTime);
   }, proceedTime);
   function andThen1() {
@@ -216,10 +232,12 @@ function playPictogramLoop2() {
     pictogramContainer.children[1].style.display = "block";
     glassContainerBeforeGame.children[3].style.display = "none"; resetWebp(glassContainerBeforeGame.children[3]);
     glassContainerBeforeGame.children[1].style.display = "block";
+    updateTimeConstant();
     to9 = new SuperTimeout(function () { // Drink water!
       console.log("Teacher says: Drink water!!!");
       injectTextIntoTheHelpBoxP.innerHTML = translation2;
       if (isNowSayingTheSecondSet) {      say4.play(); proceedTime = proceedTime + 1500;   } else {      say3.play();    }
+      updateTimeConstant();
       to10 = new SuperTimeout(andThen2, 2000 + proceedTime);
     }, proceedTime);
   }
@@ -228,14 +246,17 @@ function playPictogramLoop2() {
     pictogramContainer.children[2].style.display = "block";
     glassContainerBeforeGame.children[1].style.display = "none"; resetWebp(glassContainerBeforeGame.children[1]);
     glassContainerBeforeGame.children[2].style.display = "block";
+    updateTimeConstant();
     to15 = new SuperTimeout(function () {
       glassContainerBeforeGame.children[2].style.display = "none"; resetWebp(glassContainerBeforeGame.children[2]);
       glassContainerBeforeGame.children[3].style.display = "block";
     }, 1000);
+    updateTimeConstant();
     to11 = new SuperTimeout(function () { // Drink water from the glass!
       console.log("Teacher says: Drink water from the glass!!!");
       injectTextIntoTheHelpBoxP.innerHTML = translation3;
       if (isNowSayingTheSecondSet) {      say6.play(); proceedTime = proceedTime + 2000;   } else {      say5.play();    }
+      updateTimeConstant();
       to12 = new SuperTimeout(andThen3, 3000 + proceedTime);
     }, proceedTime);
   }
@@ -243,7 +264,7 @@ function playPictogramLoop2() {
     isNowSayingTheSecondSet = !isNowSayingTheSecondSet;
     playPictogramLoop1();
   }
-}
+} // END OF playPictogramLoop2
 
 
 function waitForFirstTouchOrClickOnGlass() {
