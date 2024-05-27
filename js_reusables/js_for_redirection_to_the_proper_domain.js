@@ -14,7 +14,7 @@ if (browserLanguage == userInterfaceLanguage) { // SEE js_for_every_single_html
 } else {
   window.addEventListener("load",checkIfRedirectionShouldBeOffered,{once:true});
   function checkIfRedirectionShouldBeOffered() {
-    setTimeout(whatIfUserInterfaceLangAndBrowserLangAreDifferent, 250); // Small delay to let the welcome menu become visible
+    setTimeout(whatIfUserInterfaceLangAndBrowserLangAreDifferent, 500); // Small delay to let the welcome menu become visible
   }
 }
 // ---

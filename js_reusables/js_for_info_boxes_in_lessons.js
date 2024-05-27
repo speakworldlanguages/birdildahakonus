@@ -137,12 +137,13 @@ const listenButtonOfTheVocabulary = document.createElement("DIV");
 const startButtonToCloseTheVocabulary = document.createElement("DIV");
 let listenButtonTxt, listenAgainButtonTxt, startButtonTxt, nextButtonTxt; // [Next] button replaces [Start] button if outro is enabled by the second parameter
 const listenBoxButton1Button2Path = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-vocabulary_button1_button2.txt";
+let primaryFetchIsStillTryingToGetTheFile = true;
 fetch(listenBoxButton1Button2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
   listenButtonTxt = contentOfTheTxtFile.split("|")[0];
   listenAgainButtonTxt = contentOfTheTxtFile.split("|")[1];
   startButtonTxt = contentOfTheTxtFile.split("|")[2];
   nextButtonTxt = contentOfTheTxtFile.split("|")[3];
-});
+}).finally(  ()=>{ primaryFetchIsStillTryingToGetTheFile = false; }  );
 // -
 let popUpVocabularySound;
 let dismissVocabularySound;
@@ -238,8 +239,10 @@ function createAndHandleListenManyTimesBox(pathToTheAudio1,pathToJSON1,pathToThe
   // Deprecate: const theFileExtensionIsRemoved_1 = pathToTheAudio1.split(".")[0];
   // Deprecate: const jsonFilePath_1 = theFileExtensionIsRemoved_1 + ".json"; // Cached by 112.js 114.js etc in js_for_cache_handling
   let lipSyncJSON_1 = null; let lipSyncJSON_2 = null; let lipSyncJSON_3 = null;
-  listenButtonOfTheVocabulary.style.visibility = "hidden"; // Its class is added down below
-  function getJSON(jsonFilePath,whichOne) {
+  //INSTEAD OF STARTING HIDDEN let's show an animated «loading» text
+  pseudoDeactivationOfPlayButton(); //Same as » listenButtonOfTheVocabulary.style.opacity = "0.4"; // Low opacity until fetch gets json // Here used to be listenButtonOfTheVocabulary.style.visibility = "hidden"; // Its class is added down below
+  // NOTE THAT: Nothing will happen if user clicks|touches the button before the sounds are loaded because the playintroVocabulary functions will check if sound is loaded before trying to play
+  function getJSON(jsonFilePath,whichOne) { // Will fire only if the sound has successfully loaded
     fetch(jsonFilePath).then(response => {  if (!response.ok) { throw new Error('Network response was not ok'); }  return response.json();  })
     .then(data => {
       switch (whichOne) {
@@ -248,10 +251,18 @@ function createAndHandleListenManyTimesBox(pathToTheAudio1,pathToJSON1,pathToThe
         case 3: lipSyncJSON_3 = data; break;
         default:
       }
-      // RELOCATE into finally: listenButtonOfTheVocabulary.style.visibility = "visible"; // Let the button be visible
     }).catch(error => { parent.console.error('Fetch error:', error); parent.console.warn("Was trying to get:\n" + jsonFilePath); })
-    .finally(()=>{
-      if (introSound1IsReady || outroSound1IsReady) { listenButtonOfTheVocabulary.style.visibility = "visible"; } // Even if json fails the app will proceed without animation
+    .finally(()=>{ // Even if json fails the app will proceed and play sounds without lip sync animation
+      if (introSound1IsReady || outroSound1IsReady) {
+        //stop the loading animation by clearing all timeouts
+        clearTimeout(to1); clearTimeout(to2); clearTimeout(to3); clearTimeout(to4); clearTimeout(to5); clearTimeout(to6);
+        // Put "Listen" text into the button by overwriting the last state of the loading animation
+        listenButtonOfTheVocabulary.innerHTML = listenButtonTxt;
+        // Before the implementation of animated text, here used to be » listenButtonOfTheVocabulary.style.visibility = "visible";
+        pseudoReactivationOfPlayButton(); // Same as » listenButtonOfTheVocabulary.style.opacity = "1";
+      } else {
+        // THIS IS IMPOSSIBLE since get getJSON will never fire without sound being fully loaded by Howler first
+      }
     });
   }
 
@@ -351,8 +362,8 @@ function createAndHandleListenManyTimesBox(pathToTheAudio1,pathToJSON1,pathToThe
     }
   }
 
-  function pseudoDeactivationOfPlayButton() { listenButtonOfTheVocabulary.style.opacity = "0.4"; }
-  function pseudoReactivationOfPlayButton() { listenButtonOfTheVocabulary.style.opacity = "1"; }
+  function pseudoDeactivationOfPlayButton() { listenButtonOfTheVocabulary.style.opacity = "0.4"; } // Event listeners will stay » callback functions will decide if the button will do something or nothing
+  function pseudoReactivationOfPlayButton() { listenButtonOfTheVocabulary.style.opacity = "1"; } // Event listeners will stay » callback functions will decide if the button will do something or nothing
 
   // APPEND txt2
   if (!isLessonOutro) {    vocabularyBoxItself.appendChild(putVocabularyTxtIntoThisP2);  }
@@ -360,8 +371,19 @@ function createAndHandleListenManyTimesBox(pathToTheAudio1,pathToJSON1,pathToThe
   // Try to fix Safari and Firefox as they ignore text align justify although the container div has it in its class
   // putVocabularyTxtIntoThisP1.style.textAlign = "justify"; putVocabularyTxtIntoThisP2.style.textAlign = "justify"; // DIDN'T WORK!
 
-  listenButtonOfTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBox");  listenButtonOfTheVocabulary.innerHTML = "&#128259; &#9658;"; // Default content is a "refresh 🔃 + play ►" mark
-  startButtonToCloseTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBox");  startButtonToCloseTheVocabulary.innerHTML = "&#127918;"; // Default content is a "gamepad 🎮" mark
+  listenButtonOfTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBox"); loadingAnimation(); // &#128259; is a "refresh 🔃" mark
+  let to1,to2,to3,to4,to5,to6;
+  function loadingAnimation() {
+    listenButtonOfTheVocabulary.innerHTML = "...::...";
+    to1 = setTimeout(function () { listenButtonOfTheVocabulary.innerHTML = "..:··:..";  }, 100);
+    to2 = setTimeout(function () { listenButtonOfTheVocabulary.innerHTML = ".:····:.";  }, 200);
+    to3 = setTimeout(function () { listenButtonOfTheVocabulary.innerHTML = ":······:";  }, 300);
+    to4 = setTimeout(function () { listenButtonOfTheVocabulary.innerHTML = ".:····:.";  }, 400);
+    to5 = setTimeout(function () { listenButtonOfTheVocabulary.innerHTML = "..:··:..";  }, 500);
+    to6 = setTimeout(loadingAnimation, 600);
+  }
+
+  startButtonToCloseTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBox");  startButtonToCloseTheVocabulary.innerHTML = "&#9658;"; // &#127918; is a "gamepad 🎮" mark // &#9658; is a "play ►" mark
   if (deviceDetector.isMobile) {
     listenButtonOfTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBoxMOBILE");
     startButtonToCloseTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBoxMOBILE");
@@ -370,17 +392,22 @@ function createAndHandleListenManyTimesBox(pathToTheAudio1,pathToJSON1,pathToThe
     startButtonToCloseTheVocabulary.classList.add("buttonsAtTheBottomOfThePronunciationBoxDESKTOP");
   }
   // ---
-  if (listenButtonTxt) { // If fetch has already finished downloading the txt file
-    listenButtonOfTheVocabulary.innerHTML = listenButtonTxt;
+  if (listenButtonTxt) { // If the primary fetch (the one that fires at global level even before window load) has already finished downloading the txt file
+    // LET listenButtonTxt STAY READY AND WAIT UNTIL THE SOUNDS AND JSONS LOAD » Before the implementation of animated text here used to be » listenButtonOfTheVocabulary.innerHTML = listenButtonTxt;
     if (!isLessonOutro) { startButtonToCloseTheVocabulary.innerHTML = startButtonTxt; }
     else { startButtonToCloseTheVocabulary.innerHTML = nextButtonTxt; }
   } else { // Restart fetch but this time update buttonTxts as soon as the file is ready
-    fetch(listenBoxButton1Button2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
-      listenButtonTxt = contentOfTheTxtFile.split("|")[0]; listenButtonOfTheVocabulary.innerHTML = listenButtonTxt;
-      listenAgainButtonTxt = contentOfTheTxtFile.split("|")[1];
-      if (!isLessonOutro) { startButtonTxt = contentOfTheTxtFile.split("|")[2]; startButtonToCloseTheVocabulary.innerHTML = startButtonTxt; }
-      else { nextButtonTxt = contentOfTheTxtFile.split("|")[3]; startButtonToCloseTheVocabulary.innerHTML = nextButtonTxt; }
-    });
+    if (primaryFetchIsStillTryingToGetTheFile) {
+      // Let it keep working
+    } else {
+      // Retry getting the file one single more time i.e. this is the second and the last try
+      fetch(listenBoxButton1Button2Path,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+        listenButtonTxt = contentOfTheTxtFile.split("|")[0]; listenButtonOfTheVocabulary.innerHTML = listenButtonTxt;
+        listenAgainButtonTxt = contentOfTheTxtFile.split("|")[1];
+        if (!isLessonOutro) { startButtonTxt = contentOfTheTxtFile.split("|")[2]; startButtonToCloseTheVocabulary.innerHTML = startButtonTxt; }
+        else { nextButtonTxt = contentOfTheTxtFile.split("|")[3]; startButtonToCloseTheVocabulary.innerHTML = nextButtonTxt; }
+      });
+    }
   }
   const twoButtonsContainer = document.createElement("DIV"); twoButtonsContainer.classList.add("vocabularyButtonsContainer");
   twoButtonsContainer.appendChild(listenButtonOfTheVocabulary);
