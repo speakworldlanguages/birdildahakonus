@@ -186,7 +186,7 @@ function handleNavigationToPatreon() {
   function nowGoToTheDonationHandlerThirdParty() {
     // EXIT FULLSCREEN IF WAS FULLSCREEN
     setTimeout(function () {  if (parent.hasGoneFullscreen) {    parent.closeFullscreen();    }  },2000);
-    setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_blank");   },3000);
+    setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },3000); // WARNING: Cannot open patreon in a new tab using _blank because Chrome blocks it considering as POP-UP
   }
   setTimeout(function(){ firstLine.style.opacity = "1";  },4600);
   setTimeout(function () { authorSaysToPotentialDonor.play(); }, 4700);
