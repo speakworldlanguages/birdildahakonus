@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head data-nosnippet>
+    <meta charset="utf-8">
+    <title data-nosnippet></title>
+
+    <style media="screen">
+      h3{padding: 15px; margin: 15px;}
+    </style>
+  </head>
+  <body data-nosnippet>
+    <h3 id="ja">Number of users on hanaserutoiiyone: </h3>
+    <h3 id="tr">Number of users on birdildahakonus: </h3>
+    <h3 id="en">Number of users on speakworldlanguagesapp: </h3>
+    <!-- <h3>Number of users on ???: </h3> -->
+
+    <script>
+      var display_ja = document.getElementById('ja');
+      var display_tr = document.getElementById('tr');
+      var display_en = document.getElementById('en');
+    </script>
+
+    <!-- Get visitor count from database -->
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    // The web app's Firebase configuration
+    const breakTheKeyToDefendItPiece1 = "A"; const breakTheKeyToDefendItPiece2 = "IzaSyDBOViYjYY_qAl_rnkFlYuN1ttohoSCNrM";
+    const breakTheBucketToDefendItPiece1 = "s"; const breakTheBucketToDefendItPiece2 = "peakworldlanguages-36b72.appspot.com";
+    const firebaseConfig = {
+      apiKey: breakTheKeyToDefendItPiece1+breakTheKeyToDefendItPiece2,
+      authDomain: "speakworldlanguages-36b72.firebaseapp.com",
+      projectId: "speakworldlanguages-36b72",
+      storageBucket: breakTheBucketToDefendItPiece1+breakTheBucketToDefendItPiece2,
+      messagingSenderId: "31786044285",
+      appId: "1:31786044285:web:2f0ddd5b23cab8f3249a14"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Function to retrieve the entire database as JSON
+    const getEntireDatabaseAsJson = async () => {
+      const dbRef = ref(db);
+      try {
+        console.log("Reading database");
+        const snapshot = await get(child(dbRef, '/'));
+        if (snapshot.exists()) {
+          console.log("Read successful");
+          return snapshot.val();
+        } else {
+          console.log("No data available");
+          return null;
+        }
+      } catch (error) {
+        console.error("Error getting database data:", error);
+      }
+    };
+    // -
+    let allUsersOf_ja = []; let uniqueUsers_ja = 0;
+    let allUsersOf_tr = []; let uniqueUsers_tr = 0;
+    let allUsersOf_en = []; let uniqueUsers_en = 0;
+    // Function to check user interfaces using switch-case
+    function checkUserInterfaces(json) {
+      for (let sessionKey in json) {
+        if (json.hasOwnProperty(sessionKey)) {
+          let userInterface = json[sessionKey].user_interface;
+          switch (userInterface) {
+            case 'ja':
+              // console.log(`${sessionKey}: Hito interface`);
+              allUsersOf_ja.push(sessionKey.ip + sessionKey.ua_string);
+              break;
+            case 'tr':
+              // console.log(`${sessionKey}: Kishi interface`);
+              allUsersOf_tr.push(sessionKey.ip + sessionKey.ua_string);
+              break;
+            case 'en':
+              // console.log(`${sessionKey}: English interface`);
+              allUsersOf_en.push(sessionKey.ip + sessionKey.ua_string);
+              break;
+            // Add more cases as needed
+            default:
+              console.warn(`${sessionKey}: Unknown interface`);
+          }
+        }
+      }
+    }
+    // -
+    window.addEventListener("load",readDatabase,{once:true});
+    function readDatabase() {
+      getEntireDatabaseAsJson().then(data => {
+        // console.log(JSON.stringify(data, null, 2)); // WORKS OK
+        // Check all user interfaces in the JSON object
+        checkUserInterfaces(data);
+        uniqueUsers_ja = new Set(allUsersOf_ja);
+        uniqueUsers_tr = new Set(allUsersOf_tr);
+        uniqueUsers_en = new Set(allUsersOf_en);
+        display_ja.innerHTML += uniqueUsers_ja.size;
+        display_tr.innerHTML += uniqueUsers_tr.size;
+        display_en.innerHTML += uniqueUsers_en.size;
+      });
+    }
+    </script>
+
+
+  </body>
+</html>
