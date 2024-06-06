@@ -24,8 +24,8 @@ fetch(explanationPathB,myHeaders).then(function(response){return response.text()
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
 // Find soundFileFormat in js_for_all_iframed_lesson_htmls
 let say1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_me_water_1_normal."+soundFileFormat;
-let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_me_water_1_slow."+soundFileFormat;
-let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_me_water_2_normal."+soundFileFormat;
+let say2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_me_water_2_normal."+soundFileFormat;
+let say3Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_me_water_1_slow."+soundFileFormat;
 let say4Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/give_me_water_2_slow."+soundFileFormat;
 let say5Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_1/lesson_2/thank_you."+soundFileFormat;
 
