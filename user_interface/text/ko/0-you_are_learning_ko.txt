@@ -1,1 +1,1 @@
-﻿한국어를 배우고 있습니다
+﻿한국어를 배우고 <span style="white-space:nowrap;">있습니다</span>
