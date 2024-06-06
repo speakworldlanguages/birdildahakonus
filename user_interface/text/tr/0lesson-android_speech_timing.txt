@@ -1,1 +1,2 @@
 ﻿Android kullanıcıları, mikrofon zamanlaması için cihaz dinleme aralığını gözeterek konuşmalıdır.
+Eğer konuşma algılama özelliği çalışmazsa atlayıp sıradaki derse geçebilirsin.
