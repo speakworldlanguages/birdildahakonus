@@ -207,7 +207,9 @@ let spoonIsLoaded = false; let isSwallowing = false; let yumNumber = 1;
 // See eat_with_spoon_desktop.js and eat_with_spoon_mobile.js
 // ---
 
-// CREATE AN OUTRO LISTENBOX for Arabic and any possible language with a similar «kul-tanaawal» situation
+// CREATE AN OUTRO LISTENBOX
+// For Arabic «kul كل vs tanaawal تناول » situation
+// For Korean «먹어요 vs 드세요» situation
 let makeProceedTimeGlobal;
 function displayNoticeOrMoveAlong(milliseconds) { // Will fire from either eat_with_spoon_desktop.js or eat_with_spoon_mobile.js
   makeProceedTimeGlobal = milliseconds;
