@@ -51,9 +51,24 @@
     <script defer async type="module" src="/pwa/firebase.js"></script>
     <!--  -->
     <!-- SOLVED: THERE USED TO BE A CONFLICT between eruda and the canvas element, probably because they both used "ctx" as the variable name -->
-    <!-- Uncomment the following to be able to use the browser console on mobile devices. CAUTION: iframes must use parent.console.log -->
-    <!-- <script src="/third_party_js/eruda.js"></script> -->
-    <!-- <script>eruda.init();</script> -->
+    <!-- August 2024: Will use eruda from cdn instead of loading from local js file | CAUTION: iframes must still use parent.console.log -->
+    <script>
+      window.addEventListener("DOMContentLoaded",handleMobileConsole,{once:true});
+      function handleMobileConsole() {
+        if (window.location.search) {
+          if (window.location.search.includes('debug')) {
+              console.log('Activating portable debug console');
+              const consoleActivatorScript = document.createElement("script"); consoleActivatorScript.async = false; document.body.appendChild(consoleActivatorScript); // Add the script to the DOM
+              consoleActivatorScript.src = "https://cdn.jsdelivr.net/npm/eruda";
+              // Ensure eruda.init() is called once the script is loaded
+              consoleActivatorScript.onload = function() {
+                  eruda.init();
+                  console.log("Eruda has been initialized.");
+              };
+          } else {}  // Query exists but is irrelevant - Do nothing
+        } else {} // No query - Do nothing
+      }
+    </script>
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -137,7 +152,7 @@
     </div>
 
     <!-- THE MAIN MENU -->
-    <main> <!-- See css_for_the_container_parent_html.css & js_for_app_initialization_in_parent.js-->
+    <main> <!-- See css_for_the_container_parent_html.css & js_for_the_parent_all_browsers_all_devices.js-->
       <header> <!-- Font setting is in js_for_every_single_html -->
         <p>Öğrenmek istediğin <span style="white-space:nowrap;">dili seç</span></p>
       </header>
@@ -192,7 +207,7 @@
         preloadHandlingDiv.classList.add("addThisClassToHideThePreloader"); // See css_for_the_container_parent_html
         //---
         const frame = document.getElementsByTagName('IFRAME')[0];
-        frame.src = "/user_interface/blank.html"; // it is only 1 kb -> REMEMBER: ayFreym.addEventListener('load',...) in js_for_app_initialization_in_parent
+        frame.src = "/user_interface/blank.html"; // it is only 1 kb -> REMEMBER: ayFreym.addEventListener('load',...) in js_for_the_parent_all_browsers_all_devices
         //---
         const main = document.getElementsByTagName('MAIN')[0];
         const header = document.getElementsByTagName('HEADER')[0];
@@ -241,7 +256,7 @@
 
     <!-- WHAT TO DISPLAY DURING APP MAINTENANCE :: UNCOMMENT WHEN NECESSARY -->
     <!--
-    <div data-nosnippet id="removeThisID" onmouseup="adminAccess()" style="position: fixed; z-index:50000; width:100vw; height:100vh; background-color:white; display:flex; align-items:center; justify-content:center; flex-direction: column;">
+    <div data-nosnippet id="removeThisID" onmouseup="adminAccess()" style="position: fixed; z-index:50000; width:100vw; width:100dvw; height:100%; height:100dvh; background-color:white; display:flex; align-items:center; justify-content:center; flex-direction: column;">
       <img data-nosnippet src="/user_interface/images/maintenance.png" alt="...">
       <p data-nosnippet style="color:#040a17;">Şu anda hizmet veremiyoruz<br>Çünkü bakım yapıyoruz</p>
     </div>

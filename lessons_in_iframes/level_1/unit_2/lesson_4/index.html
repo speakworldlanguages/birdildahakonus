@@ -26,9 +26,7 @@
     <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_4/eat_with_spoon.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
     <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_4/eat_with_spoon_desktop.js">/* MUST BE DEFERRED: Code for gameplay on desktops */</script>
     <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_4/eat_with_spoon_mobile.js">/* MUST BE DEFERRED: Code for gameplay on mobiles */</script>
-    <!-- EITHER uncomment to use the mobile console within iframe OR consider using parent.console.log -->
-    <!-- <script src="/third_party_js/eruda.js"></script> -->
-    <!-- <script>eruda.init();</script> -->
+    <!-- For mobile debugging, remember to use parent.console.log instead of console.log -->
 
     <script> /*CACHE THE NEXT LESSON and make it offline ready*/
       window.addEventListener("load",startDownloadingFilesForTheNextLessonIfNecessary,{once:true});

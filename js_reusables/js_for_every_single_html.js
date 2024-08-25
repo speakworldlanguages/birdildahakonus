@@ -22,13 +22,13 @@ var needHitoicJapaneseFonts = false; // Kosugi Motoya font is for Hitoic only - 
 
 function setUserInterfaceLanguage() {
   // Set user interface and fonts
-  if (full_URL_ofTheClone.search("hanaserutoii") >= 0 || full_URL_ofTheClone.search("syabererutoii") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
-    // JA - hanaserutoiidesuyone or ...github.io
+  if (full_URL_ofTheClone.search("gengohana") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
+    // JA - previous title was hanaserutoiidesuyone ...github.io
     userInterfaceLanguage = "ja"; //console.log("Set user-interface-language to JA due to URL: " + full_URL_ofTheClone);
     userReadsLeftToRightOrRightToLeft = "ltr";
     needHitoicJapaneseFonts = true;
   } else if (full_URL_ofTheClone.search("birdildahakon") >= 0) { // IMPORTANT!!! Update will be necessary at js_for_redirection_to_the_proper_domain too if this is updated
-    // TR - dilogrenherkeslekonus or ...github.io
+    // TR - previous title was dilogrenherkeslekonus ...github.io
     userInterfaceLanguage = "tr"; //console.log("Set user-interface-language to TR due to URL: " + full_URL_ofTheClone);
     userReadsLeftToRightOrRightToLeft = "ltr"; // Satırları ters çevirmek için <bdo> </bdo> kullanmak yerine txt dosyalarını dönüştürücü ile ters çevirmek daha mantıklı mı?
     needLatinFonts = true;

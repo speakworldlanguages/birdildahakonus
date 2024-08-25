@@ -26,9 +26,7 @@
     <script defer src="/lessons_in_iframes/level_1/unit_1/lesson_2/give_me_water.js">/* MUST BE DEFERRED: Progress handling for this particular lesson with its own unique methods */</script>
     <!-- Empty line 1 -->
     <!-- Empty line 2 -->
-    <!-- EITHER uncomment to use the mobile console within iframe OR consider using parent.console.log -->
-    <!-- <script src="/third_party_js/eruda.js"></script> -->
-    <!-- <script>eruda.init();</script> -->
+    <!-- For mobile debugging, remember to use parent.console.log instead of console.log -->
 
     <script> /*CACHE THE NEXT LESSON and make it offline ready*/
       window.addEventListener("load",startDownloadingFilesForTheNextLessonIfNecessary,{once:true});

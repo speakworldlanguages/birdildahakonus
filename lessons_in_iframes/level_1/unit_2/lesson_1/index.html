@@ -24,9 +24,7 @@
     <!-- Set paths relative to root so that caches.match() can do its job in service-worker -->
     <script defer src="/lessons_in_iframes/level_1/unit_2/lesson_1/glass.js">/*Progress handling for this lesson*/</script>
     <!-- Empty line 1 -->
-    <!-- EITHER uncomment to use the mobile console within iframe OR consider using parent.console.log -->
-    <!-- <script src="/third_party_js/eruda.js"></script> -->
-    <!-- <script>eruda.init();</script> -->
+    <!-- For mobile debugging, remember to use parent.console.log instead of console.log -->
 
     <script> /*CACHE THE NEXT LESSON and make it offline ready*/
       window.addEventListener("load",startDownloadingFilesForTheNextLessonIfNecessary,{once:true});

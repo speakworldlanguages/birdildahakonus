@@ -27,17 +27,17 @@ function whatIfUserInterfaceLangAndBrowserLangAreDifferent() {
 
       case "en":
         // Ask if user wants to go to speakworldlanguages.app or stay
-        if (confirm("Would you like to view the app in English?") == true) { top.location.assign("https://speakworldlanguages.github.io"); } // When SSL issue is resolved, change to » https://speakworldlanguages.app
+        if (confirm("Would you like to view the app in English?") == true) { top.location.assign("https://speakworldlanguages.github.io"); } // When name.com SSL issue is resolved, change to » https://speakworldlanguages.app
         else { localStorage.changingDomainToMatchBrowserLanguageWasOfferedButUserDeclined = "yes"; }
         break;
       case "tr":
-        // Ask if user wants to go to birdildahakonus.com or stay
-        if (confirm("Uygulama Türkçe arayüz ile görüntülensin mi?") == true) { top.location.assign("https://speakworldlanguages.github.io/birdildahakonus/"); } // When SSL issue is resolved, change to » https://speakworldlanguages.app/birdildahakonus/ OR other CUSTOM DOMAIN
+        // Ask if user wants to go to birdildahakonus or stay
+        if (confirm("Uygulama Türkçe arayüz ile görüntülensin mi?") == true) { top.location.assign("https://speakworldlanguages.github.io/birdildahakonus/"); } // When name.com SSL issue is resolved, change to » https://speakworldlanguages.app/birdildahakonus/ OR other CUSTOM DOMAIN
         else { localStorage.changingDomainToMatchBrowserLanguageWasOfferedButUserDeclined = "yes"; }
         break;
       case "ja":
-        // Ask if user wants to go to hanaserutoiidesuy.one or stay
-        if (confirm("アプリを八島語で（八島語＝日本語）開けましょうか？") == true) { top.location.assign("https://speakworldlanguages.github.io/hanaserutoiiyone/"); } // When SSL issue is resolved, change to » https://speakworldlanguages.app/hanaserutoiiyone/ OR other CUSTOM DOMAIN
+        // Ask if user wants to go to gengohanasite or stay
+        if (confirm("アプリを八島語で（八島語＝日本語）開けましょうか？") == true) { top.location.assign("https://speakworldlanguages.github.io/gengohanasite/"); } // When name.com SSL issue is resolved, change to » https://speakworldlanguages.app/gengohanasite/ OR other CUSTOM DOMAIN
         else { localStorage.changingDomainToMatchBrowserLanguageWasOfferedButUserDeclined = "yes"; }
         break;
 /*
@@ -67,10 +67,13 @@ const firstSevenCharactersOfTheAddress = window.location.hostname.substring(0,7)
 switch (window.location.hostname) {
   case "speakworldlanguages.github.io": // ALLOW
   case "speakworldlanguages.app": // ALLOW
-  case "birdildahakonus.com": // ALLOW
-  case "hanaserutoiiyone.com": // ALLOW
-  case "tingdongshijiederenmen.com": // ALLOW
+  case "birdildahakonus.com": // ALLOW - MUST BE UPDATED UPON PURCHASING THE ACTUAL D,O,M,A,I,N
+  case "gengohanasite.com": // ALLOW - MUST BE UPDATED UPON PURCHASING THE ACTUAL D,O,M,A,I,N - previous idea was hanaserutoiiyone
+  case "shuoba.com": // ALLOW - MUST BE UPDATED UPON PURCHASING THE ACTUAL D,O,M,A,I,N - previous idea was tingdongshijiederenmen
   case "localhost": // ALLOW
+  case "swl.test": // ALLOW - laragon
+  case "birdildahakonus.test": // ALLOW - laragon
+  case "gengohanasite.test": // ALLOW - laragon
     break;
 
   default:
@@ -85,7 +88,7 @@ switch (window.location.hostname) {
 } // End of switch-case
 
 /*______*/
-// Do not allow embedding of this app (no re-serving through an alien iframe)
+// Do not allow embedding of this app (no channeling or re-serving through any 3rd-party iframes)
 if (self === top) {
     // Display normally
 } else {
