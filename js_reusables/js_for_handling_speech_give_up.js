@@ -69,8 +69,11 @@ function handleGiveUpButton() {
   function giveUpButtonIsEitherTouchedOrClickedFunction() {
     clickSoundForGlassyButtons.play();
     userHasGivenUp = true; // Redeclared in each lesson's js » This makes success tone "not play" before proceeding to the next lesson.
-    setTimeout(function () { stopListeningAndProceedToNext(); },100); // See each lesson's own js » Might do different things depending on the lesson
-    // NOTE THAT typeof might become necessary to detect the existence of variables and functions
+    setTimeout(checkAndGoAhead,100);
+    function checkAndGoAhead() {
+      if (typeof stopListeningAndProceedToNext === "function") {    stopListeningAndProceedToNext();    } // See each lesson's own js to find stopListeningAndProceedToNext » Might do different things depending on the lesson
+      else { parent.console.warn("stopListeningAndProceedToNext function doesn't exist???"); }
+    }
   }
 }
 // End of handleGiveUpButton

@@ -417,6 +417,7 @@ function stopListeningAndProceedToNext() {
   } else { // Give up and continue
     containerOfSingles.classList.add("darkenDown");
     if (canVibrate) {  navigator.vibrate([13]);  } // See js_for_every_single_html.js for canVibrate
+    tickUntilSuccessHappens.clear(); quicklyShowAllRemainingSingles().then(nowItIsOkToExit);
   }
   // Stop all microphone activity as soon as success happens and don’t wait until “beforeunload” fires.
   // See js_for_all_iframed_lesson_htmls to find what happens with window.onbeforeunload
