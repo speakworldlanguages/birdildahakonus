@@ -1,1 +1,1 @@
-Listen|Listen again|Start|Next
+﻿Listen|Listen again|Start|Next
