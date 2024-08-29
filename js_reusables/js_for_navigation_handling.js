@@ -44,7 +44,7 @@ window.addEventListener('load', function(){
           // AUTO-SLEEP is not counted as user being away according to document.hidden
           // This works only in case user presses ON/OFF button twice
           // MUST CHECK IF that is still the case with document.visibilityState === 'hidden' instead of document.hidden
-          if ('wakeLock' in navigator) {  tryToKeepTheScreenON();  } // See js_for_different_browsers_and_devices
+          if ('wakeLock' in navigator) {  tryToPreventScreenSleep();  } // See js_for_different_browsers_and_devices
       }
     }
     // Using window blur focus to handle sounds DOES NOT WORK... Double-fires, misfires etc... No easy solution.

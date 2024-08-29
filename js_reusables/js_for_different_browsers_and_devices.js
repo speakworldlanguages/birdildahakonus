@@ -33,13 +33,13 @@ microphoneOnOffVisualIndicator.classList.add("toIndicateThatSpeechRecognitionIsO
 // Only Firefox is the one who still won't do it as of August 2023
 // See https://w3c.github.io/screen-wake-lock/ AND ALSO See https://web.dev/wake-lock/
 const stayAwakeForThisManyMinutes = 3;
-function tryToKeepTheScreenON() {
+function tryToPreventScreenSleep() {
   navigator.wakeLock.request("screen").then(lock => {
     setTimeout(() => lock.release(), stayAwakeForThisManyMinutes * 60000); // Looks like it's working
   }).catch(error => {console.log(error);});
 }
 
-if ('wakeLock' in navigator) {  tryToKeepTheScreenON();  } // Also see js_for_all_iframed_lesson_htmls and find window.onload
+if ('wakeLock' in navigator) {  tryToPreventScreenSleep();  } // Also see js_for_all_iframed_lesson_htmls and js_for_navigation_handling
 // Also see visibilitychange below to see how wake-lock is reacquired after being lost due to tab navigation or pressing the OFF button
 
 window.addEventListener('DOMContentLoaded', function(){
@@ -106,7 +106,7 @@ window.addEventListener('DOMContentLoaded', function(){
     // Should we use mp3 for Desktop Safari too???? ???? ???? YES IF it runs faster and hover sounds are accurate
     console.warn("Will use HTML5 Audio instead of Web Audio on Mac OS");
     try {
-      Howler.usingWebAudio = false; // force html5 // Otherwise every alert mutes and unmutes all the sounds and it keeps toggling like that
+      Howler.usingWebAudio = false; // force html5 // Otherwise every alert mutes and unmutes all the sounds and it keeps toggling like that (at least with webm)
     } catch (e) {
       console.error(e);
     }

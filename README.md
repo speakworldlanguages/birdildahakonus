@@ -1,2 +1,2 @@
-﻿# No forks please! 
-“Zero” is the coolest number.
+﻿# No forks please!
+“Zero” is the most useful number.

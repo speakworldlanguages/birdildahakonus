@@ -67,7 +67,7 @@
               };
           } else {}  // Query exists but is irrelevant - Do nothing
         } else {} // No query - Do nothing
-      }
+      } // End of handleMobileConsole
     </script>
 
 
@@ -96,7 +96,7 @@
     <link rel="apple-touch-icon" href="/pwa/homescreen_icon/icon_for_pwa_tr.png">
     <link rel="manifest" href="/pwa/manifest_tr.json">
     <script>
-      if ("serviceWorker" in navigator) {  window.addEventListener("DOMContentLoaded",()=>{  navigator.serviceWorker.register("service-worker.js");  });  } // Takes too long compared to window load (almost a second)
+      if ("serviceWorker" in navigator) {  window.addEventListener("DOMContentLoaded",()=>{  navigator.serviceWorker.register("service-worker.js");  },{once:true});  } // Forgot what this means: Takes too long compared to window load (almost a second)
     </script>
 
     <!-- Inline style is for the pre-preloader dialog modal box only -->

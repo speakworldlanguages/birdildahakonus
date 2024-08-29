@@ -136,7 +136,7 @@ window.onload = function() { // DANGER: Do not use window.onload anywhere else. 
 
   // Restart anti sleep timer
   if (deviceDetector.isMobile) {
-    if ('wakeLock' in navigator) {  parent.tryToKeepTheScreenON();  } // See js_for_different_browsers_and_devices
+    if ('wakeLock' in navigator) {  parent.tryToPreventScreenSleep();  } // See js_for_different_browsers_and_devices
   }
   // ---
   if (parent.topContainerDivOfTheSlidingNavMenuForMobiles) { // Check if it exists like this or use deviceDetector.isMobile

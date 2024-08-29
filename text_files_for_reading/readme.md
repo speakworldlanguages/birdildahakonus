@@ -1,1 +1,1 @@
-﻿This directory is for the webm files that will teach how to read.
+﻿This directory is for image files that will teach the user how to read.
