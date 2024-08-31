@@ -1,2 +1,2 @@
-﻿You may also want to find the microphone icon in Safari and choose "Always allow"
-|You may also want to go to Safari settings and set the microphone from [Ask] to [Allow] permanently
+﻿You may want to find the microphone icon and choose "Always allow"
+|You may want to go to your browser's settings and set the microphone to [Allow] permanently

@@ -156,7 +156,7 @@ async function mouseDownMenuButtonF(event) { event.preventDefault();
       }
     },1500); // Let user watch the blinking animation and listen to the nice button sound
   }
-}
+} // END OF mouseDownMenuButtonF
 async function touchEndMenuButtonF(event) { event.preventDefault();
   if (!blockOtherWelcomeScreenButtonsUntilItIsSafe) { // Prevention of touch/click chaos » Do not let clicking one language and another one immediately after
     // Better use changedTouches[] when listening for touchend
@@ -199,7 +199,7 @@ async function touchEndMenuButtonF(event) { event.preventDefault();
       },1500); // Let user watch the blinking animation and listen to the nice button sound
     }
   }
-}
+} // END OF touchEndMenuButtonF
 // ---
 function checkIfThisLanguageWasPreviouslyStudied(twoLetterCodeOfLanguageToBeChecked) {
   if (savedProgress[twoLetterCodeOfLanguageToBeChecked]) { return true; console.log(".::This is a previously studied language::."); } // if it exists

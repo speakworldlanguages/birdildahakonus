@@ -81,8 +81,8 @@ function goBackToWelcomeScreenLanguageSelection() {
   if (parent.containerDivOfTheNavigationMenu.contains(parent.clickToGoToMainMenuDiv)) { // Guarantee that the app won't break
     parent.containerDivOfTheNavigationMenu.removeChild(parent.clickToGoToMainMenuDiv); // TESTED: It works. ,,, also see we_are_working_for_new_levels
   }
-
-  if (confirm(sleepAdviceA+"\n\n"+sleepAdviceB)) { // INSTEAD OF: alert(sleepAdviceA+"\n\n"+sleepAdviceB);
+  // ---
+  function proceedWithOrWithoutConfirmBox() {
     parent.ayFreym.classList.add("everyThingFadesToBlack"); // 700ms this css class must exist at parent level » NOT in this document's css
     setTimeout(function() {
       parent.ayFreym.classList.remove("everyThingFadesToBlack"); // Just this once do it without a fade in; a jump in with remove() will be enough or is even better?
@@ -94,8 +94,16 @@ function goBackToWelcomeScreenLanguageSelection() {
       // DON'T NEED this because it is handled by blank.html » parent.makeTheNavMenuComeUpOnMobiles(); // Note that, the function checks if the menu was up already,,, so it's safe to call
       // Sliding nav menu will be fixed (i.e. it won't move) on welcome screen as there are no touch listeners on parent.window i.e. swipes only work on the iframe window
     },1111);
-
-  } else {
-    // confirm box was canceled » User changed his/her mind and wants to stay
   }
-}
+  // ---
+  if (!isApple) { // Android and Windows
+    if (confirm(sleepAdviceA+"\n\n"+sleepAdviceB)) { // INSTEAD OF: alert(sleepAdviceA+"\n\n"+sleepAdviceB);
+      proceedWithOrWithoutConfirmBox();
+    } else {
+      // confirm box was canceled » User changed his/her mind and wants to stay
+    }
+  } else {
+    // Avoid all alert and confirm boxes on Apple because it mutes and unmutes and keeps toggling the sound ON&OFF
+    proceedWithOrWithoutConfirmBox(); // Feels nice enough when fires without any delay, so no setTimeouts here
+  }
+} // END OF goBackToWelcomeScreenLanguageSelection

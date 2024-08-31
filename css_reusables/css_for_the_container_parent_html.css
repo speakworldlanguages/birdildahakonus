@@ -246,9 +246,11 @@ footer{
   transform: translate(-50%,calc(3vmin + 8px + -50vh)); /*With just a little space between the box and top of screen*/
   /*Older phones will not recognize dvh so we try to handle the situation without it*/
 }
-.letYouMustAllowMicrophoneDialogAppearDesktop{
-  /* margin-top: calc(0vh + 50px); */
-  transform: translate(-50%,calc(-50% + 50px)); /* Move 50px downwards after centering it » Desktop Chrome's hanging prompt box is about 50px high*/
+.letYouMustAllowMicrophoneDialogAppearDesktopChrome{
+  transform: translate(-50%,calc(-50% + 50px)); /* For Chorme move it at least 50px downwards after centering it, because desktop Chrome's prompt box hangs from top and is about 50px high*/
+}
+.letYouMustAllowMicrophoneDialogAppearDesktopSafari{
+  transform: translate(-50%,calc(-50% + 150px)); /*Let's see if 150px works with Safari and AppleChrome --- RESULT: Nice enough on MacOS Safari*/
 }
 .letYouMustAllowMicrophoneDialogDisappear{
   /* margin-top:-100vh;  */

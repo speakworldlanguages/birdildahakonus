@@ -16,15 +16,7 @@ window.addEventListener("load",function() {
   // soundFileFormat exists in js_for_different_browsers_and_devices
   enterSound = new Howl({  src: ["/user_interface/sounds/fullscreen_open."+soundFileFormat]  });
   exitSoundIsAlsoTouchStart = new Howl({  src: ["/user_interface/sounds/fullscreen_exit."+soundFileFormat]  });
-  /* DEPRECATE and use soundFileFormat from js_for_different_browsers_and_devices
-  if (isApple) { // Do not access isApple before DOMContentLoaded in js_for_different_browsers_and_devices
-    enterSound = new Howl({  src: ["/user_interface/sounds/fullscreen_open.mp3"]  });
-    exitSoundIsAlsoTouchStart = new Howl({  src: ["/user_interface/sounds/fullscreen_exit.mp3"]  });
-  } else {
-    enterSound = new Howl({  src: ["/user_interface/sounds/fullscreen_open.webm"]  });
-    exitSoundIsAlsoTouchStart = new Howl({  src: ["/user_interface/sounds/fullscreen_exit.webm"]  });
-  }
-  */
+
   const iFrameInFullscreenHandling = document.getElementsByTagName('IFRAME')[0]; // Used to be .getElementById('theIdOfTheIframe'); // Check js_for_the_parent_all_browsers_all_devices.js prevent conflicts
   let iFrameWindowInFullscreenHandling = null;
   let iFrameDocumentInFullscreenHandling = null;
@@ -51,28 +43,14 @@ window.addEventListener("load",function() {
       iFrameDocumentInFullscreenHandling.addEventListener("touchstart", handleTouchSoundBeforeFullscreen);
     }
     function handleTouchForFullscreen() {
-      if (!hasGoneFullscreen && mobileCanGoFullscreenNow){ openFullscreen(); }
-      /* IDEA
-      // If a tablet screen size is BIG ENOUGH we can leave it without going FULLSCREEN
-      const smallerDimension = Math.min(window.screen.width, window.screen.height); // Better use innerWidth & innerHeight
-      // SUSPECTED PROBLEM: Could smallerDimension be different for the parent and the iframe???
-      if (smallerDimension<599) { // 650 should be a good threshold value
-        if (!hasGoneFullscreen){ openFullscreen(); }
-        // But a user could still prefer to view the app in fullscreen mode
-        // What could be a smart way to offer the going-fullscreen option for those whose screens are taller than 650???
-      } else {
-        // Double tap detection, maybe ??? If so then how do we let the user know how to enter fullscreen mode
-        // Display a short [To view the app in fullscreen mode, you must ...] message -> When exactly ? How about the first window-load at parent?
-        // Or should we display a permanent small button on a corner ???
-        // MUST TEST: iPad Safari may or may not allow going fullscreen with a touchstart. If it doesn't then use touchend
-        window.document.addEventListener("touchstart", handleDoubleTouchForFullscreen, {once:true});
-        function handleDoubleTouchForFullscreen() {
-          if (!hasGoneFullscreen){ openFullscreen(); }
-          // Remove the event listener when time is up for the second touch to be counted as a double-touch
-          setTimeout(function () { window.document.removeEventListener("touchstart", handleDoubleTouchForFullscreen); }, 700);
+      if (!hasGoneFullscreen && mobileCanGoFullscreenNow){
+        const screenArea = screen.width*screen.height;
+        if (screenArea<500000) { // 800x600=480000
+          openFullscreen();
+        } else {
+          console.log('Screen size of this device is big enough to enjoy the content without fullscreen');
         }
       }
-      */
     }
     function handleTouchSoundBeforeFullscreen() {
       // Test on a big tablet to see if it's better to prevent the first touchstart sound
