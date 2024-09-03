@@ -291,7 +291,7 @@ function tellTheUserToChangeOrUpdateTheBrowser() {
 /*________________window LOAD___________________*/
 let allowMicrophoneBlinker;
 var pleaseAllowSound; // Also used in lessons as "Hey! New lesson is loaded" sound to recapture wandering user's attention when was viewing another browser tab
-let safariHowToPermanentlyAllowMicP = document.createElement("P"); safariHowToPermanentlyAllowMicP.innerHTML = "…"; // If this method fails then create a new box in js_for_info_boxes_in_parent » Remember to use "var" instead of "let" if that happens
+// UNCERTAIN: let safariHowToPermanentlyAllowMicP = document.createElement("P"); safariHowToPermanentlyAllowMicP.innerHTML = "…"; // It worked but do we really need it?
 let micPermissionHasChangedToGrantedSound;
 
 window.addEventListener("load",function() {
@@ -299,15 +299,18 @@ window.addEventListener("load",function() {
   micPermissionHasChangedToGrantedSound = new Howl({  src: ["/user_interface/sounds/notification2_close."+soundFileFormat]  }); // See above to find soundFileFormat
   allowMicrophoneBlinker = document.getElementById('allowMicrophoneDivID'); // See index.html
   const filePathForAllowMicrophoneText = "/user_interface/text/"+userInterfaceLanguage+"/0-allow_microphone.txt";
-  fetch(filePathForAllowMicrophoneText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ allowMicrophoneBlinker.children[1].innerHTML =  contentOfTheTxtFile; getTheNextFile(); });
+  fetch(filePathForAllowMicrophoneText,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ allowMicrophoneBlinker.children[1].innerHTML =  contentOfTheTxtFile; /*getTheNextFile();*/ });
+  /* UNCERTAIN
   function getTheNextFile() {
     if (isApple) { // isApple instead of isSafari considering the case where Chrome being installed and used on an Apple device
       const pathOfHowToAllowMicPermanentlyOnSafariTexts = "/user_interface/text/"+userInterfaceLanguage+"/0-allow_microphone_permanently_on_safari.txt";
       fetch(pathOfHowToAllowMicPermanentlyOnSafariTexts,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){  handleSafariMicHowToTexts(contentOfTheTxtFile);  });
     }
   }
+  */
 }, { once: true });
 
+/* UNCERTAIN
 function handleSafariMicHowToTexts(receivedTxt) {
   // REMEMBER: We want to avoid alert boxes especially in Safari
   if (deviceDetector.device == "desktop") { // MacOS
@@ -323,10 +326,10 @@ function handleSafariMicHowToTexts(receivedTxt) {
   // PREVIOUSLY: We tried getting away with injecting safariHowToPermanentlyAllowMicP into the allowMicrophoneBlinker
 
   // August 2024: As of Safari 17.6 reappearing permission prompt bug seems to be fixed on MacOS
-  // BUT: It is not solved on iPad so there is still need for 0-allow_microphone_permanently_on_safari.txt
+  // BUT: It is not solved on iPad, dialog appears at least twice. It is uncertain if there is still need for 0-allow_microphone_permanently_on_safari.txt
   // NOTE: The problem persists both on iPad-Safari and iPad-AppleChrome
-
 }
+*/
 
 const blockAllClicksAndHoversDIV = document.createElement("DIV"); // During mic permission prompt
 function removeAllowMicrophoneBlinkerSoftly() {
