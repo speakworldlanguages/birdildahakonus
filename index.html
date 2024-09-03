@@ -52,23 +52,10 @@
     <!--  -->
     <!-- SOLVED: THERE USED TO BE A CONFLICT between eruda and the canvas element, probably because they both used "ctx" as the variable name -->
     <!-- August 2024: Will use eruda from cdn instead of loading from local js file | CAUTION: iframes must still use parent.console.log -->
-    <script>
-      window.addEventListener("DOMContentLoaded",handleMobileConsole,{once:true});
-      function handleMobileConsole() {
-        if (window.location.search) {
-          if (window.location.search.includes('debug')) {
-              console.log('Activating portable debug console');
-              const consoleActivatorScript = document.createElement("script"); consoleActivatorScript.async = false; document.body.appendChild(consoleActivatorScript); // Add the script to the DOM
-              consoleActivatorScript.src = "https://cdn.jsdelivr.net/npm/eruda";
-              // Ensure eruda.init() is called once the script is loaded
-              consoleActivatorScript.onload = function() {
-                  eruda.init();
-                  console.log("Eruda has been initialized.");
-              };
-          } else {}  // Query exists but is irrelevant - Do nothing
-        } else {} // No query - Do nothing
-      } // End of handleMobileConsole
-    </script>
+    <!-- ERUDA -->
+    <!-- TO ACTIVATE MOBILE CONSOLE, UNCOMMENT THE FOLLOWING AND THEN ADD ?debug TO THE URL -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/eruda">/*This will cause a slight delay during app maintenance, so comment it out when it is not necessary*/</script> -->
+    <!-- <script>  if (window.location.search && window.location.search.includes('debug')) {  eruda.init();  console.log("Eruda has been initialized.");  }  </script> -->
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -95,9 +82,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#4d606f">
     <link rel="apple-touch-icon" href="/pwa/homescreen_icon/icon_for_pwa_tr.png">
     <link rel="manifest" href="/pwa/manifest_tr.json">
-    <script>
-      if ("serviceWorker" in navigator) {  window.addEventListener("DOMContentLoaded",()=>{  navigator.serviceWorker.register("service-worker.js");  },{once:true});  } // Forgot what this means: Takes too long compared to window load (almost a second)
-    </script>
+    <!-- See the end of body for service worker -->
 
     <!-- Inline style is for the pre-preloader dialog modal box only -->
     <style>
@@ -252,6 +237,19 @@
           }
         }
       }
+    </script>
+
+    <!-- SERVICE WORKER -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+            .then((registration) => {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch((error) => {
+                console.log('Service Worker registration failed:', error);
+            });
+        }
     </script>
 
     <!-- WHAT TO DISPLAY DURING APP MAINTENANCE :: UNCOMMENT WHEN NECESSARY -->

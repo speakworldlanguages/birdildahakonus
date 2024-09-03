@@ -104,6 +104,13 @@ function loadingIsCompleteFunction() {
       // createAndHandleInfoBoxType1BeforeLessonStarts will fire startTheLesson 1.5 seconds after its OK button is clicked/touched
     });
   }
+  else if (studiedLang == "ko") {
+    const pathOfNotificationAboutLevelsOfPoliteness = "/user_interface/text/"+userInterfaceLanguage+"/1-1-2_saram_levels_of_politeness.txt";
+    fetch(pathOfNotificationAboutLevelsOfPoliteness,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+      new SuperTimeout(function(){ createAndHandleInfoBoxType1BeforeLessonStarts(); putNotificationTxtIntoThisP1.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
+      // createAndHandleInfoBoxType1BeforeLessonStarts will fire startTheLesson 1.5 seconds after its OK button is clicked/touched
+    });
+  }
   else if (studiedLang == "??") {
 
   }
