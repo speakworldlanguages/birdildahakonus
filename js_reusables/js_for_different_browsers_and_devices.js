@@ -323,10 +323,10 @@ function handleSafariMicHowToTexts(receivedTxt) {
 
   // wrap method seems to work for positioning the second line of text inside the div
   allowMicrophoneBlinker.style.flexWrap = "wrap"; // Rather than » allowMicrophoneBlinker.style.flexDirection = "column";
-  // PREVIOUSLY: We tried getting away with injecting safariHowToPermanentlyAllowMicP into the allowMicrophoneBlinker
+  // PREVIOUSLY: We tried getting away with injecting safariHowToPermanentlyAllowMicP into the allowMicrophoneBlinker // It worked but do we really need that?
 
-  // August 2024: As of Safari 17.6 reappearing permission prompt bug seems to be fixed on MacOS
-  // BUT: It is not solved on iPad, dialog appears at least twice. It is uncertain if there is still need for 0-allow_microphone_permanently_on_safari.txt
+  // August 2024: As of Safari 17.6 reappearing permission prompt bug seems to be fixed on MacOS (desktop) - CANNOT REMEMBER: Was it already good when the problem kept occuring on iPhone+iPad
+  // ANYHOW: It is not solved on iPad, dialog appears at least twice. It is uncertain if there is still need for 0-allow_microphone_permanently_on_safari.txt
   // NOTE: The problem persists both on iPad-Safari and iPad-AppleChrome
 }
 */
