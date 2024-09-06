@@ -58,21 +58,25 @@
     <!-- <script>  if (window.location.search && window.location.search.includes('debug')) {  eruda.init();  console.log("Eruda has been initialized.");  }  </script> -->
 
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Global site tag (gtag.js) - Google Analytics - Looks like this gets blocked by Safari as is marked as 'known tracker' -->
     <script>
-
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8FWCR3LS62');
       window.addEventListener("load",startTracking,{once:true});
       function startTracking() {
         // Get the array ready
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-8FWCR3LS62');
         setTimeout(function () {
           const delayedScript = document.createElement("script"); delayedScript.async = true; delayedScript.src = "https://www.googletagmanager.com/gtag/js?id=G-8FWCR3LS62"; document.body.appendChild(delayedScript);
-        },3000);
+        },11111); // Ignore if user leaves within the first 10 seconds after landing
       }
-
+      // In case someone proceeds to the financial third-party
+      function gtag_report_conversion(url) { // See information.js
+        var callback = function () {          /*if (typeof(url) != 'undefined') {            window.location = url;          }*/        };
+        gtag('event', 'conversion', {            'send_to': 'AW-16690891727/uIiECMShzc8ZEM-X65Y-',            'value': 1.0,            'currency': 'USD',            'event_callback': callback        });
+        return false;
+      }
     </script>
 
     <!-- PWA -->

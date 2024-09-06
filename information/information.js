@@ -148,7 +148,7 @@ window.addEventListener('load', function(){
     document.body.appendChild(whiteFullnessDIV0);
     monthlyOpt.addEventListener("mouseenter", function(){  whiteFullnessDIV0.style.opacity = "0.15"; hoverTouchstartSound.play();  });
     monthlyOpt.addEventListener("mouseleave", function(){  whiteFullnessDIV0.style.opacity = "0";  });
-    monthlyOpt.addEventListener("mouseup", function(){    clickTouchendSound.play();    handleNavigationToPatreon();  }, { once: true });
+    monthlyOpt.addEventListener("mouseup", function(){    clickTouchendSound.play();    handleNavigationToPatreon(); parent.gtag_report_conversion(); parent.savePotentialDonor(); }, { once: true });
   }
   //--- Latin fonts are loaded with DOMContentLoaded but this one better start loading after window-load because it's almost 5MB
   if (needHitoicJapaneseFonts) {
