@@ -60,7 +60,7 @@ function checkLocalStorageToHandleData() {
               const second = String(currentDate.getSeconds()).padStart(2, '0');
               const formattedDateTime = `${year}-${month}-${day}|${hour}:${minute}:${second}`; //console.log(formattedDateTime);
               // Write to firebase realtime database regardlessly, either if IP check succeeds or fails
-                set(ref(db, "New user from "+jsonResponse.country+"/"+jsonResponse.region+"/"+jsonResponse.city+" at "+formattedDateTime), {
+                set(ref(db, "New users from "+jsonResponse.country+"/"+jsonResponse.region+"/"+jsonResponse.city+" at "+formattedDateTime), {
                   /* Before September 2024
                   user_interface: userInterfaceLanguage,
                   ip: aypii,
@@ -78,6 +78,6 @@ function checkLocalStorageToHandleData() {
         }
         // Call the function to get IP address on page load
         getIPAddress();
-      }, 5333); // Ignore those who spent less than about 30 seconds in the app
+      }, 33333); // Ignore those who spent less than about 30 seconds in the app
   }
 }
