@@ -68,7 +68,8 @@ function checkLocalStorageToHandleData() {
                   ua_string: user_agent_string*/
                   appDomain: location.href,
                   eyepea: jsonResponse1.ip,
-                  using: detectedBrowserName+" on "+detectedOS_name+" using a "+detectedBrandName+" "+deviceDetector.device // See js_for_different_browsers_and_devices
+                  using: detectedBrowserName+" on "+detectedOS_name+" using a "+detectedBrandName+" "+deviceDetector.device, // See js_for_different_browsers_and_devices
+                  arrivedFrom: document.referrer || "unknown"
                 }).then(()=>{
                   console.log("User visit saved"); // Works OK
                   localStorage.setItem("thisUserIsAlreadyCounted","yes");
