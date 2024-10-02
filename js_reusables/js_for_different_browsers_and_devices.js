@@ -226,7 +226,9 @@ window.addEventListener('DOMContentLoaded', function(){
       if (result1.state == 'granted') {
         willUserTalkToSpeechRecognition = true; // Necessary: In case user is on an unknown browser that supports "Speech Recognition"
         // -
-        console.log("Microphone permission is already set to GRANTED!");
+        console.log("Microphone permission is already set to GRANTED!"); // This can practically happen if user clears the browser cache after using the app for the first time (which will delete all localStorage data).
+        // If the browser's cache was indeed manually cleared THE CONFLICT MUST BE RESOLVED » The browser remembers that mic was allowed but the localStorage key, where the app took note of that, doesn't exist anymore.
+        localStorage.allowMicrophoneDialogHasAlreadyBeenDisplayed = "probably"; // By creating the key here, we can prevent [ALLOW MIC] prompt which is, in this case, not only unnecessary but will also break the app if the custom "Please allow" div shows » since onchange will never fire to make it disappear.
         // -
       } else if (result1.state == 'denied') {
         willUserTalkToSpeechRecognition = false; // Shorten the waiting time when showing c1 c2 c3 visuals and change the button from SKIP to NEXT
