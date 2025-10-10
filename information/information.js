@@ -179,10 +179,10 @@ function handleNavigationToPatreon() {
   if (needLatinFonts) { firstLine.style.fontFamily = 'manheart, serif'; secondLine.style.fontFamily = 'manheart, serif'; }
   if (needHitoicJapaneseFonts) { firstLine.style.fontFamily = 'DFKai-SB, dfkai, serif'; secondLine.style.fontFamily = 'DFKai-SB, dfkai, serif'; } // If kaiu.ttf exists in windows fonts try to use it (DFKai-SB),,, otherwise hope that it is loaded from /user_interface/fonts/ (dfkai:almost 5MB)
   //---
-  setTimeout(function(){ markContainerDIV.appendChild(firstLine); markContainerDIV.appendChild(secondLine); },4000);
-  setTimeout(function(){ firstLine.style.opacity = "1";  },4600);
-  setTimeout(function () { authorSaysToPotentialDonor.play(); }, 4700);
-  setTimeout(function(){ secondLine.style.opacity = "1";  },6400);
+  setTimeout(function(){ markContainerDIV.appendChild(firstLine); markContainerDIV.appendChild(secondLine); },3000);
+  setTimeout(function(){ firstLine.style.opacity = "1";  },3000);
+  setTimeout(function () { authorSaysToPotentialDonor.play(); }, 3000);
+  setTimeout(function(){ secondLine.style.opacity = "1";  },5000);
   //-
   if (needLatinFonts) {
     //DEPRECATED secondLine.style.textAlign = "justify";
@@ -197,7 +197,7 @@ function handleNavigationToPatreon() {
     // EXIT FULLSCREEN IF WAS FULLSCREEN
     setTimeout(function () {  if (parent.hasGoneFullscreen) {    parent.closeFullscreen();    }  },100);
     // Using "_top" instead of "_parent" could be necessary if the parent lives in a masking domain name container frame
-    setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },1200); // WARNING: Cannot open patreon in a new tab using _blank because Chrome blocks it considering as POP-UP
+    setTimeout(function () {  window.open("https://patreon.com/ForTerranationalBonocracy_USD","_top");   },500); // WARNING: Cannot open patreon in a new tab using _blank because Chrome blocks it considering as POP-UP
   }
   // -
 }
