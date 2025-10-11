@@ -191,7 +191,7 @@ mark{
 .markDesktop{
   opacity: 0;
   font-size: 200%; max-width: 85vw; min-width: 62vw; transform: translateY(-3.5vmin);
-  transition: opacity 4s;
+  transition: opacity 2s;
   letter-spacing: 1.2px;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: rgba(0,0,0,0.9);
@@ -199,7 +199,7 @@ mark{
 .markTabletAndPhone{
   opacity: 0;
   font-size: 6.5vmin; width: 80vw;
-  transition: opacity 3.5s;
+  transition: opacity 2s;
   letter-spacing: 0.5px;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: rgba(0,0,0,0.5);
