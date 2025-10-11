@@ -179,7 +179,7 @@ function handleNavigationToPatreon() {
   if (needLatinFonts) { firstLine.style.fontFamily = 'manheart, serif'; secondLine.style.fontFamily = 'manheart, serif'; }
   if (needHitoicJapaneseFonts) { firstLine.style.fontFamily = 'DFKai-SB, dfkai, serif'; secondLine.style.fontFamily = 'DFKai-SB, dfkai, serif'; } // If kaiu.ttf exists in windows fonts try to use it (DFKai-SB),,, otherwise hope that it is loaded from /user_interface/fonts/ (dfkai:almost 5MB)
   //---
-  setTimeout(function(){ markContainerDIV.appendChild(firstLine); markContainerDIV.appendChild(secondLine); },4600);
+  setTimeout(function(){ markContainerDIV.appendChild(firstLine); markContainerDIV.appendChild(secondLine); },500); // 500 is arbitrary since nothing will show as initial opacity is 0 > See css
   setTimeout(function(){ firstLine.style.opacity = "1";  },4600); // opacity transition duration set in CSS > See information.css
   setTimeout(function () { authorSaysToPotentialDonor.play(); }, 4600);
   setTimeout(function(){ secondLine.style.opacity = "1";  },4600+6000); // opacity transition duration set in CSS > See information.css // 6000 is due to the audio > See dev source
