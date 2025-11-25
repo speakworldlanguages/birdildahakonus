@@ -94,20 +94,14 @@ function loadingIsCompleteFunction() {
       // createAndHandleInfoBoxType1BeforeLessonStarts() will fire startTheLesson() 1.5 seconds after its OK button is clicked/touched
     });
   }
-  else if (studiedLang == "ar") { // Display the warning about TANWEEN to users who want to learn the Standard Arabic.
-    const pathOfNotificationAboutTanween = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_arabic_tanween.txt";
-    fetch(pathOfNotificationAboutTanween,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+  else if (studiedLang == "tr") {
+    const pathOfNotificationAboutRenIntonation = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_turk-ish.txt";
+    fetch(pathOfNotificationAboutRenIntonation,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
       new SuperTimeout(function(){ createAndHandleInfoBoxType1BeforeLessonStarts(); putNotificationTxtIntoThisP1.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
       // createAndHandleInfoBoxType1BeforeLessonStarts() will fire startTheLesson() 1.5 seconds after its OK button is clicked/touched
     });
   }
-  else if (studiedLang == "ja") { // Display the explanation about "mizu" and "omizu".
-    const pathOfNotificationAboutMizuOmizu = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_hito_mizu_omizu.txt"; // See js_for_every_single_html to find userInterfaceLanguage
-    fetch(pathOfNotificationAboutMizuOmizu,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
-      new SuperTimeout(function(){ createAndHandleInfoBoxType1BeforeLessonStarts(); putNotificationTxtIntoThisP1.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
-      // createAndHandleInfoBoxType1BeforeLessonStarts() will fire startTheLesson() 1.5 seconds after its OK button is clicked/touched
-    });
-  }
+  // See continueLesson function below for other notifications that will show just before speech recognition
   else if (studiedLang == "??") {
 
   }
@@ -321,7 +315,34 @@ function goFromCDtoEF() {
 }
 
 function continueLesson() {
-  display_nowItsYourTurn_animation();
+  if (studiedLang == "ar") { // Display the warning about TANWEEN to users who want to learn Standard Arabic.
+    const pathOfNotificationAboutTanween = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_arabic_tanween.txt";
+    fetch(pathOfNotificationAboutTanween,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+      new SuperTimeout(function(){ createAndHandleInfoBoxType1JustBeforeSpeechRecognition(); putNotificationTxtIntoThisP3.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
+      // createAndHandleInfoBoxType1JustBeforeSpeechRecognition() will fire display_nowItsYourTurn_animation() 1.5 seconds after its OK button is clicked/touched
+    });
+  }
+  else if (studiedLang == "ja") { // Display the explanation about "mizu" and "omizu".
+    const pathOfNotificationAboutMizuOmizu = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_hito_mizu_omizu.txt"; // See js_for_every_single_html to find userInterfaceLanguage
+    fetch(pathOfNotificationAboutMizuOmizu,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+      new SuperTimeout(function(){ createAndHandleInfoBoxType1JustBeforeSpeechRecognition(); putNotificationTxtIntoThisP3.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
+      // createAndHandleInfoBoxType1JustBeforeSpeechRecognition() will fire display_nowItsYourTurn_animation() 1.5 seconds after its OK button is clicked/touched
+    });
+  }
+  else if (studiedLang == "tr") {
+    // "Su" is only one syllable long. Chrome users must make some random noise to wake speech recognition up or say it repeatedly.
+    // Display: If speech recognition doesn't work just make some random noise to wake it up and then say the answer or say it a few times repeatedly. This is a workaround for machine recognition in case the sound is too short such as this one.
+    const pathOfNotificationAboutMizuOmizu = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-speech_input_might_be_too_short.txt"; // See js_for_every_single_html to find userInterfaceLanguage
+    fetch(pathOfNotificationAboutMizuOmizu,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+      new SuperTimeout(function(){ createAndHandleInfoBoxType1JustBeforeSpeechRecognition(); putNotificationTxtIntoThisP3.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
+      // createAndHandleInfoBoxType1JustBeforeSpeechRecognition() will fire display_nowItsYourTurn_animation() 1.5 seconds after its OK button is clicked/touched
+    });
+  }
+  else if (studiedLang == "??") {
+
+  } else {
+    display_nowItsYourTurn_animation();
+  }
 }
 
 /* Get ready for speech recognition */

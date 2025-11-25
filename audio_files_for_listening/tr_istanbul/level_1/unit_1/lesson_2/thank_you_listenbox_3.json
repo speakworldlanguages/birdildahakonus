@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "duration": 1.40
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.06, "value": "XX" },
+    { "start": 0.06, "end": 0.13, "value": "SS" },
+    { "start": 0.13, "end": 0.19, "value": "EE" },
+    { "start": 0.19, "end": 0.28, "value": "SS" },
+    { "start": 0.28, "end": 0.36, "value": "EE" },
+    { "start": 0.36, "end": 0.48, "value": "SS" },
+	{ "start": 0.48, "end": 0.51, "value": "UU" },
+	{ "start": 0.51, "end": 0.54, "value": "LL" },
+	{ "start": 0.54, "end": 0.61, "value": "EE" },
+	{ "start": 0.61, "end": 0.67, "value": "NN" },
+	{ "start": 0.67, "end": 0.74, "value": "EE" },
+	{ "start": 0.74, "end": 0.78, "value": "LL" },
+	{ "start": 0.78, "end": 0.85, "value": "SS" },
+	{ "start": 0.85, "end": 1.04, "value": "MM" },
+    { "start": 1.04, "end": 1.40, "value": "XX" }
+  ]
+}

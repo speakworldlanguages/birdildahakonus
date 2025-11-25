@@ -1,0 +1,3 @@
+﻿Mikrofona söylemen gereken şey çok kısa olduğunda konuşma algılama özelliği kelimeyi yakalamakta zorlanabilir.
+Kelimeyi söylemeden önce herhangi başka bir ses çıkarmayı ya da üstüste bir kaç kez söylemeyi deneyebilirsin.
+Eğer konuşma algılama özelliği yine de çalışmazsa atlayıp sıradaki derse geçebilirsin.

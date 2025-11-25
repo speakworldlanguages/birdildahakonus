@@ -1,3 +1,3 @@
 ﻿<strong>Short:</strong> To play the game just repeat what you hear.
-<strong>Long:</strong> As you get better in Hito language, you will realize that some adjectives take the <span style="white-space:nowrap;">«i-い»</span> suffix and some do not.
-<i>Advice:</i> Do not to rush into conclusions. As you start recognizing grammatical patterns it is better if you keep exploring slowly rather than trying to discover rapidly.
+<strong>Long:</strong> In Hito language, there are <span style="white-space:nowrap; display:inline-block;">い-adjective</span> colors and <span style="white-space:nowrap; display:inline-block;">noun-type</span> colors. The difference is what syllable sound they take at their end.
+<i>Advice:</i> Do not to rush into conclusions. As you start recognizing grammatical patterns it is better to take your time and internalize.

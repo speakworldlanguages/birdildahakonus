@@ -1,4 +1,4 @@
 ﻿Speech recognition is not working.
-Try using Chrome on Windows or Android.
-|You may need to update your browser or try using Chrome on Windows or Android to run this app.
+Try using Chrome on Windows, Linux or Android.
+|You may need to update your browser or try using Chrome on Windows, Linux or Android to run this app.
 |Speech recognition may not function properly when voice input is too short. If this seems to be the case, you can try saying it TWICE or maybe three times QUICKLY.

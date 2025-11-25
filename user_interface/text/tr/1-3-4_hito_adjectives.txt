@@ -1,3 +1,3 @@
 ﻿<strong>Kısaca:</strong> Oyunu oynamak için duyduklarını tekrar et yeter.
-<strong>Uzunca:</strong> İlerledikçe göreceksin ki Hitoca dilinde sıfatlar iki türlüdür: <span style="white-space:nowrap;">«i-い»</span> sıfatları ve <span style="white-space:nowrap;">«no-の/na-な»</span> sıfatları.
-Tavsiye: Her kural her duruma uygulanmıyor olabilir. Gereğinden fazla tahmin yürüterek kendini hayal kırıklığına uğratma. Çözmeye değil biriktirmeye çalış.
+<strong>Uzunca:</strong> Hitoca dilinde renkler iki türlüdür. Sıfat kökenli olanların sonuna <span style="white-space:nowrap; display:inline-block;">«i-い»</span> takısı gelir. İsim kökenli olanların sonuna <span style="white-space:nowrap; display:inline-block;">«no-の»</span> takısı gelir.
+Öneri: Gramer kurallarını çabuk çözmeye değil, sabırla biriktirmeye çalış.

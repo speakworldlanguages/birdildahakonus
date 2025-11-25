@@ -118,7 +118,7 @@ let triesForProgressChartFiles = 0;
 function cacheProgressChartCommonFiles() { // LOOKS LIKE IMPOSSIBLE: Make progress_chart offline compatible without introducing the obligation of deleting outdated caches
   return new Promise(async (resolve,reject) => { // Do the «async» here to be able to make use of «await»
     // Create the folder-like storage slots
-    const cacheForTheProgressChart = await caches.open('progress-chart-assets-April2024'); // Note the name to be able to delete the older cache
+    const cacheForTheProgressChart = await caches.open('progress-chart-assets-April2024'); // Note the name to be able to delete the older cache // WILL THROW ERROR WITHOUT HTTPS
     // When older files are updated OR new files are added THE PREVIOUS CACHE MUST BE DELETED
     const listOfEverythingInProgressChart = [
       "/progress_chart/images/1_1_1_water.webp",

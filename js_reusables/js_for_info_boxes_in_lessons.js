@@ -9,21 +9,26 @@
 /* VARIABLES AND CONSTANTS*/
 const putNotificationTxtIntoThisP1 = document.createElement("P");
 const putNotificationTxtIntoThisP2 = document.createElement("P");
+const putNotificationTxtIntoThisP3 = document.createElement("P");
 const okButtonToCloseInfoBoxType1 = document.createElement("DIV");
 const okButtonToCloseInfoBoxType1AmidLesson = document.createElement("DIV");
+const okButtonToCloseInfoBoxType1BeforeSpeechRecognition = document.createElement("DIV");
 // Put something like [OK], [Got it], [I see], [Oh really?], [Wow], [That's interesting] etc into the button.
 let okTexts = "&#10004;|&#10004;"; // Default content of the OK box is a "tick ✔" mark to be shown in case fetch fails
 okButtonToCloseInfoBoxType1.innerHTML = okTexts.split("|")[0];
-okButtonToCloseInfoBoxType1AmidLesson.innerHTML = okTexts.split("|")[1];
+okButtonToCloseInfoBoxType1AmidLesson.innerHTML = okTexts.split("|")[0];
+okButtonToCloseInfoBoxType1BeforeSpeechRecognition.innerHTML = okTexts.split("|")[0];
 const pathOfOkCloseTheBox = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-ok_i_understand.txt";
 fetch(pathOfOkCloseTheBox,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){ okTexts=contentOfTheTxtFile; assignOKButtonText(); });
 function assignOKButtonText() {
   if(Math.random()<0.5) { // Heads or tails
     okButtonToCloseInfoBoxType1.innerHTML = okTexts.split("|")[0];
     okButtonToCloseInfoBoxType1AmidLesson.innerHTML = okTexts.split("|")[1];
+    okButtonToCloseInfoBoxType1BeforeSpeechRecognition.innerHTML = okTexts.split("|")[0];
   } else {
     okButtonToCloseInfoBoxType1.innerHTML = okTexts.split("|")[1];
     okButtonToCloseInfoBoxType1AmidLesson.innerHTML = okTexts.split("|")[0];
+    okButtonToCloseInfoBoxType1BeforeSpeechRecognition.innerHTML = okTexts.split("|")[0];
   }
 }
 let popUpNotificationType1Sound;
@@ -41,15 +46,15 @@ function unloadNotificationType1Sounds() {
   dismissNotificationType1Sound.unload();
 }
 
-/*Info box with only one [OK] button*/
+/*Info box with only one [OK] button to show at the beginning of the lesson*/
 function createAndHandleInfoBoxType1BeforeLessonStarts() {
   popUpNotificationType1Sound.play();
-  const notificationBoxContainer = document.createElement("DIV");
-  notificationBoxContainer.classList.add("notificationBG"); // See css_for_info_boxes_in_lessons
-  document.body.appendChild(notificationBoxContainer);
+  const notificationBoxContainer1 = document.createElement("DIV");
+  notificationBoxContainer1.classList.add("notificationBG"); // See css_for_info_boxes_in_lessons
+  document.body.appendChild(notificationBoxContainer1);
   const notificationBoxItself = document.createElement("DIV");
   notificationBoxItself.classList.add("notificationRoundedBox"); // See css_for_info_boxes_in_lessons
-  notificationBoxContainer.appendChild(notificationBoxItself);
+  notificationBoxContainer1.appendChild(notificationBoxItself);
 
   notificationBoxItself.appendChild(putNotificationTxtIntoThisP1);
 
@@ -70,14 +75,15 @@ function createAndHandleInfoBoxType1BeforeLessonStarts() {
   else { okButtonToCloseInfoBoxType1.addEventListener("mousedown",okButtonIsClickedToStartLesson); }
   function okButtonIsClickedToStartLesson(event) { event.preventDefault(); event.stopPropagation();
     dismissNotificationType1Sound.play();
-    notificationBoxContainer.classList.add("addThisToAButtonForPlayStationStyleClick"); // See css_for_every_single_html_css
-    setTimeout(function () {     notificationBoxContainer.parentNode.removeChild(notificationBoxContainer);     },1000); // The animation completes in 600ms
+    notificationBoxContainer1.classList.add("addThisToAButtonForPlayStationStyleClick"); // See css_for_every_single_html_css
+    setTimeout(function () {     notificationBoxContainer1.parentNode.removeChild(notificationBoxContainer1);     },1000); // The animation completes in 600ms
     if (typeof startTheLesson === "function") {
       setTimeout(function () {     startTheLesson();     }, 1500);
     } else { parent.console.error("Error: createAndHandleInfoBoxType1BeforeLessonStarts() needs startTheLesson() function which doesn't exist???"); }
   }
 }
 
+/*Info box with only one [OK] button to show in the middle or at the end of the lesson*/
 function createAndHandleInfoBoxType1AmidLesson() {
   popUpNotificationType1Sound.play();
   const notificationBoxContainer2 = document.createElement("DIV");
@@ -110,6 +116,42 @@ function createAndHandleInfoBoxType1AmidLesson() {
     if (typeof continueLesson === "function") {
       setTimeout(function () {     continueLesson();     }, 1500);
     } else { parent.console.error("Error: createAndHandleInfoBoxType1AmidLesson() needs continueLesson() function which doesn't exist???"); }
+  }
+}
+
+/*Info box with only one [OK] button to show just before speech recognition*/
+function createAndHandleInfoBoxType1JustBeforeSpeechRecognition() {
+  popUpNotificationType1Sound.play();
+  const notificationBoxContainer3 = document.createElement("DIV");
+  notificationBoxContainer3.classList.add("notificationBG"); // See css_for_info_boxes_in_lessons
+  document.body.appendChild(notificationBoxContainer3);
+  const notificationBoxItself3 = document.createElement("DIV");
+  notificationBoxItself3.classList.add("notificationRoundedBox"); // See css_for_info_boxes_in_lessons
+  notificationBoxContainer3.appendChild(notificationBoxItself3);
+
+  notificationBoxItself3.appendChild(putNotificationTxtIntoThisP3);
+
+  okButtonToCloseInfoBoxType1AmidLesson.classList.add("okButtonUnderNotification"); // See css_for_info_boxes_in_lessons
+  if (needLatinFonts) {
+    okButtonToCloseInfoBoxType1AmidLesson.style.fontFamily = '"Oxanium SemiBold", sans-serif';
+    notificationBoxItself3.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
+    putNotificationTxtIntoThisP3.classList.add("latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
+  }
+  if (needHitoicJapaneseFonts) {
+    notificationBoxItself3.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
+    putNotificationTxtIntoThisP3.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
+  }
+  notificationBoxItself3.appendChild(okButtonToCloseInfoBoxType1AmidLesson);
+
+  if (deviceDetector.isMobile) { okButtonToCloseInfoBoxType1AmidLesson.addEventListener("touchstart",okButtonIsClickedToContinueLesson); }
+  else { okButtonToCloseInfoBoxType1AmidLesson.addEventListener("mousedown",okButtonIsClickedToContinueLesson); }
+  function okButtonIsClickedToContinueLesson(event) { event.preventDefault(); event.stopPropagation();
+    dismissNotificationType1Sound.play();
+    notificationBoxContainer3.classList.add("addThisToAButtonForPlayStationStyleClick"); // See css_for_every_single_html_css
+    setTimeout(function () {     notificationBoxContainer3.parentNode.removeChild(notificationBoxContainer3);  },1000); // The animation completes in 600ms
+    if (typeof display_nowItsYourTurn_animation === "function") {
+      setTimeout(function () {     display_nowItsYourTurn_animation();     }, 1500);
+    } else { parent.console.error("Error: createAndHandleInfoBoxType1JustBeforeSpeechRecognition() needs display_nowItsYourTurn_animation() function which doesn't exist???"); }
   }
 }
 

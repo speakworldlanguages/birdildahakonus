@@ -88,18 +88,46 @@ ease-out: fast/abrupt at the beginning, slow at the end
 
 
 .oneParticularLesson{
-  width:70px; height: 70px;
+  /* width:72px; height: 72px; why was this necessary??? probably a mistake */
   margin: 1.5vmin;
   border-radius: 7px;
-  background-color: white;
+  /* background-color: white; MIGHT BE NECESSARY IF png with transparency is used as the image */
   display: flex; justify-content: center;  align-items: center;
   transition: all 0.17s;
   box-shadow: 0 1px 3px rgba(142,178,204,0.16), 0 1px 2px rgba(93,143,181,0.32);
-  border: 10px solid #f3f3f3; /*Close to WhiteSmoke*/
+  border: 4px solid #f3f3f3; /*THESE THREE THICKNESS VALUES MUST MATCH - Color close to WhiteSmoke*/
 }
 .oneParticularLesson img{
-  width:60px; height: 60px; pointer-events: none;
+  width:60px; height: 60px; pointer-events: none; /* Default --- For devices whose narrower screen dimension is below 420px. Most phones are within 360px–480px */
 }
+/*PORTRAIT*/
+/* Medium sized phones */
+@media (orientation: portrait) and (min-width: 420px) {  .oneParticularLesson img { width: 65px; height: 65px; }  }
+/* Bigger phones or smaller tablets */
+@media (orientation: portrait) and (min-width: 540px) {  .oneParticularLesson img { width: 70px; height: 70px; }  }
+/* Tablets (Portrait – width mostly around 600–768px) */
+@media (orientation: portrait) and (min-width: 684px) {  .oneParticularLesson img { width: 80px; height: 80px; }  }
+@media (orientation: portrait) and (min-width: 792px) {  .oneParticularLesson img { width: 90px; height: 90px; }  }
+/* Desktops (Portrait – width mostly around 900px+) */
+@media (orientation: portrait) and (min-width: 900px) {  .oneParticularLesson img { width: 100px; height: 100px; }  }
+@media (orientation: portrait) and (min-width: 1080px) {  .oneParticularLesson img { width: 110px; height: 110px; }  }
+/* 4K */
+@media (orientation: portrait) and (min-width: 1200px) {  .oneParticularLesson img { width: 120px; height: 120px; }  }
+/*LANDSCAPE*/
+/* Medium sized phones */
+@media (orientation: landscape) and (min-height: 420px) {  .oneParticularLesson img { width: 65px; height: 65px; }  }
+/* Bigger phones or smaller tablets */
+@media (orientation: landscape) and (min-height: 540px) {  .oneParticularLesson img { width: 70px; height: 70px; }  }
+/* Tablets (Landscape – height mostly around  600–768px) */
+@media (orientation: landscape) and (min-height: 684px) {  .oneParticularLesson img { width: 80px; height: 80px; }  }
+@media (orientation: landscape) and (min-height: 792px) {  .oneParticularLesson img { width: 90px; height: 90px; }  }
+/* Desktops (Landscape – height mostly around  900px+) */
+@media (orientation: landscape) and (min-height: 900px) {  .oneParticularLesson img { width: 100px; height: 100px; }  }
+@media (orientation: landscape) and (min-height: 1080px) {  .oneParticularLesson img { width: 110px; height: 110px; }  }
+/* 4K */
+@media (orientation: landscape) and (min-height: 1200px) {  .oneParticularLesson img { width: 120px; height: 120px; }  }
+
+
 .oneParticularLesson:hover{
   transform: scale(1.08);
   box-shadow: 0 1px 5px rgba(220,239,248,0.16), 0 1px 4px rgba(93,143,181,0.32);
@@ -109,16 +137,18 @@ ease-out: fast/abrupt at the beginning, slow at the end
 }
 
 .thisLessonHasBeenViewedButNotCompleted{
-  border: 10px solid #ffffe4; /*Close to Ivory*/
+  border: 4px solid #fcfcc0; /*THESE THREE THICKNESS VALUES MUST MATCH - Color used to be #ffffe4 which was close to Ivory*/
 }
 
 .thisLessonHasBeenCompleted{
-  border: 10px solid #e4ffe4; /*Close to Honeydew*/
+  border: 4px solid #c1ffc1; /*THESE THREE THICKNESS VALUES MUST MATCH - Color used to be #e4ffe4 which was close to Honeydew*/
 }
 
 .eachWebp{
   width:100%;
   border-radius: 4px;
-  border: 6px solid white;
+  border: 8px solid white;
+  outline: 4px solid #f3f3f3;      /* first frame, thinner inner border, (138,161,177) is lesson background color, rgb(188,201,211) is unit color around every four lessons */
+  outline-offset: -8px;            /* trick to use outline as inner border */
   pointer-events: none;
 }

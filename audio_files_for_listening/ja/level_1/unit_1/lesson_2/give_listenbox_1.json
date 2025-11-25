@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "duration": 2.38
+    "duration": 2.50
   },
   "mouthCues": [
     { "start": 0.00, "end": 0.08, "value": "XX" },
@@ -13,6 +13,6 @@
     { "start": 1.81, "end": 1.93, "value": "SS" },
     { "start": 1.93, "end": 2.10, "value": "AA" },
     { "start": 2.10, "end": 2.37, "value": "SS" },
-    { "start": 2.37, "end": 2.38, "value": "XX" }
+    { "start": 2.37, "end": 2.50, "value": "XX" }
   ]
 }

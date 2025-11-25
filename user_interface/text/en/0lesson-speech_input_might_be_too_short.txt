@@ -1,0 +1,3 @@
+﻿You will now speak to your device microphone.
+However in this case the word to be pronounced is quite short. If speech recognition doesn't work just make some random noise to feed it up before saying the answer or say it a few times repeatedly.
+You may also skip it.

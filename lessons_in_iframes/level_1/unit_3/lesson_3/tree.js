@@ -283,7 +283,18 @@ function goFromCDtoEF() {
 }
 
 function continueLesson() {
-  display_nowItsYourTurn_animation();
+  if (studiedLang == "ja") { // Display the notification about "ki" being too short for recognition.
+    const pathOfNotificationAboutKi = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-speech_input_might_be_too_short.txt"; // See js_for_every_single_html to find userInterfaceLanguage
+    fetch(pathOfNotificationAboutKi,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+      new SuperTimeout(function(){ createAndHandleInfoBoxType1JustBeforeSpeechRecognition(); putNotificationTxtIntoThisP3.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
+      // createAndHandleInfoBoxType1JustBeforeSpeechRecognition() will fire display_nowItsYourTurn_animation() 1.5 seconds after its OK button is clicked/touched
+    });
+  }
+  else if (studiedLang == "??") {
+
+  } else {
+    display_nowItsYourTurn_animation();
+  }
 }
 
 /* Get ready for speech recognition */

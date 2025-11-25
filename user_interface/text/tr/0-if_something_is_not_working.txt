@@ -1,4 +1,4 @@
 ﻿Konuşma algılama çalışmıyor.
-Bu özellik Windows ya da Android üzerinde Chrome ile kullanılabilir.
-|Tarayıcını güncellemen gerekiyor olabilir ya da ister Windows ister Android üzerinde Chrome kullanabilirsin.
+Bu özellik Windows, Linux ya da Android üzerinde "Chrome" ile kullanılabilir.
+|Tarayıcını güncellemen gerekiyor olabilir ya da ister Windows ister Linux ister Android üzerinde Chrome kullanabilirsin.
 |Tek heceli kısa kelimeler için konuşma algılama özelliği çalışmayabilir. Bu gibi durumlarda cevãbı İKİ ya da üç kez ÜSTÜSTE söylemeyi deneyebilirsin.

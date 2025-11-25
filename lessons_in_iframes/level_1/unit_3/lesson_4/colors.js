@@ -40,31 +40,83 @@ fetch(filePathForBlack, myHeaders).then(function(response){return response.text(
 
 /* ___AUDIO ELEMENTS___ */ //...Sound player (Howler) exists in the parent html. So the path must be relative to the parent html. Not to the framed html.
 // Find soundFileFormat in js_for_all_iframed_lesson_htmls
-const sayWhite1Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/white_1."+soundFileFormat;
-const sayGreen1Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/green_1."+soundFileFormat;
-const sayBlue1Path   = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/blue_1."+soundFileFormat;
-const sayYellow1Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/yellow_1."+soundFileFormat;
-const sayRed1Path    = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/red_1."+soundFileFormat;
-const sayBlack1Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_1."+soundFileFormat;
-const sayWhite1  = new parent.Howl({ src: [sayWhite1Path]  });
-const sayGreen1  = new parent.Howl({ src: [sayGreen1Path]  });
-const sayBlue1   = new parent.Howl({ src: [sayBlue1Path]   });
-const sayYellow1 = new parent.Howl({ src: [sayYellow1Path] });
-const sayRed1    = new parent.Howl({ src: [sayRed1Path]    });
-const sayBlack1  = new parent.Howl({ src: [sayBlack1Path]  });
+const sayWhite1APath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/white_1a."+soundFileFormat;
+const sayGreen1APath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/green_1a."+soundFileFormat;
+const sayBlue1APath   = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/blue_1a."+soundFileFormat;
+const sayYellow1APath = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/yellow_1a."+soundFileFormat;
+const sayRed1APath    = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/red_1a."+soundFileFormat;
+const sayBlack1APath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_1a."+soundFileFormat;
+const sayWhite1A  = new parent.Howl({ src: [sayWhite1APath]  });
+const sayGreen1A  = new parent.Howl({ src: [sayGreen1APath]  });
+const sayBlue1A   = new parent.Howl({ src: [sayBlue1APath]   });
+const sayYellow1A = new parent.Howl({ src: [sayYellow1APath] });
+const sayRed1A    = new parent.Howl({ src: [sayRed1APath]    });
+const sayBlack1A  = new parent.Howl({ src: [sayBlack1APath]  });
 
-const sayWhite2Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/white_2."+soundFileFormat;
-const sayGreen2Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/green_2."+soundFileFormat;
-const sayBlue2Path   = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/blue_2."+soundFileFormat;
-const sayYellow2Path = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/yellow_2."+soundFileFormat;
-const sayRed2Path    = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/red_2."+soundFileFormat;
-const sayBlack2Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_2."+soundFileFormat;
-const sayWhite2  = new parent.Howl({ src: [sayWhite2Path]  });
-const sayGreen2  = new parent.Howl({ src: [sayGreen2Path]  });
-const sayBlue2   = new parent.Howl({ src: [sayBlue2Path]   });
-const sayYellow2 = new parent.Howl({ src: [sayYellow2Path] });
-const sayRed2    = new parent.Howl({ src: [sayRed2Path]    });
-const sayBlack2  = new parent.Howl({ src: [sayBlack2Path]  });
+const sayWhite1BPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/white_1b."+soundFileFormat;
+const sayGreen1BPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/green_1b."+soundFileFormat;
+const sayBlue1BPath   = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/blue_1b."+soundFileFormat;
+const sayYellow1BPath = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/yellow_1b."+soundFileFormat;
+const sayRed1BPath    = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/red_1b."+soundFileFormat;
+const sayBlack1BPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_1b."+soundFileFormat;
+const sayWhite1B  = new parent.Howl({ src: [sayWhite1BPath]  });
+const sayGreen1B  = new parent.Howl({ src: [sayGreen1BPath]  });
+const sayBlue1B   = new parent.Howl({ src: [sayBlue1BPath]   });
+const sayYellow1B = new parent.Howl({ src: [sayYellow1BPath] });
+const sayRed1B    = new parent.Howl({ src: [sayRed1BPath]    });
+const sayBlack1B  = new parent.Howl({ src: [sayBlack1BPath]  });
+
+const sayWhite1CPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/white_1c."+soundFileFormat;
+const sayGreen1CPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/green_1c."+soundFileFormat;
+const sayBlue1CPath   = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/blue_1c."+soundFileFormat;
+const sayYellow1CPath = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/yellow_1c."+soundFileFormat;
+const sayRed1CPath    = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/red_1c."+soundFileFormat;
+const sayBlack1CPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_1c."+soundFileFormat;
+const sayWhite1C  = new parent.Howl({ src: [sayWhite1CPath]  });
+const sayGreen1C  = new parent.Howl({ src: [sayGreen1CPath]  });
+const sayBlue1C   = new parent.Howl({ src: [sayBlue1CPath]   });
+const sayYellow1C = new parent.Howl({ src: [sayYellow1CPath] });
+const sayRed1C    = new parent.Howl({ src: [sayRed1CPath]    });
+const sayBlack1C  = new parent.Howl({ src: [sayBlack1CPath]  });
+
+const sayWhite2APath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/white_2a."+soundFileFormat;
+const sayGreen2APath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/green_2a."+soundFileFormat;
+const sayBlue2APath   = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/blue_2a."+soundFileFormat;
+const sayYellow2APath = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/yellow_2a."+soundFileFormat;
+const sayRed2APath    = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/red_2a."+soundFileFormat;
+const sayBlack2APath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_2a."+soundFileFormat;
+const sayWhite2A  = new parent.Howl({ src: [sayWhite2APath]  });
+const sayGreen2A  = new parent.Howl({ src: [sayGreen2APath]  });
+const sayBlue2A   = new parent.Howl({ src: [sayBlue2APath]   });
+const sayYellow2A = new parent.Howl({ src: [sayYellow2APath] });
+const sayRed2A    = new parent.Howl({ src: [sayRed2APath]    });
+const sayBlack2A  = new parent.Howl({ src: [sayBlack2APath]  });
+
+const sayWhite2BPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/white_2b."+soundFileFormat;
+const sayGreen2BPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/green_2b."+soundFileFormat;
+const sayBlue2BPath   = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/blue_2b."+soundFileFormat;
+const sayYellow2BPath = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/yellow_2b."+soundFileFormat;
+const sayRed2BPath    = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/red_2b."+soundFileFormat;
+const sayBlack2BPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_2b."+soundFileFormat;
+const sayWhite2B  = new parent.Howl({ src: [sayWhite2BPath]  });
+const sayGreen2B  = new parent.Howl({ src: [sayGreen2BPath]  });
+const sayBlue2B   = new parent.Howl({ src: [sayBlue2BPath]   });
+const sayYellow2B = new parent.Howl({ src: [sayYellow2BPath] });
+const sayRed2B    = new parent.Howl({ src: [sayRed2BPath]    });
+const sayBlack2B  = new parent.Howl({ src: [sayBlack2BPath]  });
+
+const sayWhite2CPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/white_2c."+soundFileFormat;
+const sayGreen2CPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/green_2c."+soundFileFormat;
+const sayBlue2CPath   = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/blue_2c."+soundFileFormat;
+const sayYellow2CPath = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/yellow_2c."+soundFileFormat;
+const sayRed2CPath    = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/red_2c."+soundFileFormat;
+const sayBlack2CPath  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/black_2c."+soundFileFormat;
+const sayWhite2C  = new parent.Howl({ src: [sayWhite2CPath]  });
+const sayGreen2C  = new parent.Howl({ src: [sayGreen2CPath]  });
+const sayBlue2C   = new parent.Howl({ src: [sayBlue2CPath]   });
+const sayYellow2C = new parent.Howl({ src: [sayYellow2CPath] });
+const sayRed2C    = new parent.Howl({ src: [sayRed2CPath]    });
+const sayBlack2C  = new parent.Howl({ src: [sayBlack2CPath]  });
 
 const sayWhite3Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/white_3."+soundFileFormat;
 const sayGreen3Path  = "/audio_files_for_listening/"+parent.langCodeForTeachingFilePaths+"/level_1/unit_3/lesson_4/green_3."+soundFileFormat;
@@ -97,8 +149,12 @@ var listOfAllSoundsInThisLesson = [
   setOffSound3,setOffSound2,setOffSound1,explodeSound,findSound,failSound,turnSound,
   mouseDownTouchEndSound,mouseEnterTouchStartSound,
   sayBlack3,sayRed3,sayYellow3,sayBlue3,sayGreen3,sayWhite3,
-  sayBlack2,sayRed2,sayYellow2,sayBlue2,sayGreen2,sayWhite2,
-  sayBlack1,sayRed1,sayYellow1,sayBlue1,sayGreen1,sayWhite1
+  sayBlack2C,sayRed2C,sayYellow2C,sayBlue2C,sayGreen2C,sayWhite2C,
+  sayBlack2B,sayRed2B,sayYellow2B,sayBlue2B,sayGreen2B,sayWhite2B,
+  sayBlack2A,sayRed2A,sayYellow2A,sayBlue2A,sayGreen2A,sayWhite2A,
+  sayBlack1C,sayRed1C,sayYellow1C,sayBlue1C,sayGreen1C,sayWhite1C,
+  sayBlack1B,sayRed1B,sayYellow1B,sayBlue1B,sayGreen1B,sayWhite1B,
+  sayBlack1A,sayRed1A,sayYellow1A,sayBlue1A,sayGreen1A,sayWhite1A
 
 ];
 function unloadTheSoundsOfThisLesson() { // See onbeforeunload in js_for_all_iframed_lesson_htmls
@@ -239,164 +295,187 @@ let nowShowingTheSecondSixInsideSecondSet = false;
 function startTheLesson() {
   // White is the first color then comes green » blue » yellow » red » black
   // Give time to the preloader to clear
-  let sayTime; let proceedTime;
+  let initialWait; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
-    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
-    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
+    case "slow": initialWait = 3003; proceedTime = 11000; break;
+    case "fast": initialWait = 1001; proceedTime = 5000;  break;
+    default:     initialWait = 2002; proceedTime = 8000;
   }
   // -
   if (displayingFirstSet) {
     // NO NEED TO HIDE/UNHIDE as fabrics i.e. the-first-set will never be visible again ,,, first image already visible in index.html
-    new SuperTimeout(function () { sayWhite1.play(); }, sayTime);
+    new SuperTimeout(function () { sayWhite1A.play(); }, initialWait);
+    new SuperTimeout(function () { sayWhite1B.play(); }, initialWait + proceedTime*0.33); // 5000 x 0.33 = 1650 // 8000 x 0.33 = 2640 // 11000 x 0.33 = 3630
+    new SuperTimeout(function () { sayWhite1C.play(); }, initialWait + proceedTime*0.66);
   }
   else {
     if (!nowShowingTheSecondSixInsideSecondSet) {
       // See listenAgainFunction to find HIDE/UNHIDE algorithm
-      new SuperTimeout(function () { sayWhite2.play(); }, sayTime);
+      new SuperTimeout(function () { sayWhite2A.play(); }, initialWait);
+      new SuperTimeout(function () { sayWhite2B.play(); }, initialWait + proceedTime*0.33);
+      new SuperTimeout(function () { sayWhite2C.play(); }, initialWait + proceedTime*0.66);
     } else {
       // See listenAgainFunction to find HIDE/UNHIDE algorithm
-      new SuperTimeout(function () { sayWhite3.play(); }, sayTime);
+      new SuperTimeout(function () { sayWhite3.play(); }, initialWait);
+      proceedTime = proceedTime * 0.25; // 8000 x 0.25 = 2000
     }
   }
   // -
-  // UNCOMMENT AFTER TESTS new SuperTimeout(showGreen, proceedTime);
-  new SuperTimeout(showGreen, proceedTime);
-  // new SuperTimeout(showBlack, proceedTime); //allSinglesOfFirstSet[0].style.visibility = "hidden"; // DELETE AFTER TESTS
+  new SuperTimeout(showGreen, proceedTime + initialWait);
 }
 
 function showGreen() {
 
-  let sayTime; let proceedTime;
+  let initialWait; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
-    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
-    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
+    case "slow": initialWait = 3003; proceedTime = 11000; break;
+    case "fast": initialWait = 1001; proceedTime = 5000;  break;
+    default:     initialWait = 2002; proceedTime = 8000;
   }
   // -
   if (displayingFirstSet) {
     hideThemAllWithTheExceptionOf(allSinglesOfFirstSet,1);
-    new SuperTimeout(function () { sayGreen1.play(); }, sayTime);
+    new SuperTimeout(function () { sayGreen1A.play(); }, initialWait);
+    new SuperTimeout(function () { sayGreen1B.play(); }, initialWait + proceedTime*0.33);
+    new SuperTimeout(function () { sayGreen1C.play(); }, initialWait + proceedTime*0.66);
   }
   else {
-
     if (!nowShowingTheSecondSixInsideSecondSet) {
       hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,1);
-      new SuperTimeout(function () { sayGreen2.play(); }, sayTime);
+      new SuperTimeout(function () { sayGreen2A.play(); }, initialWait);
+      new SuperTimeout(function () { sayGreen2B.play(); }, initialWait + proceedTime*0.33);
+      new SuperTimeout(function () { sayGreen2C.play(); }, initialWait + proceedTime*0.66);
     } else {
       hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,7);
-      new SuperTimeout(function () { sayGreen3.play(); }, sayTime);
+      new SuperTimeout(function () { sayGreen3.play(); }, initialWait);
+      proceedTime = proceedTime * 0.25;
     }
   }
   // -
-  new SuperTimeout(showBlue, proceedTime);
+  new SuperTimeout(showBlue, proceedTime + initialWait);
 }
 
 function showBlue() {
 
-  let sayTime; let proceedTime;
+  let initialWait; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
-    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
-    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
+    case "slow": initialWait = 3003; proceedTime = 11000; break;
+    case "fast": initialWait = 1001; proceedTime = 5000;  break;
+    default:     initialWait = 2002; proceedTime = 8000;
   }
   // -
   if (displayingFirstSet) {
     hideThemAllWithTheExceptionOf(allSinglesOfFirstSet,2);
-    new SuperTimeout(function () { sayBlue1.play(); }, sayTime);
+    new SuperTimeout(function () { sayBlue1A.play(); }, initialWait);
+    new SuperTimeout(function () { sayBlue1B.play(); }, initialWait + proceedTime*0.33);
+    new SuperTimeout(function () { sayBlue1C.play(); }, initialWait + proceedTime*0.66);
   }
   else {
-
     if (!nowShowingTheSecondSixInsideSecondSet) {
       hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,2);
-      new SuperTimeout(function () { sayBlue2.play(); }, sayTime);
+      new SuperTimeout(function () { sayBlue2A.play(); }, initialWait);
+      new SuperTimeout(function () { sayBlue2B.play(); }, initialWait + proceedTime*0.33);
+      new SuperTimeout(function () { sayBlue2C.play(); }, initialWait + proceedTime*0.66);
     } else {
       hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,8);
-      new SuperTimeout(function () { sayBlue3.play(); }, sayTime);
+      new SuperTimeout(function () { sayBlue3.play(); }, initialWait);
+      proceedTime = proceedTime * 0.25;
     }
   }
   // -
-  new SuperTimeout(showYellow, proceedTime);
+  new SuperTimeout(showYellow, proceedTime + initialWait);
 }
 
 function showYellow() {
 
-  let sayTime; let proceedTime;
+  let initialWait; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
-    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
-    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
+    case "slow": initialWait = 3003; proceedTime = 11000; break;
+    case "fast": initialWait = 1001; proceedTime = 5000;  break;
+    default:     initialWait = 2002; proceedTime = 8000;
   }
   // -
   if (displayingFirstSet) {
     hideThemAllWithTheExceptionOf(allSinglesOfFirstSet,3);
-    new SuperTimeout(function () { sayYellow1.play(); }, sayTime);
+    new SuperTimeout(function () { sayYellow1A.play(); }, initialWait);
+    new SuperTimeout(function () { sayYellow1B.play(); }, initialWait + proceedTime*0.33);
+    new SuperTimeout(function () { sayYellow1C.play(); }, initialWait + proceedTime*0.66);
   }
   else {
-
     if (!nowShowingTheSecondSixInsideSecondSet) {
       hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,3);
-      new SuperTimeout(function () { sayYellow2.play(); }, sayTime);
+      new SuperTimeout(function () { sayYellow2A.play(); }, initialWait);
+      new SuperTimeout(function () { sayYellow2B.play(); }, initialWait + proceedTime*0.33);
+      new SuperTimeout(function () { sayYellow2C.play(); }, initialWait + proceedTime*0.66);
     } else {
       hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,9);
-      new SuperTimeout(function () { sayYellow3.play(); }, sayTime);
+      new SuperTimeout(function () { sayYellow3.play(); }, initialWait);
+      proceedTime = proceedTime * 0.25;
     }
   }
   // -
-  new SuperTimeout(showRed, proceedTime);
+  new SuperTimeout(showRed, proceedTime + initialWait);
 }
 
 function showRed() {
 
-  let sayTime; let proceedTime;
+  let initialWait; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
-    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
-    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
+    case "slow": initialWait = 3003; proceedTime = 11000; break;
+    case "fast": initialWait = 1001; proceedTime = 5000;  break;
+    default:     initialWait = 2002; proceedTime = 8000;
   }
   // -
   if (displayingFirstSet) {
     hideThemAllWithTheExceptionOf(allSinglesOfFirstSet,4);
-    new SuperTimeout(function () { sayRed1.play(); }, sayTime);
+    new SuperTimeout(function () { sayRed1A.play(); }, initialWait);
+    new SuperTimeout(function () { sayRed1B.play(); }, initialWait + proceedTime*0.33);
+    new SuperTimeout(function () { sayRed1C.play(); }, initialWait + proceedTime*0.66);
   }
   else {
-
     if (!nowShowingTheSecondSixInsideSecondSet) {
       hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,4);
-      new SuperTimeout(function () { sayRed2.play(); }, sayTime);
+      new SuperTimeout(function () { sayRed2A.play(); }, initialWait);
+      new SuperTimeout(function () { sayRed2B.play(); }, initialWait + proceedTime*0.33);
+      new SuperTimeout(function () { sayRed2C.play(); }, initialWait + proceedTime*0.66);
     } else {
       hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,10);
-      new SuperTimeout(function () { sayRed3.play(); }, sayTime);
+      new SuperTimeout(function () { sayRed3.play(); }, initialWait);
+      proceedTime = proceedTime * 0.25;
     }
   }
   // -
-  new SuperTimeout(showBlack, proceedTime);
+  new SuperTimeout(showBlack, proceedTime + initialWait);
 }
 
 function showBlack() {
 
-  let sayTime; let proceedTime;
+  let initialWait; let proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 3003; proceedTime = 8500; break; // midpoint: 4250
-    case "fast": sayTime = 1001; proceedTime = 4500; break; // midpoint: 2250
-    default:     sayTime = 2002; proceedTime = 6500;        // midpoint: 3250
+    case "slow": initialWait = 3003; proceedTime = 11000; break;
+    case "fast": initialWait = 1001; proceedTime = 5000;  break;
+    default:     initialWait = 2002; proceedTime = 8000;
   }
   // -
   if (displayingFirstSet) {
     hideThemAllWithTheExceptionOf(allSinglesOfFirstSet,5);
-    new SuperTimeout(function () { sayBlack1.play(); }, sayTime);
-    new SuperTimeout(startDisplayingTheSecondSet, proceedTime+1000);
+    new SuperTimeout(function () { sayBlack1A.play(); }, initialWait);
+    new SuperTimeout(function () { sayBlack1B.play(); }, initialWait + proceedTime*0.33);
+    new SuperTimeout(function () { sayBlack1C.play(); }, initialWait + proceedTime*0.66);
+    new SuperTimeout(startDisplayingTheSecondSet, proceedTime + initialWait);
   }
   else {
-
     if (!nowShowingTheSecondSixInsideSecondSet) {
       hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,5);
-      new SuperTimeout(function () { sayBlack2.play(); }, sayTime);
+      new SuperTimeout(function () { sayBlack2A.play(); }, initialWait);
+      new SuperTimeout(function () { sayBlack2B.play(); }, initialWait + proceedTime*0.33);
+      new SuperTimeout(function () { sayBlack2C.play(); }, initialWait + proceedTime*0.66);
     } else {
       hideThemAllWithTheExceptionOf(allSinglesOfSecondSet,11);
-      new SuperTimeout(function () { sayBlack3.play(); }, sayTime);
+      new SuperTimeout(function () { sayBlack3.play(); }, initialWait);
+      proceedTime = proceedTime * 0.25;
     }
-    new SuperTimeout(goToRepeatOrPlayTheGameChoice, proceedTime+1000);
+    new SuperTimeout(goToRepeatOrPlayTheGameChoice, proceedTime + initialWait);
   }
   // -
 }
