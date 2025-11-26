@@ -304,43 +304,44 @@ function goFromCDtoEF() {
 
   // ---
   new SuperTimeout(function () {
-    // Special situation for Android users when viewing the first lesson (water.js)
-    if (isAndroid && androidSpeechTimingInfoTxt) { // User's device is Android and fetch has successfully got the text from file
-      putNotificationTxtIntoThisP2.innerHTML = androidSpeechTimingInfoTxt;
-      createAndHandleInfoBoxType1AmidLesson(); // continueLesson() will be fired from within -> See js_for_info_boxes_in_lessons
-    } else { // Either not Android or a mishap of 0.01% chance occured and fetch couldn't get the txt file
+    if (studiedLang == "ar") { // Display the warning about TANWEEN to users who want to learn Standard Arabic.
+      const pathOfNotificationAboutTanween = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_arabic_tanween.txt";
+      fetch(pathOfNotificationAboutTanween,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+        new SuperTimeout(function(){ createAndHandleInfoBoxType1AmidLesson(); putNotificationTxtIntoThisP2.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
+        // createAndHandleInfoBoxType1AmidLesson() will fire continueLesson() 1.5 seconds after its OK button is clicked/touched
+      });
+    }
+    else if (studiedLang == "ja") { // Display the explanation about "mizu" and "omizu".
+      const pathOfNotificationAboutMizuOmizu = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_hito_mizu_omizu.txt"; // See js_for_every_single_html to find userInterfaceLanguage
+      fetch(pathOfNotificationAboutMizuOmizu,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+        new SuperTimeout(function(){ createAndHandleInfoBoxType1AmidLesson(); putNotificationTxtIntoThisP2.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
+        // createAndHandleInfoBoxType1AmidLesson() will fire continueLesson() 1.5 seconds after its OK button is clicked/touched
+      });
+    }
+    else if (studiedLang == "tr") { // NOTE: Check other browsers' behavior and modify this condition to narrow it down on Chrome, that is in case Safari never needs such a repetition or wakeup noise
+      // "Su" is only one syllable long. Chrome users must make some random noise to wake speech recognition up or say it repeatedly.
+      // Display the workaround message
+      const pathOfNotificationAboutMizuOmizu = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-speech_input_might_be_too_short.txt"; // See js_for_every_single_html to find userInterfaceLanguage
+      fetch(pathOfNotificationAboutMizuOmizu,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
+        new SuperTimeout(function(){ createAndHandleInfoBoxType1AmidLesson(); putNotificationTxtIntoThisP2.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
+        // createAndHandleInfoBoxType1AmidLesson() will fire continueLesson() 1.5 seconds after its OK button is clicked/touched
+      });
+    }
+    else if (studiedLang == "??") {
+      // Extendable
+    } else {
       continueLesson();
     }
   }, changeTime*500 + proceedTime);
-}
+} // END OF goFromCDtoEF
 
 function continueLesson() {
-  if (studiedLang == "ar") { // Display the warning about TANWEEN to users who want to learn Standard Arabic.
-    const pathOfNotificationAboutTanween = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_arabic_tanween.txt";
-    fetch(pathOfNotificationAboutTanween,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
-      new SuperTimeout(function(){ createAndHandleInfoBoxType1JustBeforeSpeechRecognition(); putNotificationTxtIntoThisP3.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
-      // createAndHandleInfoBoxType1JustBeforeSpeechRecognition() will fire display_nowItsYourTurn_animation() 1.5 seconds after its OK button is clicked/touched
-    });
-  }
-  else if (studiedLang == "ja") { // Display the explanation about "mizu" and "omizu".
-    const pathOfNotificationAboutMizuOmizu = "/user_interface/text/"+userInterfaceLanguage+"/1-1-1_hito_mizu_omizu.txt"; // See js_for_every_single_html to find userInterfaceLanguage
-    fetch(pathOfNotificationAboutMizuOmizu,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
-      new SuperTimeout(function(){ createAndHandleInfoBoxType1JustBeforeSpeechRecognition(); putNotificationTxtIntoThisP3.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
-      // createAndHandleInfoBoxType1JustBeforeSpeechRecognition() will fire display_nowItsYourTurn_animation() 1.5 seconds after its OK button is clicked/touched
-    });
-  }
-  else if (studiedLang == "tr") {
-    // "Su" is only one syllable long. Chrome users must make some random noise to wake speech recognition up or say it repeatedly.
-    // Display: If speech recognition doesn't work just make some random noise to wake it up and then say the answer or say it a few times repeatedly. This is a workaround for machine recognition in case the sound is too short such as this one.
-    const pathOfNotificationAboutMizuOmizu = "/user_interface/text/"+userInterfaceLanguage+"/0lesson-speech_input_might_be_too_short.txt"; // See js_for_every_single_html to find userInterfaceLanguage
-    fetch(pathOfNotificationAboutMizuOmizu,myHeaders).then(function(response){return response.text();}).then(function(contentOfTheTxtFile){
-      new SuperTimeout(function(){ createAndHandleInfoBoxType1JustBeforeSpeechRecognition(); putNotificationTxtIntoThisP3.innerHTML = contentOfTheTxtFile; },501); // See js_for_info_boxes_in_lessons.js
-      // createAndHandleInfoBoxType1JustBeforeSpeechRecognition() will fire display_nowItsYourTurn_animation() 1.5 seconds after its OK button is clicked/touched
-    });
-  }
-  else if (studiedLang == "??") {
-
-  } else {
+  // Special situation for Android users when viewing the first lesson (water.js)
+  if (isAndroid && androidSpeechTimingInfoTxt) { // User's device is Android and fetch has successfully got the text from file
+    putNotificationTxtIntoThisP3.innerHTML = androidSpeechTimingInfoTxt;
+    createAndHandleInfoBoxType1JustBeforeSpeechRecognition(); // See js_for_info_boxes_in_lessons
+    // createAndHandleInfoBoxType1JustBeforeSpeechRecognition() will fire display_nowItsYourTurn_animation() 1.5 seconds after its OK button is clicked/touched
+  } else { // Either not Android or a mishap of 0.01% chance occured and fetch couldn't get the txt file
     display_nowItsYourTurn_animation();
   }
 }
