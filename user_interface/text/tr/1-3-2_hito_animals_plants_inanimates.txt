@@ -1,1 +1,5 @@
-﻿Hitoca dilinde bir varlığın bir yerde bulunması durumunu anlatırken insanlar ve hayvanlar için <span style="white-space: nowrap;">いる</span> (vardır) denir. Bitkiler ve cansız varlıklar için ise <span style="white-space: nowrap;">いる</span> denmez, onun yerine <span style="white-space: nowrap;">ある</span> (vardır) kullanılır. Şimdi <span style="white-space: nowrap;">いる'nun</span> nasıl söylendiğini duyacaksın.
+﻿Bir varlığın bir yerde bulunduğunu anlatan "var olmak" fiili Türkçe'de tektir.
+Hitoca dilinde ise var olmak iki farklı kelime ile anlatılır.
+<strong>İnsanlar ve hayvanlar</strong> için <span style="white-space:nowrap; display:inline-block;">いる [iru]</span> (vardır) denir.
+<strong>Bitkiler ve cansız varlıklar</strong> için ise <span style="white-space:nowrap; display:inline-block;">いる</span> denmez, onun yerine <span style="white-space:nowrap; display:inline-block;">ある [aru]</span> (vardır) denir.
+Şimdi <span style="white-space:nowrap; display:inline-block;">いる'nun</span> nasıl söylendiğini duyacaksın.

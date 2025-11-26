@@ -37,7 +37,7 @@ function whatIfUserInterfaceLangAndBrowserLangAreDifferent() {
         break;
       case "ja":
         // Ask if user wants to go to gengohanasite or stay
-        if (confirm("アプリを八島語で（八島語＝日本語）開けましょうか？") == true) { top.location.assign("https://speakworldlanguages.github.io/gengohanasite/"); } // When name.com SSL issue is resolved, change to » https://speakworldlanguages.app/gengohanasite/ OR other CUSTOM DOMAIN
+        if (confirm("アプリを八島語で（八島語＝日本語）開けましょうか？") == true) { top.location.assign("https://gengohana.site"); } // https must be enforced
         else { localStorage.changingDomainToMatchBrowserLanguageWasOfferedButUserDeclined = "yes"; }
         break;
 /*
@@ -68,8 +68,8 @@ switch (window.location.hostname) {
   case "speakworldlanguages.github.io": // ALLOW
   case "speakworldlanguages.app": // ALLOW
   case "birdildahakonus.com": // ALLOW - MUST BE UPDATED UPON PURCHASING THE ACTUAL D,O,M,A,I,N
-  case "gengohanasite.com": // ALLOW - MUST BE UPDATED UPON PURCHASING THE ACTUAL D,O,M,A,I,N - previous idea was hanaserutoiiyone
-  case "shuoba.com": // ALLOW - MUST BE UPDATED UPON PURCHASING THE ACTUAL D,O,M,A,I,N - previous idea was tingdongshijiederenmen
+  case "gengohana.site": // ALLOW - MUST BE UPDATED UPON PURCHASING THE ACTUAL D,O,M,A,I,N - previous idea was hanaserutoiiyone
+  case "shuoba.com": // ALLOW - MUST BE UPDATED UPON PURCHASING THE ACTUAL D,O,M,A,I,N - previous idea was tingdongshijiederenmen, also check ren(dot)men
   case "localhost": // ALLOW
   case "swl.test": // ALLOW - laragon
   case "birdildahakonus.test": // ALLOW - laragon
