@@ -131,9 +131,9 @@ function createAndHandleInfoBoxType1JustBeforeSpeechRecognition() {
 
   notificationBoxItself3.appendChild(putNotificationTxtIntoThisP3);
 
-  okButtonToCloseInfoBoxType1AmidLesson.classList.add("okButtonUnderNotification"); // See css_for_info_boxes_in_lessons
+  okButtonToCloseInfoBoxType1BeforeSpeechRecognition.classList.add("okButtonUnderNotification"); // See css_for_info_boxes_in_lessons
   if (needLatinFonts) {
-    okButtonToCloseInfoBoxType1AmidLesson.style.fontFamily = '"Oxanium SemiBold", sans-serif';
+    okButtonToCloseInfoBoxType1BeforeSpeechRecognition.style.fontFamily = '"Oxanium SemiBold", sans-serif';
     notificationBoxItself3.classList.add("textAlignJustifyLTR","latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
     putNotificationTxtIntoThisP3.classList.add("latinLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
@@ -141,10 +141,10 @@ function createAndHandleInfoBoxType1JustBeforeSpeechRecognition() {
     notificationBoxItself3.classList.add("textAlignLeft","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
     putNotificationTxtIntoThisP3.classList.add("toUseWBR_withCJK","cjkLineHeightAndLetterSpacing"); // See css_for_every_single_html
   }
-  notificationBoxItself3.appendChild(okButtonToCloseInfoBoxType1AmidLesson);
+  notificationBoxItself3.appendChild(okButtonToCloseInfoBoxType1BeforeSpeechRecognition);
 
-  if (deviceDetector.isMobile) { okButtonToCloseInfoBoxType1AmidLesson.addEventListener("touchstart",okButtonIsClickedToContinueLesson); }
-  else { okButtonToCloseInfoBoxType1AmidLesson.addEventListener("mousedown",okButtonIsClickedToContinueLesson); }
+  if (deviceDetector.isMobile) { okButtonToCloseInfoBoxType1BeforeSpeechRecognition.addEventListener("touchstart",okButtonIsClickedToContinueLesson); }
+  else { okButtonToCloseInfoBoxType1BeforeSpeechRecognition.addEventListener("mousedown",okButtonIsClickedToContinueLesson); }
   function okButtonIsClickedToContinueLesson(event) { event.preventDefault(); event.stopPropagation();
     dismissNotificationType1Sound.play();
     notificationBoxContainer3.classList.add("addThisToAButtonForPlayStationStyleClick"); // See css_for_every_single_html_css
