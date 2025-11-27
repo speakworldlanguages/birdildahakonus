@@ -196,9 +196,9 @@ function removeVid1AndReturnToAB() {
 function goFromABtoCD() {
   let changeTime, sayTime, proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": changeTime = 3; sayTime = 5000; proceedTime = 15000;  break;
-    case "fast": changeTime = 1; sayTime = 3000; proceedTime = 10000;  break;
-    default:     changeTime = 2; sayTime = 4000; proceedTime = 12500;
+    case "slow": changeTime = 3; sayTime = 3300+2500; proceedTime = 9500+2500;  break;
+    case "fast": changeTime = 1; sayTime = 1000+1500; proceedTime = 6500+1500;  break;
+    default:     changeTime = 2; sayTime = 2000+2000; proceedTime = 8100+2000;
   }
   imgA.classList.add("makePhotosDisappear");  imgA.style.animationDuration = String(changeTime)+"s";
   imgB.classList.add("makePhotosDisappear");  imgB.style.animationDuration = String(changeTime)+"s";
@@ -279,9 +279,9 @@ function removeVid2AndReturnToCD() {
 function goFromCDtoEF() {
   let changeTime, sayTime, proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": changeTime = 3; sayTime = 5000; proceedTime = 15000; break;
-    case "fast": changeTime = 1; sayTime = 3000; proceedTime = 10000; break;
-    default:     changeTime = 2; sayTime = 4000; proceedTime = 12500;
+    case "slow": changeTime = 3; sayTime = 3300+2500; proceedTime = 9500+2500; break;
+    case "fast": changeTime = 1; sayTime = 1000+1500; proceedTime = 6500+1500; break;
+    default:     changeTime = 2; sayTime = 2000+2000; proceedTime = 8100+2000;
   }
   // No fade time
   imgC.classList.remove("makePhotosAppear");  imgC.classList.add("makePhotosDisappear");  imgC.style.animationDuration = String(changeTime)+"s";

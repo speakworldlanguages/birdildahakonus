@@ -3,12 +3,13 @@
     "duration": 0.93
   },
   "mouthCues": [
-    { "start": 0.00, "end": 0.03, "value": "XX" },
-    { "start": 0.03, "end": 0.15, "value": "MM" },
-    { "start": 0.15, "end": 0.29, "value": "UU" },
-	{ "start": 0.29, "end": 0.31, "value": "SS" },
-	{ "start": 0.31, "end": 0.46, "value": "UU" },
-    { "start": 0.46, "end": 0.75, "value": "LL" },
+    { "start": 0.00, "end": 0.01, "value": "XX" },
+    { "start": 0.01, "end": 0.06, "value": "MM" },
+	{ "start": 0.06, "end": 0.15, "value": "UU" },
+    { "start": 0.15, "end": 0.24, "value": "OO" },
+	{ "start": 0.24, "end": 0.34, "value": "UU" },
+	{ "start": 0.34, "end": 0.44, "value": "OO" },
+    { "start": 0.44, "end": 0.75, "value": "NN" },
     { "start": 0.75, "end": 0.93, "value": "XX" }
   ]
 }
