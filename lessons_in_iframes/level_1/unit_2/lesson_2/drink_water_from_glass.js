@@ -86,7 +86,7 @@ const glassContainerDuringGameGulp2 = document.querySelectorAll('.alreadyAtTheCe
 const glassContainerDuringGameGulp3 = document.querySelectorAll('.alreadyAtTheCenter')[3];
 const glassContainerDuringGameGulp4 = document.querySelectorAll('.alreadyAtTheCenter')[4];
 const preciseTouchClickArea = document.getElementById('exactAreaID');
-const svg = document.getElementsByTagName('svg')[0];
+const svg = document.getElementsByTagName('svg')[0]; // svg is the container of preciseTouchClickArea
 // See index.html to find showHowDesktop showHowTablet showHowPhone
 
 // See js_for_the_parent_all_browsers_all_devices for lastRecordedWindowWidth lastRecordedWindowHeight
@@ -280,12 +280,15 @@ function waitForFirstTouchOrClickOnGlass() {
 
 function handleHoveringON() {  glassContainerBeforeGame.classList.remove("mouseIsNotHovering"); glassContainerBeforeGame.classList.add("mouseIsHovering"); mouseHoverAndTouchStartSound.play(); }
 function handleHoveringOFF() {  glassContainerBeforeGame.classList.remove("mouseIsHovering"); glassContainerBeforeGame.classList.add("mouseIsNotHovering");  }
-function stopLoopingAndGetToNewPosition() {
+function stopLooping() {
   injectTextIntoTheHelpBoxP.innerHTML = "…";
   // DEPRECATED: /*clearTimeout(to1);clearTimeout(to2);clearTimeout(to3);clearTimeout(to4);clearTimeout(to5);clearTimeout(to6);clearTimeout(to7);clearTimeout(to8);clearTimeout(to9);clearTimeout(to10);clearTimeout(to11);clearTimeout(to12);*/
   if (to1) { to1.clear(); } if (to2) { to2.clear(); } if (to3) { to3.clear(); } if (to4) { to4.clear(); } if (to5) { to5.clear(); }
   if (to6) { to6.clear(); } if (to7) { to7.clear(); } if (to8) { to8.clear(); } if (to9) { to9.clear(); } if (to10) { to10.clear(); }
   if (to11) { to11.clear(); } if (to12) { to12.clear(); } if (to13) { to13.clear(); } if (to14) { to14.clear(); } if (to15) { to15.clear(); }
+  // -
+}
+function getToNewPosition() {
   let newPositionTime;  switch (parent.speedAdjustmentSetting) {  case "slow": newPositionTime = 7.0; break;  case "fast": newPositionTime = 3.0; break;  default: newPositionTime = 5.0;  }
   pictogramContainer.style.transitionDuration = String(newPositionTime)+"s";
   pictogramContainer.style.animationDuration = String(newPositionTime)+"s";
@@ -312,6 +315,10 @@ function getNormalGlass() {
   glassContainerBeforeGame.children[2].style.display = "none"; // blur to focus
   glassContainerBeforeGame.children[3].style.display = "none"; // flashing as it may have been
   glassContainerBeforeGame.children[0].style.display = "block"; // fixed clear frame in focus
+  // BUGFIX PERFORMED: There used to be a united function called stopLoopingAndGetToNewPosition
+  // It worked fine for destop because it stopped timers without delay after getNormalGlass
+  // However on mobile it caused a timeout clearance issue when user kept his finger on the screen » style display of [1], [2], [3] was set back to "block" where they should have stayed "none"
+  // That was because stopLoopingAndGetToNewPosition was called at touchend while getNormalGlass was called at touchstart and there could be a delay in between
 }
 // -
 let mouseInstructionDisappearTimeout = null;
@@ -321,7 +328,7 @@ function getReadyToStartTheGameOnDESKTOP() {
   handleHoveringOFF(); // In case it was on
   preciseTouchClickArea.removeEventListener("mouseenter",handleHoveringON); // svg display is set to none in stopLoopingAndGetToNewPosition
   preciseTouchClickArea.removeEventListener("mouseleave",handleHoveringOFF); // svg display is set to none in stopLoopingAndGetToNewPosition
-  stopLoopingAndGetToNewPosition();
+  stopLooping(); getToNewPosition();
   let getReadyTime;  switch (parent.speedAdjustmentSetting) {  case "slow": getReadyTime = 7000; break;  case "fast": getReadyTime = 3000; break;  default: getReadyTime = 5000;  }
   new SuperTimeout(function () {
     // Show how to use mouse wheel
@@ -374,16 +381,18 @@ function getReadyToStartTheGameOnDESKTOP() {
 
 function getReadyToStartTheGameOnMOBILEtouchstart(event) { event.preventDefault(); event.stopPropagation();
   getNormalGlass(); // Sudden focus will happen if was blurred
+  stopLooping();
   if (canVibrate) { navigator.vibrate(10); }
   parent.console.log("user has started touching preciseTouchClickArea");
   mouseHoverAndTouchStartSound.play();
   // See stopLoopingAndGetToNewPosition where blur unblur is handled
   glassContainerBeforeGame.classList.add("glassFlashesBriefly");
+  // PROBLEM SOLVED: There used to be a chance that stopLoopingAndGetToNewPosition wouldn't be called immediately after getNormalGlass in case user held his/her finger on screen
 }
 
 var tiltIsNotAvailableSoWillPlayWithTouchmove = false;
 function getReadyToStartTheGameOnMOBILEtouchend(event) { event.preventDefault(); event.stopPropagation();
-  if (canVibrate) { navigator.vibrate(10); }
+  setTimeout(function () {    if (canVibrate) { navigator.vibrate(10); }    }, 20); // 20ms delay to make sure the previous (touchstart) vibration completes before firing a new one
   mouseDownAndTouchEndSound.play();
   lockOrientation(); // Will unlock with onbeforeunload » See js_for_all_iframed_lesson_htmls
   let getReadyTime;  switch (parent.speedAdjustmentSetting) {  case "slow": getReadyTime = 7000; break;  case "fast": getReadyTime = 3000; break;  default: getReadyTime = 5000;  }
@@ -396,14 +405,14 @@ function getReadyToStartTheGameOnMOBILEtouchend(event) { event.preventDefault();
     DeviceOrientationEvent.requestPermission()
       .then(permissionState => {
         if (permissionState === 'granted') { // Good and now let's test it
-          stopLoopingAndGetToNewPosition(); // This will let us have enough time to check if deviceorientation will work
+          getToNewPosition(); // This will let us have enough time to check if deviceorientation will work
           testDeviceorientation();
           new SuperTimeout(function () {
             console.log("proceed to drink_water_from_glass_mobile.js");
             showHowToPlayOnMobile(tiltIsNotAvailableSoWillPlayWithTouchmove); // See drink_water_from_glass_mobile.js
           }, getReadyTime);
         } else {
-          stopLoopingAndGetToNewPosition(); // Proceed anyhow
+          getToNewPosition(); // Proceed anyhow
           tiltIsNotAvailableSoWillPlayWithTouchmove = true;
           new SuperTimeout(function () {
             console.log("proceed to drink_water_from_glass_mobile.js");
@@ -415,7 +424,7 @@ function getReadyToStartTheGameOnMOBILEtouchend(event) { event.preventDefault();
   } else {
     // Android
     console.log("No, DeviceOrientationEvent.requestPermission does not exist");
-    stopLoopingAndGetToNewPosition(); // This will let us have enough time to check if deviceorientation will work
+    getToNewPosition(); // This will let us have enough time to check if deviceorientation will work
     testDeviceorientation();
     new SuperTimeout(function () {
       console.log("proceed to drink_water_from_glass_mobile");

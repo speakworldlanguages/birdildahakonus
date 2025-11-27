@@ -119,13 +119,13 @@ function vocabularyBoxIsClosed(x,y) { // Will fire from within createAndHandleLi
 function startTheLesson() {
   let sayTime, proceedTime;
   switch (parent.speedAdjustmentSetting) {
-    case "slow": sayTime = 10000; proceedTime = 15000; break;
-    case "fast": sayTime = 5000;  proceedTime = 10000; break;
-    default:     sayTime = 7500;  proceedTime = 12500;
+    case "slow": sayTime = 3300+2500;  proceedTime = 9500+2500; break;
+    case "fast": sayTime = 1000+1500;  proceedTime = 6500+1500; break;
+    default:     sayTime = 2000+2000;  proceedTime = 8100+2000; // Small additions to standard times to let the background sfx i.e. chirping birds choir be heard
   }
   //---
-  whatBirdSoundsLike1.play(); whatBirdSoundsLike1.fade(0,1,2000); // 12000ms audio fades to silence at the end
-  new SuperTimeout(function(){ whatBirdSoundsLike1.fade(1,0.33,1000); }, sayTime - 1000);
+  whatBirdSoundsLike1.play(); // 12000ms audio file itself fades from and to silence at the beginning and at the end // UNNECESSARY: whatBirdSoundsLike1.fade(0,1,2000);
+  new SuperTimeout(function(){ whatBirdSoundsLike1.fade(1,0.33,1000); }, sayTime - 1000); // Volume down to make room for speech
   new SuperTimeout(function(){      sayAB.play();      sayAB.once("end", function(){  whatBirdSoundsLike1.fade(0.33,1,1000);  });      }, sayTime); // Assume that teacher will be talking for 5000ms
   new SuperTimeout(function(){ blurABandBringVid1OverAB(); }, proceedTime); // slow, normal, fast
 }

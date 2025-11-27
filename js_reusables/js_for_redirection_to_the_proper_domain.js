@@ -17,29 +17,52 @@ if (browserLanguage == userInterfaceLanguage) { // SEE js_for_every_single_html
     setTimeout(whatIfUserInterfaceLangAndBrowserLangAreDifferent, 500); // Small delay to let the welcome menu become visible
   }
 }
+const ifWantToChange_EN = "Would you like to view the app in English?\n";
+const ifWantToChange_TR = "Uygulama Türkçe arayüz ile görüntülensin mi?\n";
+const ifWantToChange_JA = "アプリを八島語で（八島語＝日本語）開けましょうか？\n";
+const ifWantToKeep_EN = "Cancel to keep user interface in English.";
+const ifWantToKeep_TR = "Arayüz Türkçe kalsın istiyorsanız iptali seçin.";
+const ifWantToKeep_JA = "日本語のままにするには、［キャンセル］を選択してください。";
 // ---
 function whatIfUserInterfaceLangAndBrowserLangAreDifferent() {
   if (!localStorage.changingDomainToMatchBrowserLanguageWasOfferedButUserDeclined) {
     // Check if there is an available domain where UI language is user's browser language
+    let message = "?";
+    // browserLanguage is in most cases OS language i.e. THE HOUSE
+    // userInterfaceLanguage is what domain user has arrived through i.e. THE DOOR
     switch (browserLanguage) {
-
       // BETTER IF: this list is ordered in the opposite direction of the list in js_for_every_single_html
-
       case "en":
+        switch (userInterfaceLanguage) {
+          case "tr": message = ifWantToChange_EN + ifWantToKeep_TR; break;
+          case "ja": message = ifWantToChange_EN + ifWantToKeep_JA; break;
+          default: message = ifWantToChange_EN;
+        }
         // Ask if user wants to go to speakworldlanguages.app or stay
-        if (confirm("Would you like to view the app in English?") == true) { top.location.assign("https://speakworldlanguages.github.io"); } // When name.com SSL issue is resolved, change to » https://speakworldlanguages.app
+        if (confirm(message) == true) { top.location.assign("https://speakworldlanguages.github.io"); } // When name.com SSL issue is resolved, change to » https://speakworldlanguages.app
         else { localStorage.changingDomainToMatchBrowserLanguageWasOfferedButUserDeclined = "yes"; }
         break;
       case "tr":
+        switch (userInterfaceLanguage) {
+          case "en": message = ifWantToChange_TR + ifWantToKeep_EN; break;
+          case "ja": message = ifWantToChange_TR + ifWantToKeep_JA; break;
+          default: message = ifWantToChange_TR;
+        }
         // Ask if user wants to go to birdildahakonus or stay
-        if (confirm("Uygulama Türkçe arayüz ile görüntülensin mi?") == true) { top.location.assign("https://speakworldlanguages.github.io/birdildahakonus/"); } // When name.com SSL issue is resolved, change to » https://speakworldlanguages.app/birdildahakonus/ OR other CUSTOM DOMAIN
+        if (confirm(message) == true) { top.location.assign("https://speakworldlanguages.github.io/birdildahakonus/"); } // When name.com SSL issue is resolved, change to » https://speakworldlanguages.app/birdildahakonus/ OR other CUSTOM DOMAIN
         else { localStorage.changingDomainToMatchBrowserLanguageWasOfferedButUserDeclined = "yes"; }
         break;
       case "ja":
+        switch (userInterfaceLanguage) {
+          case "en": message = ifWantToChange_JA + ifWantToKeep_EN; break;
+          case "tr": message = ifWantToChange_JA + ifWantToKeep_TR; break;
+          default: message = ifWantToChange_JA;
+        }
         // Ask if user wants to go to gengohanasite or stay
-        if (confirm("アプリを八島語で（八島語＝日本語）開けましょうか？") == true) { top.location.assign("https://gengohana.site"); } // https must be enforced
+        if (confirm(message) == true) { top.location.assign("https://gengohana.site"); } // https must be enforced
         else { localStorage.changingDomainToMatchBrowserLanguageWasOfferedButUserDeclined = "yes"; }
         break;
+
 /*
       case "zh": // TAIWAN is zh-TW, no?
         // Ask if user wants to go to tingdongshijiederenmen.com or stay
